@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>آلة Z-machine هي آلة افتراضية تم تطويرها من قبل جويل بيريز ومارك بلانك في عام 1979 واستخدمتها Infocom لألعاب المغامرات النصية. قامت Infocom بتجميع شيفرة اللعبة إلى ملفات تحتوي على تعليمات Z-machine (تسمى ملفات القصة أو ملفات Z-code) وبالتالي يمكنها نقل مغامراتها النصية إلى منصة جديدة ببساطة عن طريق كتابة تطبيق Z-machine لتلك المنصة. مع وجود عدد كبير من أنظمة الكمبيوتر المنزلية غير المتوافقة المستخدمة في ذلك الوقت، كانت هذه ميزة مهمة مقارنة باستخدام التعليمات البرمجية الأصلية أو تطوير مترجم لكل نظام.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Z-machine är en virtuell maskin som utvecklades av Joel Berez och Marc Blank 1979 och som användes av Infocom för deras textäventyrsspel. Infocom kompilerade spelkoden till filer som innehöll Z-machine-instruktioner (så kallade storyfiler eller Z-code-filer) och kunde därför porta sina textäventyr till en ny plattform genom att helt enkelt skriva en Z-machine-implementation för den plattformen. Med tanke på det stora antalet inkompatibla hemdatorsystem som användes vid den här tiden var detta en viktig fördel jämfört med att använda inbyggd kod eller utveckla en kompilator för varje system.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Z-machine là một máy ảo được phát triển bởi Joel Berez và Marc Blank vào năm 1979 và được Infocom sử dụng cho các trò chơi phiêu lưu văn bản của mình. Infocom đã biên dịch mã trò chơi thành các tệp chứa các lệnh Z-machine (được gọi là tệp câu chuyện hoặc tệp Z-code) và do đó có thể chuyển các trò chơi phiêu lưu văn bản của mình sang một nền tảng mới chỉ bằng cách viết một bản triển khai Z-machine cho nền tảng đó. Với số lượng lớn các hệ thống máy tính gia đình không tương thích đang được sử dụng vào thời điểm đó, đây là một lợi thế quan trọng so với việc sử dụng mã gốc hoặc phát triển một trình biên dịch cho từng hệ thống.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>ضوء القمر (المعروف سابقًا باسم لايملايت) هو تطبيق مفتوح المصدر لبروتوكول GameStream من NVIDIA. قمنا بتنفيذ البروتوكول الذي يستخدمه NVIDIA Shield وكتبنا مجموعة من عملاء الطرف الثالث.  يتيح لك Moonlight تشغيل ألعاب الكمبيوتر على أي جهاز تقريبًا، سواء كنت في غرفة أخرى أو على بعد أميال من جهاز الألعاب الخاص بك.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Moonlight (tidigare Limelight) är en implementering med öppen källkod av NVIDIA:s GameStream-protokoll. Vi implementerade det protokoll som används av NVIDIA Shield och skrev en uppsättning tredjepartsklienter.  Med Moonlight kan du spela dina PC-spel på nästan vilken enhet som helst, oavsett om du befinner dig i ett annat rum eller långt från din spelrigg.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Moonlight (trước đây là Limelight) là một phiên bản mã nguồn mở của giao thức GameStream của NVIDIA. Chúng tôi đã triển khai giao thức được sử dụng trên NVIDIA Shield và phát triển một bộ ứng dụng khách của bên thứ ba. Moonlight cho phép bạn chơi các trò chơi trên PC của mình trên hầu hết mọi thiết bị, dù bạn đang ở phòng khác hay cách xa máy tính chơi game hàng chục cây số.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

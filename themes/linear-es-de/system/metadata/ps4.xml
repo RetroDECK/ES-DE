@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>بلاي ستيشن 4 (PS4) هو جهاز ألعاب فيديو منزلي تم تطويره من قبل شركة سوني إنترأكتيف إنترتاينمنت. تم الإعلان عنه كخليفة لجهاز بلاي ستيشن 3 في فبراير 2013، وتم إطلاقه في 15 نوفمبر 2013 في أمريكا الشمالية، وفي 29 نوفمبر 2013 في أوروبا وأمريكا الجنوبية وأستراليا، وفي 22 فبراير 2014 في اليابان. وهو وحدة تحكم من الجيل الثامن، وينافس جهاز Xbox One من Microsoft وWii U وSwitch من Nintendo.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>PlayStation 4 (PS4) är en hemkonsol för videospel som utvecklats av Sony Interactive Entertainment. Den tillkännagavs som efterföljaren till PlayStation 3 i februari 2013 och lanserades den 15 november 2013 i Nordamerika, den 29 november 2013 i Europa, Sydamerika och Australien samt den 22 februari 2014 i Japan. Konsolen tillhör den åttonde generationen och konkurrerar med Microsofts Xbox One och Nintendos Wii U och Switch.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>PlayStation 4 (PS4) là một hệ máy chơi game gia đình do Sony Interactive Entertainment phát triển. Được công bố là phiên bản kế nhiệm của PlayStation 3 vào tháng 2 năm 2013, hệ máy này chính thức ra mắt vào ngày 15 tháng 11 năm 2013 tại Bắc Mỹ, ngày 29 tháng 11 năm 2013 tại châu Âu, Nam Mỹ và Úc, và ngày 22 tháng 2 năm 2014 tại Nhật Bản. Là một hệ máy thuộc thế hệ thứ tám, PS4 cạnh tranh với Xbox One của Microsoft và Wii U cùng Switch của Nintendo.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

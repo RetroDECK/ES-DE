@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>نظام الترفيه المتقدم (AES)، المعروف في الأصل باسم Neo Geo فقط، هو أول جهاز ألعاب فيديو في العائلة. يتميز الجهاز برسومات ثنائية الأبعاد ملونة نسبياً. تم تصميم الجهاز جزئياً من قبل ألفا دينشي (ADK لاحقاً). في البداية، كان النظام المنزلي متاحاً فقط للإيجار للمؤسسات التجارية، مثل سلاسل الفنادق والحانات والمطاعم وغيرها من الأماكن. وعندما أشارت استجابة العملاء إلى أن بعض اللاعبين كانوا على استعداد لشراء وحدة تحكم بقيمة 650 دولار أمريكي، قامت SNK بتوسيع نطاق المبيعات والتسويق في سوق وحدات التحكم المنزلية. تم إطلاق وحدة التحكم Neo Geo رسمياً في 31 يناير 1990 في أوساكا باليابان. تتطابق AES مع نظيرتها في الأركيد، MVS، لذا فإن ألعاب الأركيد التي تم إصدارها للسوق المنزلي هي تحويلات متطابقة تقريباً.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>نظام الترفيه المتقدم (AES)، المعروف في الأصل باسم Neo Geo فقط، هو أول جهاز ألعاب فيديو في العائلة. يتميز الجهاز برسومات ثنائية الأبعاد ملونة نسبياً. تم تصميم الجهاز جزئياً من قبل ألفا دينشي (ADK لاحقاً). في البداية، كان النظام المنزلي متاحاً فقط للإيجار للمؤسسات التجارية، مثل سلاسل الفنادق والحانات والمطاعم وغيرها من الأماكن. وعندما أشارت استجابة العملاء إلى أن بعض اللاعبين كانوا على استعداد لشراء وحدة تحكم بقيمة 650 دولار أمريكي، قامت SNK بتوسيع نطاق المبيعات والتسويق في سوق وحدات التحكم المنزلية. تم إطلاق كونسول Neo Geo رسمياً في 31 يناير 1990 في أوساكا باليابان. تتطابق AES مع نظيرتها في الأركيد، MVS، لذا فإن ألعاب الأركيد التي تم إصدارها للسوق المنزلي هي تحويلات متطابقة تقريباً.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Advanced Entertainment System (AES), ursprungligen bara känd som Neo Geo, är den första videospelskonsolen i familjen. Hårdvaran har jämförelsevis färgglad 2D-grafik. Hårdvaran designades delvis av Alpha Denshi (senare ADK). Till en början fanns hemsystemet endast tillgängligt för uthyrning till kommersiella inrättningar, såsom hotellkedjor, barer och restauranger och andra platser. När kundresponsen visade att vissa spelare var villiga att köpa en konsol för 650 USD, utökade SNK försäljning och marknadsföring till hemkonsolmarknaden. Neo Geo-konsolen lanserades officiellt den 31 januari 1990 i Osaka, Japan. AES är identisk med dess motsvarighet för arkadspel, MVS, så de arkadspel som släpps för hemmamarknaden är nästan identiska konverteringar.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống Giải trí Nâng cao (AES), ban đầu chỉ được biết đến với tên gọi Neo Geo, là hệ máy chơi game đầu tiên trong dòng sản phẩm này. Phần cứng của hệ thống sở hữu đồ họa 2D tương đối sống động. Phần cứng này được thiết kế một phần bởi Alpha Denshi (sau này là ADK). Ban đầu, hệ máy này chỉ được cho thuê tại các cơ sở thương mại như chuỗi khách sạn, quán bar, nhà hàng và các địa điểm khác. Khi phản hồi từ khách hàng cho thấy một số game thủ sẵn sàng mua một chiếc máy chơi game giá 650 đô la Mỹ, SNK đã mở rộng hoạt động bán hàng và tiếp thị sang thị trường máy chơi game gia đình. Máy chơi game Neo Geo chính thức ra mắt vào ngày 31 tháng 1 năm 1990 tại Osaka, Nhật Bản. AES giống hệt với phiên bản arcade của nó, MVS, vì vậy các trò chơi arcade phát hành cho thị trường gia đình gần như là các bản chuyển đổi giống hệt nhau.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -162,6 +162,14 @@ Type X är baserat på en vanlig persondators hårdvaruarkitektur och är inte e
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Taito Type X là một bo mạch hệ thống máy arcade được phát hành vào năm 2004 bởi nhà phát triển và phát hành trò chơi Taito.
+
+Dựa trên kiến trúc phần cứng máy tính cá nhân thông dụng, Type X không phải là một tiêu chuẩn cho một bộ phần cứng cụ thể, mà là một nền tảng mô-đun hỗ trợ nhiều cấu hình phần cứng với các mức độ khả năng đồ họa khác nhau. Sự linh hoạt này cho phép các nhà phát triển game có sự lựa chọn hạn chế trong việc chọn cấu hình phù hợp với yêu cầu cụ thể của trò chơi, đồng thời giúp nền tảng này hỗ trợ hiệu quả hơn các tựa game có nhu cầu tính toán đa dạng. Ví dụ, các mẫu Type X+ và Type X2 có khả năng xử lý đồ họa được nâng cấp, có thể được sử dụng để cải thiện hình ảnh trò chơi hoặc xuất ra màn hình có độ phân giải cao hơn (HDTV). Bo mạch Type X7 chủ yếu được sử dụng cho máy pachinko tại Nhật Bản. Rawiya là một trong những cổ đông sở hữu công ty sản xuất bo mạch hệ thống này.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Taito Type X 是游戏开发商和发行商 Taito 于 2004 年发布的一款街机系统板卡。

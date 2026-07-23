@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن حاسوب Othello Multivision (オオオロロロルマチチビジョジョン) هو استنساخ مرخص من SG-1000 تم تصنيعه بواسطة شركة Tsukuda Original. وهو موجود لأن النية الأصلية لـ Sega لحاسوب SC-3000 كانت السماح للمصنعين الآخرين بإنتاج حواسيب متوافقة على أمل الحصول على معيار عالمي. ولسوء الحظ، ربما مع ظهور MSX، فشل هذا التكتيك وفشل هذا التكتيك، وتم إنتاج عدد قليل جداً من الأجهزة المتوافقة مع SG-1000/SC-3000. وكان جهاز Othello Multivision أحد هذه الأجهزة.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Othello Multivision (オセロマルチビジョン) är en licensierad SG-1000-klon som tillverkas av Tsukuda Original. Den existerar eftersom Segas ursprungliga avsikt med SC-3000-datorn var att låta andra tillverkare tillverka kompatibla datorer i hopp om att få en världsomspännande standard. Tyvärr misslyckades denna taktik, möjligen i och med MSX:s framväxt, och mycket få SG-1000/SC-3000-kompatibla maskiner tillverkades. Othello Multivision var en av dessa maskiner.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Othello Multivision (オセロマルチビジョン) là một phiên bản sao chép được cấp phép của SG-1000 do Tsukuda Original sản xuất. Sản phẩm này ra đời bởi vì mục đích ban đầu của Sega đối với máy tính SC-3000 là cho phép các nhà sản xuất khác chế tạo các máy tính tương thích, với hy vọng tạo ra một tiêu chuẩn toàn cầu. Thật không may, có thể do sự xuất hiện của MSX, chiến lược này đã thất bại, và rất ít máy tương thích với SG-1000/SC-3000 được sản xuất. Othello Multivision là một trong số những máy đó.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

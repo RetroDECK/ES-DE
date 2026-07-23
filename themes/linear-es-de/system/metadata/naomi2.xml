@@ -162,6 +162,14 @@ NAOMI 2 är betydligt mer kraftfull än NAOMI, inklusive en dubbel CPU-installat
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega NAOMI 2 là một bo mạch arcade do Sega phát triển và là phiên bản kế thừa của phần cứng Sega NAOMI. Sản phẩm này ban đầu được ra mắt vào năm 2000. Do sử dụng kiến trúc NAOMI tương tự (nhưng đã được nâng cấp đáng kể), nó cũng hoàn toàn tương thích ngược với phiên bản tiền nhiệm.
+
+NAOMI 2 mạnh mẽ hơn NAOMI rất nhiều, bao gồm cấu hình CPU kép, GPU T&amp;L mới, GPU rasterizer kép, bộ nhớ tăng cường và băng thông nhanh hơn. Điều này giúp các trò chơi có nhiều đa giác hơn so với trò chơi NAOMI, được hiển thị với tốc độ nhanh hơn nhiều, trong khi GPU T&amp;L mới bổ sung các hiệu ứng ánh sáng và hạt tiên tiến. Nó cũng có giá cả phải chăng hơn so với hệ thống arcade Sega Hikaru rất đắt đỏ (và khó lập trình) trước đó. Tuy nhiên, NAOMI 2 vẫn mạnh mẽ hơn các hệ thống gia đình vào thời điểm đó.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>世嘉 NAOMI 2 是世嘉公司开发的一款街机游戏板，是世嘉 NAOMI 硬件的后续产品。它最初于 2000 年发布。由于它使用类似的 NAOMI 架构（但经过大幅改进），因此也完全向后兼容其前身。

@@ -27,7 +27,7 @@ Initially conceived as a solution for industrial and office applications, by 198
 كان الطراز الأول من هذا الحاسوب مزودًا بمعالج Intel 8086 مزودًا بمعالج Intel 8086 بسرعة 5 ميجاهرتز وذاكرة وصول عشوائي سعتها 128 كيلوبايت. وتم شحنه ببطاقات رسومات قادرة على عرض 8 ألوان بدقة 640 × 400، وهو ما كان يميزه بوضوح عن أجهزة الكمبيوتر الشخصية في ذلك الوقت.
 
 تم تصميمه في البداية كحل للتطبيقات الصناعية والمكتبية، وبحلول عام 1987، استحوذت سلسلة PC-9801 على ما يقرب من 90% من سوق الحواسيب الشخصية اليابانية. وبمرور الوقت، ومع زيادة الطاقة وتقدير المستخدمين المنزليين (خاصة اللاعبين) للرسومات والمؤثرات الصوتية، أصبحت هذه السلسلة شائعة أيضًا في التطبيقات غير التجارية - على سبيل المثال، ظهرت سلسلة Touhou Project لأول مرة.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -198,6 +198,16 @@ Den första modellen hade en 16-bitars arkitektur med en Intel 8086-processor so
 
 PC-9801-serien, som ursprungligen var tänkt som en lösning för industri- och kontorsapplikationer, hade 1987 nästan 90% av den japanska marknaden för persondatorer. Med tiden, när kraften ökade och grafik och ljudeffekter uppskattades av hemanvändare (särskilt spelare), blev den också populär för icke-kommersiella applikationer - Touhou Project-serien, till exempel, gjorde sin debut.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>NEC PC-9800 là dòng máy tính cá nhân được Tập đoàn NEC phát triển tại Nhật Bản vào năm 1982 dựa trên nền tảng của IBM, dành riêng cho thị trường Nhật Bản.
+
+Mẫu đầu tiên có kiến trúc 16-bit với bộ xử lý Intel 8086 tốc độ 5 MHz và 128 KB RAM. Máy được trang bị card đồ họa có khả năng hiển thị 8 màu ở độ phân giải 640x400 - một điểm khác biệt rõ rệt về hiệu năng so với các máy tính cá nhân cùng thời.
+
+Ban đầu được thiết kế như một giải pháp cho các ứng dụng công nghiệp và văn phòng, đến năm 1987, dòng PC-9801 đã chiếm gần 90% thị trường máy tính cá nhân Nhật Bản. Theo thời gian, khi sức mạnh xử lý tăng lên và hiệu ứng đồ họa cùng âm thanh được người dùng gia đình (đặc biệt là game thủ) ưa chuộng, dòng máy này cũng trở nên phổ biến cho các ứng dụng phi thương mại - ví dụ như series Touhou Project đã ra mắt lần đầu tiên.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

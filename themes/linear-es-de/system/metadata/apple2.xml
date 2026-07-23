@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>في عام 1976، بدأ رائدا الكمبيوتر ستيف وزنياك وستيف جوبز في عام 1976 في بيع حاسوب Apple I في شكل عدة لمتاجر الكمبيوتر. وبعد ذلك بشهر، كان وزنياك يعمل على تصميم نسخة محسّنة من الحاسوب Apple II. وقد عرضا نموذجًا أوليًا في ديسمبر، ثم قدماه للجمهور في أبريل 1977. بدأ Apple II طفرة في مبيعات الحواسيب الشخصية في أواخر السبعينيات، ودفع Apple إلى الصدارة بين صانعي الحواسيب الشخصية.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>1976 började datorpionjärerna Steve Wozniak och Steve Jobs sälja sin Apple I-dator i byggsatsform till datorbutiker. En månad senare arbetade Wozniak med att ta fram en design för en förbättrad version, Apple II. De demonstrerade en prototyp i december och presenterade den sedan för allmänheten i april 1977. Apple II startade boomen i försäljningen av persondatorer i slutet av 1970-talet och gav Apple en ledande position bland tillverkarna av persondatorer.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Năm 1976, hai nhà tiên phong trong lĩnh vực máy tính là Steve Wozniak và Steve Jobs bắt đầu bán máy tính Apple I dưới dạng bộ lắp ráp cho các cửa hàng máy tính. Một tháng sau, Wozniak bắt đầu thiết kế phiên bản cải tiến, Apple II. Họ trình diễn một mẫu thử nghiệm vào tháng 12, và sau đó giới thiệu sản phẩm này đến công chúng vào tháng 4 năm 1977. Apple II đã khởi đầu cho sự bùng nổ doanh số máy tính cá nhân vào cuối thập niên 1970, và đưa Apple lên vị trí dẫn đầu trong số các nhà sản xuất máy tính cá nhân.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

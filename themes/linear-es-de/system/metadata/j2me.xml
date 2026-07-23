@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>منصة Java Platform, Micro Edition أو Java ME هي منصة حوسبة لتطوير ونشر التعليمات البرمجية المحمولة للأجهزة المدمجة والمحمولة (أجهزة التحكم الدقيقة وأجهزة الاستشعار والبوابات والهواتف المحمولة والمساعدات الرقمية الشخصية وأجهزة التلفزيون والطابعات). كانت Java ME تُعرف سابقاً باسم Java 2 Platform, Micro Edition أو J2ME. اعتبارًا من 22 ديسمبر 2006، تم ترخيص شفرة مصدر Java ME بموجب رخصة جنو العمومية العامة، وتم إصدارها تحت اسم المشروع phoneME.</systemDescription>
-            <systemHardwareType>نظام التشغيل</systemHardwareType>
+            <systemHardwareType>نظام تشغيل</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Java Platform, Micro Edition eller Java ME är en datorplattform för utveckling och driftsättning av portabel kod för inbyggda och mobila enheter (mikrokontroller, sensorer, gateways, mobiltelefoner, personliga digitala assistenter, TV set-top boxar, skrivare). Java ME var tidigare känd under namnet Java 2 Platform, Micro Edition eller J2ME. Sedan den 22 december 2006 är källkoden för Java ME licensierad under GNU General Public License och lanseras under projektnamnet phoneME.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Java Platform, Micro Edition (Java ME) là một nền tảng máy tính dành cho việc phát triển và triển khai mã nguồn di động trên các thiết bị nhúng và di động (bộ vi điều khiển, cảm biến, cổng kết nối, điện thoại di động, thiết bị trợ lý kỹ thuật số cá nhân, hộp giải mã truyền hình, máy in). Java ME trước đây được gọi là Java 2 Platform, Micro Edition (J2ME). Tính đến ngày 22 tháng 12 năm 2006, mã nguồn Java ME được cấp phép theo Giấy phép Công cộng GNU (GNU General Public License) và được phát hành dưới tên dự án phoneME.</systemDescription>
+            <systemHardwareType>CÁC</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

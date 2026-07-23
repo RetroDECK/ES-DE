@@ -162,6 +162,14 @@ Bland de 33 titlar som släpptes till det ursprungliga CP-systemet fanns bland a
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống CP (CPシステム, shīpī shisutemu, viết tắt là CPS) là một bo mạch hệ thống máy arcade do Capcom phát triển, cho phép chạy phần mềm trò chơi được lưu trữ trên các bo mạch con có thể tháo lắp. Hơn hai chục tựa game arcade đã được phát hành cho CPS-1, trước khi Capcom chuyển sang phát triển trò chơi trên hệ thống kế thừa của nó, CP System II.
+
+Trong số 33 tựa game được phát hành cho CP System ban đầu có Street Fighter II: The World Warrior và hai phần tiếp theo đầu tiên của nó, Street Fighter II: Champion Edition và Street Fighter II: Hyper Fighting.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>CP System（CPシステム，shīpī shisutemu，简称 CPS）是卡普空公司开发的一种街机系统板卡，可运行存储在可移动子板上的游戏软件。在卡普空将游戏开发工作转移到其后续产品 CP System II 之前，CPS-1 推出了二十多款街机游戏。

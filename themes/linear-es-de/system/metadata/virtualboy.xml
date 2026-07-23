@@ -20,7 +20,7 @@ The games use a parallax effect to create the illusion of depth. Sales failed to
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>فيرتشوال بوي هو جهاز ألعاب فيديو محمول 32 بت تم تطويره وتصنيعه من قبل شركة نينتندو. صدر في عام 1995، وتم تسويقه كأول وحدة تحكم قادرة على عرض رسومات مجسمة "ثلاثية الأبعاد". ويستخدم اللاعب وحدة التحكم مثل شاشة العرض المثبتة على الرأس، ويضع رأسه على العدسة ليرى شاشة عرض أحادية اللون حمراء.
+            <systemDescription>فيرتشوال بوي هو جهاز ألعاب فيديو محمول 32 بت تم تطويره وتصنيعه من قبل شركة نينتندو. صدر في عام 1995، وتم تسويقه كأول وحدة تحكم قادرة على عرض رسومات مجسمة "ثلاثية الأبعاد". ويستخدم اللاعب كونسول مثل شاشة العرض المثبتة على الرأس، ويضع رأسه على العدسة ليرى شاشة عرض أحادية اللون حمراء.
 
 تستخدم الألعاب تأثير المنظر لخلق وهم العمق. فشلت المبيعات في تحقيق الأهداف، وتوقفت نينتندو عن التوزيع وتطوير الألعاب في عام 1996، بعد أن أصدرت 22 لعبة فقط للنظام.</systemDescription>
             <systemHardwareType>محمول</systemHardwareType>
@@ -160,6 +160,14 @@ The games use a parallax effect to create the illusion of depth. Sales failed to
 
 Spelen använder en parallaxeffekt för att skapa en illusion av djup. Försäljningen nådde inte upp till målen och Nintendo upphörde med distribution och spelutveckling 1996, efter att endast ha släppt 22 spel till systemet.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Virtual Boy là một hệ máy chơi game cầm tay để bàn 32-bit do Nintendo phát triển và sản xuất. Ra mắt vào năm 1995, sản phẩm này được quảng bá là hệ máy chơi game đầu tiên có khả năng hiển thị đồ họa "3D" lập thể. Người chơi sử dụng hệ máy như một thiết bị hiển thị gắn trên đầu, đặt đầu vào ống ngắm để nhìn vào màn hình đơn sắc màu đỏ.
+
+Các trò chơi sử dụng hiệu ứng parallax để tạo ra ảo giác về độ sâu. Doanh số bán hàng không đạt được mục tiêu, và Nintendo đã ngừng phân phối và phát triển trò chơi vào năm 1996, sau khi chỉ phát hành được 22 trò chơi cho hệ thống này.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

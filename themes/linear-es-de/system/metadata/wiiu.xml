@@ -22,8 +22,8 @@ The Wii U is the first Nintendo console to support HD graphics. The system's pri
         <variables>
             <systemDescription>Wii U (وي يو) هو جهاز ألعاب فيديو منزلي طورته شركة نينتندو ليكون خليفة لجهاز Wii. تم إصداره في أواخر عام 2012، وهو أول جهاز ألعاب فيديو من الجيل الثامن، ونافس جهاز Xbox One من مايكروسوفت وجهاز PlayStation 4 من سوني.
 
-Wii U هو أول وحدة تحكم من نينتندو تدعم رسومات عالية الدقة. وحدة التحكم الأساسية في النظام هي لوحة ألعاب Wii U GamePad، والتي تتميز بشاشة لمس مدمجة وأزرار اتجاهية وعصي تناظرية وأزرار حركة. يمكن استخدام الشاشة إما كمكمل للشاشة الرئيسية أو في الألعاب المدعومة للعب اللعبة مباشرة على لوحة الألعاب. يمكن استخدام وحدة تحكم Wii U Pro بدلاً منها كبديل أكثر تقليدية. جهاز Wii U متوافق مع الإصدارات السابقة مع جميع برامج وملحقات Wii. يمكن أن تدعم الألعاب أي مجموعة من لوحة الألعاب أو ريموت Wii أو النانشوك أو لوحة التوازن أو وحدة تحكم Nintendo الكلاسيكية أو وحدة تحكم Wii U Pro. تتمحور الوظائف عبر الإنترنت حول منصة Nintendo Network و Miiverse، وهي خدمة شبكات اجتماعية متكاملة تتيح للمستخدمين مشاركة المحتوى في مجتمعات خاصة بالألعاب.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+Wii U هو أول وحدة تحكم من نينتندو تدعم رسومات عالية الدقة. كونسول الأساسية في النظام هي لوحة ألعاب Wii U GamePad، والتي تتميز بشاشة لمس مدمجة وأزرار اتجاهية وعصي تناظرية وأزرار حركة. يمكن استخدام الشاشة إما كمكمل للشاشة الرئيسية أو في الألعاب المدعومة للعب اللعبة مباشرة على لوحة الألعاب. يمكن استخدام وحدة تحكم Wii U Pro بدلاً منها كبديل أكثر تقليدية. جهاز Wii U متوافق مع الإصدارات السابقة مع جميع برامج وملحقات Wii. يمكن أن تدعم الألعاب أي مجموعة من لوحة الألعاب أو ريموت Wii أو النانشوك أو لوحة التوازن أو وحدة تحكم Nintendo الكلاسيكية أو وحدة تحكم Wii U Pro. تتمحور الوظائف عبر الإنترنت حول منصة Nintendo Network و Miiverse، وهي خدمة شبكات اجتماعية متكاملة تتيح للمستخدمين مشاركة المحتوى في مجتمعات خاصة بالألعاب.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ The Wii U is the first Nintendo console to support HD graphics. The system's pri
 
 Wii U är den första Nintendo-konsolen med stöd för HD-grafik. Systemets primära styrenhet är Wii U GamePad, som har en inbyggd pekskärm, riktningsknappar, analoga spakar och actionknappar. Skärmen kan användas antingen som ett komplement till huvudskärmen eller i spel som stöds för att spela spelet direkt på GamePad. Wii U Pro Controller kan användas i stället som ett mer traditionellt alternativ. Wii U är bakåtkompatibel med alla Wii-program och tillbehör. Spelen kan stödja alla kombinationer av GamePad, Wii-fjärrkontrollen, Nunchuk, Balance Board eller Nintendos Classic Controller eller Wii U Pro Controller. Online-funktionaliteten är centrerad kring Nintendo Network-plattformen och Miiverse, en integrerad social nätverkstjänst som gör det möjligt för användare att dela innehåll i spelspecifika communities.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Wii U (WEE YOO) là một hệ máy chơi game gia đình do Nintendo phát triển, là phiên bản kế nhiệm của Wii. Ra mắt vào cuối năm 2012, đây là hệ máy chơi game thế hệ thứ tám đầu tiên và cạnh tranh với Xbox One của Microsoft và PlayStation 4 của Sony.
+
+Wii U là hệ máy chơi game đầu tiên của Nintendo hỗ trợ đồ họa HD. Bộ điều khiển chính của hệ thống là Wii U GamePad, có màn hình cảm ứng tích hợp, các nút điều hướng, cần analog và nút hành động. Màn hình này có thể được sử dụng như một màn hình phụ cho màn hình chính hoặc trong các trò chơi hỗ trợ để chơi trực tiếp trên GamePad. Wii U Pro Controller có thể được sử dụng thay thế như một lựa chọn truyền thống hơn. Wii U tương thích ngược với tất cả phần mềm và phụ kiện của Wii. Các trò chơi có thể hỗ trợ bất kỳ sự kết hợp nào giữa GamePad, Wii Remote, Nunchuk, Balance Board, hoặc Classic Controller của Nintendo hoặc Wii U Pro Controller. Chức năng trực tuyến tập trung vào nền tảng Nintendo Network và Miiverse, một dịch vụ mạng xã hội tích hợp cho phép người dùng chia sẻ nội dung trong các cộng đồng dành riêng cho từng trò chơi.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

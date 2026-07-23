@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>في بداية العقد الأول من القرن الحادي والعشرين بدأت الشركات المصنعة لأنظمة الأركيد في الابتعاد عن تصميمات اللوحات المخصصة، وكجزء من هذا التغيير قام العديد منهم بدلاً من ذلك بتكييف بنية الكمبيوتر الشخصي القياسية. كان هناك العديد من هذه التصاميم التي تعمل بنظام لينكس أو ويندوز، على سبيل المثال سيجا ليندبيرغ ونظام N2 من Namco و Taito Type X.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>I början av 2000-talet började tillverkarna av arkadsystem att gå ifrån specialdesignade kort och som en del av denna förändring anpassade många istället standardarkitekturen för PC. Det fanns många sådana konstruktioner som körde Linux eller Windows, till exempel Sega Lindbergh, Namco System N2 och Taito Type X.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Vào đầu những năm 2000, các nhà sản xuất hệ thống máy chơi game arcade bắt đầu từ bỏ việc thiết kế bo mạch riêng, và trong bối cảnh thay đổi này, nhiều hãng đã chuyển sang áp dụng kiến trúc PC tiêu chuẩn. Có rất nhiều thiết kế như vậy chạy hệ điều hành Linux hoặc Windows, ví dụ như Sega Lindbergh, Namco System N2 và Taito Type X.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

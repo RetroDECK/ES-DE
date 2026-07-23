@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>أتاري جاغوار هو جهاز ألعاب فيديو من الجيل الخامس (1993-2005) تم تطويره وتوزيعه من قبل شركة أتاري كوربوريشن. تم إصدارها في نوفمبر 1993 في أمريكا الشمالية بسعر تجزئة 249.99 دولارًا أمريكيًا. تم إصدار وحدة التحكم لاحقًا في أوروبا (1994) وأستراليا (1994) واليابان (1994). تم تسويق Jaguar على أنها أول وحدة تحكم لألعاب الفيديو ذات 64 بت؛ ولكن تم انتقاد هذا الادعاء على نطاق واسع. تم إيقاف وحدة التحكم في أوائل عام 1996، ربما في وقت بيع الشركة في 8 أبريل 1996.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>أتاري جاغوار هو جهاز ألعاب فيديو من الجيل الخامس (1993-2005) تم تطويره وتوزيعه من قبل شركة أتاري كوربوريشن. تم إصدارها في نوفمبر 1993 في أمريكا الشمالية بسعر تجزئة 249.99 دولارًا أمريكيًا. تم إصدار كونسول لاحقًا في أوروبا (1994) وأستراليا (1994) واليابان (1994). تم تسويق Jaguar على أنها أول وحدة تحكم لألعاب الفيديو ذات 64 بت؛ ولكن تم انتقاد هذا الادعاء على نطاق واسع. تم إيقاف كونسول في أوائل عام 1996، ربما في وقت بيع الشركة في 8 أبريل 1996.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Atari Jaguar är en femte generationens (1993-2005) videospelskonsol som utvecklades och distribuerades av Atari Corporation. Den släpptes i november 1993 i Nordamerika till ett detaljhandelspris av 249,99 dollar. Konsolen släpptes senare i Europa (1994), Australien (1994) och Japan (1994). Jaguaren marknadsfördes som den första 64-bitars videospelskonsolen, men detta påstående kritiserades av många. Konsolen slutade säljas i början av 1996, möjligen i samband med företagets försäljning den 8 april 1996.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Atari Jaguar là một hệ máy chơi game thế hệ thứ năm (1993–2005) do Tập đoàn Atari phát triển và phân phối. Hệ máy này được ra mắt vào tháng 11 năm 1993 tại Bắc Mỹ với giá bán lẻ là 249,99 đô la. Hệ máy này sau đó được phát hành tại châu Âu (1994), Úc (1994) và Nhật Bản (1994). Jaguar được quảng bá là hệ máy chơi game 64-bit đầu tiên; tuy nhiên, tuyên bố này đã vấp phải nhiều chỉ trích. Hệ máy này ngừng sản xuất vào đầu năm 1996, có thể là vào thời điểm công ty được bán lại vào ngày 8 tháng 4 năm 1996.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

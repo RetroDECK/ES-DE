@@ -20,10 +20,10 @@ The GameCube is the first Nintendo console to use optical discs as its primary s
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز نينتندو جيم كيوب هو جهاز ألعاب فيديو منزلي أصدرته شركة نينتندو في اليابان وأمريكا الشمالية في عام 2001 وفي مناطق PAL في عام 2002. GameCube هو جهاز نينتندو في الجيل السادس من أجهزة ألعاب الفيديو، وهو خليفة لوحدة التحكم السابقة Nintendo 64. تنافس GameCube مع PlayStation 2 من سوني وXbox من مايكروسوفت.
+            <systemDescription>جهاز نينتندو جيم كيوب هو جهاز ألعاب فيديو منزلي أصدرته شركة نينتندو في اليابان وأمريكا الشمالية في عام 2001 وفي مناطق PAL في عام 2002. GameCube هو جهاز نينتندو في الجيل السادس من أجهزة ألعاب الفيديو، وهو خليفة لكونسول السابقة Nintendo 64. تنافس GameCube مع PlayStation 2 من سوني وXbox من مايكروسوفت.
 
-GameCube هو أول وحدة تحكم من نينتندو تستخدم الأقراص الضوئية كوسيط تخزين أساسي. الأقراص بتنسيق يعتمد على أقراص ميني دي في دي، لكن النظام لم يصمم لتشغيل أقراص دي في دي كاملة الحجم أو أقراص صوتية مدمجة على عكس منافسيه، وركز بشكل أساسي على الألعاب بدلاً من ذلك. وتدعم وحدة التحكم الألعاب المحدودة عبر الإنترنت لعدد قليل من الألعاب عبر محول النطاق العريض أو المودم GameCube ويمكنها الاتصال بجهاز Game Boy Advance باستخدام كابل رابط، مما يسمح للاعبين بالوصول إلى ميزات حصرية داخل اللعبة باستخدام الجهاز المحمول كشاشة ثانية ووحدة تحكم مثل Wii U.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+GameCube هو أول وحدة تحكم من نينتندو تستخدم الأقراص الضوئية كوسيط تخزين أساسي. الأقراص بتنسيق يعتمد على أقراص ميني دي في دي، لكن النظام لم يصمم لتشغيل أقراص دي في دي كاملة الحجم أو أقراص صوتية مدمجة على عكس منافسيه، وركز بشكل أساسي على الألعاب بدلاً من ذلك. وتدعم كونسول الألعاب المحدودة عبر الإنترنت لعدد قليل من الألعاب عبر محول النطاق العريض أو المودم GameCube ويمكنها الاتصال بجهاز Game Boy Advance باستخدام كابل رابط، مما يسمح للاعبين بالوصول إلى ميزات حصرية داخل اللعبة باستخدام الجهاز المحمول كشاشة ثانية ووحدة تحكم مثل Wii U.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ GameCube - первая консоль Nintendo, в которой в качес
 
 GameCube är den första Nintendo-konsolen som använder optiska skivor som sitt primära lagringsmedium. Skivorna är i ett miniDVD-baserat format men systemet var inte utformat för att spela fullstora DVD-skivor eller ljud-CD-skivor till skillnad från sina konkurrenter, utan fokuserade främst på spel istället. Konsolen stöder begränsat onlinespelande för ett litet antal spel via en GameCube bredbands- eller modemadapter och kan anslutas till en Game Boy Advance med en länkkabel, vilket gör att spelarna kan få tillgång till exklusiva funktioner i spelet genom att använda handenheten som en andra skärm och handkontroll som en Wii U.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Nintendo GameCube là một hệ máy chơi game gia đình do Nintendo phát hành tại Nhật Bản và Bắc Mỹ vào năm 2001, và tại các khu vực PAL vào năm 2002. GameCube là sản phẩm đại diện của Nintendo trong thế hệ thứ sáu của các hệ máy chơi game và là phiên bản kế nhiệm của hệ máy tiền nhiệm, Nintendo 64. GameCube đã cạnh tranh với PlayStation 2 của Sony và Xbox của Microsoft.
+
+GameCube là hệ máy chơi game đầu tiên của Nintendo sử dụng đĩa quang làm phương tiện lưu trữ chính. Các đĩa này có định dạng dựa trên miniDVD, nhưng hệ thống không được thiết kế để phát các đĩa DVD kích thước đầy đủ hoặc đĩa CD âm thanh như các đối thủ cạnh tranh, và chủ yếu tập trung vào việc chơi game. Hệ máy này hỗ trợ chơi game trực tuyến hạn chế cho một số ít trò chơi thông qua bộ điều hợp băng thông rộng hoặc modem GameCube và có thể kết nối với Game Boy Advance bằng cáp liên kết, cho phép người chơi truy cập các tính năng độc quyền trong trò chơi bằng cách sử dụng thiết bị cầm tay làm màn hình thứ hai và bộ điều khiển giống như Wii U.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

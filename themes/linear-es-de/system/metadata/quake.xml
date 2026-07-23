@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>كويك هي لعبة تصويب من منظور الشخص الأول تم تطويرها من قبل شركة id Software ونشرتها شركة GT Interactive. وهي أول لعبة في سلسلة Quake، وقد صدرت في الأصل لأجهزة MS-DOS ومايكروسوفت ويندوز ولينكس في عام 1996، ثم أُصدرت لنظام التشغيل Mac OS وSega Saturn في عام 1997 وNintendo 64 في عام 1998. في اللعبة، يجب على اللاعبين أن يجدوا طريقهم عبر بيئات مختلفة تشبه المتاهات وتعود إلى القرون الوسطى بينما يقاتلون الوحوش باستخدام مجموعة من الأسلحة. الجو العام للعبة مظلم وشجاع، مع العديد من التركيبات الحجرية والخط الصدئ ذو الأحرف الكبيرة. تستلهم لعبة Quake من الخيال القوطي وأعمال H. P. Lovecraft.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemDescription>كويك هي لعبة تصويب من منظور الشخص الأول تم تطويرها من قبل شركة id Software ونشرتها شركة GT Interactive. وهي أول لعبة في سلسلة Quake، وقد صدرت في الأصل لأجهزة MS-DOS ومايكروسوفت ويندوز ولينكس في عام 1996، ثم أُصدرت لنظام تشغيل Mac OS وSega Saturn في عام 1997 وNintendo 64 في عام 1998. في اللعبة، يجب على اللاعبين أن يجدوا طريقهم عبر بيئات مختلفة تشبه المتاهات وتعود إلى القرون الوسطى بينما يقاتلون الوحوش باستخدام مجموعة من الأسلحة. الجو العام للعبة مظلم وشجاع، مع العديد من التركيبات الحجرية والخط الصدئ ذو الأحرف الكبيرة. تستلهم لعبة Quake من الخيال القوطي وأعمال H. P. Lovecraft.</systemDescription>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Quake är ett förstapersonsskjutspel som utvecklats av id Software och publicerats av GT Interactive. Det är det första spelet i Quake-serien och släpptes ursprungligen för MS-DOS, Microsoft Windows och Linux 1996, följt av Mac OS och Sega Saturn 1997 och Nintendo 64 1998. I spelet måste spelarna hitta vägen genom olika labyrintliknande, medeltida miljöer medan de kämpar mot monster med hjälp av en rad olika vapen. Den övergripande atmosfären är mörk och grusig, med många stenstrukturer och ett rostigt teckensnitt med stora bokstäver. Quake hämtar inspiration från gotisk fiktion och H.P. Lovecrafts verk.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Quake là một trò chơi bắn súng góc nhìn thứ nhất do id Software phát triển và GT Interactive phát hành. Là tựa game đầu tiên trong series Quake, trò chơi ban đầu được phát hành cho các nền tảng MS-DOS, Microsoft Windows và Linux vào năm 1996, sau đó là Mac OS và Sega Saturn vào năm 1997, và Nintendo 64 vào năm 1998. Trong trò chơi, người chơi phải tìm đường đi qua các môi trường thời trung cổ giống như mê cung trong khi chiến đấu với quái vật bằng nhiều loại vũ khí. Bầu không khí tổng thể u ám và gai góc, với nhiều họa tiết đá và phông chữ in hoa màu gỉ sét. Quake lấy cảm hứng từ tiểu thuyết gothic và các tác phẩm của H. P. Lovecraft.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

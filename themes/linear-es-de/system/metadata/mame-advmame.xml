@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>AdvanceMAME، هو منفذ لمحاكيات MAME 0.106 و MESS 0.106 لمحاكيات شاشات الأركيد وأجهزة التلفاز وكذلك لشاشات LCD وشاشات الكمبيوتر الشخصي.</systemDescription>
-            <systemHardwareType>المحاكي</systemHardwareType>
+            <systemHardwareType>محاكى</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>AdvanceMAME, är en portning av emulatorerna MAME 0.106 och MESS 0.106 för arkadmonitorer och TV-apparater men även för LCD- och PC-monitorer.</systemDescription>
             <systemHardwareType>Emulator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>AdvanceMAME là phiên bản chuyển đổi từ các trình giả lập MAME 0.106 và MESS 0.106, dành cho màn hình máy arcade và TV, cũng như màn hình LCD và màn hình máy tính.</systemDescription>
+            <systemHardwareType>Trình giả lập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

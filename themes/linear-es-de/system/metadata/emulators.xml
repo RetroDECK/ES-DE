@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>تعديل إعدادات المحاكي وتكويناته</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemDescription>تعديل إعدادات محاكى وتكويناته</systemDescription>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Ändra Emulator-inställningar och -konfigurationer</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Chỉnh sửa cài đặt và cấu hình của trình giả lập</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

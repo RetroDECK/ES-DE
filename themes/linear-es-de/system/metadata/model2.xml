@@ -124,6 +124,12 @@
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega Model 2 là một bo mạch hệ thống máy arcade được Sega ra mắt lần đầu tiên vào năm 1993, nhằm thay thế cho bo mạch Sega Model 1. Đây là phiên bản nâng cấp của phần cứng Model 1, nổi bật nhất là việc giới thiệu khái niệm đa giác có bản đồ kết cấu (texture-mapped polygons), cho phép hiển thị đồ họa 3D chân thực hơn (so với thời điểm đó). Bo mạch Model 2 là một cột mốc quan trọng đối với ngành công nghiệp arcade và đã góp phần ra mắt nhiều tựa game arcade nổi bật của thập niên 90, bao gồm Daytona USA, Virtua Cop, Sega Rally Championship, Dead or Alive, Virtua Striker, Cyber Troopers Virtual-On và The House of the Dead. Model 2 được phát triển với sự hỗ trợ của GE Aerospace (được Martin Marietta mua lại vào năm 1993, nay là một phần của Lockheed Martin), đơn vị đã thiết kế công nghệ ánh xạ kết cấu được tích hợp vào Model 2. Quá trình phát triển Model 2 do nhà thiết kế game nổi tiếng Yu Suzuki dẫn dắt. Bo mạch arcade Model 2 ra mắt cùng với Daytona USA, một trò chơi đã hoàn thành, được đăng ký bản quyền và ra mắt tại triển lãm arcade JAMMA năm 1993. Có bốn phiên bản của hệ thống: Model 2 gốc và các biến thể Model 2A-CRX, Model 2B-CRX và Model 2C-CRX. Model 2 và 2A-CRX sử dụng một bộ xử lý tín hiệu số (DSP) tùy chỉnh với mã nguồn nội bộ cho bộ tạo hình học, trong khi 2B-CRX và 2C-CRX sử dụng các bộ xử lý tín hiệu số (DSP) đã được tài liệu hóa kỹ lưỡng và tải mã nguồn bộ tạo hình học lên DSP khi khởi động.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>世嘉 Model 2 是世嘉公司于 1993 年首次推出的一款街机系统板卡，是世嘉 Model 1 板卡的后续产品。它是 Model 1 硬件的延伸，最显著的特点是引入了纹理映射多边形的概念，使 3D 图形更加逼真（在当时）。Model 2 游戏板是街机行业的一个重要里程碑，帮助推出了 90 年代的几款重要街机特许经营产品，包括《美国代托纳》、《Virtua Cop》、《世嘉拉力锦标赛》、《死或生》、《Virtua Striker》、《虚拟网络部队》和《死亡之屋》。Model 2 的设计得到了通用电气航空航天公司（1993 年被马丁-玛丽埃塔公司收购，现为洛克希德-马丁公司的一部分）的帮助，该公司设计了 Model 2 所采用的纹理映射技术。Model 2 的开发由著名游戏设计师铃木裕领导。Model 2 街机板与《美国代托纳》（Daytona USA）一起首次亮相，该游戏已完成并获得版权，于 1993 年在 JAMMA 街机展上首次亮相。该系统有四个版本：原始的 Model 2 以及 Model 2A-CRX、Model 2B-CRX 和 Model 2C-CRX 变体。2 型和 2A-CRX 使用的是定制的 DSP，带有几何裁剪器的内部代码，而 2B-CRX 和 2C-CRX 使用的是有据可查的 DSP，并在启动时将几何裁剪器代码上传到 DSP。</systemDescription>

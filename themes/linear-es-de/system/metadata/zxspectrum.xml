@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>ZX Spectrum هو جهاز كمبيوتر منزلي شخصي 8 بت تم إصداره في المملكة المتحدة عام 1982 من قبل شركة Sinclair Research Ltd. كان هذا الحاسوب بمثابة متابعة لحاسوب Sinclair ZX81. تم إصدار Spectrum في نهاية المطاف كثمانية نماذج مختلفة (على الرغم من أن النماذج التي تلي Spectrum 128K تم تطويرها وتصنيعها تقنياً بواسطة Amstrad)، بدءاً من النموذج المبتدئ بذاكرة وصول عشوائي سعة 16 كيلوبايت الذي تم إصداره في عام 1982 إلى ZX Spectrum +3 بذاكرة وصول عشوائي سعة 128 كيلوبايت ومحرك أقراص مرنة مدمج. كان Spectrum من بين أوائل الحواسيب المنزلية ذات الجمهور السائد في المملكة المتحدة، وهو مشابه في أهميته لحاسوب Commodore 64 في الولايات المتحدة الأمريكية. كانت أجهزة Commodore 64 وBBC Microcomputer ولاحقًا مجموعة Amstrad CPC منافسين رئيسيين لـ Spectrum في سوق المملكة المتحدة خلال أوائل الثمانينيات.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>ZX Spectrum är en 8-bitars personlig hemdator som lanserades i Storbritannien 1982 av Sinclair Research Ltd. Den var uppföljaren till Sinclair ZX81. Spectrum släpptes i slutändan som åtta olika modeller (även om modellerna efter Spectrum 128K tekniskt sett utvecklades och tillverkades av Amstrad), från instegsmodellen med 16 kB RAM som släpptes 1982 till ZX Spectrum +3 med 128 kB RAM och inbyggd diskettenhet. Spectrum var en av de första hemdatorerna för den breda publiken i Storbritannien och hade samma betydelse som Commodore 64 i USA. Commodore 64, BBC Microcomputer och senare Amstrad CPC var stora konkurrenter till Spectrum på den brittiska marknaden under början av 1980-talet.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>ZX Spectrum là một máy tính cá nhân 8-bit được Sinclair Research Ltd. ra mắt tại Vương quốc Anh vào năm 1982. Đây là phiên bản kế thừa của Sinclair ZX81. Spectrum cuối cùng đã được phát hành với tám mẫu khác nhau (mặc dù các mẫu sau Spectrum 128K về mặt kỹ thuật được phát triển và sản xuất bởi Amstrad), từ mẫu cơ bản với 16 kB RAM ra mắt vào năm 1982 đến ZX Spectrum +3 với 128 kB RAM và ổ đĩa mềm tích hợp. Spectrum là một trong những máy tính gia đình đầu tiên dành cho đại chúng tại Vương quốc Anh, có tầm quan trọng tương tự như Commodore 64 tại Hoa Kỳ. Commodore 64, BBC Microcomputer và sau đó là dòng Amstrad CPC là những đối thủ chính của Spectrum trên thị trường Anh vào đầu những năm 1980.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

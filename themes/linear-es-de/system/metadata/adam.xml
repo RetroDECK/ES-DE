@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>جهاز Coleco Adam هو جهاز كمبيوتر منزلي وجهاز توسعة لجهاز ColecoVision من شركة Coleco الأمريكية المصنعة للألعاب وألعاب الفيديو. كان آدم محاولة لمتابعة نجاح جهاز ColecoVision لألعاب الفيديو الخاص بالشركة. وقد كان متاحًا كوحدة التوسعة رقم 3 لجهاز ColecoVision، مما أدى إلى تحويله إلى كمبيوتر منزلي، وكجهاز مستقل. وعلى هذا النحو، كان له ميزة التوافق التام مع جميع ألعاب ColecoVision والأجهزة الطرفية. كان الحاسوب مزوداً بذاكرة 64 كيلوبايت، ومحرك أشرطة لوسيط خاص يسمى حزم البيانات الرقمية، وطابعة ذات عجلة ديزي، وتطبيقات إنتاجية، بالإضافة إلى جهازي DDPs لـ SmartBASIC وباك روجرز: لعبة Planet of Zoom Super Game. تم إصداره في أكتوبر 1983 بسعر أولي قدره 700 دولار.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Coleco Adam är en hemdator och expansionsenhet för ColecoVision från den amerikanska leksaks- och videospeltillverkaren Coleco. Adam var ett försök att följa upp framgången med företagets videospelskonsol ColecoVision. Den fanns tillgänglig som expansionsmodul #3 för ColecoVision, som omvandlade den till en hemdator, och som en fristående enhet. Som sådan hade den fördelen att den var helt kompatibel med alla ColecoVision-spel och all kringutrustning. Datorn levererades med 64 KB minne, en bandstation för ett eget medium kallat Digital Data Packs, en Daisy Wheel-skrivare och produktivitetsapplikationer, tillsammans med två DDP:er för SmartBASIC och Buck Rogers: Planet of Zoom Super Game. Den släpptes i oktober 1983 med ett ursprungligt pris på 700 dollar.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Coleco Adam là một máy tính gia đình và thiết bị mở rộng dành cho hệ máy ColecoVision của nhà sản xuất đồ chơi và trò chơi điện tử Mỹ Coleco. Adam là nỗ lực nhằm tiếp nối thành công của hệ máy chơi game ColecoVision của công ty. Thiết bị này được phát hành dưới dạng Mô-đun Mở rộng số 3 cho ColecoVision, giúp biến hệ máy này thành một máy tính gia đình, đồng thời cũng có thể hoạt động như một thiết bị độc lập. Nhờ đó, nó có ưu điểm là hoàn toàn tương thích với tất cả các trò chơi và thiết bị ngoại vi của ColecoVision. Máy tính này được trang bị bộ nhớ 64 KB, ổ đĩa băng cho một phương tiện độc quyền có tên là Digital Data Packs, máy in bánh xe hoa cúc và các ứng dụng năng suất, cùng với hai DDP cho SmartBASIC và Buck Rogers: Planet of Zoom Super Game. Nó được phát hành vào tháng 10 năm 1983 với giá ban đầu là 700 đô la.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

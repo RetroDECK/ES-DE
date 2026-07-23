@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن Video Technology CreatiVision عبارة عن جهاز كمبيوتر هجين ووحدة تحكم بألعاب الفيديو المنزلية قدمته شركة VTech في عام 1981 وتم إصداره في عام 1982 خلال الجيل الثاني من وحدات تحكم ألعاب الفيديو. وقد صنعته شركة Salora الفنلندية. وبلغت تكلفته 295 دولاراً أسترالياً. كانت هذه الوحدة الهجينة مشابهة في مفهومها لأجهزة الكمبيوتر مثل آلة التخيل APF Imagination Machine، وكمبيوتر VideoBrain Family Computer الأقدم، وبدرجة أقل وحدة تحكم الألعاب Intellivision وكمبيوتر Coleco Adam، وكلها توقعت اتجاه أجهزة ألعاب الفيديو لتصبح أشبه بأجهزة الكمبيوتر المنخفضة. تم إيقافها في عام 1986.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Video Technology CreatiVision är en hybrid av en dator och en hemkonsol för videospel som introducerades av VTech 1981 och släpptes 1982 under den andra generationen av konsoler för videospel. Den byggdes av det finska företaget Salora. Den kostade 295 australiska dollar. Hybridenheten hade liknande koncept som datorer som APF Imagination Machine, den äldre VideoBrain Family Computer, och i mindre utsträckning Intellivision-spelkonsolen och Coleco Adam-datorn, som alla föregrep trenden att videospelkonsoler skulle bli mer lika avancerade datorer. Den slutade tillverkas 1986.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Video Technology CreatiVision là một thiết bị lai giữa máy tính và máy chơi game gia đình do VTech giới thiệu vào năm 1981 và ra mắt vào năm 1982, trong thời kỳ thế hệ thứ hai của các máy chơi game. Thiết bị này được sản xuất bởi công ty Salora của Phần Lan. Giá bán của nó là 295 đô la Úc. Thiết bị lai này có khái niệm tương tự như các máy tính như APF Imagination Machine, VideoBrain Family Computer thế hệ cũ, và ở mức độ thấp hơn là máy chơi game Intellivision và máy tính Coleco Adam, tất cả đều dự báo xu hướng máy chơi game ngày càng trở nên giống với máy tính cấp thấp. Sản phẩm này ngừng sản xuất vào năm 1986.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>في حين أن لوحات الأركيد كانت تقليديًا عبارة عن تصميمات مخصصة، كان هناك عدد من الأنظمة التي كانت تعتمد بدلاً من ذلك على منصات وحدات التحكم المنزلية. كانت أول لوحة من هذا النوع هي Nintendo VS. سيستم، استنادًا إلى نظام Famicom الذي تم إصداره في عام 1984. وكانت اللوحة الأخيرة القائمة على وحدة التحكم هي Namco System 369 التي صدرت في عام 2011 وكانت مبنية على PlayStation 3 من سوني.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemDescription>في حين أن لوحات الأركيد كانت تقليديًا عبارة عن تصميمات مخصصة، كان هناك عدد من الأنظمة التي كانت تعتمد بدلاً من ذلك على منصات وحدات التحكم المنزلية. كانت أول لوحة من هذا النوع هي Nintendo VS. سيستم، استنادًا إلى نظام Famicom الذي تم إصداره في عام 1984. وكانت اللوحة الأخيرة القائمة على كونسول هي Namco System 369 التي صدرت في عام 2011 وكانت مبنية على PlayStation 3 من سوني.</systemDescription>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Även om arkadbrädor traditionellt har varit specialdesignade har det funnits ett antal system som istället baserats på hemkonsolplattformar. Det första sådana brädet var Nintendo VS. System, som baserades på Famicom och släpptes 1984. Det senaste konsolbaserade brädet var Namco System 369 som släpptes 2011 och var baserat på Sony PlayStation 3.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Mặc dù các bo mạch máy arcade truyền thống thường được thiết kế riêng, nhưng cũng có một số hệ thống được phát triển dựa trên nền tảng của các hệ máy chơi game gia đình. Bo mạch đầu tiên thuộc loại này là Nintendo VS. System, được phát triển dựa trên hệ máy Famicom và ra mắt vào năm 1984. Bo mạch dựa trên hệ máy chơi game gia đình cuối cùng là Namco System 369, ra mắt vào năm 2011 và được phát triển dựa trên hệ máy Sony PlayStation 3.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

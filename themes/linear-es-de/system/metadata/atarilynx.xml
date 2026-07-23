@@ -18,7 +18,7 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز أتاري لينكس، الذي يشار إليه عادةً باسم لينكس فقط، هو جهاز ألعاب فيديو محمول باليد من الجيل الرابع (1987-2004) تم تطويره بالشراكة مع شركة إبيكس ووزعته شركة أتاري. تم إصداره في سبتمبر 1989 في أمريكا الشمالية بسعر تجزئة 149.95 دولار أمريكي. كما تم إصدار الجهاز المحمول في أوروبا (1990) واليابان (1990). كانت Lynx أول لعبة إلكترونية محمولة باليد في العالم مزودة بشاشة LCD ملونة. تم إيقاف وحدة التحكم في أوائل عام 1996، ربما في وقت بيع الشركة في 8 أبريل 1996.</systemDescription>
+            <systemDescription>جهاز أتاري لينكس، الذي يشار إليه عادةً باسم لينكس فقط، هو جهاز ألعاب فيديو محمول باليد من الجيل الرابع (1987-2004) تم تطويره بالشراكة مع شركة إبيكس ووزعته شركة أتاري. تم إصداره في سبتمبر 1989 في أمريكا الشمالية بسعر تجزئة 149.95 دولار أمريكي. كما تم إصدار الجهاز المحمول في أوروبا (1990) واليابان (1990). كانت Lynx أول لعبة إلكترونية محمولة باليد في العالم مزودة بشاشة LCD ملونة. تم إيقاف كونسول في أوائل عام 1996، ربما في وقت بيع الشركة في 8 أبريل 1996.</systemDescription>
             <systemHardwareType>محمول</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Atari Lynx, vanligtvis bara kallad Lynx, är en fjärde generationens (1987-2004) handhållen videospelskonsol som utvecklades i samarbete med Epyx, Inc. och distribuerades av Atari Corporation. Den släpptes i september 1989 i Nordamerika till ett detaljhandelspris av 149,95 dollar. Den handhållna konsolen släpptes även i Europa (1990) och Japan (1990). Lynx var världens första handhållna elektroniska spel med en LCD-skärm i färg. Konsolen lades ned i början av 1996, möjligen i samband med att företaget såldes den 8 april 1996.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Atari Lynx, thường được gọi tắt là Lynx, là một hệ máy chơi game cầm tay thế hệ thứ tư (1987–2004) được phát triển hợp tác với Epyx, Inc. và phân phối bởi Tập đoàn Atari. Thiết bị này được ra mắt vào tháng 9 năm 1989 tại Bắc Mỹ với giá bán lẻ là 149,95 USD. Máy chơi game cầm tay này cũng được phát hành tại châu Âu (1990) và Nhật Bản (1990). Lynx là máy chơi game điện tử cầm tay đầu tiên trên thế giới có màn hình LCD màu. Máy chơi game này ngừng sản xuất vào đầu năm 1996, có thể là vào thời điểm công ty được bán vào ngày 8 tháng 4 năm 1996.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

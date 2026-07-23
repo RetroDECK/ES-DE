@@ -23,7 +23,7 @@ The main benefit of CD technology was greater storage, which allowed for games t
             <systemDescription>القرص المدمج Sega CD، الذي تم إصداره باسم Mega-CD في معظم المناطق خارج أمريكا الشمالية والبرازيل، هو ملحق قرص مدمج (CD-ROM) لجهاز Mega Drive/Genesis صممته وأنتجته شركة Sega كجزء من الجيل الرابع من أجهزة ألعاب الفيديو. تم إصداره في 12 ديسمبر 1991 في اليابان، و15 أكتوبر 1992 في أمريكا الشمالية، و2 أبريل 1993 في أوروبا. يلعب القرص المضغوط Sega CD ألعاباً تعتمد على الأقراص المضغوطة ويضيف وظائف للأجهزة مثل وحدة معالجة مركزية أسرع وتحسينات رسومية مثل تحجيم العفاريت والدوران. ويمكنه أيضاً تشغيل الأقراص المدمجة الصوتية وأقراص CD+G.
 
 كانت الميزة الرئيسية لتقنية الأقراص المدمجة هي زيادة سعة التخزين، مما سمح للألعاب بأن تكون أكبر بحوالي 320 مرة من خراطيش Genesis. وقد تجلت هذه الميزة في ألعاب الفيديو بالحركة الكاملة (FMV) مثل لعبة Night Trap المثيرة للجدل، والتي أصبحت محور جلسات الاستماع في الكونغرس عام 1993 حول قضايا العنف في ألعاب الفيديو وتصنيفاتها. دخلت شركة Sega اليابانية في شراكة مع JVC لتصميم قرص Sega CD ورفضت التشاور مع شركة Sega الأمريكية حتى اكتمال المشروع. قامت شركة Sega الأمريكية بتجميع أجزاء من وحدات "وهمية" مختلفة للحصول على نموذج أولي فعال. أعيد تصميمه عدة مرات من قبل Sega ومطوري الطرف الثالث المرخصين.</systemDescription>
-            <systemHardwareType>محيطي</systemHardwareType>
+            <systemHardwareType>طرفية</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Principalul beneficiu al tehnologiei CD a fost creșterea capacității de stoca
 
 Den största fördelen med CD-tekniken var den större lagringsmöjligheten, som gjorde att spelen kunde vara nästan 320 gånger större än Genesis-kassetterna. Denna fördel manifesterades i full motion video (FMV)-spel som det kontroversiella Night Trap, som blev ett fokus för 1993 års kongressutfrågningar om frågor som rörde våld och klassificering av videospel. Sega of Japan samarbetade med JVC för att utforma Sega CD och vägrade att rådgöra med Sega of America förrän projektet var slutfört. Sega of America monterade delar från olika "dummy"-enheter för att få fram en fungerande prototyp. Den omdesignades flera gånger av Sega och licensierade tredjepartsutvecklare.</systemDescription>
             <systemHardwareType>Tillbehör</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega CD, được phát hành với tên gọi Mega-CD tại hầu hết các khu vực ngoài Bắc Mỹ và Brazil, là một phụ kiện CD-ROM dành cho hệ máy Mega Drive/Genesis, do Sega thiết kế và sản xuất như một phần của thế hệ thứ tư các hệ máy chơi game. Sản phẩm này được ra mắt vào ngày 12 tháng 12 năm 1991 tại Nhật Bản, ngày 15 tháng 10 năm 1992 tại Bắc Mỹ và ngày 2 tháng 4 năm 1993 tại châu Âu. Sega CD chơi các trò chơi dựa trên đĩa CD và bổ sung các chức năng phần cứng như bộ xử lý trung tâm nhanh hơn và các cải tiến đồ họa như thu nhỏ và xoay sprite. Thiết bị này cũng có thể phát đĩa CD âm thanh và đĩa CD+G.
+
+Lợi ích chính của công nghệ CD là dung lượng lưu trữ lớn hơn, cho phép các trò chơi có dung lượng gấp gần 320 lần so với các đĩa game Genesis. Lợi ích này thể hiện qua các trò chơi video chuyển động đầy đủ (FMV) như Night Trap gây tranh cãi, trở thành tâm điểm của các phiên điều trần Quốc hội năm 1993 về vấn đề bạo lực trong trò chơi điện tử và hệ thống xếp hạng. Sega Nhật Bản đã hợp tác với JVC để thiết kế Sega CD và từ chối tham khảo ý kiến của Sega Mỹ cho đến khi dự án hoàn thành. Sega of America đã lắp ráp các bộ phận từ nhiều thiết bị "giả" khác nhau để có được một nguyên mẫu hoạt động. Thiết bị này đã được Sega và các nhà phát triển bên thứ ba được cấp phép thiết kế lại nhiều lần.</systemDescription>
+            <systemHardwareType>Thiết bị ngoại vi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -23,7 +23,7 @@ The model numbers reflect the primary difference between the two machines, which
             <systemDescription>التنين 32 والتنين 64 هما حاسوبان منزليان تم تصنيعهما في الثمانينيات. وتشبه حواسيب دراغون إلى حد كبير حواسيب TRS-80 الملونة، وقد أنتجتها شركة دراغون داتا المحدودة للسوق الأوروبية في البداية في سوانسي بويلز قبل أن تنتقل إلى بورت تالبوت بويلز (حتى عام 1984) وشركة يوروهارد إس إيه في كاسار دي كاسيريس بإسبانيا (من 1984 إلى 1987)، وللسوق الأمريكية بواسطة شركة تانو في نيو أورليانز بولاية لويزيانا.
 
 تعكس أرقام الطرازات الفرق الأساسي بين الآلتين، اللتين تحتويان على 32 و64 كيلو بايت (32,768 و65,536 بايت) من ذاكرة الوصول العشوائي (RAM) على التوالي.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Numerele modelelor reflectă principala diferență dintre cele două mașini, c
 
 Modellnumren återspeglar den primära skillnaden mellan de två maskinerna, som har 32 respektive 64 kilobyte (32.768 och 65.536 byte) RAM.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Dragon 32 và Dragon 64 là những mẫu máy tính gia đình được sản xuất vào thập niên 1980. Các dòng Dragon rất giống với máy tính TRS-80 Color Computer, và được sản xuất cho thị trường châu Âu bởi Dragon Data, Ltd., ban đầu tại Swansea, xứ Wales trước khi chuyển đến Port Talbot, xứ Wales (cho đến năm 1984) và bởi Eurohard S.A. tại Casar de Cáceres, Tây Ban Nha (từ năm 1984 đến 1987), và cho thị trường Mỹ bởi Tano tại New Orleans, Louisiana.
+
+Số model phản ánh sự khác biệt chính giữa hai máy, với dung lượng RAM lần lượt là 32 và 64 kilobyte (32.768 và 65.536 byte).</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

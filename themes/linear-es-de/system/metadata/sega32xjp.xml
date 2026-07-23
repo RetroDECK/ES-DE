@@ -20,10 +20,10 @@ Unveiled by Sega at June 1994's Consumer Electronics Show, the 32X was presented
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>إن 32X هي إضافة لوحدة تحكم ألعاب الفيديو Sega Mega Drive/Genesis. تم تصميم 32X، الذي أطلق عليه الاسم الرمزي "مشروع المريخ"، لتوسيع قوة ميجا درايف/جينيسيسيس وليكون بمثابة وحدة تحكم انتقالية في عصر 32 بت حتى إصدار سيجا ساتورن. ويستخدم 32X المستقل عن وحدة التحكم، خراطيش ROM الخاصة به ولديه مكتبة ألعاب خاصة به. تم توزيعه تحت اسم Super 32X في اليابان، و Genesis 32X في أمريكا الشمالية، و Mega Drive 32X في منطقة PAL، و Mega 32X في البرازيل.
+            <systemDescription>إن 32X هي إضافة لوحدة تحكم ألعاب الفيديو Sega Mega Drive/Genesis. تم تصميم 32X، الذي أطلق عليه الاسم الرمزي "مشروع المريخ"، لتوسيع قوة ميجا درايف/جينيسيسيس وليكون بمثابة وحدة تحكم انتقالية في عصر 32 بت حتى إصدار سيجا ساتورن. ويستخدم 32X المستقل عن كونسول، خراطيش ROM الخاصة به ولديه مكتبة ألعاب خاصة به. تم توزيعه تحت اسم Super 32X في اليابان، و Genesis 32X في أمريكا الشمالية، و Mega Drive 32X في منطقة PAL، و Mega 32X في البرازيل.
 
 تم الكشف عن 32X من قبل Sega في معرض الإلكترونيات الاستهلاكية في يونيو 1994، وتم تقديم 32X كخيار منخفض التكلفة للمستهلكين الذين يتطلعون إلى لعب ألعاب 32 بت. تم تطويره رداً على أتاري جاغوار والمخاوف من عدم وصول Saturn إلى السوق بحلول نهاية عام 1994. على الرغم من أنه تم تصميمه كوحدة تحكم جديدة بالكامل، إلا أنه وبناءً على اقتراح من المدير التنفيذي لشركة Sega of America Joe Miller وفريقه، تم تحويله إلى إضافة لجهاز Genesis وجعله أكثر قوة. احتوى التصميم النهائي على وحدتي معالجة مركزية 32 بت ومعالج رسومات ثلاثي الأبعاد.</systemDescription>
-            <systemHardwareType>محيطي</systemHardwareType>
+            <systemHardwareType>طرفية</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Unveiled by Sega at June 1994's Consumer Electronics Show, the 32X was presented
 
 32X presenterades av Sega på Consumer Electronics Show i juni 1994 och var ett lågprisalternativ för konsumenter som ville spela 32-bitarsspel. Den utvecklades som ett svar på Atari Jaguar och farhågorna om att Saturn inte skulle hinna ut på marknaden före slutet av 1994. Konsolen var tänkt som en helt ny konsol, men på förslag av Joe Miller, chef för Sega of America, och hans team omvandlades den till ett tillägg till Genesis och gjordes mer kraftfull. Den slutliga designen innehöll två 32-bitars centralenheter och en 3D-grafikprocessor.</systemDescription>
             <systemHardwareType>Tillbehör</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>32X là một thiết bị mở rộng dành cho hệ máy chơi game Sega Mega Drive/Genesis. Với tên mã "Project Mars", 32X được thiết kế để nâng cao sức mạnh của Mega Drive/Genesis và đóng vai trò là hệ máy chuyển tiếp sang kỷ nguyên 32-bit cho đến khi Sega Saturn ra mắt. Hoạt động độc lập với hệ máy chính, 32X sử dụng các thẻ ROM riêng và sở hữu thư viện trò chơi riêng. Nó được phân phối dưới tên Super 32X tại Nhật Bản, Genesis 32X tại Bắc Mỹ, Mega Drive 32X tại khu vực PAL và Mega 32X tại Brazil.
+
+Được Sega giới thiệu tại Triển lãm Điện tử Tiêu dùng tháng 6 năm 1994, 32X được trình bày như một lựa chọn giá rẻ dành cho người tiêu dùng muốn chơi các trò chơi 32-bit. Thiết bị này được phát triển để đối phó với Atari Jaguar và lo ngại rằng Saturn sẽ không kịp ra mắt thị trường trước cuối năm 1994. Mặc dù ban đầu được thiết kế như một hệ máy chơi game hoàn toàn mới, nhưng theo đề xuất của Joe Miller, giám đốc điều hành Sega of America, và đội ngũ của ông, thiết bị này đã được chuyển đổi thành một phụ kiện cho Genesis và được nâng cấp để trở nên mạnh mẽ hơn. Thiết kế cuối cùng bao gồm hai bộ xử lý trung tâm 32-bit và một bộ xử lý đồ họa 3D.</systemDescription>
+            <systemHardwareType>Thiết bị ngoại vi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>ZX Spectrum Next هو كمبيوتر منزلي من 8 بت، تم إصداره في البداية في عام 2017، وهو متوافق مع برامج وأجهزة ZX Spectrum لعام 1982. كما أنه يتمتع بقدرات محسّنة. وهو يهدف إلى جذب عشاق الحوسبة القديمة و"تشجيع جيل جديد من المبرمجين في غرف النوم"، وفقًا لعضو المشروع جيم باجلي.  وعلى الرغم من الاسم، فإن الآلة ليست تابعة بشكل مباشر لشركة Sinclair Research Ltd. أو السير كلايف سينكلير أو المالك الحالي للعلامات التجارية، Sky Group.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>ZX Spectrum Next är en 8-bitars hemdator, ursprungligen utgiven 2017, som är kompatibel med programvara och hårdvara för ZX Spectrum från 1982. Den har också förbättrade funktioner. Den är avsedd att tilltala entusiaster av retrodatorer och att "uppmuntra en ny generation av sovrumskodare", enligt projektmedlemmen Jim Bagley.  Trots namnet har maskinen ingen direkt anknytning till Sinclair Research Ltd, Sir Clive Sinclair eller Sky Group, som är nuvarande ägare av varumärkena.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>ZX Spectrum Next là một máy tính gia đình 8-bit, ra mắt lần đầu vào năm 2017, tương thích với phần mềm và phần cứng của ZX Spectrum năm 1982. Máy cũng được trang bị các tính năng nâng cao. Theo Jim Bagley, một thành viên của dự án, sản phẩm này nhằm thu hút những người đam mê máy tính cổ điển và “khuyến khích một thế hệ mới các lập trình viên nghiệp dư”.  Mặc dù có tên gọi như vậy, máy tính này không trực tiếp liên kết với Sinclair Research Ltd., Sir Clive Sinclair hay chủ sở hữu hiện tại của các nhãn hiệu, Sky Group.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

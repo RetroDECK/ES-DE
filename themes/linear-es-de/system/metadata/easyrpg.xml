@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>EasyRPG هو محرك مجاني ومفتوح المصدر لإنشاء ألعاب تقمص الأدوار يهدف إلى أن يكون متوافقًا أيضًا مع جميع ألعاب RPG Maker 2000 و RPG Maker 2003.  تميل ألعاب RPG Maker 2000/2003 إلى امتلاك آليات وصور مشابهة لألعاب تقمص الأدوار 16 بت، على الرغم من إمكانية إنشاء نصوص مخصصة من قبل المبدعين لتعديل شكل اللعبة ومظهرها.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>EasyRPG är en gratis motor med öppen källkod för att skapa RPG-spel, med målet att vara kompatibel med alla RPG Maker 2000- och RPG Maker 2003-spel.  RPG Maker 2000/2003-spel tenderar att ha mekanik och grafik som liknar 16-bitars JRPG, även om anpassade skript kan göras av skaparna för att ändra hur spelet känns och ser ut.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>EasyRPG là một công cụ mã nguồn mở miễn phí dùng để tạo trò chơi RPG, với mục tiêu tương thích với tất cả các trò chơi được phát triển bằng RPG Maker 2000 và RPG Maker 2003. Các trò chơi RPG Maker 2000/2003 thường có cơ chế và đồ họa tương tự như các tựa game JRPG 16-bit, mặc dù người sáng tạo có thể viết các kịch bản tùy chỉnh để điều chỉnh cách trò chơi hoạt động và hiển thị.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

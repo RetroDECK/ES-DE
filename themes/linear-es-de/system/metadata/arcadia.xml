@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>أركاديا 2001 هي وحدة تحكم ألعاب فيديو منزلية من الجيل الثاني من ألعاب الفيديو المنزلية ذات 8 بت، تم إصدارها من قبل راديو إيمرسون في مايو 1982 بسعر 99 دولارًا أمريكيًا، قبل عدة أشهر من إصدار ColecoVision. تم إيقافها بعد 18 شهرًا فقط، حيث تم إصدار ما مجموعه 35 لعبة. قامت شركة إيمرسون بترخيص أركاديا 2001 لشركة بانداي التي أصدرتها في اليابان. يوجد أكثر من 30 نسخة من أركاديا 2001.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Arcadia 2001 är en andra generationens 8-bitars hemkonsol för videospel som släpptes av Emerson Radio i maj 1982 till ett pris av 99 USD, flera månader innan ColecoVision lanserades. Den slutade säljas bara 18 månader senare, då totalt 35 spel hade släppts. Emerson licensierade Arcadia 2001 till Bandai, som släppte den i Japan. Det finns över 30 kloner av Arcadia 2001.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Arcadia 2001 là một hệ máy chơi game gia đình 8-bit thế hệ thứ hai do Emerson Radio phát hành vào tháng 5 năm 1982 với giá 99 USD, vài tháng trước khi ColecoVision ra mắt. Sản phẩm này đã ngừng sản xuất chỉ sau 18 tháng, với tổng cộng 35 tựa game được phát hành. Emerson đã cấp phép cho Bandai phân phối Arcadia 2001 tại Nhật Bản. Hiện có hơn 30 bản sao của Arcadia 2001.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

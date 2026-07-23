@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز سيجا جينيسيس، المعروف باسم ميجا درايف في معظم المناطق خارج أمريكا الشمالية، هو جهاز ألعاب فيديو منزلي 16 بت تم تطويره وبيعه من قبل شركة سيجا إنتربرايزس المحدودة. كان جينيسيس هو وحدة التحكم الثالثة من سيجا وخليفة النظام الرئيسي. أصدرت Sega وحدة التحكم لأول مرة باسم Mega Drive في اليابان في عام 1988، ثم أطلقتها لأول مرة في أمريكا الشمالية تحت اسم Genesis في عام 1989. وفي عام 1990، تم توزيع وحدة التحكم باسم Mega Drive من قبل شركة Virgin Mastertronic في أوروبا، وشركة Ozisoft في أستراليا، وشركة Tec Toy في البرازيل. وفي كوريا الجنوبية، تم توزيع الأنظمة من قبل شركة Samsung وعُرفت باسم Super Gam*Boy، ولاحقًا باسم Super Aladdin Boy. المعالج الدقيق الرئيسي في Genesis هو وحدة المعالجة المركزية Motorola 68000 ذات 16/32 بت من موتورولا 68000 بسرعة 7.6 ميجاهرتز. تشتمل وحدة التحكم أيضاً على معالج فرعي Zilog Z80، والذي كان يستخدم بشكل أساسي للتحكم في أجهزة الصوت ويوفر أيضاً توافقاً مع النظام الرئيسي.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>جهاز سيجا جينيسيس، المعروف باسم ميجا درايف في معظم المناطق خارج أمريكا الشمالية، هو جهاز ألعاب فيديو منزلي 16 بت تم تطويره وبيعه من قبل شركة سيجا إنتربرايزس المحدودة. كان جينيسيس هو كونسول الثالثة من سيجا وخليفة النظام الرئيسي. أصدرت Sega كونسول لأول مرة باسم Mega Drive في اليابان في عام 1988، ثم أطلقتها لأول مرة في أمريكا الشمالية تحت اسم Genesis في عام 1989. وفي عام 1990، تم توزيع كونسول باسم Mega Drive من قبل شركة Virgin Mastertronic في أوروبا، وشركة Ozisoft في أستراليا، وشركة Tec Toy في البرازيل. وفي كوريا الجنوبية، تم توزيع الأنظمة من قبل شركة Samsung وعُرفت باسم Super Gam*Boy، ولاحقًا باسم Super Aladdin Boy. المعالج الدقيق الرئيسي في Genesis هو وحدة المعالجة المركزية Motorola 68000 ذات 16/32 بت من موتورولا 68000 بسرعة 7.6 ميجاهرتز. تشتمل كونسول أيضاً على معالج فرعي Zilog Z80، والذي كان يستخدم بشكل أساسي للتحكم في أجهزة الصوت ويوفر أيضاً توافقاً مع النظام الرئيسي.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Sega Genesis, känd som Mega Drive i de flesta regioner utanför Nordamerika, är en 16-bitars hemkonsol för videospel som utvecklades och såldes av Sega Enterprises, Ltd. Genesis var Segas tredje konsol och efterföljaren till Master System. Sega släppte konsolen först som Mega Drive i Japan 1988, följt av en nordamerikansk debut under namnet Genesis 1989. Under 1990 distribuerades konsolen som Mega Drive av Virgin Mastertronic i Europa, av Ozisoft i Australasien och av Tec Toy i Brasilien. I Sydkorea distribuerades systemen av Samsung och var kända som Super Gam*Boy, och senare Super Aladdin Boy. Huvudmikroprocessorn i Genesis är en 16/32-bitars Motorola 68000 CPU med en klockfrekvens på 7,6 MHz. Konsolen innehåller också en Zilog Z80-subprocessor, som främst användes för att styra ljudhårdvaran och som också ger bakåtkompatibilitet med Master System.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega Genesis, được biết đến với tên gọi Mega Drive tại hầu hết các khu vực ngoài Bắc Mỹ, là một hệ máy chơi game gia đình 16-bit do Sega Enterprises, Ltd. phát triển và phân phối. Genesis là hệ máy thứ ba của Sega và là phiên bản kế nhiệm của Master System. Sega lần đầu tiên ra mắt hệ máy này với tên gọi Mega Drive tại Nhật Bản vào năm 1988, sau đó là lần ra mắt tại Bắc Mỹ dưới tên Genesis vào năm 1989. Năm 1990, hệ máy này được phân phối dưới tên Mega Drive bởi Virgin Mastertronic tại châu Âu, bởi Ozisoft tại khu vực Australasia và bởi Tec Toy tại Brazil. Tại Hàn Quốc, hệ thống này được phân phối bởi Samsung và được gọi là Super Gam*Boy, sau đó là Super Aladdin Boy. Bộ vi xử lý chính của Genesis là CPU Motorola 68000 16/32-bit với tốc độ 7,6 MHz. Hệ máy này cũng bao gồm một bộ vi xử lý phụ Zilog Z80, chủ yếu được sử dụng để điều khiển phần cứng âm thanh và cũng cung cấp khả năng tương thích ngược với Master System.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

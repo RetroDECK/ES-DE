@@ -124,6 +124,12 @@
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>CP System III (CPシステムIII, shīpī shisutemu surī) hay CPS-3 là một bo mạch hệ thống máy arcade được Capcom sử dụng lần đầu tiên vào năm 1996 với trò chơi arcade Red Earth. Đây là thế hệ thứ hai kế thừa phần cứng máy arcade CP System, sau CP System II. Đây cũng là bo mạch hệ thống độc quyền cuối cùng mà Capcom sản xuất trước khi chuyển sang nền tảng Naomi dựa trên Dreamcast.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>CP System III（CPシステムIII，shīpī shisutemu surī）或 CPS-3 是一种街机系统板卡，卡普空公司于 1996 年首次将其用于街机游戏《红土地》。它是继 CP System II 之后，CP System 街机硬件的第二个后续产品。在转向基于 Dreamcast 的 Naomi 平台之前，它是 Capcom 生产的最后一款专有系统板。</systemDescription>

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Steam هي خدمة توزيع ألعاب الفيديو الرقمية وواجهة متجر لألعاب الفيديو من Valve. تم إطلاقها كعميل برمجيات في سبتمبر 2003 كوسيلة ل Valve لتوفير تحديثات تلقائية لألعابهم، وتوسعت لتوزيع وتقديم عناوين ناشري ألعاب الطرف الثالث في أواخر عام 2005.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Steam är en digital distributionstjänst för videospel och ett skyltfönster från Valve. Den lanserades som en mjukvaruklient i september 2003 som ett sätt för Valve att tillhandahålla automatiska uppdateringar för sina spel, och utökades till att distribuera och erbjuda titlar från tredjepartsspelutgivare i slutet av 2005.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Steam là một dịch vụ phân phối trò chơi điện tử và nền tảng bán hàng trực tuyến do Valve phát triển. Dịch vụ này ra mắt dưới dạng phần mềm khách hàng vào tháng 9 năm 2003, ban đầu nhằm mục đích cung cấp các bản cập nhật tự động cho các trò chơi của Valve, và sau đó mở rộng sang phân phối và cung cấp các tựa game của các nhà phát hành bên thứ ba vào cuối năm 2005.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

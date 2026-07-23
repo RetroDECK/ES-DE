@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>نظام سوبر نينتندو إنترتينمنت سيستم (المعروف أيضاً باسم سوبر NES أو SNES أو سوبر نينتندو) هو جهاز ألعاب فيديو منزلي 16 بت تم تطويره من قبل نينتندو وتم إصداره في عام 1990 في اليابان و1991 في أمريكا الشمالية و1992 في أوروبا وأستراليا (أوقيانوسيا) و1993 في أمريكا الجنوبية. في اليابان، يُطلق على هذا النظام اسم سوبر فاميكوم، وهو الاسم المختصر لسابقه كمبيوتر العائلة أو SFC اختصاراً. وفي كوريا الجنوبية، يُعرف في كوريا الجنوبية باسم سوبر كومبوي Super Comboy وتم توزيعه من قبل شركة هيونداي للإلكترونيات. على الرغم من أن كل إصدار متشابه بشكل أساسي، إلا أن العديد من أشكال الإغلاق الإقليمي تمنع الإصدارات المختلفة من التوافق مع بعضها البعض.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Super Nintendo Entertainment System (även känt som Super NES, SNES eller Super Nintendo) är en 16-bitars hemkonsol för videospel som utvecklats av Nintendo och som släpptes 1990 i Japan, 1991 i Nordamerika, 1992 i Europa och Australasien (Oceanien) och 1993 i Sydamerika. I Japan kallas systemet Super Famicom, och har officiellt antagit det förkortade namnet på sin föregångare, Family Computer, eller kort och gott SFC. I Sydkorea kallas den Super Comboy och distribuerades av Hyundai Electronics. Även om varje version är i stort sett densamma, förhindrar flera former av regional lockout att de olika versionerna är kompatibla med varandra.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống giải trí Super Nintendo (còn được gọi là Super NES, SNES hoặc Super Nintendo) là một hệ máy chơi game gia đình 16-bit do Nintendo phát triển, được ra mắt vào năm 1990 tại Nhật Bản, năm 1991 tại Bắc Mỹ, năm 1992 tại châu Âu và châu Úc (châu Đại Dương), và năm 1993 tại Nam Mỹ. Tại Nhật Bản, hệ thống này được gọi là Super Famicom, chính thức sử dụng tên viết tắt của người tiền nhiệm là Family Computer, hay SFC. Tại Hàn Quốc, nó được gọi là Super Comboy và được phân phối bởi Hyundai Electronics. Mặc dù mỗi phiên bản về cơ bản là giống nhau, nhưng một số hình thức khóa vùng khiến các phiên bản khác nhau không tương thích với nhau.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -162,6 +162,14 @@ Deși Game Gear a fost lansat pe piață în grabă, biblioteca sa unică de joc
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Game Gear là một hệ máy chơi game cầm tay 8-bit thế hệ thứ tư do Sega phát hành vào ngày 6 tháng 10 năm 1990 tại Nhật Bản, vào tháng 4 năm 1991 tại Bắc Mỹ và châu Âu, và trong năm 1992 tại Úc. Game Gear chủ yếu cạnh tranh với Game Boy của Nintendo, Atari Lynx và TurboExpress của NEC. Nó chia sẻ nhiều phần cứng với hệ máy Master System và có thể chơi các trò chơi của Master System thông qua một bộ chuyển đổi. Sega đã định vị Game Gear, với màn hình màu đầy đủ có đèn nền và định dạng ngang, là một thiết bị cầm tay vượt trội về công nghệ so với Game Boy.
+
+Mặc dù Game Gear được tung ra thị trường một cách vội vàng, nhưng thư viện trò chơi độc đáo và mức giá cạnh tranh đã giúp nó có lợi thế so với Atari Lynx và TurboExpress. Tuy nhiên, do thời lượng pin ngắn, thiếu trò chơi gốc và sự hỗ trợ yếu kém từ Sega, Game Gear không thể vượt qua Game Boy, chỉ bán được 10,62 triệu đơn vị tính đến tháng 3 năm 1996. Game Gear bị ngừng sản xuất vào ngày 30 tháng 4 năm 1997. Nó được tái phát hành dưới dạng hệ thống giá rẻ bởi Majesco Entertainment vào năm 2000, theo giấy phép từ Sega.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Game Gear 是世嘉公司于 1990 年 10 月 6 日在日本发布的一款 8 位第四代掌上游戏机，1991 年 4 月在北美和欧洲发布，1992 年在澳大利亚发布。Game Gear 主要与任天堂的 Game Boy、Atari Lynx 和 NEC 的 TurboExpress 竞争。它与 Master System 共享大部分硬件，通过使用适配器可播放 Master System 游戏。世嘉将 Game Gear 定位为在技术上优于 Game Boy 的掌上游戏机，Game Gear 有一个横向全彩背光屏幕。

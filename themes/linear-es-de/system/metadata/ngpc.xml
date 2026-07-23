@@ -162,6 +162,14 @@ Efter en bra försäljningsstart i både USA och Japan med 14 lanseringstitlar (
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Neo Geo Pocket Color là một hệ máy chơi game cầm tay 16-bit màu do SNK sản xuất. Đây là phiên bản kế thừa của hệ máy cầm tay Neo Geo Pocket đơn sắc của SNK, ra mắt lần đầu tiên vào năm 1998 tại Nhật Bản, với phiên bản Color hoàn toàn tương thích ngược. Neo Geo Pocket Color được phát hành vào ngày 16 tháng 3 năm 1999 tại Nhật Bản, ngày 6 tháng 8 năm 1999 tại Bắc Mỹ và ngày 1 tháng 10 năm 1999 tại châu Âu, thâm nhập vào các thị trường vốn bị Nintendo thống trị, cạnh tranh với Game Boy Color của Nintendo.
+
+Sau một khởi đầu bán hàng tốt ở cả Mỹ và Nhật Bản với 14 tựa game ra mắt (một kỷ lục vào thời điểm đó), sự hỗ trợ bán lẻ thấp sau đó ở Mỹ, sự thiếu liên lạc với các nhà phát triển bên thứ ba từ phía ban quản lý SNK tại Mỹ, sự phổ biến của thương hiệu Pokémon của Nintendo và sự mong đợi đối với Game Boy Advance 32-bit, cùng với sự cạnh tranh mạnh mẽ từ WonderSwan của Bandai tại Nhật Bản, đã dẫn đến sự sụt giảm doanh số tại cả hai khu vực.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Neo Geo Pocket Color 是 SNK 生产的一款 16 位彩色掌上视频游戏机。它是 SNK 于 1998 年在日本推出的单色 Neo Geo Pocket 掌上游戏机的后继机，Color 完全向后兼容。Neo Geo Pocket Color 于 1999 年 3 月 16 日在日本发布，1999 年 8 月 6 日在北美发布，1999 年 10 月 1 日在欧洲发布，进入了任天堂主导的市场，与任天堂的 Game Boy Color 展开竞争。

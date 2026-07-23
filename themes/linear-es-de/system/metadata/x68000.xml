@@ -23,7 +23,7 @@ The first model features a 10 MHz Motorola 68000 CPU (hence the name), 1 MB of R
             <systemDescription>X68000 (باليابانية: エッ ッ ク ス ク ろくんははっせん، هيبورن: Ekkusu Rokuman Hassen) هو كمبيوتر منزلي تم إنشاؤه بواسطة شركة Sharp، وتم إصداره لأول مرة في عام 1987، وتم بيعه في اليابان فقط.
 
 يتميز الموديل الأول بوحدة معالجة مركزية من موتورولا 68000 بتردد 10 ميجاهرتز (ومن هنا جاءت التسمية)، وذاكرة وصول عشوائي سعتها 1 ميجا بايت، ولا يحتوي على قرص صلب؛ أما الموديل الأخير فقد صدر في عام 1993 بوحدة معالجة مركزية من موتورولا 68030 بتردد 25 ميجاهرتز، وذاكرة وصول عشوائي سعتها 4 ميجا بايت، وقرص صلب اختياري من نوع SCSI سعة 80 ميجا بايت. ذاكرة الوصول العشوائي في هذه الأنظمة قابلة للتوسيع إلى 12 ميغابايت، على الرغم من أن معظم الألعاب والتطبيقات لا تتطلب أكثر من 2 ميغابايت.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ The first model features a 10 MHz Motorola 68000 CPU (hence the name), 1 MB of R
 
 Den första modellen har en 10 MHz Motorola 68000 CPU (därav namnet), 1 MB RAM och ingen hårddisk; den sista modellen släpptes 1993 med en 25 MHz Motorola 68030 CPU, 4 MB RAM och en 80 MB SCSI-hårddisk som tillval. RAM-minnet i dessa system kan utökas till 12 MB, men de flesta spel och applikationer kräver inte mer än 2 MB.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>X68000 (tiếng Nhật: エックス ろくまんはっせん, Hepburn: Ekkusu Rokuman Hassen) là một mẫu máy tính gia đình do Tập đoàn Sharp sản xuất, ra mắt lần đầu vào năm 1987 và chỉ được bán tại Nhật Bản.
+
+Mẫu đầu tiên được trang bị CPU Motorola 68000 10 MHz (do đó có tên gọi như vậy), 1 MB RAM và không có ổ cứng; mẫu cuối cùng được phát hành vào năm 1993 với CPU Motorola 68030 25 MHz, 4 MB RAM và ổ cứng SCSI 80 MB tùy chọn. RAM trong các hệ thống này có thể mở rộng lên đến 12 MB, mặc dù hầu hết các trò chơi và ứng dụng không yêu cầu hơn 2 MB.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

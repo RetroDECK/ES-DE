@@ -28,14 +28,14 @@ Both parts (the C++ engine and the Lua scripts of your quest) communicate throug
         <variables>
             <systemDescription>صُممت سولاروس خصيصًا مع وضع كلاسيكيات ألعاب تقمص الأدوار ثنائية الأبعاد في الاعتبار، مثل The Legend of Zelda: A Link to the Past وScret of Mana على سوبر نينتندو، أو Soleil على Sega Megadrive/Genesis.
 
-تمت برمجة المحرك بلغة C++، مع مكتبة SDL وخلفية OpenGL. الألعاب المصنوعة باستخدام سولاروس تسمى المهام، وهي مبرمجة بلغة Lua.
+تمت برمجة محرك بلغة C++، مع مكتبة SDL وخلفية OpenGL. الألعاب المصنوعة باستخدام سولاروس تسمى المهام، وهي مبرمجة بلغة Lua.
 
-يقوم المحرك بجميع العمليات الحسابية الثقيلة (على سبيل المثال، عمليات التحقق من التصادم) والعمليات منخفضة المستوى مثل رسم الشاشة وتحريك العفاريت وتشغيل الأصوات.
+يقوم محرك بجميع العمليات الحسابية الثقيلة (على سبيل المثال، عمليات التحقق من التصادم) والعمليات منخفضة المستوى مثل رسم الشاشة وتحريك العفاريت وتشغيل الأصوات.
 
 كصانع مهام، أنت لست مهتمًا كثيرًا بتنفيذ هذه الخوارزميات. على العكس، أنت تريد تحديد منطق اللعبة. نصوص Lua النصية الخاصة بك تصف سلوك الأعداء، وما يحدث عند الضغط على مفتاح على خريطة معينة. ستنفذ أيضًا أشياء مثل شاشة العنوان وشاشة العرض الأمامية.
 
-يتواصل كلا الجزأين (محرك C++ المحرك ونصوص Lua البرمجية الخاصة بمهمتك) من خلال واجهة برمجة تطبيقات Solarus Lua. يعمل الاتصال في كلا الاتجاهين: يمكنك استدعاء وظائف المحرك (على سبيل المثال: تريد تحريك شخصية لا تلعب) ويستدعي المحرك وظائفك الخاصة (على سبيل المثال: أن يتم إعلامك بأن عدوًا قد قُتل للتو). لكن قبل استخدام واجهة برمجة تطبيقات سولاروس هذه، عليك أن تتعلم أساسيات لغة Lua (لغة سهلة وبسيطة لكنها قوية).</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+يتواصل كلا الجزأين (محرك C++ محرك ونصوص Lua البرمجية الخاصة بمهمتك) من خلال واجهة برمجة تطبيقات Solarus Lua. يعمل الاتصال في كلا الاتجاهين: يمكنك استدعاء وظائف محرك (على سبيل المثال: تريد تحريك شخصية لا تلعب) ويستدعي محرك وظائفك الخاصة (على سبيل المثال: أن يتم إعلامك بأن عدوًا قد قُتل للتو). لكن قبل استخدام واجهة برمجة تطبيقات سولاروس هذه، عليك أن تتعلم أساسيات لغة Lua (لغة سهلة وبسيطة لكنها قوية).</systemDescription>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -274,6 +274,20 @@ Som uppdragsskapare är du inte särskilt intresserad av att implementera dessa 
 
 Båda delarna (C++-motorn och Lua-skripten för ditt uppdrag) kommunicerar via Solarus Lua API. Kommunikationen fungerar på båda sätten: du kan anropa funktioner i motorn (exempel: du vill flytta en icke-spelande karaktär) och motorn anropar dina egna funktioner (exempel: bli informerad om att en fiende just dödats). Men innan du använder Solarus API måste du lära dig grunderna i Lua (ett enkelt och minimalt, men ändå kraftfullt språk).</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Solarus được thiết kế đặc biệt với cảm hứng từ những tựa game hành động nhập vai 2D kinh điển được yêu thích, như The Legend of Zelda: A Link to the Past và Secret of Mana trên hệ máy Super Nintendo, hay Soleil trên hệ máy Sega Megadrive/Genesis.
+
+Engine này được lập trình bằng ngôn ngữ C++, sử dụng thư viện SDL và nền tảng OpenGL. Các trò chơi được phát triển bằng Solarus được gọi là "quest" và được lập trình bằng ngôn ngữ Lua.
+
+Engine này thực hiện tất cả các tính toán nặng (ví dụ: kiểm tra va chạm) và các thao tác cấp thấp như vẽ màn hình, tạo hiệu ứng động cho sprite và phát âm thanh.
+
+Với tư cách là người tạo quest, bạn không cần quan tâm nhiều đến việc triển khai các thuật toán này. Ngược lại, bạn muốn định nghĩa logic trò chơi. Các skript Lua của bạn mô tả hành vi của kẻ thù, những gì xảy ra khi nhấn một công tắc trên bản đồ cụ thể. Chúng cũng sẽ triển khai các thành phần như màn hình tiêu đề và giao diện hiển thị thông tin (HUD).
+
+Cả hai phần (engine C++ và các skript Lua của quest) giao tiếp thông qua API Lua của Solarus. Giao tiếp diễn ra theo cả hai chiều: bạn có thể gọi các hàm của engine (ví dụ: bạn muốn di chuyển một nhân vật không điều khiển) và engine gọi các hàm của bạn (ví dụ: được thông báo rằng một kẻ thù vừa bị tiêu diệt). Nhưng trước khi sử dụng API Solarus này, bạn phải học những kiến thức cơ bản về Lua (một ngôn ngữ dễ học, tối giản nhưng mạnh mẽ).</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

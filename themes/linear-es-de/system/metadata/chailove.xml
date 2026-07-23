@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>ChaiLove هو إطار عمل رائع يمكنك استخدامه لصنع ألعاب ثنائية الأبعاد في ChaiScript. إنه مجاني ومفتوح المصدر، ويعمل على أنظمة ويندوز وماك أو إس إكس ولينكس وأندرويد و ARM من خلال libretro/RetroArch.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>ChaiLove är ett fantastiskt ramverk som du kan använda för att skapa 2D-spel i ChaiScript. Det är gratis, har öppen källkod och fungerar på Windows, Mac OS X, Linux, Android och ARM via libretro/RetroArch.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>ChaiLove là một bộ công cụ tuyệt vời giúp bạn tạo các trò chơi 2D bằng ChaiScript. Nó miễn phí, mã nguồn mở và hoạt động trên Windows, Mac OS X, Linux, Android cũng như các thiết bị ARM thông qua libretro/RetroArch.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

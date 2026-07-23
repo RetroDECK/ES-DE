@@ -124,6 +124,12 @@
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Watara Supervision, còn được gọi là QuickShot Supervision tại Anh, là một máy chơi game cầm tay đơn sắc có nguồn gốc từ châu Á, ra mắt vào năm 1992 với tư cách là đối thủ giá rẻ cạnh tranh với Game Boy của Nintendo. Máy được bán kèm với trò chơi Crystball, có lối chơi tương tự như Breakout. Một tính năng độc đáo của Supervision là nó có thể kết nối với tivi thông qua cáp kết nối. Các trò chơi chơi theo cách này sẽ hiển thị bốn màu, tương tự như phụ kiện Super Game Boy của Nintendo dành cho SNES. Một phiên bản kết nối tivi đầy đủ màu sắc cũng đang được phát triển, nhưng do Supervision không tạo được ấn tượng mạnh mẽ trong cộng đồng game thủ nên dự án đã bị hủy bỏ, cùng với các trò chơi đang được phát triển cho nó.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Watara Supervision，在英国又称 QuickShot Supervision，是一种单色掌上游戏机，源自亚洲，于 1992 年推出，是任天堂 Game Boy 的廉价竞争对手。它的包装中附带了一款名为 "Crystball "的游戏，类似于 "突围"（Breakout）。Supervision 的独特之处在于它可以通过连接线与电视机连接。通过这种方式玩游戏可以显示四种颜色，就像任天堂为 SNES 推出的超级游戏男孩插件一样。全彩电视链接也在设计之中，但由于 Supervision 未能给玩家留下深刻印象，因此连同为其开发的游戏一起被取消了。</systemDescription>

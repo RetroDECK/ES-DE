@@ -18,7 +18,7 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>اللوحة الثلاثية (ト ライフォース) هي لوحة أركيد تم تطويرها في مشروع مشترك بين سيجا ونينتندو ونامكو. وهي مبنية على وحدة تحكم ألعاب الفيديو Nintendo GameCube لتقليل تكاليف التطوير، وسمحت بمنافذ ألعاب الأركيد لألعاب وحدة التحكم المنزلية، والعكس صحيح. وقد سُميت على اسم الكائن السحري الذي غالبًا ما يكون مرغوبًا في سلسلة The Legend of Zelda الشهيرة من Nintendo.</systemDescription>
+            <systemDescription>اللوحة الثلاثية (ト ライフォース) هي لوحة أركيد تم تطويرها في مشروع مشترك بين سيجا ونينتندو ونامكو. وهي مبنية على وحدة تحكم ألعاب الفيديو Nintendo GameCube لتقليل تكاليف التطوير، وسمحت بمنافذ ألعاب الأركيد لألعاب كونسول المنزلية، والعكس صحيح. وقد سُميت على اسم الكائن السحري الذي غالبًا ما يكون مرغوبًا في سلسلة The Legend of Zelda الشهيرة من Nintendo.</systemDescription>
             <systemHardwareType>أركيد</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>The Triforce (トライフォース) är ett arkadkort som utvecklats i ett joint venture mellan Sega, Nintendo och Namco. Den är baserad på videospelskonsolen Nintendo GameCube för att minska utvecklingskostnaderna, och möjliggjorde arkadportar av hemkonsolspel och vice versa. Det är uppkallat efter det magiska, ofta eftertraktade föremålet i Nintendos populära The Legend of Zelda-serie.</systemDescription>
             <systemHardwareType>Arkad</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Triforce (トライフォース) là một bo mạch máy arcade được phát triển thông qua dự án hợp tác giữa Sega, Nintendo và Namco. Bo mạch này được phát triển dựa trên nền tảng của hệ máy chơi game Nintendo GameCube nhằm giảm chi phí phát triển, đồng thời cho phép chuyển thể các tựa game trên hệ máy gia đình sang phiên bản arcade và ngược lại. Tên gọi của nó được lấy cảm hứng từ vật phẩm ma thuật, thường được săn lùng trong series game nổi tiếng The Legend of Zelda của Nintendo.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

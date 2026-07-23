@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>كان MS-DOS، وهو اختصار لنظام تشغيل الأقراص من مايكروسوفت، نظام تشغيل لأجهزة الكمبيوتر الشخصية القائمة على x86، تم تطويره في الغالب من قبل مايكروسوفت. وكان هو العضو الأكثر استخداماً في عائلة أنظمة التشغيل DOS، وكان نظام التشغيل الرئيسي لأجهزة الكمبيوتر الشخصية المتوافقة مع IBM PC خلال الثمانينيات وحتى منتصف التسعينيات، عندما تم استبداله تدريجياً بأنظمة تشغيل تقدم واجهة مستخدم رسومية (GUI)، في أجيال مختلفة من نظام التشغيل Microsoft Windows.</systemDescription>
-            <systemHardwareType>نظام التشغيل</systemHardwareType>
+            <systemDescription>كان MS-DOS، وهو اختصار لنظام تشغيل الأقراص من مايكروسوفت، نظام تشغيل لأجهزة الكمبيوتر الشخصية القائمة على x86، تم تطويره في الغالب من قبل مايكروسوفت. وكان هو العضو الأكثر استخداماً في عائلة أنظمة التشغيل DOS، وكان نظام تشغيل الرئيسي لأجهزة الكمبيوتر الشخصية المتوافقة مع IBM PC خلال الثمانينيات وحتى منتصف التسعينيات، عندما تم استبداله تدريجياً بأنظمة تشغيل تقدم واجهة مستخدم رسومية (GUI)، في أجيال مختلفة من نظام تشغيل Microsoft Windows.</systemDescription>
+            <systemHardwareType>نظام تشغيل</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>MS-DOS, en förkortning för Microsoft Disk Operating System, var ett operativsystem för x86-baserade persondatorer som huvudsakligen utvecklades av Microsoft. Det var den mest använda medlemmen av DOS-familjen av operativsystem och var det huvudsakliga operativsystemet för IBM PC-kompatibla persondatorer under 1980-talet till mitten av 1990-talet, då det gradvis ersattes av operativsystem som erbjuder ett grafiskt användargränssnitt (GUI), i olika generationer av operativsystemet Microsoft Windows.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>MS-DOS, viết tắt của Microsoft Disk Operating System, là một hệ điều hành dành cho máy tính cá nhân dựa trên kiến trúc x86, chủ yếu được phát triển bởi Microsoft. Đây là thành viên phổ biến nhất trong gia đình hệ điều hành DOS, và là hệ điều hành chính cho các máy tính cá nhân tương thích IBM PC từ những năm 1980 đến giữa những năm 1990, khi nó dần bị thay thế bởi các hệ điều hành cung cấp giao diện người dùng đồ họa (GUI), trong các thế hệ khác nhau của hệ điều hành Microsoft Windows.</systemDescription>
+            <systemHardwareType>CÁC</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

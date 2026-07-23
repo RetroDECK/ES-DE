@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>جهاز 3DO التفاعلي متعدد اللاعبين (غالباً ما يُطلق عليه ببساطة 3DO) هو جهاز ألعاب فيديو أنتجته باناسونيك في الأصل عام 1993. وتم إصدار إصدارات أخرى من الجهاز في عام 1994 من قبل Sanyo وGoldstar. تم تصنيع وحدات التحكم وفقًا للمواصفات التي أنشأتها شركة 3DO، وتم تصميمها في الأصل من قبل ديف نيدل وRJ Mical من مجموعة التكنولوجيا الجديدة. تم تصميم النظام من قبل رجل الأعمال ومؤسس شركة Electronic Arts تريب هوكينز.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>3DO Interactive Multiplayer (ofta bara kallad 3DO) är en videospelskonsol som ursprungligen tillverkades av Panasonic 1993. Ytterligare versioner av hårdvaran släpptes 1994 av Sanyo och Goldstar. Konsolerna tillverkades enligt specifikationer skapade av The 3DO Company och designades ursprungligen av Dave Needle och RJ Mical från New Technology Group. Systemet utformades av entreprenören och Electronic Arts-grundaren Trip Hawkins.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ máy chơi game 3DO Interactive Multiplayer (thường được gọi tắt là 3DO) là một hệ máy chơi game do Panasonic sản xuất lần đầu tiên vào năm 1993. Các phiên bản phần cứng tiếp theo đã được Sanyo và Goldstar phát hành vào năm 1994. Các hệ máy này được sản xuất theo các thông số kỹ thuật do The 3DO Company đề ra, và ban đầu được thiết kế bởi Dave Needle và RJ Mical thuộc New Technology Group. Hệ thống này được hình thành bởi doanh nhân và nhà sáng lập Electronic Arts, Trip Hawkins.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

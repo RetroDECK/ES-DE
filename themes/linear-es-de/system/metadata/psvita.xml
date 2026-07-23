@@ -18,7 +18,7 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز PlayStation Vita (PS Vita أو Vita) هو جهاز ألعاب فيديو محمول باليد تم تطويره وتسويقه من قبل شركة Sony Interactive Entertainment. تم إصداره لأول مرة في اليابان في 17 ديسمبر 2011، وفي أمريكا الشمالية وأوروبا ومناطق دولية أخرى ابتداءً من 22 فبراير 2012. وحدة التحكم هي خليفة بلاي ستيشن بورتابل، وجزء من العلامة التجارية بلاي ستيشن لأجهزة الألعاب؛ وكجزء من الجيل الثامن من أجهزة ألعاب الفيديو، تنافس بشكل أساسي مع جهاز نينتندو 3DS.</systemDescription>
+            <systemDescription>جهاز PlayStation Vita (PS Vita أو Vita) هو جهاز ألعاب فيديو محمول باليد تم تطويره وتسويقه من قبل شركة Sony Interactive Entertainment. تم إصداره لأول مرة في اليابان في 17 ديسمبر 2011، وفي أمريكا الشمالية وأوروبا ومناطق دولية أخرى ابتداءً من 22 فبراير 2012. كونسول هي خليفة بلاي ستيشن بورتابل، وجزء من العلامة التجارية بلاي ستيشن لأجهزة الألعاب؛ وكجزء من الجيل الثامن من أجهزة ألعاب الفيديو، تنافس بشكل أساسي مع جهاز نينتندو 3DS.</systemDescription>
             <systemHardwareType>محمول</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>PlayStation Vita (PS Vita, eller Vita) är en handhållen videospelskonsol som utvecklats och marknadsförs av Sony Interactive Entertainment. Den släpptes för första gången i Japan den 17 december 2011 och i Nordamerika, Europa och andra internationella territorier från och med den 22 februari 2012. Konsolen är efterföljaren till PlayStation Portable och en del av PlayStation-varumärket för spelkonsoler; som en del av den åttonde generationen av videospelskonsoler konkurrerade den främst med Nintendo 3DS.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>PlayStation Vita (PS Vita, hay Vita) là một hệ máy chơi game cầm tay do Sony Interactive Entertainment phát triển và phân phối. Thiết bị này lần đầu tiên được ra mắt tại Nhật Bản vào ngày 17 tháng 12 năm 2011, và tại Bắc Mỹ, Châu Âu cùng các thị trường quốc tế khác bắt đầu từ ngày 22 tháng 2 năm 2012. Hệ máy này là phiên bản kế thừa của PlayStation Portable và là một phần của dòng sản phẩm thiết bị chơi game PlayStation; thuộc thế hệ thứ tám của các hệ máy chơi game, nó chủ yếu cạnh tranh với Nintendo 3DS.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

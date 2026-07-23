@@ -27,7 +27,7 @@ The ZX81 could be bought by mail order preassembled or, for a lower price, in ki
 صُممت ZX81 لتكون صغيرة وبسيطة وفوق كل ذلك غير مكلفة، مع أقل عدد ممكن من المكونات. يتم إخراج الفيديو إلى جهاز تلفاز بدلاً من شاشة مخصصة. يتم تحميل البرامج والبيانات وحفظها على أشرطة صوتية مدمجة. ويستخدم أربع شرائح سيليكون فقط وذاكرة بسعة 1 كيلوبايت فقط. لا يوجد مفتاح طاقة أو أي أجزاء متحركة باستثناء مفتاح اختيار قناة تلفزيونية ذات تردد عالٍ جداً موجود في بعض الطرازات. ويحتوي على لوحة مفاتيح غشائية حساسة للضغط. دفعت محدودية ZX81 إلى ظهور سوق في الأجهزة الطرفية الخارجية لتحسين قدراته. وقد جلبت غلافه المميز ولوحة المفاتيح المميزة للمصمم ريك ديكنسون جائزة مجلس التصميم.
 
 يمكن شراء ZX81 عن طريق طلب الشراء بالبريد مُجمَّعًا مسبقًا أو بسعر أقل في شكل مجموعة أدوات. وقد كان أول كمبيوتر منزلي رخيص الثمن يباع في المتاجر الكبرى وعلى رأسها W. H. Smith، وسرعان ما تم بيعه من قبل العديد من تجار التجزئة الآخرين. كان حاسوب ZX81 علامة على النقطة التي أصبحت فيها الحوسبة في بريطانيا نشاطًا لعامة الناس بدلاً من أن تكون حكرًا على رجال الأعمال وهواة الإلكترونيات. فقد أنتجت مجتمعاً ضخماً من المتحمسين، الذين أسس بعضهم شركاتهم الخاصة لإنتاج البرمجيات والأجهزة الخاصة بال ZX81. واستمر العديد منهم في لعب أدوار رئيسية في صناعة الكمبيوتر البريطانية. جعل النجاح التجاري الذي حققه جهاز ZX81 من شركة Sinclair Research إحدى الشركات الرائدة في بريطانيا في مجال تصنيع الحواسيب وحقق ثروة كبيرة وحصل مؤسس الشركة السير كلايف سينكلير على لقب فارس.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -198,6 +198,16 @@ ZX81 var konstruerad för att vara liten, enkel och framför allt billig, med s�
 
 ZX81 kunde köpas via postorder färdigmonterad eller, till ett lägre pris, i byggsatser. Det var den första billiga hemdatorn för massmarknaden som såldes av stora butiker, med W. H. Smith i spetsen och snart även många andra återförsäljare. ZX81 markerade den punkt då databehandling i Storbritannien blev en aktivitet för allmänheten snarare än förbehållen affärsmän och elektronikhobbyister. Den gav upphov till en stor skara entusiaster, varav en del grundade egna företag som producerade mjukvara och hårdvara för ZX81. Många kom att spela en viktig roll inom den brittiska datorindustrin. ZX81:ans kommersiella framgångar gjorde Sinclair Research till en av Storbritanniens ledande datortillverkare och gav företagets grundare Sir Clive Sinclair en förmögenhet och så småningom en adelstitel.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>ZX81 là một máy tính gia đình do Sinclair Research phát triển và được sản xuất tại Dundee, Scotland, bởi Tập đoàn Timex. Máy được ra mắt tại Vương quốc Anh vào tháng 3 năm 1981 với tư cách là phiên bản kế nhiệm của ZX80 và được thiết kế nhằm mang đến cho công chúng một sản phẩm máy tính gia đình giá rẻ. Máy đã gặt hái thành công vang dội với hơn 1,5 triệu chiếc được bán ra. Tại Hoa Kỳ, máy ban đầu được bán dưới tên ZX-81 theo giấy phép của Timex. Sau đó, Timex đã sản xuất các phiên bản riêng của ZX81: Timex Sinclair 1000 và Timex Sinclair 1500. Các bản sao ZX81 không được ủy quyền cũng được sản xuất tại một số quốc gia.
+
+ZX81 được thiết kế để nhỏ gọn, đơn giản và trên hết là rẻ tiền, với số lượng linh kiện ít nhất có thể. Đầu ra video được kết nối với tivi thay vì màn hình chuyên dụng. Chương trình và dữ liệu được tải và lưu trữ trên băng cassette âm thanh. Máy chỉ sử dụng bốn chip silicon và dung lượng bộ nhớ chỉ 1 KB. Máy không có công tắc nguồn hay bất kỳ bộ phận chuyển động nào, ngoại trừ công tắc chọn kênh truyền hình VHF có trên một số mẫu. Máy được trang bị bàn phím màng cảm ứng áp lực. Những hạn chế của ZX81 đã thúc đẩy sự phát triển của thị trường phụ kiện bên thứ ba nhằm nâng cao khả năng của máy. Vỏ máy và bàn phím độc đáo đã mang lại cho nhà thiết kế Rick Dickinson giải thưởng của Hội đồng Thiết kế.
+
+ZX81 có thể được mua qua đặt hàng trực tuyến dưới dạng đã lắp ráp sẵn hoặc, với giá rẻ hơn, dưới dạng bộ kit. Đây là máy tính gia đình giá rẻ đầu tiên được bán rộng rãi tại các cửa hàng trên phố, dẫn đầu bởi W. H. Smith và sau đó là nhiều nhà bán lẻ khác. ZX81 đánh dấu thời điểm mà việc sử dụng máy tính tại Anh trở thành hoạt động dành cho công chúng nói chung thay vì chỉ dành cho doanh nhân và những người đam mê điện tử. Nó đã tạo ra một cộng đồng người hâm mộ khổng lồ, trong đó một số người đã thành lập doanh nghiệp riêng để sản xuất phần mềm và phần cứng cho ZX81. Nhiều người trong số họ sau này đã đóng vai trò quan trọng trong ngành công nghiệp máy tính của Anh. Thành công thương mại của ZX81 đã đưa Sinclair Research trở thành một trong những nhà sản xuất máy tính hàng đầu của Anh và mang lại tài sản khổng lồ cùng tước hiệp sĩ cho người sáng lập công ty, Sir Clive Sinclair.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

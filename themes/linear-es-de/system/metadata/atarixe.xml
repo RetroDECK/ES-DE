@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>إن نظام ألعاب الفيديو Atari XE (Atari XEGS) هو إعادة تصميم صناعي لجهاز الكمبيوتر المنزلي Atari 65XE والطراز الأخير في عائلة Atari 8 بت. تم إصداره من قبل شركة أتاري في عام 1987 وتم تسويقه كوحدة تحكم في ألعاب الفيديو المنزلية إلى جانب نظام نينتندو للترفيه ونظام سيجا الرئيسي ونظام أتاري 7800 الخاص بشركة أتاري. يتوافق XEGS مع أجهزة وبرامج عائلة أتاري 8 بت الحالية. وبدون لوحة المفاتيح، يعمل النظام كوحدة تحكم ألعاب مستقلة. أما مع لوحة المفاتيح، فيعمل بشكل مطابق لأجهزة كمبيوتر أتاري XE. قامت Atari بتعبئة XEGS كمجموعة أساسية تتكون من وحدة التحكم وعصا التحكم فقط، وكمجموعة فاخرة تتكون من وحدة التحكم ولوحة المفاتيح وعصا التحكم CX40 ومسدس XG-1 الخفيف.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>إن نظام ألعاب الفيديو Atari XE (Atari XEGS) هو إعادة تصميم صناعي لجهاز الكمبيوتر المنزلي Atari 65XE والطراز الأخير في عائلة Atari 8 بت. تم إصداره من قبل شركة أتاري في عام 1987 وتم تسويقه كوحدة تحكم في ألعاب الفيديو المنزلية إلى جانب نظام نينتندو للترفيه ونظام سيجا الرئيسي ونظام أتاري 7800 الخاص بشركة أتاري. يتوافق XEGS مع أجهزة وبرامج عائلة أتاري 8 بت الحالية. وبدون لوحة المفاتيح، يعمل النظام كوحدة تحكم ألعاب مستقلة. أما مع لوحة المفاتيح، فيعمل بشكل مطابق لأجهزة كمبيوتر أتاري XE. قامت Atari بتعبئة XEGS كمجموعة أساسية تتكون من كونسول وعصا التحكم فقط، وكمجموعة فاخرة تتكون من كونسول ولوحة المفاتيح وعصا التحكم CX40 ومسدس XG-1 الخفيف.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Atari XE Video Game System (Atari XEGS) är en industriell omdesign av hemdatorn Atari 65XE och den sista modellen i Atari 8-bitarsfamiljen. Den släpptes av Atari Corporation 1987 och marknadsfördes som en videospelskonsol för hemmabruk tillsammans med Nintendo Entertainment System, Segas Master System och Ataris egen Atari 7800. XEGS är kompatibel med befintlig hård- och mjukvara från Atari 8-bitarsfamiljen. Utan tangentbord fungerar systemet som en fristående spelkonsol. Med tangentbord startar den på samma sätt som Atari XE-datorerna. Atari förpackade XEGS som en basuppsättning bestående av endast konsol och joystick, och som en deluxe-uppsättning bestående av konsol, tangentbord, CX40 joystick och XG-1 light gun.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống trò chơi điện tử Atari XE (Atari XEGS) là phiên bản thiết kế lại dành cho thị trường công nghiệp của máy tính gia đình Atari 65XE và là mẫu cuối cùng trong dòng sản phẩm Atari 8-bit. Sản phẩm này được Tập đoàn Atari ra mắt vào năm 1987 và được tiếp thị như một hệ máy chơi game gia đình, cạnh tranh với Nintendo Entertainment System, Master System của Sega và chính mẫu Atari 7800 của Atari. XEGS tương thích với phần cứng và phần mềm hiện có của dòng Atari 8-bit. Không có bàn phím, hệ thống này hoạt động như một máy chơi game độc lập. Với bàn phím, nó khởi động giống hệt như các máy tính Atari XE. Atari đóng gói XEGS dưới dạng bộ cơ bản chỉ bao gồm máy chơi game và cần điều khiển, và dưới dạng bộ cao cấp bao gồm máy chơi game, bàn phím, cần điều khiển CX40 và súng ánh sáng XG-1.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

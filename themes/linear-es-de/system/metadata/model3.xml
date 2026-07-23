@@ -124,6 +124,12 @@
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega Model 3 là một nền tảng máy chơi game arcade do Sega sản xuất với sự hợp tác của Lockheed Martin. Đây là phiên bản kế thừa của nền tảng Sega Model 2, được ra mắt vào năm 1996. Phần cứng của Model 3 rất khác so với các bo mạch Model 1 và Model 2 trước đó. Nó được thiết kế với một mục đích duy nhất - hiển thị càng nhiều đa giác có kết cấu càng tốt với chi phí thấp nhất có thể. Khi ra mắt, bo mạch Model 3 mạnh mẽ hơn bất kỳ nền tảng arcade nào khác trên thị trường, cũng như bất kỳ máy chơi game gia đình hay máy tính nào.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>世嘉 Model 3 是世嘉公司与洛克希德-马丁公司合作生产的一款街机平台。它是世嘉 Model 2 平台的后续产品，于 1996 年发布。Model 3 的硬件与之前的 Model 1 和 Model 2 截然不同。它的设计目的只有一个--用尽可能少的钱制作尽可能多的纹理多边形。Model 3 游戏板一经推出，其功能就比市场上任何其他街机平台以及任何家用游戏机或电脑都要强大。</systemDescription>

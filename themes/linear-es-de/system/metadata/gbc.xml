@@ -124,6 +124,12 @@
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Game Boy Color (viết tắt là GBC) là một máy chơi game cầm tay do Nintendo sản xuất, được ra mắt vào ngày 21 tháng 10 năm 1998 tại Nhật Bản và vào tháng 11 cùng năm tại các thị trường quốc tế. Đây là phiên bản kế thừa của Game Boy. Như tên gọi đã gợi ý, Game Boy Color sở hữu màn hình màu nhưng không có đèn nền. Nó dày và cao hơn một chút so với Game Boy Pocket, phiên bản Game Boy được thiết kế lại và ra mắt vào năm 1996. Giống như phiên bản Game Boy gốc, nó sử dụng bộ xử lý 8-bit tùy chỉnh có liên quan đến bộ xử lý trung tâm (CPU) Zilog Z80. Tên gốc - với cách viết "color" theo tiếng Anh Mỹ - vẫn được giữ nguyên ngay cả ở các thị trường nơi "colour" là cách viết tiếng Anh được chấp nhận. Các đối thủ chính của Game Boy Color là Neo Geo Pocket của SNK và WonderSwan của Bandai (cả hai đều chỉ được phát hành tại Nhật Bản), dù Game Boy Color đã bán chạy hơn hẳn so với các sản phẩm này. Tổng số lượng Game Boy và Game Boy Color bán ra trên toàn thế giới là 118,69 triệu chiếc. Sản phẩm này đã ngừng sản xuất vào năm 2003, ngay sau khi Game Boy Advance SP ra mắt.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Game Boy Color（简称 GBC）是任天堂公司生产的一款掌上游戏机，1998 年 10 月 21 日在日本发布，同年 11 月在国际市场发布。它是 Game Boy 的后继机。顾名思义，Game Boy Color 具有彩色屏幕，但没有背光。它比 Game Boy Pocket（1996 年发布的重新设计的 Game Boy）稍厚、稍高。与最初的 Game Boy 一样，它配备了一个定制的 8 位处理器，与 Zilog Z80 中央处理器（CPU）有些相似。其原名--美式英语拼写为 "color"--保持不变，即使在以 "color "为通用英语拼写的市场上也是如此。Game Boy Color 的主要竞争对手是 SNK 推出的更先进的 Neo Geo Pocket 和 Bandai 推出的 WonderSwan（均只在日本发行），但 Game Boy Color 的销量远远超过了这两款产品。Game Boy 和 Game Boy Color 的全球总销量为 1.1869 亿台。2003 年，Game Boy Advance SP 发布后不久，Game Boy Color 便停产了。</systemDescription>

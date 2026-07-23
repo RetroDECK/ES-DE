@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>سوبر فاميكوم هو جهاز ألعاب فيديو منزلي 16 بت طورته شركة نينتندو وتم إصداره في عام 1990 في اليابان و1991 في أمريكا الشمالية و1992 في أوروبا وأستراليا (أوقيانوسيا) و1993 في أمريكا الجنوبية.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Super Famicom är en 16-bitars hemkonsol för videospel som utvecklats av Nintendo och som släpptes 1990 i Japan, 1991 i Nordamerika, 1992 i Europa och Australasien (Oceanien) och 1993 i Sydamerika.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Super Famicom là một hệ máy chơi game gia đình 16-bit do Nintendo phát triển, được ra mắt vào năm 1990 tại Nhật Bản, năm 1991 tại Bắc Mỹ, năm 1992 tại châu Âu và châu Đại Dương (Oceania), và năm 1993 tại Nam Mỹ.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

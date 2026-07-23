@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Vircon32 عبارة عن وحدة تحكم افتراضية مستوحاة من أنظمة 16 و32 بت الكلاسيكية بالإضافة إلى عصر الآركيد.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Vircon32 är en virtuell konsol som är inspirerad av klassiska 16- och 32-bitars system samt av arkadtiden.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Vircon32 là một trình giả lập máy tính được lấy cảm hứng từ các hệ thống 16-bit và 32-bit cổ điển cũng như thời kỳ máy chơi game arcade.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

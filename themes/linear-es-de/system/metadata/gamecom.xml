@@ -181,6 +181,15 @@ Det var den första videospelskonsolen med pekskärm och den första handhållna
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Game.com là một hệ máy chơi game cầm tay thế hệ thứ năm do Tiger Electronics phát hành vào tháng 8 năm 1997. Một phiên bản nhỏ gọn hơn, Game.com Pocket Pro, đã được ra mắt vào giữa năm 1999.
+Phiên bản đầu tiên của Game.com có thể kết nối với modem 14,4 kbit/s để truy cập Internet, do đó tên gọi của nó gợi ý đến tên miền cấp cao nhất .com.
+
+Đây là máy chơi game video đầu tiên được trang bị màn hình cảm ứng và là máy chơi game cầm tay đầu tiên có khả năng kết nối Internet.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Game.com 是虎牌电子公司于 1997 年 8 月发布的第五代掌上游戏机。1999 年年中发布了一个较小的版本 Game.com Pocket Pro。

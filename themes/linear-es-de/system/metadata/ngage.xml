@@ -20,7 +20,7 @@ N-Gage attempted to lure gamers away from the Game Boy Advance by including tele
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>N-Gage هو هاتف ذكي يجمع بين ميزات الهاتف المحمول ونظام الألعاب المحمول الذي طورته شركة نوكيا، وتم الإعلان عنه في 4 نوفمبر 2002 وتم إصداره في 7 أكتوبر 2003. وهو يعمل بمنصة السلسلة 60 الأصلية على نظام التشغيل Symbian OS v6.1.
+            <systemDescription>N-Gage هو هاتف ذكي يجمع بين ميزات الهاتف المحمول ونظام الألعاب المحمول الذي طورته شركة نوكيا، وتم الإعلان عنه في 4 نوفمبر 2002 وتم إصداره في 7 أكتوبر 2003. وهو يعمل بمنصة السلسلة 60 الأصلية على نظام تشغيل Symbian OS v6.1.
 
 حاولت N-Gage جذب اللاعبين بعيداً عن Game Boy Advance من خلال تضمين وظائف الهاتف. ولم تنجح هذه المحاولة، ويرجع ذلك جزئياً إلى أن الأزرار المصممة للهاتف لم تكن مناسبة تماماً للألعاب. وقد وُصف هاتف N-Gage الأصلي بأنه يشبه التاكو، مما أدى إلى إطلاق لقب "هاتف التاكو" عليه بطريقة ساخرة.</systemDescription>
             <systemHardwareType>محمول</systemHardwareType>
@@ -160,6 +160,14 @@ N-Gage пыталась переманить геймеров у Game Boy Advanc
 
 N-Gage försökte locka bort spelare från Game Boy Advance genom att inkludera telefonfunktionalitet. Detta misslyckades, delvis på grund av att knapparna, som var utformade för en telefon, inte var särskilt väl lämpade för spel. Den ursprungliga N-Gage beskrevs som lik en taco, vilket ledde till det hånfulla smeknamnet "taco phone".</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>N-Gage là một chiếc điện thoại thông minh kết hợp các tính năng của điện thoại di động và hệ thống chơi game cầm tay do Nokia phát triển, được công bố vào ngày 4 tháng 11 năm 2002 và ra mắt vào ngày 7 tháng 10 năm 2003. Thiết bị này chạy trên nền tảng Series 60 gốc với hệ điều hành Symbian OS phiên bản 6.1.
+
+N-Gage đã cố gắng thu hút người chơi Game Boy Advance bằng cách tích hợp chức năng điện thoại. Tuy nhiên, nỗ lực này không thành công, một phần vì các nút bấm được thiết kế cho điện thoại không phù hợp với việc chơi game. Mẫu N-Gage ban đầu được mô tả là trông giống một chiếc taco, dẫn đến biệt danh mỉa mai "taco phone".</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

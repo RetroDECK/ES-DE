@@ -23,7 +23,7 @@ The original Master System models use both cartridges and a credit card-sized fo
             <systemDescription>نظام سيجا ماستر سيستم هو الجيل الثالث من الجيل الثالث من أجهزة ألعاب الفيديو المنزلية ذات 8 بت التي صنعتها شركة سيجا. كان في الأصل نسخة تصدير معاد تشكيلها من سيجا مارك الثالث، وهو التكرار الثالث لسلسلة وحدات التحكم SG-1000، التي تم إصدارها في اليابان عام 1985، وتميزت بقدرات رسومية محسنة عن سابقاتها. تم إطلاق نظام Master System في أمريكا الشمالية في عام 1986، ثم في أوروبا في عام 1987، والبرازيل في عام 1989. كما تم إطلاق نسخة يابانية من نظام Master System في عام 1987، والتي تميزت ببعض التحسينات مقارنة بطرازات التصدير (وبالوكالة طراز Mark III الأصلي): شريحة صوت FM مدمجة، ومفتاح تشغيل سريع، ومنفذ مخصص للنظارات ثلاثية الأبعاد. تم إصدار Master System II، وهو طراز أرخص، في عام 1990 في أمريكا الشمالية وأوروبا.
 
 تستخدم موديلات Master System الأصلية كلاً من الخراطيش وصيغة بحجم بطاقة الائتمان المعروفة باسم بطاقات Sega Cards. وتشمل ملحقات وحدات التحكم مسدس ضوئي ونظارات ثلاثية الأبعاد تعمل مع مجموعة من الألعاب المصممة خصيصاً. أما جهاز Master System II الذي أعيد تصميمه لاحقاً فقد أزال فتحة البطاقة، مما جعله نظاماً يقتصر على الخراطيش فقط وغير متوافق مع النظارات ثلاثية الأبعاد.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Modelele originale Master System folosesc atât cartușe, cât și un format de 
 
 De ursprungliga Master System-modellerna använder både kassetter och ett format i kreditkortsstorlek som kallas Sega Cards. Bland tillbehören till konsolerna finns en ljuspistol och 3D-glasögon som fungerar med en rad specialdesignade spel. I den senare Master System II-modellen togs kortplatsen bort, vilket gjorde konsolen till ett system som enbart använde kassetter och som inte är kompatibelt med 3D-glasögonen.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega Master System là hệ máy chơi game gia đình 8-bit thế hệ thứ ba do Sega sản xuất. Ban đầu, đây là phiên bản xuất khẩu được cải tiến từ Sega Mark III, thế hệ thứ ba của dòng máy chơi game SG-1000, được ra mắt tại Nhật Bản vào năm 1985 và sở hữu khả năng đồ họa được nâng cấp so với các phiên bản tiền nhiệm. Master System ra mắt tại Bắc Mỹ vào năm 1986, tiếp theo là châu Âu vào năm 1987 và Brazil vào năm 1989. Phiên bản Master System dành cho thị trường Nhật Bản cũng được ra mắt vào năm 1987, với một số cải tiến so với các mẫu xuất khẩu (và gián tiếp so với Mark III gốc): chip âm thanh FM tích hợp, công tắc bắn nhanh và cổng kết nối dành riêng cho kính 3D. Master System II, một mẫu máy rẻ hơn, được phát hành vào năm 1990 tại Bắc Mỹ và châu Âu.
+
+Các mẫu Master System ban đầu sử dụng cả băng game và định dạng có kích thước bằng thẻ tín dụng được gọi là Sega Cards. Các phụ kiện cho máy chơi game này bao gồm súng bắn ánh sáng và kính 3D hoạt động với một loạt các trò chơi được thiết kế đặc biệt. Thiết kế lại Master System II sau này đã loại bỏ khe cắm thẻ, biến nó thành một hệ thống chỉ sử dụng băng game và không tương thích với kính 3D.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>TIC-80 عبارة عن كمبيوتر خيالي مجاني ومفتوح المصدر لصنع الألعاب الصغيرة وتشغيلها ومشاركتها. هناك أدوات مدمجة للتطوير: التعليمات البرمجية والعفاريت والخرائط ومحررات الصوت وسطر الأوامر، وهو ما يكفي لإنشاء لعبة ريترو صغيرة. عند الخروج ستحصل على ملف خرطوشة، يمكن تخزينه وتشغيله على الموقع الإلكتروني. أيضًا، يمكن تعبئة اللعبة في مشغل يعمل على جميع المنصات الشائعة وتوزيعها كما يحلو لك. لصنع لعبة على الطراز القديم، تتم عملية الإنشاء بأكملها في ظل بعض القيود التقنية: عرض 240 × 136 بكسل، ولوحة ألوان 16، وعفاريت ملونة 256 8 × 8، وصوت 4 قنوات وغيرها.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>TIC-80 är en fantasidator med fri och öppen källkod för att skapa, spela och dela små spel. Det finns inbyggda verktyg för utveckling: kod, sprites, kartor, ljudredigerare och kommandoraden, vilket är tillräckligt för att skapa ett miniretrospel. Vid utgången får du en cartridge-fil, som kan lagras och spelas på webbplatsen. Spelet kan också packas in i en spelare som fungerar på alla populära plattformar och distribueras som du vill. För att skapa ett spel i retrostil sker hela skapandeprocessen under vissa tekniska begränsningar: 240x136 pixlars skärm, 16 färgpalett, 256 8x8 färgsprites, 4-kanals ljud och så vidare.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>TIC-80 là một máy tính ảo miễn phí và mã nguồn mở dành cho việc tạo, chơi và chia sẻ các trò chơi nhỏ. Hệ thống tích hợp sẵn các công cụ phát triển: mã nguồn, hình ảnh động, bản đồ, trình chỉnh sửa âm thanh và dòng lệnh, đủ để tạo ra một trò chơi retro mini. Khi hoàn thành, bạn sẽ nhận được một tệp cartridge, có thể lưu trữ và chơi trực tiếp trên trang web. Ngoài ra, trò chơi có thể được đóng gói vào một trình phát tương thích với tất cả các nền tảng phổ biến và phân phối theo ý muốn. Để tạo ra một trò chơi theo phong cách retro, toàn bộ quá trình sáng tạo diễn ra trong một số giới hạn kỹ thuật: màn hình 240x136 pixel, bảng màu 16 màu, 256 sprite màu 8x8, âm thanh 4 kênh, v.v.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

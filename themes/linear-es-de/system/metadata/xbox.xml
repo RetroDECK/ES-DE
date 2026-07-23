@@ -23,7 +23,7 @@ The brand was first introduced in the United States in November 2001, with the l
             <systemDescription>إكس بوكس هي علامة تجارية لألعاب الفيديو تم إنشاؤها وتملكها شركة مايكروسوفت. وهي تمثل سلسلة من وحدات تحكم ألعاب الفيديو التي طورتها مايكروسوفت، حيث تم إصدار ثلاث وحدات تحكم في الأجيال السادس والسابع والثامن على التوالي. تمثل العلامة التجارية أيضاً تطبيقات (ألعاب)، وخدمات البث، وخدمة عبر الإنترنت باسم Xbox Live، وذراع التطوير باسم Xbox Game Studios.
 
 تم تقديم العلامة التجارية لأول مرة في الولايات المتحدة في نوفمبر 2001، مع إطلاق وحدة تحكم Xbox الأصلية.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ The brand was first introduced in the United States in November 2001, with the l
 
 Varumärket introducerades för första gången i USA i november 2001, i samband med lanseringen av den ursprungliga Xbox-konsolen.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Xbox là một thương hiệu trò chơi điện tử do Microsoft sáng lập và sở hữu. Thương hiệu này đại diện cho dòng máy chơi game do Microsoft phát triển, với ba thế hệ máy lần lượt thuộc thế hệ thứ sáu, thứ bảy và thứ tám. Thương hiệu này còn bao gồm các ứng dụng (trò chơi), dịch vụ phát trực tuyến, dịch vụ trực tuyến mang tên Xbox Live, và bộ phận phát triển mang tên Xbox Game Studios.
+
+Thương hiệu này lần đầu tiên được giới thiệu tại Hoa Kỳ vào tháng 11 năm 2001, cùng với sự ra mắt của hệ máy chơi game Xbox thế hệ đầu tiên.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

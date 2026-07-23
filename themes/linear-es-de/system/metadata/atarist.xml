@@ -27,7 +27,7 @@ The ST was sold with either Atari's color monitor or the less expensive monochro
 يُعد أتاري ST جزءًا من جيل منتصف الثمانينيات من الحواسيب المنزلية التي تحتوي على معالجات 16 أو 32 بت، وذاكرة وصول عشوائي سعتها 256 كيلوبايت أو أكثر وواجهات مستخدم رسومية يتم التحكم فيها بالماوس. ويشمل هذا الجيل أجهزة Macintosh وAmiga وApple IIGS، وفي بعض الأسواق Acorn Archimedes. وترمز كلمة "ST" رسميًا إلى "ستة عشر/اثنين وثلاثين"، والتي تشير إلى ناقل موتورولا 68000 الخارجي ذي 16 بت والداخلي ذي 32 بت.
 
 تم بيع ST مع شاشة أتاري الملونة أو الشاشة أحادية اللون الأقل تكلفة. ولا تتوفر أوضاع الرسومات الملونة في النظام إلا في الوضع الأول بينما يحتاج الوضع الأعلى دقة إلى الشاشة أحادية اللون.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -198,6 +198,16 @@ Atari ST ingår i en generation av hemdatorer från mitten av 1980-talet som har
 
 ST såldes med antingen Ataris färgmonitor eller den billigare monokroma monitorn. Systemets färggrafiklägen är endast tillgängliga på den förstnämnda medan det högupplösta läget kräver den svartvita monitorn.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Atari ST là dòng máy tính gia đình của Tập đoàn Atari và là thế hệ kế tiếp của dòng máy Atari 8-bit. Mẫu máy đầu tiên, 520ST, được phát hành giới hạn trong khoảng thời gian từ tháng 4 đến tháng 6 năm 1985 và được phân phối rộng rãi vào tháng 7. 520ST là máy tính cá nhân đầu tiên được trang bị giao diện người dùng đồ họa màu bitmap, sử dụng phiên bản GEM của Digital Research được phát hành vào tháng 2 năm 1985. 1040ST, ra mắt vào năm 1986, là máy tính cá nhân đầu tiên được trang bị 1 megabyte RAM trong cấu hình cơ bản và cũng là máy tính đầu tiên có chi phí trên mỗi kilobyte dưới 1 đô la Mỹ.
+
+Atari ST thuộc thế hệ máy tính gia đình giữa thập niên 1980, có bộ xử lý 16 hoặc 32-bit, 256 KB RAM trở lên và giao diện người dùng đồ họa điều khiển bằng chuột. Thế hệ này bao gồm Macintosh, Amiga, Apple IIGS và ở một số thị trường là Acorn Archimedes. "ST" chính thức là viết tắt của "Sixteen/Thirty-two", ám chỉ bus ngoại vi 16-bit và cấu trúc nội bộ 32-bit của bộ xử lý Motorola 68000.
+
+ST được bán kèm với màn hình màu của Atari hoặc màn hình đơn sắc giá rẻ hơn. Các chế độ đồ họa màu của hệ thống chỉ có sẵn trên màn hình màu, trong khi chế độ độ phân giải cao nhất yêu cầu màn hình đơn sắc.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

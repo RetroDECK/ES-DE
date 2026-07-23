@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>القرص المدمج نيو جيو (باليابانية: ネオジオ CD، هيبورن: نيو جيو شي دي) هو ثاني وحدة تحكم بألعاب الفيديو المنزلية من عائلة نيو جيو التابعة لشركة SNK Corporation، تم إصداره في 9 سبتمبر 1994، بعد أربع سنوات من إصداره على شكل خرطوشة. وهي نفس المنصة التي تم تحويلها إلى صيغة الأقراص المدمجة الأرخص ثمناً والتي تباع بالتجزئة بسعر يتراوح بين 49 و79 دولاراً أمريكياً لكل عنوان، مقارنةً بالخرطوشات التي يبلغ سعرها 300 دولار أمريكي. كان سعر النظام في الأصل 399 دولارًا أمريكيًا، أو 399 جنيهًا إسترلينيًا في المملكة المتحدة. محرك الأقراص المدمجة 1×CD-ROM الخاص بالوحدة بطيء، مع أوقات تحميل طويلة جداً. يمكن للنظام أيضاً تشغيل الأقراص المدمجة الصوتية. جميع الإصدارات الثلاثة من النظام لا تحتوي على قفل المنطقة. تم إطلاق القرص المدمج Neo Geo CD مع لوحة تحكم بدلاً من عصا التحكم مثل إصدار AES. ومع ذلك، يمكن استخدام عصا التحكم الأصلية AES مع جميع طرازات الأقراص المدمجة Neo Geo CD الثلاثة.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Neo Geo CD (japanska: ネオジオCD, Hepburn: Neo Jio Shī Dī) är den andra videospelskonsolen för hemmabruk i SNK Corporations Neo Geo-familj och släpptes den 9 september 1994, fyra år efter dess kassettbaserade motsvarighet. Detta är samma plattform, konverterad till det billigare CD-formatet som säljs för 49-79 dollar per titel, jämfört med kassetterna som kostade 300 dollar. Systemet kostade ursprungligen 399 US-dollar, eller 399 pund i Storbritannien. Enhetens 1× CD-ROM-enhet är långsam med mycket långa laddningstider. Systemet kan även spela Audio-CD-skivor. Alla tre versionerna av systemet har inget regionlås. Neo Geo CD lanserades med en styrplatta istället för en joystick som i AES-versionen. Den ursprungliga AES-joysticken kan dock användas med alla tre Neo Geo CD-modellerna.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Neo Geo CD (tiếng Nhật: ネオジオCD, Hepburn: Neo Jio Shī Dī) là hệ máy chơi game gia đình thứ hai thuộc dòng Neo Geo của Tập đoàn SNK, ra mắt vào ngày 9 tháng 9 năm 1994, bốn năm sau phiên bản sử dụng băng game. Đây là nền tảng tương tự, được chuyển đổi sang định dạng đĩa CD rẻ hơn với giá bán lẻ từ 49 đến 79 đô la Mỹ cho mỗi tựa game, so với mức giá 300 đô la Mỹ của các băng game. Hệ thống ban đầu có giá 399 đô la Mỹ, hoặc 399 bảng Anh tại Vương quốc Anh. Ổ đĩa CD-ROM 1× của thiết bị này khá chậm, với thời gian tải rất lâu. Hệ thống này cũng có thể phát đĩa CD âm thanh. Cả ba phiên bản của hệ thống này đều không có khóa vùng. Neo Geo CD được ra mắt kèm theo một bàn phím điều khiển thay vì cần điều khiển như phiên bản AES. Tuy nhiên, cần điều khiển AES gốc có thể được sử dụng với cả ba mẫu Neo Geo CD.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

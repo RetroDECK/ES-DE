@@ -162,6 +162,14 @@ NAOMI efterträddes av Sega Hikaru och Sega NAOMI 2, som dock hade överlevt NAO
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>NAOMI (New Arcade Operation Machine Idea) là một hệ thống máy chơi game arcade do Sega phát hành vào năm 1998. Hệ thống này được thiết kế như một phiên bản kế thừa của phần cứng Sega Model 3, sử dụng kiến trúc tương tự như Sega Dreamcast.
+
+NAOMI được thay thế bởi các bo mạch Sega Hikaru và Sega NAOMI 2, mặc dù đã tồn tại lâu hơn NAOMI 2, Hikaru và Sega Aurora. Sega Chihiro, hoặc thậm chí có thể là Sega Lindbergh, cũng có thể được coi là những người kế nhiệm.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>NAOMI（New Arcade Operation Machine Idea）是世嘉于 1998 年发布的一款街机系统。它被设计为世嘉 Model 3 硬件的后续机型，采用与世嘉 Dreamcast 相似的结构。

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>كمبيوتر أمستراد الملون الشخصي، المعروف باسم أمستراد CPC، هو سلسلة من أجهزة الكمبيوتر المنزلية ذات 8 بت من تصميم أمستراد. تم إصدار الطرازات الأولى في أبريل 1984 في أوروبا بسعر تجزئة يتراوح بين 199 جنيهًا إسترلينيًا و299 جنيهًا إسترلينيًا، حسب الحزمة التي تم شراؤها. لم يتم إصدار أجهزة الكمبيوتر خارج أوروبا. كان لسلسلة CPC خمسة نماذج متميزة: CPC464 و CPC664 و CPC6128 و CPC6128 و 464 بلس و 6128 بلس. تم تصنيع أجهزة الكمبيوتر حتى وقت غير محدد في عام 1990.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Amstrad Colour Personal Computer, mer känd som Amstrad CPC, är en serie 8-bitars hemdatorer som designats av Amstrad. De första modellerna släpptes i april 1984 i Europa till ett detaljhandelspris på mellan £199 och £299, beroende på vilket paket som köptes. Datorerna släpptes inte utanför Europa. CPC-serien bestod av fem olika modeller: CPC464, CPC664, CPC6128, 464plus och 6128plus. Datorerna tillverkades fram till en ospecificerad tidpunkt under 1990.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Máy tính cá nhân màu Amstrad, thường được gọi tắt là Amstrad CPC, là dòng máy tính gia đình 8-bit do Amstrad thiết kế. Các mẫu đầu tiên được ra mắt vào tháng 4 năm 1984 tại châu Âu với giá bán lẻ dao động từ 199 đến 299 bảng Anh, tùy thuộc vào gói sản phẩm được mua. Dòng máy tính này không được phát hành ngoài châu Âu. Dòng CPC có năm mẫu riêng biệt: CPC464, CPC664, CPC6128, 464plus và 6128plus. Các máy tính này được sản xuất cho đến một thời điểm không xác định vào năm 1990.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

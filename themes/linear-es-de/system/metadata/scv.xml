@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>طرحت شركة Epoch نظام Cassette Vision الأصلي في اليابان في عام 1981، والذي حقق مبيعات ثابتة واستحوذ على 70% من سوق وحدات التحكم المنزلية اليابانية في ذلك الوقت، حيث تم بيع حوالي 400,000 وحدة. ومع ذلك، سرعان ما أدى طرح أنظمة الجيل التالي من Nintendo و Casio و Sega إلى تراجع إصدار Cassette Vision الأصلي، مما دفع Epoch إلى تطوير خليفة لها بسرعة. تم إصدار جهاز Super Cassette Vision في عام 1984 بتكلفة 14,800 ين ياباني وتميز بمعالج 8 بت وأداء أفضل يتماشى مع منافسيه. تم إصداره لاحقًا في فرنسا بواسطة ITMC تحت العلامة التجارية Yeno. تم جلب 16 لعبة على الأقل من اليابان لإصدارها في أوروبا. واستهدف إصدار من النظام سوق الإناث الشابات، وهو "سوبر ليدي كاسيت فيجن". وجاءت وحدة التحكم معبأة في حقيبة حمل وردية اللون، إلى جانب لعبة "ميلكي برينسيس". لم ينجح النظام في الإقلاع، ولم يتمكن من مجاراة الشعبية الهائلة التي حظيت بها نينتندو فاميكوم، مما أدى إلى انسحاب Epoch من سوق وحدات التحكم بحلول عام 1987.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>طرحت شركة Epoch نظام Cassette Vision الأصلي في اليابان في عام 1981، والذي حقق مبيعات ثابتة واستحوذ على 70% من سوق وحدات التحكم المنزلية اليابانية في ذلك الوقت، حيث تم بيع حوالي 400,000 وحدة. ومع ذلك، سرعان ما أدى طرح أنظمة الجيل التالي من Nintendo و Casio و Sega إلى تراجع إصدار Cassette Vision الأصلي، مما دفع Epoch إلى تطوير خليفة لها بسرعة. تم إصدار جهاز Super Cassette Vision في عام 1984 بتكلفة 14,800 ين ياباني وتميز بمعالج 8 بت وأداء أفضل يتماشى مع منافسيه. تم إصداره لاحقًا في فرنسا بواسطة ITMC تحت العلامة التجارية Yeno. تم جلب 16 لعبة على الأقل من اليابان لإصدارها في أوروبا. واستهدف إصدار من النظام سوق الإناث الشابات، وهو "سوبر ليدي كاسيت فيجن". وجاءت كونسول معبأة في حقيبة حمل وردية اللون، إلى جانب لعبة "ميلكي برينسيس". لم ينجح النظام في الإقلاع، ولم يتمكن من مجاراة الشعبية الهائلة التي حظيت بها نينتندو فاميكوم، مما أدى إلى انسحاب Epoch من سوق وحدات التحكم بحلول عام 1987.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Epochs ursprungliga Cassette Vision introducerades i Japan av Epoch 1981 och hade en stabil försäljning och tog över 70% av den japanska hemkonsolmarknaden vid den tiden, med cirka 400.000 sålda enheter. Introduktionen av nästa generations system från Nintendo, Casio och Sega ledde dock till att den ursprungliga Cassette Vision snabbt föll tillbaka, vilket fick Epoch att snabbt utveckla en efterföljare. Super Cassette Vision släpptes 1984 till en kostnad av 14.800 yen, med en 8-bitars processor och bättre prestanda mer i linje med sina konkurrenter. Den släpptes senare i Frankrike av ITMC under varumärket Yeno. Minst 16 spel fördes över från Japan för en europeisk lansering. En version av systemet riktade sig till den unga kvinnliga marknaden, Super Lady Cassette Vision. Konsolen levererades i en rosa bärväska tillsammans med spelet Milky Princess. Systemet blev ingen succé och kunde inte mäta sig med Nintendo Famicoms enorma popularitet, vilket ledde till att Epoch lämnade konsolmarknaden 1987.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Phiên bản Cassette Vision ban đầu của Epoch được hãng này ra mắt tại Nhật Bản vào năm 1981, với doanh số ổn định và chiếm hơn 70% thị phần máy chơi game gia đình tại Nhật Bản vào thời điểm đó, với khoảng 400.000 chiếc được bán ra. Tuy nhiên, sự ra đời của các hệ máy thế hệ mới từ Nintendo, Casio và Sega đã nhanh chóng đẩy lùi Cassette Vision ban đầu, khiến Epoch phải gấp rút phát triển một phiên bản kế nhiệm. Super Cassette Vision được phát hành vào năm 1984 với giá 14.800 yên, trang bị bộ xử lý 8-bit và hiệu năng tốt hơn, phù hợp hơn với các đối thủ cạnh tranh. Sau đó, sản phẩm này được ITMC phát hành tại Pháp dưới thương hiệu Yeno. Ít nhất 16 tựa game đã được đưa từ Nhật Bản sang để phát hành tại châu Âu. Một phiên bản của hệ thống nhắm đến thị trường nữ giới trẻ, đó là Super Lady Cassette Vision. Máy chơi game được đóng gói trong một hộp đựng màu hồng, kèm theo tựa game Milky Princess. Hệ thống này không thành công và không thể sánh ngang với sự phổ biến khổng lồ của Nintendo Famicom, dẫn đến việc Epoch rút khỏi thị trường máy chơi game vào năm 1987.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

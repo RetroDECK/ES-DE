@@ -26,7 +26,7 @@ Handhelds' popularity was at its peak from the late 1970s into the early 1990s b
 
 وبدلاً من أن تكون الشاشة ذات الأغراض العامة مكونة من شبكة من وحدات البكسل الصغيرة، عادةً ما تحتوي على شاشات عرض مخصصة مصممة لتشغيل لعبة واحدة. هذه البساطة تعني أنها يمكن أن تكون صغيرة مثل الساعة الذكية، وأحياناً تكون كذلك. يمكن أن يتراوح الإخراج المرئي لهذه الألعاب من بضعة مصابيح صغيرة أو مصابيح LED إلى شاشات أبجدية رقمية تشبه الآلة الحاسبة؛ وقد تم استبدالها في وقت لاحق في الغالب بشاشات عرض بلورية سائلة وشاشات عرض فلورية مفرغة من الهواء مع صور مفصلة وفي حالة ألعاب VFD، ملونة.
 
-بلغت شعبية الأجهزة المحمولة باليد ذروتها من أواخر السبعينيات إلى أوائل التسعينيات قبل أن تتراجع. وهي سلائف وحدة التحكم في الألعاب المحمولة باليد.</systemDescription>
+بلغت شعبية الأجهزة المحمولة باليد ذروتها من أواخر السبعينيات إلى أوائل التسعينيات قبل أن تتراجع. وهي سلائف كونسول في الألعاب المحمولة باليد.</systemDescription>
             <systemHardwareType>محمول</systemHardwareType>
         </variables>
     </language>
@@ -198,6 +198,16 @@ I stället för en vanlig skärm som består av ett rutnät av små pixlar har d
 
 Handdatorernas popularitet nådde sin topp från slutet av 1970-talet till början av 1990-talet för att sedan minska. De är föregångare till den handhållna spelkonsolen.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Trò chơi điện tử cầm tay là những thiết bị nhỏ gọn, di động dùng để chơi các trò chơi điện tử tương tác, thường là phiên bản thu nhỏ của trò chơi điện tử trên máy tính. Các bộ điều khiển, màn hình và loa đều được tích hợp trong một thiết bị duy nhất.
+
+Thay vì sử dụng màn hình đa năng được tạo thành từ lưới các điểm ảnh nhỏ, chúng thường có màn hình chuyên dụng được thiết kế riêng để chơi một trò chơi cụ thể. Sự đơn giản này giúp chúng có thể được chế tạo với kích thước nhỏ như một chiếc đồng hồ thông minh, và đôi khi thực tế cũng như vậy. Hình ảnh hiển thị của các trò chơi này có thể dao động từ một vài bóng đèn nhỏ hoặc đèn LED đến màn hình chữ và số giống như máy tính; sau này, chúng chủ yếu bị thay thế bởi màn hình tinh thể lỏng và màn hình huỳnh quang chân không với hình ảnh chi tiết và trong trường hợp của các trò chơi VFD, có màu sắc. 
+
+Sự phổ biến của các thiết bị cầm tay đạt đỉnh cao từ cuối những năm 1970 đến đầu những năm 1990 trước khi suy giảm. Chúng là tiền thân của máy chơi game cầm tay.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

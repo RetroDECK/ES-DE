@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>Symbian هو نظام تشغيل (OS) ومنصة حوسبة متوقفة عن العمل للهواتف الذكية. وقد تم تطويره في الأصل كنظام تشغيل برمجي مملوك للمساعدات الرقمية الشخصية في عام 1998 من قبل اتحاد سيمبيان المحدودة. نظام سيمبيان OS هو سليل نظام Psion's EPOC، وتم إصداره حصريًا على معالجات ARM، على الرغم من وجود منفذ x86 لم يتم إصداره. استُخدِم نظام سيمبيان من قبل العديد من العلامات التجارية الكبرى للهواتف المحمولة، مثل سامسونج وموتورولا وسوني إريكسون، وقبل كل شيء نوكيا. وكان منتشرًا أيضًا في اليابان من قبل علامات تجارية مثل فوجيتسو وشارب وميتسوبيشي. وباعتباره رائدًا في تأسيس صناعة الهواتف الذكية، فقد كان نظام التشغيل الأكثر شعبية للهواتف الذكية في المتوسط العالمي حتى نهاية عام 2010، في وقت كان استخدام الهواتف الذكية محدودًا، عندما تجاوزه نظامي iOS و Android. وكان أقل شعبية بشكل ملحوظ في أمريكا الشمالية.</systemDescription>
-            <systemHardwareType>نظام التشغيل</systemHardwareType>
+            <systemDescription>Symbian هو نظام تشغيل (OS) ومنصة حوسبة متوقفة عن العمل للهواتف الذكية. وقد تم تطويره في الأصل كنظام تشغيل برمجي مملوك للمساعدات الرقمية الشخصية في عام 1998 من قبل اتحاد سيمبيان المحدودة. نظام سيمبيان OS هو سليل نظام Psion's EPOC، وتم إصداره حصريًا على معالجات ARM، على الرغم من وجود منفذ x86 لم يتم إصداره. استُخدِم نظام سيمبيان من قبل العديد من العلامات التجارية الكبرى للهواتف المحمولة، مثل سامسونج وموتورولا وسوني إريكسون، وقبل كل شيء نوكيا. وكان منتشرًا أيضًا في اليابان من قبل علامات تجارية مثل فوجيتسو وشارب وميتسوبيشي. وباعتباره رائدًا في تأسيس صناعة الهواتف الذكية، فقد كان نظام تشغيل الأكثر شعبية للهواتف الذكية في المتوسط العالمي حتى نهاية عام 2010، في وقت كان استخدام الهواتف الذكية محدودًا، عندما تجاوزه نظامي iOS و Android. وكان أقل شعبية بشكل ملحوظ في أمريكا الشمالية.</systemDescription>
+            <systemHardwareType>نظام تشغيل</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Symbian är ett mobilt operativsystem (OS) och en datorplattform för smartphones. Det utvecklades ursprungligen som ett proprietärt operativsystem för personliga digitala assistenter 1998 av konsortiet Symbian Ltd. Symbian OS är en ättling till Psion's EPOC och släpptes exklusivt på ARM-processorer, även om det fanns en outgiven x86-port. Symbian användes av många stora mobiltelefonmärken, som Samsung, Motorola, Sony Ericsson och framför allt Nokia. Symbian var också vanligt förekommande i Japan, bland annat hos Fujitsu, Sharp och Mitsubishi. Som en pionjär som etablerade smartphone-industrin var det det mest populära operativsystemet för smartphones i hela världen fram till slutet av 2010, vid en tidpunkt då smartphones användes i begränsad utsträckning, då det passerades av iOS och Android. Det var betydligt mindre populärt i Nordamerika.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Symbian là một hệ điều hành (OS) di động và nền tảng máy tính đã ngừng phát triển, được thiết kế dành cho điện thoại thông minh. Ban đầu, nó được phát triển như một hệ điều hành phần mềm độc quyền dành cho các thiết bị trợ lý kỹ thuật số cá nhân (PDA) vào năm 1998 bởi liên minh Symbian Ltd. Hệ điều hành Symbian là hậu duệ của EPOC của Psion, và được phát hành độc quyền trên các bộ xử lý ARM, mặc dù có một phiên bản port cho x86 chưa được phát hành. Symbian được sử dụng bởi nhiều thương hiệu điện thoại di động lớn, như Samsung, Motorola, Sony Ericsson, và đặc biệt là Nokia. Nó cũng phổ biến tại Nhật Bản thông qua các thương hiệu như Fujitsu, Sharp và Mitsubishi. Là một trong những người tiên phong trong việc hình thành ngành công nghiệp điện thoại thông minh, Symbian là hệ điều hành điện thoại thông minh phổ biến nhất trên toàn cầu cho đến cuối năm 2010, vào thời điểm điện thoại thông minh còn chưa phổ biến rộng rãi, trước khi bị iOS và Android vượt qua. Hệ điều hành này đặc biệt ít phổ biến tại Bắc Mỹ.</systemDescription>
+            <systemHardwareType>CÁC</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

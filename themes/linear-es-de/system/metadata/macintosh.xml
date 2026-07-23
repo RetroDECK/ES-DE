@@ -23,7 +23,7 @@ The original Macintosh is the first successful mass-market all-in-one desktop pe
             <systemDescription>جهاز ماكنتوش (Macintosh (Mac بشكل أساسي منذ عام 1998) هو عائلة من أجهزة الكمبيوتر الشخصية التي تم تصميمها وتصنيعها وبيعها من قبل شركة Apple Inc. (في الأصل باسم Apple Computer, Inc.) منذ يناير 1984.
 
 يعد جهاز ماكنتوش الأصلي أول كمبيوتر شخصي مكتبي متعدد الإمكانات ناجح في السوق الشامل يتميز بواجهة مستخدم رسومية وشاشة مدمجة وماوس. باعت Apple جهاز ماكنتوش إلى جانب عائلاتها الشهيرة Apple II وApple IIGS وApple III وApple Lisa حتى توقفت الطرازات الأخرى في التسعينيات.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Originalul Macintosh este primul computer personal desktop all-in-one de succes 
 
 Den ursprungliga Macintosh är den första framgångsrika massmarknaden allt-i-ett stationär persondator som har haft ett grafiskt användargränssnitt, inbyggd skärm och mus. Apple sålde Macintosh tillsammans med sina populära datorfamiljer Apple II, Apple IIGS, Apple III och Apple Lisa tills de andra modellerna slutade tillverkas på 1990-talet.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Macintosh (chủ yếu được gọi là Mac kể từ năm 1998) là dòng máy tính cá nhân được thiết kế, sản xuất và phân phối bởi Apple Inc. (ban đầu là Apple Computer, Inc.) kể từ tháng 1 năm 1984.
+
+Macintosh nguyên bản là máy tính cá nhân để bàn tất cả trong một đầu tiên dành cho thị trường đại chúng thành công, được trang bị giao diện người dùng đồ họa, màn hình tích hợp và chuột. Apple đã bán Macintosh cùng với các dòng máy tính phổ biến khác như Apple II, Apple IIGS, Apple III và Apple Lisa cho đến khi các mẫu máy khác ngừng sản xuất vào những năm 1990.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -124,6 +124,12 @@
             <systemHardwareType>Arkad</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>CP System II (CPシステムII, shīpī shisutemu tsū) hay CPS-2 là một bo mạch hệ thống máy arcade mà Capcom lần đầu tiên sử dụng vào năm 1993 cho tựa game Super Street Fighter II. Đây là phiên bản kế thừa của hệ thống CP System và phần cứng máy arcade Capcom Power System Changer trước đó, và được thay thế bởi phần cứng CP System III vào năm 1996; tuy nhiên, CPS-2 vẫn tiếp tục được sử dụng thêm hơn bốn năm sau đó. Hệ thống arcade này vẫn có các tựa game mới được phát hành cho đến cuối năm 2003, kết thúc với Hyper Street Fighter II.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>CP System II（CPシステムII，shīpī shisutemu tsū）或 CPS-2 是卡普空于 1993 年首次用于《超级街头霸王 II》的街机系统板。它是之前 CP System 和 Capcom Power System Changer 街机硬件的后续产品，并于 1996 年被 CP System III 硬件所取代，CPS-2 的寿命比 CP System III 长了四年多。直到 2003 年底，该街机系统一直有新版本推出，最后以《超级街霸 II》结束。</systemDescription>

@@ -14,7 +14,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>العب وأكمل الألعاب المتراكمة لديك.</systemDescription>
-            <systemHardwareType>المجموعة</systemHardwareType>
+            <systemHardwareType>مجموعة</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -117,6 +117,12 @@
         <variables>
             <systemDescription>Spela och slutför spelen i din backlog.</systemDescription>
             <systemHardwareType>Samling</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hãy chơi và hoàn thành các trò chơi còn dang dở trong danh sách của bạn.</systemDescription>
+            <systemHardwareType>Bộ sưu tập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

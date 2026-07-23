@@ -27,7 +27,7 @@ The reason for the separation of the older branch, FB Alpha, and new spin-off br
 FinalBurn Neo هو شوكة نشطة لمحاكي FinalBurn Alpha، أنشأه العديد من مطوري FBA السابقين.
 
 ويرجع سبب الفصل بين الفرع القديم، FB Alpha، والفرع المنبثق الجديد، FB Neo، إلى خلاف واضح بين باري هاريس وبقية أعضاء فريق FBA الرئيسي حول مشكلة الترخيص.</systemDescription>
-            <systemHardwareType>المحاكي</systemHardwareType>
+            <systemHardwareType>محاكى</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -198,6 +198,16 @@ FinalBurn Neo är en aktiv gaffel av FinalBurn Alpha-emulatorn, skapad av många
 
 Anledningen till separationen av den äldre grenen, FB Alpha, och den nya avknoppningsgrenen, FB Neo, berodde på en uppenbar oenighet mellan en Barry Harris och resten av huvudmedlemmarna i FBA-teamet om en licensfråga.</systemDescription>
             <systemHardwareType>Emulator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>FinalBurn Neo là một trình giả lập đa nền tảng nổi tiếng nhất với khả năng giả lập các trò chơi của Neo-Geo, Capcom, Konami và Cave. Trình giả lập này được phát triển bởi nhóm FinalBurn và có nguồn gốc từ FinalBurn do Dave phát triển cùng các phiên bản MAME cũ.
+
+FinalBurn Neo là một nhánh phát triển tích cực từ trình giả lập FinalBurn Alpha, được tạo ra bởi nhiều cựu thành viên của nhóm phát triển FBA.
+
+Lý do dẫn đến sự tách biệt giữa nhánh cũ, FB Alpha, và nhánh mới, FB Neo, là do sự bất đồng rõ ràng giữa Barry Harris và các thành viên còn lại của nhóm FBA chính về một vấn đề liên quan đến giấy phép.</systemDescription>
+            <systemHardwareType>Trình giả lập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

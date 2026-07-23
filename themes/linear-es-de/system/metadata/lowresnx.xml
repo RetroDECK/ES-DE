@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>استوحيت تقنية LowRes NX من أنظمة 8 بت و16 بت الحقيقية وتحاكي رقاقات للرسومات والصوت والإدخال/الإخراج، والتي تعمل بالفعل مثل الأجهزة الكلاسيكية. وهو يدعم الرسوم المتحركة للأجهزة بالإضافة إلى تمرير المنظر للأجهزة، كما أنه يوفر مقاطعات رأسية فارغة ونقطية لإنشاء تأثيرات رجعية حقيقية.  تخيل LowRes NX كوحدة تحكم ألعاب محمولة باليد مع لوحة تحكم d-pad وزرين للحركة ولوحة مفاتيح مطاطية صغيرة أسفل شاشة لمس قابلة للانزلاق.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>LowRes NX har inspirerats av riktiga 8- och 16-bitars system och simulerar chip för grafik, ljud och I/O, som faktiskt fungerar som klassisk hårdvara. Den stöder sprites i hårdvara samt parallaxscrolling i hårdvara och erbjuder till och med vertikala blank- och rasteravbrott för att skapa autentiska retroeffekter.  Föreställ dig LowRes NX som en handhållen spelkonsol med en d-pad, två actionknappar och ett litet gummitangentbord under en skjutbar pekskärm.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>LowRes NX lấy cảm hứng từ các hệ thống 8-bit và 16-bit thực tế và mô phỏng các chip đồ họa, âm thanh và I/O, hoạt động giống hệt như phần cứng cổ điển. Phần mềm này hỗ trợ các sprite phần cứng cũng như hiệu ứng cuộn song song phần cứng, và thậm chí còn cung cấp các ngắt khoảng trống dọc và ngắt raster để tạo ra các hiệu ứng retro chân thực. Hãy hình dung LowRes NX như một chiếc máy chơi game cầm tay với cần điều khiển, hai nút hành động và một bàn phím cao su nhỏ nằm bên dưới màn hình cảm ứng có thể trượt.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

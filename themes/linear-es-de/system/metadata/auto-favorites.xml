@@ -14,7 +14,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>عرض ألعابك المفضلة وتشغيلها عبر المكتبة بأكملها.</systemDescription>
-            <systemHardwareType>المجموعة</systemHardwareType>
+            <systemHardwareType>مجموعة</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -117,6 +117,12 @@
         <variables>
             <systemDescription>Visa och spela dina favoritspel i hela biblioteket.</systemDescription>
             <systemHardwareType>Samling</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Xem và chơi các trò chơi yêu thích của bạn trong toàn bộ thư viện.</systemDescription>
+            <systemHardwareType>Bộ sưu tập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

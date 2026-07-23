@@ -27,7 +27,7 @@ It is also possible for Super Game Boy games to make use of the Super NES hardwa
 يمكن للوحدة تعيين درجات اللون الأخضر الأربعة إلى ألوان مختلفة على الشاشة. كانت ألعاب Game Boy اللاحقة التي تم تحسينها لاستخدام Game Game Boy الخارق تحتوي على معلومات ألوان إضافية ويمكنها تجاوز الألوان التي تظهر على الشاشة، وعرض حدود رسومية حول الشاشة، وعرض رسوم متحركة خاصة في الخلفية. كانت تلك الألعاب ستطبع شعار "Super Game Boy Game Pak" صغير على العلبة والخرطوشة. يمكن أن يدعم المحول ما يصل إلى 64 لونًا للحدود و12 لونًا للشاشة. يمكن للشاشات الثابتة عرض جميع الألوان العشرة. يمكن لبعض الألعاب تحميل حدود متعددة اعتمادًا على موقع اللاعب في اللعبة.
 
 من الممكن أيضًا لألعاب Super Game Boy الاستفادة من أجهزة Super NES للحصول على تأثيرات إضافية: كانت هذه الألعاب تحتوي على صوت موسع عند استخدامها مع Super Game Boy. حتى أن بعض العناوين سمحت باستخدام وحدة تحكم Super NES الثانية لاستخدامها في لعبة ثنائية اللاعبين؛ حتى أن بعض الألعاب كانت تدعم أربعة لاعبين باستخدام جهاز Super Multitap.</systemDescription>
-            <systemHardwareType>محيطي</systemHardwareType>
+            <systemHardwareType>طرفية</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -198,6 +198,16 @@ Enheten kunde mappa de fyra gröna nyanserna till olika färger på skärmen. Se
 
 Det är också möjligt för Super Game Boy-spel att använda Super NES-hårdvaran för extra effekter: dessa spel hade utökat ljud när de användes med Super Game Boy. Vissa titlar tillät även att den andra Super NES-kontrollen användes för två spelare; med Super Multitap kunde vissa spel till och med stödja fyra spelare.</systemDescription>
             <systemHardwareType>Tillbehör</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Super Game Boy (スーパーゲームボーイ, Sūpā Gēmu Bōi) là một thiết bị ngoại vi cho phép chơi các thẻ game Game Boy trên hệ máy Super Nintendo Entertainment System, tương thích với các loại thẻ game giống như trên Game Boy gốc: thẻ game Game Boy gốc, Game Boy Camera và thẻ game Game Boy Color chế độ kép (ở chế độ Game Boy).
+
+Thiết bị này có thể ánh xạ bốn sắc thái màu xanh lá cây sang các màu khác nhau trên màn hình. Các trò chơi Game Boy sau này được tối ưu hóa để sử dụng Super Game Boy có thêm thông tin màu sắc và có thể ghi đè lên màu sắc trên màn hình, hiển thị viền đồ họa xung quanh màn hình và hiển thị các sprite nền đặc biệt. Những trò chơi này sẽ có in logo nhỏ "Super Game Boy Game Pak" trên hộp và băng game. Bộ chuyển đổi có thể hỗ trợ tối đa 64 màu cho viền và 12 màu cho màn hình. Các màn hình tĩnh có thể hiển thị tất cả 10 màu. Một số trò chơi có thể tải nhiều viền khác nhau tùy thuộc vào vị trí của người chơi trong trò chơi.
+
+Các trò chơi Super Game Boy cũng có thể tận dụng phần cứng Super NES để tạo ra các hiệu ứng bổ sung: các trò chơi này có âm thanh mở rộng khi được sử dụng với Super Game Boy. Một số tựa game thậm chí còn cho phép sử dụng bộ điều khiển Super NES thứ hai cho chế độ hai người chơi; bằng cách sử dụng Super Multitap, một số trò chơi thậm chí còn hỗ trợ bốn người chơi.</systemDescription>
+            <systemHardwareType>Thiết bị ngoại vi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

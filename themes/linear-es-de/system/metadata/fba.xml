@@ -26,8 +26,8 @@ Differentiated from other emulators by a very large number of supported systems,
 
 كان FinalBurn واحدًا من أوائل محاكيات Capcom CPS2. عندما توقف هذا المشروع في عام 2001، تم نشر مصادره على نطاق واسع، مما سمح بتطوير العديد من الإصدارات غير الرسمية، والتي تعد FBA أكثرها نجاحًا.
 
-يتميز FB Alpha عن غيره من المحاكيات الأخرى بعدد كبير جدًا من الأنظمة المدعومة، كما يقدم واجهة واضحة (بسيطة مثل واجهة Kawaks) وأداءً ممتازًا. والمميز فيه أنه لا يستهلك الكثير من الموارد، ولا تحتاج إلى الانغماس في إعدادات معقدة لتتمكن من استخدامه على الفور، رغم أن قوائمه باللغة الإنجليزية في الأصل.</systemDescription>
-            <systemHardwareType>المحاكي</systemHardwareType>
+يتميز FB Alpha عن غيره من محاكىات الأخرى بعدد كبير جدًا من الأنظمة المدعومة، كما يقدم واجهة واضحة (بسيطة مثل واجهة Kawaks) وأداءً ممتازًا. والمميز فيه أنه لا يستهلك الكثير من الموارد، ولا تحتاج إلى الانغماس في إعدادات معقدة لتتمكن من استخدامه على الفور، رغم أن قوائمه باللغة الإنجليزية في الأصل.</systemDescription>
+            <systemHardwareType>محاكى</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -198,6 +198,16 @@ FinalBurn var en av de första Capcom CPS2-emulatorerna. När projektet stoppade
 
 FB Alpha skiljer sig från andra emulatorer genom ett mycket stort antal system som stöds, och erbjuder också ett tydligt gränssnitt (enkelt som Kawaks) och utmärkt prestanda. Glasyren på kakan; det är inte resurskrävande, och du behöver inte hänge dig åt komplexa inställningar för att ta det i handen omedelbart, även om dess menyer är inbyggda på engelska.</systemDescription>
             <systemHardwareType>Emulator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Dự án mã nguồn mở này được phát triển dựa trên FinalBurn, do Dave tạo ra vào năm 2000. Dự án được lập trình bởi một nhóm gồm Barry Harris (Tên người dùng cũ: TrebleWinner), Jan_Klaassen, KEV, LoopMaster, Mike Haggar, Hyper Yagami và Ayeye.
+
+FinalBurn là một trong những trình giả lập Capcom CPS2 đầu tiên. Khi dự án này ngừng hoạt động vào năm 2001, mã nguồn của nó đã được phổ biến rộng rãi, tạo điều kiện cho việc phát triển nhiều phiên bản không chính thức, trong đó FBA là phiên bản thành công nhất.
+
+Khác biệt với các trình giả lập khác nhờ số lượng hệ thống được hỗ trợ rất lớn, FB Alpha còn cung cấp giao diện rõ ràng (đơn giản như của Kawaks) và hiệu suất tuyệt vời. Điểm cộng nữa là nó không tiêu tốn nhiều tài nguyên và bạn không cần phải mày mò các cài đặt phức tạp để sử dụng ngay lập tức, mặc dù menu của nó mặc định là tiếng Anh.</systemDescription>
+            <systemHardwareType>Trình giả lập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

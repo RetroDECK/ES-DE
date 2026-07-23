@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن 64DDD، الذي يُشار إليه بالعامية باسم Nintendo 64DD، هو محرك أقراص مغناطيسية طرفية لوحدة تحكم ألعاب Nintendo 64 التي طورتها Nintendo. وقد تم الإعلان عنه في الأصل في عام 1995، قبل إطلاق نينتندو 64 في عام 1996، وبعد العديد من التأخيرات تم إصداره أخيراً في اليابان فقط في 1 ديسمبر 1999. تم إصدار عشرة عناوين برمجيات فقط حتى تم إيقاف الوحدة في فبراير 2001. وقد كان فشلاً تجارياً، حيث تم بيع ما لا يقل عن 15000 وحدة على الأقل ولم يتم بيع 85000 وحدة أخرى.</systemDescription>
-            <systemHardwareType>محيطي</systemHardwareType>
+            <systemHardwareType>طرفية</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>64DD, i dagligt tal kallad Nintendo 64DD, är en magnetisk hårddisk för spelkonsolen Nintendo 64 som utvecklats av Nintendo. Den presenterades ursprungligen 1995, före Nintendo 64:s lansering 1996, och efter många förseningar släpptes den slutligen endast i Japan den 1 december 1999. Endast tio mjukvarutitlar släpptes fram till dess att enheten avvecklades i februari 2001. Den var ett kommersiellt misslyckande, med minst 15.000 sålda enheter och ytterligare 85.000 osålda enheter.</systemDescription>
             <systemHardwareType>Tillbehör</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>64DD, thường được gọi là Nintendo 64DD, là một thiết bị ngoại vi ổ đĩa từ dành cho hệ máy chơi game Nintendo 64 do Nintendo phát triển. Sản phẩm này ban đầu được công bố vào năm 1995, trước khi Nintendo 64 ra mắt vào năm 1996, và sau nhiều lần trì hoãn, cuối cùng chỉ được phát hành tại Nhật Bản vào ngày 1 tháng 12 năm 1999. Chỉ có mười tựa game được phát hành cho đến khi thiết bị này ngừng sản xuất vào tháng 2 năm 2001. Đây là một thất bại thương mại, với tổng cộng ít nhất 15.000 chiếc được bán ra và 85.000 chiếc còn tồn kho.</systemDescription>
+            <systemHardwareType>Thiết bị ngoại vi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

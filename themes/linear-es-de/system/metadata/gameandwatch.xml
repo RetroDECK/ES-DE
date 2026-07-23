@@ -200,6 +200,16 @@ Serien såldes i sammanlagt 43,4 miljoner exemplar över hela världen.</systemD
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Thương hiệu Game &amp; Watch là một dòng máy chơi game điện tử cầm tay do Nintendo phát triển, sản xuất, phát hành và tiếp thị từ năm 1980 đến năm 1991. Được sáng tạo bởi nhà thiết kế game Gunpei Yokoi, sản phẩm này lấy tên từ đặc điểm nổi bật là chỉ có một trò chơi duy nhất cùng với một chiếc đồng hồ trên màn hình LCD. Các mẫu máy từ năm 1981 trở đi còn được trang bị thêm chức năng báo thức. Đây là sản phẩm trò chơi điện tử đầu tiên của Nintendo gặt hái được thành công lớn.
+
+Các thiết bị này dựa trên bộ vi xử lý 4-bit thuộc dòng Sharp SM5xx, bao gồm một vùng ROM và RAM nhỏ cùng mạch điều khiển màn hình LCD. Tuy nhiên, trước khi được mô phỏng trong MAME, đã có một hiểu lầm cho rằng mọi thiết bị đều sử dụng một ASIC tùy chỉnh thay vì một bộ vi điều khiển chính thức.
+
+Dòng sản phẩm này đã bán được tổng cộng 43,4 triệu đơn vị trên toàn thế giới.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Game &amp; Watch 品牌是任天堂于 1980 年至 1991 年间开发、制造、发行和销售的一系列掌上电子游戏。该产品由游戏设计师横井群平（Gunpei Yokoi）设计，因在液晶屏幕上显示单个游戏和时钟而得名。1981 年以后的型号还增加了闹钟功能。它是任天堂最早获得巨大成功的视频游戏产品。

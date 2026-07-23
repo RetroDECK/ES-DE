@@ -22,8 +22,8 @@ The console was first officially announced at E3 2005, and was released at the e
         <variables>
             <systemDescription>بلاي ستيشن 3 (PS3) هو جهاز ألعاب فيديو منزلي تم تطويره من قبل شركة سوني كمبيوتر إنترتينمنت. وهو خليفة بلاي ستيشن 2، وهو جزء من العلامة التجارية لوحدات تحكم بلاي ستيشن. تم إصداره لأول مرة في 11 نوفمبر 2006 في اليابان، و17 نوفمبر 2006 في أمريكا الشمالية، و23 مارس 2007 في أوروبا وأستراليا. تنافس PlayStation 3 في المقام الأول ضد Xbox 360 من مايكروسوفت وWii من نينتندو كجزء من الجيل السابع من أجهزة ألعاب الفيديو.
 
-تم الإعلان عن وحدة التحكم لأول مرة رسميًا في E3 2005، وتم إصدارها في نهاية عام 2006. وكانت أول وحدة تحكم تستخدم قرص Blu-ray كوسيط تخزين أساسي. كانت وحدة التحكم أول جهاز PlayStation يدمج خدمات الألعاب الاجتماعية، بما في ذلك شبكة PlayStation Network، بالإضافة إلى أنه أول جهاز يمكن التحكم فيه من وحدة تحكم محمولة باليد، من خلال اتصاله عن بُعد مع PlayStation Portable و PlayStation Vita. في سبتمبر 2009، تم إصدار الطراز Slim من PlayStation 3 في سبتمبر 2009. ولم يعد يوفر الجهاز القدرة على تشغيل ألعاب PS2. كان أخف وزنًا وأقل سمكًا من الإصدار الأصلي، وتميز بشعار وتصميم تسويقي معاد تصميمه، بالإضافة إلى تغيير بسيط في بدء التشغيل في البرامج. ثم تم إصدار نسخة سوبر سليم في أواخر عام 2012، مما أدى إلى مزيد من التحسين وإعادة تصميم وحدة التحكم.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+تم الإعلان عن كونسول لأول مرة رسميًا في E3 2005، وتم إصدارها في نهاية عام 2006. وكانت أول وحدة تحكم تستخدم قرص Blu-ray كوسيط تخزين أساسي. كانت كونسول أول جهاز PlayStation يدمج خدمات الألعاب الاجتماعية، بما في ذلك شبكة PlayStation Network، بالإضافة إلى أنه أول جهاز يمكن التحكم فيه من وحدة تحكم محمولة باليد، من خلال اتصاله عن بُعد مع PlayStation Portable و PlayStation Vita. في سبتمبر 2009، تم إصدار الطراز Slim من PlayStation 3 في سبتمبر 2009. ولم يعد يوفر الجهاز القدرة على تشغيل ألعاب PS2. كان أخف وزنًا وأقل سمكًا من الإصدار الأصلي، وتميز بشعار وتصميم تسويقي معاد تصميمه، بالإضافة إلى تغيير بسيط في بدء التشغيل في البرامج. ثم تم إصدار نسخة سوبر سليم في أواخر عام 2012، مما أدى إلى مزيد من التحسين وإعادة تصميم كونسول.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Consola a fost anunțată oficial pentru prima dată la E3 2005 și a fost lansa
 
 Konsolen presenterades för första gången officiellt på E3 2005 och släpptes i slutet av 2006. Det var den första konsolen som använde Blu-ray Disc som primärt lagringsmedium. Konsolen var den första PlayStation som integrerade sociala speltjänster, inklusive PlayStation Network, och den första som kunde styras från en handhållen konsol genom fjärranslutning till PlayStation Portable och PlayStation Vita. I september 2009 släpptes Slim-modellen av PlayStation 3. Den hade inte längre den hårdvara som krävdes för att köra PS2-spel. Den var lättare och tunnare än originalversionen och hade en omdesignad logotyp och marknadsföringsdesign, samt en mindre uppstartsändring i programvaran. En Super Slim-variant släpptes sedan i slutet av 2012, vilket ytterligare förfinade och omformade konsolen.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>PlayStation 3 (PS3) là một hệ máy chơi game gia đình do Sony Computer Entertainment phát triển. Đây là phiên bản kế nhiệm của PlayStation 2 và thuộc dòng sản phẩm PlayStation. Hệ máy này lần đầu tiên được ra mắt vào ngày 11 tháng 11 năm 2006 tại Nhật Bản, ngày 17 tháng 11 năm 2006 tại Bắc Mỹ, và ngày 23 tháng 3 năm 2007 tại châu Âu và Úc. PlayStation 3 chủ yếu cạnh tranh với Xbox 360 của Microsoft và Wii của Nintendo trong thế hệ thứ bảy của các hệ máy chơi game.
+
+Hệ máy này lần đầu tiên được công bố chính thức tại E3 2005 và được phát hành vào cuối năm 2006. Đây là hệ máy chơi game đầu tiên sử dụng đĩa Blu-ray làm phương tiện lưu trữ chính. PlayStation 3 cũng là hệ máy PlayStation đầu tiên tích hợp các dịch vụ chơi game xã hội, bao gồm PlayStation Network, đồng thời là hệ máy đầu tiên có thể điều khiển từ một hệ máy cầm tay thông qua kết nối từ xa với PlayStation Portable và PlayStation Vita. Vào tháng 9 năm 2009, phiên bản Slim của PlayStation 3 đã được phát hành. Phiên bản này không còn hỗ trợ khả năng chạy các trò chơi PS2. Nó nhẹ hơn và mỏng hơn so với phiên bản gốc, đồng thời có logo và thiết kế tiếp thị được làm mới, cùng với một số thay đổi nhỏ trong phần mềm khởi động. Một biến thể Super Slim sau đó đã được phát hành vào cuối năm 2012, tiếp tục tinh chỉnh và thiết kế lại hệ máy.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

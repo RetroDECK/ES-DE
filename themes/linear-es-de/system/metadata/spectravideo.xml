@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>كانت شركة SpectraVideo International Limited (SVI) شركة أمريكية لتصنيع الحواسيب والبرمجيات. وكانت تسمى في الأصل SpectraVision، وهي شركة أسسها هاري فوكس في عام 1981. أنتجت الشركة ألعاب فيديو وبرامج أخرى للكمبيوتر المنزلي VIC-20، وجهاز ألعاب الفيديو المنزلي أتاري 2600، وجهازها الطرفي CompuMate. وكانت بعض أجهزة الكمبيوتر الخاصة بها متوافقة مع مايكروسوفت MSX أو كمبيوتر IBM.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Spectravideo International Limited (SVI) var en amerikansk datortillverkare och programvaruhus. Det hette ursprungligen SpectraVision, ett företag som grundades av Harry Fox 1981. Företaget producerade videospel och annan programvara för hemdatorn VIC-20, videospelskonsolen Atari 2600 och dess CompuMate-kringutrustning. Vissa av deras egna datorer var kompatibla med Microsoft MSX eller IBM PC.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Spectravideo International Limited (SVI) là một nhà sản xuất máy tính và công ty phần mềm của Mỹ. Ban đầu, công ty này có tên là SpectraVision, được Harry Fox thành lập vào năm 1981. Công ty sản xuất trò chơi điện tử và các phần mềm khác cho máy tính gia đình VIC-20, máy chơi game gia đình Atari 2600 và thiết bị ngoại vi CompuMate của hãng. Một số mẫu máy tính do chính họ sản xuất tương thích với hệ thống Microsoft MSX hoặc IBM PC.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

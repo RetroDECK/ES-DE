@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>تشغيل ${النظام.الاسم الكامل}</systemDescription>
-            <systemHardwareType>المجموعة</systemHardwareType>
+            <systemHardwareType>مجموعة</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Visa och spela ${system.fullName}</systemDescription>
             <systemHardwareType>Samling</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Chơi ${system.fullName}</systemDescription>
+            <systemHardwareType>Bộ sưu tập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

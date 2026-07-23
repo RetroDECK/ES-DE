@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Lutro هو إطار عمل للألعاب ثنائية الأبعاد يهدف إلى البساطة وقابلية النقل القصوى. باستخدام Lutro، يمكنك تطوير أي نوع من الألعاب ثنائية الأبعاد القديمة، مثل ألعاب NES أو Genesis، وتشغيلها على مجموعة واسعة من المنصات من خلال RetroArch. يجعل Lutro من السهل كتابة الألعاب باستخدام Lua واتباع واجهة برمجة تطبيقات LÖVE. تتحقق قابلية النقل من خلال واجهة برمجة التطبيقات libretro API: يتم تحميل Lutro فقط كمكون إضافي في واجهة أمامية مثل RetroArch التي تهتم بالعرض والصوت والمدخلات.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Lutro är ett ramverk för 2D-spel som strävar efter enkelhet och extrem portabilitet. Med Lutro kan du utveckla alla typer av 2D-retrospel, som NES- eller Genesis-spel, och köra dem på ett brett utbud av plattformar via RetroArch. Lutro gör det enkelt att skriva spel genom att använda Lua och följa LÖVE API. Portabilitet uppnås genom libretro API: Lutro laddas bara som ett plugin i en frontend som RetroArch som tar hand om display, ljud och ingångar.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Lutro là một khung nền trò chơi 2D hướng đến sự đơn giản và khả năng tương thích cao. Với Lutro, bạn có thể phát triển bất kỳ loại trò chơi 2D cổ điển nào, như các trò chơi trên NES hay Genesis, và chạy chúng trên nhiều nền tảng khác nhau thông qua RetroArch. Lutro giúp việc viết trò chơi trở nên dễ dàng nhờ sử dụng ngôn ngữ Lua và tuân thủ giao diện lập trình ứng dụng (API) LÖVE. Khả năng tương thích được thực hiện thông qua API libretro: Lutro chỉ được tải dưới dạng một plugin trong một giao diện người dùng như RetroArch, nơi đảm nhiệm việc hiển thị, âm thanh và nhập liệu.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">
