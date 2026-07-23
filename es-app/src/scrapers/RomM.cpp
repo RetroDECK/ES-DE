@@ -17,6 +17,7 @@
 #include "Log.h"
 #include "MameNames.h"
 #include "RomM/RomMApiClient.h"
+#include "RomM/RomMUtils.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "utils/FileSystemUtil.h"
@@ -260,8 +261,8 @@ void romm_generate_scraper_requests(const ScraperSearchParams& params,
     int rommPlatformId {-1};
     for (const auto& platform : platforms) {
         for (const auto& platformId : params.system->getPlatformIds()) {
-            if (RomMApiClient::platformNameMatches(PlatformIds::getPlatformName(platformId),
-                                                   platform.slug, platform.fsSlug)) {
+            if (RomMUtils::platformNameMatches(PlatformIds::getPlatformName(platformId),
+                                               platform.slug, platform.fsSlug)) {
                 rommPlatformId = platform.id;
                 break;
             }

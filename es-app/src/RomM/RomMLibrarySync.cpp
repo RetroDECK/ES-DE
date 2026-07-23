@@ -10,6 +10,7 @@
 #include "FileFilterIndex.h"
 #include "Log.h"
 #include "RomM/RomMCache.h"
+#include "RomM/RomMUtils.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "utils/FileSystemUtil.h"
@@ -173,8 +174,8 @@ void RomMLibrarySync::fetchInBackground()
             if (claimedPlatformIds.find(platform.id) != claimedPlatformIds.cend())
                 continue;
             for (const auto& id : system->getPlatformIds()) {
-                if (RomMApiClient::platformNameMatches(PlatformIds::getPlatformName(id),
-                                                       platform.slug, platform.fsSlug)) {
+                if (RomMUtils::platformNameMatches(PlatformIds::getPlatformName(id), platform.slug,
+                                                   platform.fsSlug)) {
                     matchedPlatform = &platform;
                     break;
                 }
@@ -216,7 +217,7 @@ void RomMLibrarySync::fetchInBackground()
         // used as the NEXT sync's updated_after cursor rather than the max updated_at seen in
         // this run's results - so a rom updated mid-fetch still gets picked up next time
         // instead of being permanently skipped.
-        const std::string newCursor {RomMApiClient::formatTimestampUtc(Utils::Time::now())};
+        const std::string newCursor {RomMUtils::formatTimestampUtc(Utils::Time::now())};
 
         int systemProcessed {0};
         RomMApiClient client {serverURL, token};

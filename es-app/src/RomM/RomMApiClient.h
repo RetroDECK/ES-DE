@@ -123,16 +123,6 @@ public:
 
     const std::string& lastError() const { return mLastError; }
 
-    // Best-effort match between an ES-DE system's platform name (PlatformIds::getPlatformName(),
-    // e.g. "snes", as declared via the <platform> tag in es_systems.xml) and a RomM platform's
-    // slug/fs_slug. RomM's own slug conventions are closely aligned with those used by
-    // ES-DE/RetroPie/Batocera, so most systems match via a direct case-insensitive compare;
-    // the small alias table below covers the handful of known mismatches. Extend the table as
-    // more mismatches are discovered against real RomM instances.
-    static bool platformNameMatches(const std::string& esdePlatformName,
-                                    const std::string& rommSlug,
-                                    const std::string& rommFsSlug);
-
     // Formats a UTC time_t as "YYYY-MM-DDTHH:MM:SSZ", the format RomM's updated_after query
     // parameter accepts (empirically verified against a live RomM instance). Public and
     // static so callers (e.g. RomMLibrarySync/RomMCache) can format a persisted sync cursor

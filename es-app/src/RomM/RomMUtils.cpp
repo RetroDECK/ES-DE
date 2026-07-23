@@ -13,9 +13,101 @@
 #include <chrono>
 #include <ctime>
 #include <thread>
+#include <unordered_map>
 
 namespace
 {
+    // Known mismatches between ES-DE's platform names (PlatformIds::platformNames) and RomM's
+    // filesystem-friendly platform slugs. Key is the ES-DE name, value the RomM fs_slug/slug(s)
+    // it should be considered equivalent to - some names have two, where RomM has both a legacy
+    // IGDB slug and a newer "universal" slug (see UniversalPlatformSlug in
+    // backend/handler/metadata/base_handler.py of rommapp/romm, the authoritative source these
+    // were checked against) for the same platform.
+    const std::unordered_map<std::string, std::vector<std::string>> sPlatformAliases {
+        {"3do", {"3do"}},
+        {"adam", {"colecoadam"}},
+        {"amigacd32", {"amiga-cd32"}},
+        {"amstradcpc", {"acpc"}},
+        {"apple2", {"appleii"}},
+        {"apple2gs", {"apple-iigs"}},
+        {"arcade", {"arcade"}},
+        {"arcadia", {"arcadia-2001"}},
+        {"archimedes", {"acorn-archimedes"}},
+        {"astrocde", {"astrocade"}},
+        {"atari2600", {"atari2600"}},
+        {"atarijaguar", {"jaguar"}},
+        {"atarijaguarcd", {"atari-jaguar-cd"}},
+        {"atarilynx", {"lynx"}},
+        {"atarist", {"atari-st"}},
+        {"atarixe", {"atari-xegs"}},
+        {"cdimono1", {"philips-cd-i"}},
+        {"cdtv", {"commodore-cdtv"}},
+        {"channelf", {"fairchild-channel-f"}},
+        {"coco", {"trs-80-color-computer"}},
+        {"crvision", {"creativision"}},
+        {"dragon32", {"dragon-32-slash-64"}},
+        {"dreamcast", {"dc"}},
+        {"electron", {"acorn-electron"}},
+        {"famicom", {"nes"}},
+        {"fm7", {"fm-7"}},
+        {"fmtowns", {"fm-towns"}},
+        {"gameandwatch", {"g-and-w"}},
+        {"gamecom", {"game-dot-com"}},
+        {"gamegear", {"gg"}},
+        {"gb", {"gb"}},
+        {"gba", {"gba"}},
+        {"gbc", {"gbc"}},
+        {"gc", {"ngc"}},
+        {"genesis", {"genesis-slash-megadrive"}},
+        {"gmaster", {"hartung"}},
+        {"gx4000", {"amstrad-gx4000"}},
+        {"lcdgames", {"handheld-electronic-lcd"}},
+        {"macintosh", {"mac"}},
+        {"mastersystem", {"sms"}},
+        {"megadrive", {"genesis-slash-megadrive", "genesis"}},
+        {"megaduck", {"mega-duck-slash-cougar-boy"}},
+        {"msxturbor", {"msx-turbo"}},
+        {"n3ds", {"3ds"}},
+        {"n64", {"n64"}},
+        {"neogeo", {"neogeoaes"}},
+        {"neogeocd", {"neo-geo-cd"}},
+        {"nes", {"nes"}},
+        {"ngp", {"neo-geo-pocket"}},
+        {"ngpc", {"neo-geo-pocket-color"}},
+        {"odyssey2", {"odyssey-2"}},
+        {"palm", {"palm-os"}},
+        {"pc88", {"pc-8800-series"}},
+        {"pc98", {"pc-9800-series"}},
+        {"pcengine", {"turbografx-16-slash-pc-engine", "tg16"}},
+        {"pcenginecd", {"turbografx-cd"}},
+        {"pcfx", {"pc-fx"}},
+        {"pcwindows", {"win"}},
+        {"plus4", {"c-plus-4"}},
+        {"pokemini", {"pokemon-mini"}},
+        {"ps2", {"ps2"}},
+        {"psx", {"ps"}},
+        {"pv1000", {"casio-pv-1000"}},
+        {"samcoupe", {"sam-coupe"}},
+        {"saturn", {"saturn"}},
+        {"scv", {"epoch-super-cassette-vision"}},
+        {"sega32x", {"sega32"}},
+        {"segacd", {"segacd"}},
+        {"sg-1000", {"sg1000"}},
+        {"snes", {"snes"}},
+        {"sufami", {"sufami-turbo"}},
+        {"supracan", {"super-acan"}},
+        {"ti99", {"ti-99"}},
+        {"tic80", {"tic-80"}},
+        {"vic20", {"vic-20"}},
+        {"wasm4", {"wasm-4"}},
+        {"windows3x", {"win3x"}},
+        {"wonderswancolor", {"wonderswan-color"}},
+        {"x68000", {"sharp-x68000"}},
+        {"zmachine", {"z-machine"}},
+        {"zxnext", {"zx-spectrum-next"}},
+        {"zxspectrum", {"zxs"}},
+    };
+
     // Parses the fixed "YYYY-MM-DDTHH:MM:SS" prefix of an ISO-8601 timestamp as returned by
     // RomM's "expires_at" field into Unix seconds, ignoring any fractional-seconds/offset
     // suffix. Returns 0 on any parse failure.
@@ -109,4 +201,40 @@ namespace RomMUtils
 
         return false;
     }
+
+    bool platformNameMatches(const std::string& esdePlatformName,
+                             const std::string& rommSlug,
+                             const std::string& rommFsSlug)
+    {
+        const std::string esdeLower {Utils::String::toLower(esdePlatformName)};
+        const std::string slugLower {Utils::String::toLower(rommSlug)};
+        const std::string fsSlugLower {Utils::String::toLower(rommFsSlug)};
+
+        if (esdeLower == slugLower || esdeLower == fsSlugLower)
+            return true;
+
+        const auto it {sPlatformAliases.find(esdeLower)};
+        if (it != sPlatformAliases.cend()) {
+            for (const auto& alias : it->second) {
+                if (alias == slugLower || alias == fsSlugLower)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    std::string formatTimestampUtc(time_t time)
+    {
+        tm utcTime {};
+#if defined(_WIN64)
+        gmtime_s(&utcTime, &time);
+#else
+        gmtime_r(&time, &utcTime);
+#endif
+        char buffer[32];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", &utcTime);
+        return std::string {buffer};
+    }
+
 } // namespace RomMUtils
