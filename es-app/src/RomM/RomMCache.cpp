@@ -58,6 +58,19 @@ std::vector<RomMCache::CachedRom> RomMCache::getRoms(int rommPlatformId) const
     return it == mPlatforms.cend() ? std::vector<CachedRom>() : it->second.roms;
 }
 
+bool RomMCache::findCachedSize(int rommId, int64_t& sizeBytesOut) const
+{
+    for (const auto& [rommPlatformId, entry] : mPlatforms) {
+        for (const auto& rom : entry.roms) {
+            if (rom.id == rommId) {
+                sizeBytesOut = rom.fsSizeBytes;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void RomMCache::setPlatform(int rommPlatformId,
                             const std::string& cursor,
                             const std::vector<CachedRom>& roms)

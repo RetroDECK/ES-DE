@@ -23,7 +23,12 @@
 // Not thread-safe by design: every RomM sync runs via
 // ViewController::runRomMSyncWithSplashScreen(), which blocks the main thread until done, so only
 // one RomMLibrarySync background thread ever exists at a time, and it's the only caller of this
-// class - no locking is needed. Must never be touched from the main/render thread.
+// class - no locking is needed. Writes (setPlatform()/flush()) must never be touched from the
+// main/render thread. The one exception is findCachedSize(): a read-only lookup called from
+// ViewController::update() (main thread) to show a not-yet-downloaded game's size without a
+// network round-trip. This is safe without locking because runRomMSyncWithSplashScreen() blocks
+// the main thread for a sync's entire duration - update() (and thus findCachedSize()) can never
+// run while the sync thread is writing.
 class RomMCache
 {
 public:
@@ -49,6 +54,9 @@ public:
     std::string getCursor(int rommPlatformId) const;
     // Empty vector if this platform has never been successfully synced.
     std::vector<CachedRom> getRoms(int rommPlatformId) const;
+    // Scans every cached platform for a rom with this id. Returns false (leaving sizeBytesOut
+    // untouched) if not found in any cached platform.
+    bool findCachedSize(int rommId, int64_t& sizeBytesOut) const;
     // In-memory only - call flush() to persist. Overwrites any prior entry for this platform.
     void setPlatform(int rommPlatformId,
                      const std::string& cursor,

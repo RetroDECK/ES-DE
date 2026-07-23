@@ -389,7 +389,6 @@ void RomMLibrarySync::applyResults()
                     existing->metadata.set("name", displayName);
                     if (!rom.summary.empty())
                         existing->metadata.set("desc", rom.summary);
-                    existing->metadata.set("rommsize", std::to_string(rom.fsSizeBytes));
                     continue;
                 }
                 // The computed name changed since the last sync (e.g. a newly-added sibling rom
@@ -422,7 +421,6 @@ void RomMLibrarySync::applyResults()
                 newGame->metadata.set("desc", rom.summary);
             newGame->metadata.set("rommremote", "true");
             newGame->metadata.set("rommid", std::to_string(rom.id));
-            newGame->metadata.set("rommsize", std::to_string(rom.fsSizeBytes));
             rootFolder->addChild(newGame);
             fileIndex->addToIndex(newGame);
             addedAny = true;

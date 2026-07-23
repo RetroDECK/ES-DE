@@ -180,7 +180,7 @@ void GuiRomMDownload::downloadMultiDiscInBackground(const RomMApiClient::Rom& ro
             rommM3u = &file;
     }
     if (totalBytes <= 0)
-        totalBytes = atoll(mGame->metadata.get("rommsize").c_str());
+        totalBytes = rom.fsSizeBytes;
 
     int64_t completedBytes {0};
     std::vector<std::string> discFileNames;

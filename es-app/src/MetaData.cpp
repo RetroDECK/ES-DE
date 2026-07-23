@@ -48,8 +48,7 @@ namespace
     {"lastplayed",         MD_TIME,             "0",               true,      "LAST PLAYED",                 "ENTER LAST PLAYED DATE",           false},
     // Internal bookkeeping for the RomM integration, not intended for manual editing.
     {"rommremote",         MD_BOOL,             "false",           true,      "ROMM REMOTE",                 "ENTER ROMM REMOTE OFF/ON",         false},
-    {"rommid",             MD_STRING,           "",                true,      "ROMM ID",                     "ENTER ROMM ID",                    false},
-    {"rommsize",           MD_STRING,           "0",               true,      "ROMM SIZE",                   "ENTER ROMM SIZE",                  false}
+    {"rommid",             MD_STRING,           "",                true,      "ROMM ID",                     "ENTER ROMM ID",                    false}
     };
 
     MetaDataDecl folderDecls[] {

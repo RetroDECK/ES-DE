@@ -18,6 +18,7 @@
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
+#include "RomM/RomMCache.h"
 #include "RomM/RomMLibrarySync.h"
 #include "Scripting.h"
 #include "Settings.h"
@@ -1412,7 +1413,9 @@ void ViewController::update(int deltaTime)
             // confirm dialog below can actually receive input.
             mWindow->setBlockInput(false);
 
-            const int64_t sizeBytes {atoll(remoteGame->metadata.get("rommsize").c_str())};
+            int64_t sizeBytes {0};
+            RomMCache::getInstance().findCachedSize(
+                atoi(remoteGame->metadata.get("rommid").c_str()), sizeBytes);
             const std::string message {
                 Utils::String::format(_("THIS GAME IS NOT INSTALLED\nDOWNLOAD FROM ROMM NOW? (%s)"),
                                       formatByteSize(sizeBytes).c_str())};

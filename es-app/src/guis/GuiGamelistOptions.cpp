@@ -422,8 +422,7 @@ void GuiGamelistOptions::openMetaDataEd()
         const bool isRomMGame {file->metadata.get("rommid") != ""};
         for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
             if (isRomMGame) {
-                if (it->key == "name" || it->key == "rommid" || it->key == "rommremote" ||
-                    it->key == "rommsize")
+                if (it->key == "name" || it->key == "rommid" || it->key == "rommremote")
                     continue;
             }
             if (it->key == "name") {
