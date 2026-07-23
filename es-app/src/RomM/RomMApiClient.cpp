@@ -268,11 +268,16 @@ std::vector<RomMApiClient::Rom> RomMApiClient::fetchRoms(
                     doc["total"].GetInt() :
                     static_cast<int>(roms.size() + doc["items"].GetArray().Size());
 
+        auto entryArray = doc["items"].GetArray();
+        if (!entryArray.Empty() && onRomsFetched)
+            onRomsFetched(0, total);
         for (const auto& entry : doc["items"].GetArray()) {
             roms.emplace_back(parseRom(entry));
             if (onRomsFetched)
                 onRomsFetched(1, total);
         }
+        if (onRomsFetched)
+            onRomsFetched(0, total);
 
         offset += pageSize;
     } while (offset < total);
