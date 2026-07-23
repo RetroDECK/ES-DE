@@ -124,6 +124,3 @@ CPackSourceConfig.cmake
 # VSCode
 .vscode/
 .continueignore
-
-# Compile Commands
-compile_commands.json
