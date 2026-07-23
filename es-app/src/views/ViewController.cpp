@@ -1378,7 +1378,7 @@ void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync, bool resc
             lastShownProgress = systemProcessed;
             mWindow->setSyncingSplashText(Utils::String::format(
                 forceFullResync ? _("Performing full RomM resync... %s (%d/%d roms)") :
-                                  _("Syncing RomM %s library... (%d/%d roms)"),
+                                  _("Syncing RomM - %s library... (%d/%d roms)"),
                 currentSystem->getFullName().c_str(), systemProcessed, systemTotal));
         }
         const float progress {
