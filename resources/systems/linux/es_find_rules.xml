@@ -611,6 +611,18 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.gopher64.gopher64</entry>
         </rule>
     </emulator>
+    <emulator name="GROOVYMAME">
+        <!-- Arcade emulator GroovyMAME -->
+        <rule type="systempath">
+            <entry>groovymame</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/groovymame/groovymame</entry>
+            <entry>~/.local/share/applications/groovymame/groovymame</entry>
+            <entry>~/.local/bin/groovymame/groovymame</entry>
+            <entry>~/bin/groovymame/groovymame</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">

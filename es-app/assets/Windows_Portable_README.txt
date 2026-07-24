@@ -92,6 +92,7 @@ Emulators\Gearboy\Gearboy.exe
 Emulators\Geargrafx\Geargrafx.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\gopher64\gopher64-windows-x86_64.exe
+Emulators\groovymame\mame.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\izapple2\izapple2sdl_windows_amd64.exe

@@ -509,6 +509,17 @@
             <entry>%ESPATH%\..\Emulators\gopher64\gopher64-windows-x86_64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="GROOVYMAME">
+        <!-- Arcade emulator GroovyMAME -->
+        <rule type="systempath">
+            <entry>groovymame.exe</entry>
+            <entry>mame.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\groovymame\mame.exe</entry>
+            <entry>%ESPATH%\..\Emulators\groovymame\mame.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">
