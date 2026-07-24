@@ -27,6 +27,7 @@
 * Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
 * Added Play! Arcade standalone as an alternative emulator for the arcade and mame systems on Linux, macOS and Windows
 * Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp and sega32xna systems on Linux and Windows
+* Added GroovyMAME standalone as an alternative emulator for the arcade and mame systems on Linux and Windows
 * Added veesem standalone as an alternative emulator for the vsmile system on Linux and Windows
 * (Android) Added NetherSX2 standalone as the default emulator for the ps2 system
 * (Android) Added NetherSX2-Turnip and NetherSX2-Turnip Classic standalone as alternative emulators for the ps2 system
@@ -50,6 +51,7 @@
 * Added the .acgame and .arcadedef file extensions to the arcade and mame systems on Linux, macOS and Windows
 * Added the .a0, .b0 and .rom file extensions to the vic20 system
 * Added the .dsi and .ids file extensions to the nds system
+* (linear-es-de) Updated the system metadata from the upstream system-metadata repository
 * The UTF8-CPP dependency is now only built on Android
 * (Android) Updated the build environment
 * (Android) Updated a number of Java and Kotlin dependencies
