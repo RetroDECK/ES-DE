@@ -193,6 +193,18 @@ namespace
         if (entry.HasMember("updated_at") && entry["updated_at"].IsString())
             rom.updatedAt = parseIso8601ToUnixSeconds(entry["updated_at"].GetString());
 
+        if (entry.HasMember("rom_user") && entry["rom_user"].IsObject()) {
+            const auto& romUser = entry["rom_user"];
+            if (romUser.HasMember("last_played") && romUser["last_played"].IsString())
+                rom.lastPlayed = parseIso8601ToUnixSeconds(romUser["last_played"].GetString());
+            if (romUser.HasMember("hidden") && romUser["hidden"].IsBool())
+                rom.userHidden = romUser["hidden"].GetBool();
+            if (romUser.HasMember("rating") && romUser["rating"].IsInt())
+                rom.userRating = romUser["rating"].GetInt();
+            if (romUser.HasMember("status") && romUser["status"].IsString())
+                rom.userStatus = romUser["status"].GetString();
+        }
+
         if (entry.HasMember("metadatum") && entry["metadatum"].IsObject()) {
             const auto& metadatum = entry["metadatum"];
             // first_release_date is a Unix timestamp in milliseconds since epoch, not a string -

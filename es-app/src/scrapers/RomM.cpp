@@ -22,13 +22,10 @@
 #include "SystemData.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
-#include "utils/TimeUtil.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 
-#include <cmath>
-#include <iomanip>
 #include <unordered_set>
 
 using namespace rapidjson;
@@ -112,57 +109,20 @@ namespace
             const Value& metadatum {game["metadatum"]};
 
             // first_release_date is a Unix timestamp in MILLISECONDS since epoch, UTC (not
-            // seconds, and not a string). Converted to a UTC calendar date via gmtime_r() rather
-            // than through Utils::Time::DateTime/stringToTime, since those work in local time
-            // and would shift the date by a day in most timezones for what is meant to be a
-            // plain calendar date, not a precise instant.
+            // seconds, and not a string).
             if (metadatum.HasMember("first_release_date") &&
                 metadatum["first_release_date"].IsInt64()) {
-                const int64_t rawTimestampMs {metadatum["first_release_date"].GetInt64()};
-                const time_t releaseTimestamp {static_cast<time_t>(rawTimestampMs / 1000)};
-
-                tm utcTime {};
-#if defined(_WIN64)
-                gmtime_s(&utcTime, &releaseTimestamp);
-#else
-                gmtime_r(&releaseTimestamp, &utcTime);
-#endif
-                const int year {utcTime.tm_year + 1900};
-                const int currentYear {
-                    Utils::Time::DateTime(Utils::Time::now()).getTimeStruct().tm_year + 1900};
-
-                // RomM/IGDB metadata occasionally has an implausible release date for a
-                // specific entry - skip setting the field rather than displaying garbage, and
-                // log the raw value so a genuine parsing/unit bug can be told apart from bad
-                // upstream data.
-                if (year < 1950 || year > currentYear + 2) {
-                    LOG(LogWarning) << "RomM scraper: Ignoring implausible release date for \""
-                                    << game["name"].GetString() << "\" (raw timestamp "
-                                    << rawTimestampMs << " ms -> year " << year << ")";
-                }
-                else {
-                    // Formatted directly to MD_DATE's raw storage format, see the
-                    // "releasedate" default value ("19700101T000000") in MetaData.cpp.
-                    std::stringstream dateStream;
-                    dateStream << std::setfill('0') << std::setw(4) << year << std::setw(2)
-                               << (utcTime.tm_mon + 1) << std::setw(2) << utcTime.tm_mday
-                               << "T000000";
-                    result.mdl.set("releasedate", dateStream.str());
-                }
+                const std::string releaseDate {RomMUtils::formatReleaseDate(
+                    metadatum["first_release_date"].GetInt64() / 1000, game["name"].GetString())};
+                if (!releaseDate.empty())
+                    result.mdl.set("releasedate", releaseDate);
             }
 
             if (metadatum.HasMember("average_rating") && metadatum["average_rating"].IsNumber()) {
-                // RomM ratings are on a 0-100 scale, ES-DE expects 0.0-1.0. Round to the
-                // closest .1 value (i.e. to the closest half-star), mirroring how the
-                // ScreenScraper backend rounds its own rating scale.
-                float ratingVal {metadatum["average_rating"].GetFloat() / 100.0f};
-                ratingVal = std::min(1.0f, std::max(0.0f, ratingVal));
-                ratingVal = ceilf(ratingVal / 0.1f) / 10.0f;
-                if (ratingVal > 0.0f) {
-                    std::stringstream ss;
-                    ss << ratingVal;
-                    result.mdl.set("rating", ss.str());
-                }
+                const std::string rating {
+                    RomMUtils::formatCommunityRating(metadatum["average_rating"].GetFloat())};
+                if (!rating.empty())
+                    result.mdl.set("rating", rating);
             }
 
             if (metadatum.HasMember("genres") && metadatum["genres"].IsArray()) {

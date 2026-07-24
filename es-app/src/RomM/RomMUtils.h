@@ -41,6 +41,19 @@ namespace RomMUtils
     // static so callers (e.g. RomMLibrarySync/RomMCache) can format a persisted sync cursor
     // without duplicating the gmtime_r/gmtime_s platform split.
     std::string formatTimestampUtc(time_t time);
+
+    // Formats a RomM rom's metadatum.first_release_date (Unix seconds, UTC - the caller divides
+    // RomM's own millisecond value down first) as ES-DE's MD_DATE storage format
+    // ("YYYYMMDDT000000"). Returns "" if unset (<= 0) or implausible (a parsed year outside
+    // [1950, this-year + 2], logged via gameName so a genuine parsing/unit bug can be told
+    // apart from bad upstream data) - shared by the RomM scraper backend and the library sync,
+    // which both need to turn the same field into the same ES-DE representation.
+    std::string formatReleaseDate(int64_t firstReleaseDateUnixSeconds, const std::string& gameName);
+
+    // Converts a RomM metadatum.average_rating (0-100, community/IGDB scale) to ES-DE's 0.0-1.0
+    // MD_RATING string, rounded to the closest half-star like the ScreenScraper backend does for
+    // its own rating scale. Returns "" if the result would be 0.
+    std::string formatCommunityRating(float averageRating0to100);
 } // namespace RomMUtils
 
 #endif // ES_APP_ROMM_ROMM_UTILS_H

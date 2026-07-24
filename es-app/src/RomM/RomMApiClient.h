@@ -76,6 +76,13 @@ public:
         // where a rom updated mid-fetch would otherwise be permanently skipped by a future
         // updated_after filter).
         int64_t updatedAt {0};
+        // The following come from "rom_user" - per-user state not driven by rom.updated_at, so
+        // an incremental (updated_after-filtered) sync can miss a fresh change to any of these.
+        int64_t lastPlayed {0};
+        bool userHidden {false};
+        // 0-10 (RomM's own scale), distinct from metadatum.average_rating (0-100, community).
+        int userRating {0};
+        std::string userStatus;
     };
 
     RomMApiClient(const std::string& serverURL, const std::string& token);

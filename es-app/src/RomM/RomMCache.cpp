@@ -94,6 +94,10 @@ RomMCache::CachedRom RomMCache::fromApiRom(const RomMApiClient::Rom& rom)
     cached.regions = rom.regions;
     cached.languages = rom.languages;
     cached.hasMultipleFiles = rom.hasMultipleFiles;
+    cached.lastPlayed = rom.lastPlayed;
+    cached.userHidden = rom.userHidden;
+    cached.userRating = rom.userRating;
+    cached.userStatus = rom.userStatus;
     return cached;
 }
 
@@ -109,6 +113,10 @@ RomMApiClient::Rom RomMCache::toApiRom(const CachedRom& cached)
     rom.regions = cached.regions;
     rom.languages = cached.languages;
     rom.hasMultipleFiles = cached.hasMultipleFiles;
+    rom.lastPlayed = cached.lastPlayed;
+    rom.userHidden = cached.userHidden;
+    rom.userRating = cached.userRating;
+    rom.userStatus = cached.userStatus;
     // urlCover/genres/companies/firstReleaseDate/averageRating/playerCount/files/updatedAt
     // stay at their defaults - applyResults()/buildDisplayNames() never read them.
     return rom;
@@ -158,6 +166,10 @@ void RomMCache::loadFile()
             rom.regions = splitComma(romNode.attribute("regions").as_string());
             rom.languages = splitComma(romNode.attribute("languages").as_string());
             rom.hasMultipleFiles = romNode.attribute("hasMultipleFiles").as_bool();
+            rom.lastPlayed = romNode.attribute("lastPlayed").as_llong();
+            rom.userHidden = romNode.attribute("userHidden").as_bool();
+            rom.userRating = romNode.attribute("userRating").as_int();
+            rom.userStatus = romNode.attribute("userStatus").as_string();
             entry.roms.emplace_back(std::move(rom));
         }
 
@@ -186,6 +198,10 @@ void RomMCache::flush()
             romNode.append_attribute("regions").set_value(joinComma(rom.regions).c_str());
             romNode.append_attribute("languages").set_value(joinComma(rom.languages).c_str());
             romNode.append_attribute("hasMultipleFiles").set_value(rom.hasMultipleFiles);
+            romNode.append_attribute("lastPlayed").set_value(static_cast<long long>(rom.lastPlayed));
+            romNode.append_attribute("userHidden").set_value(rom.userHidden);
+            romNode.append_attribute("userRating").set_value(rom.userRating);
+            romNode.append_attribute("userStatus").set_value(rom.userStatus.c_str());
         }
     }
 

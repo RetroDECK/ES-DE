@@ -7,11 +7,17 @@
 #include "RomM/RomMUtils.h"
 
 #include "HttpReq.h"
+#include "Log.h"
 #include "Settings.h"
 #include "utils/StringUtil.h"
+#include "utils/TimeUtil.h"
 
+#include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <ctime>
+#include <iomanip>
+#include <sstream>
 #include <thread>
 #include <unordered_map>
 
@@ -235,6 +241,54 @@ namespace RomMUtils
         char buffer[32];
         strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", &utcTime);
         return std::string {buffer};
+    }
+
+    std::string formatReleaseDate(int64_t firstReleaseDateUnixSeconds, const std::string& gameName)
+    {
+        if (firstReleaseDateUnixSeconds <= 0)
+            return "";
+
+        // Converted to a UTC calendar date via gmtime_r()/gmtime_s() rather than through
+        // Utils::Time::DateTime/stringToTime, since those work in local time and would shift
+        // the date by a day in most timezones for what is meant to be a plain calendar date,
+        // not a precise instant.
+        const time_t releaseTimestamp {static_cast<time_t>(firstReleaseDateUnixSeconds)};
+        tm utcTime {};
+#if defined(_WIN64)
+        gmtime_s(&utcTime, &releaseTimestamp);
+#else
+        gmtime_r(&releaseTimestamp, &utcTime);
+#endif
+        const int year {utcTime.tm_year + 1900};
+        const int currentYear {
+            Utils::Time::DateTime(Utils::Time::now()).getTimeStruct().tm_year + 1900};
+
+        if (year < 1950 || year > currentYear + 2) {
+            LOG(LogWarning) << "RomM: Ignoring implausible release date for \"" << gameName
+                            << "\" (raw timestamp " << firstReleaseDateUnixSeconds
+                            << " s -> year " << year << ")";
+            return "";
+        }
+
+        // Formatted directly to MD_DATE's raw storage format, see the "releasedate" default
+        // value ("19700101T000000") in MetaData.cpp.
+        std::stringstream dateStream;
+        dateStream << std::setfill('0') << std::setw(4) << year << std::setw(2)
+                   << (utcTime.tm_mon + 1) << std::setw(2) << utcTime.tm_mday << "T000000";
+        return dateStream.str();
+    }
+
+    std::string formatCommunityRating(float averageRating0to100)
+    {
+        // RomM ratings are on a 0-100 scale, ES-DE expects 0.0-1.0.
+        float ratingVal {averageRating0to100 / 100.0f};
+        ratingVal = std::min(1.0f, std::max(0.0f, ratingVal));
+        ratingVal = ceilf(ratingVal / 0.1f) / 10.0f;
+        if (ratingVal <= 0.0f)
+            return "";
+        std::stringstream ss;
+        ss << ratingVal;
+        return ss.str();
     }
 
 } // namespace RomMUtils

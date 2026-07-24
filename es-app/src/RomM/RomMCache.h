@@ -35,7 +35,9 @@ public:
     // Only the fields RomMLibrarySync::applyResults()/buildDisplayNames() actually read -
     // deliberately excludes urlCover/genres/companies/firstReleaseDate/averageRating/
     // playerCount/files/updatedAt, which together account for the vast majority of a rom's
-    // payload size and are never used by the sync path.
+    // payload size and are never used by the sync path. The per-user "rom_user" fields below
+    // are the exception - kept here so an incremental sync reusing a cached rom entry doesn't
+    // regress a previously-known value back to its default.
     struct CachedRom {
         int id {0};
         std::string name;
@@ -46,6 +48,10 @@ public:
         std::vector<std::string> regions;
         std::vector<std::string> languages;
         bool hasMultipleFiles {false};
+        int64_t lastPlayed {0};
+        bool userHidden {false};
+        int userRating {0};
+        std::string userStatus;
     };
 
     static RomMCache& getInstance();
