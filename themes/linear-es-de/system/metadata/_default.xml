@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Visualizzare e riprodurre il file ${system.fullName}</systemDescription>
+            <systemDescription>Lanciare ${system.fullName}</systemDescription>
             <systemHardwareType>Collezione</systemHardwareType>
         </variables>
     </language>
