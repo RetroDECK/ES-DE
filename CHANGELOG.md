@@ -39,6 +39,7 @@
 * (Android) Added D.Smile standalone as an alternative emulator for the vsmile system
 * (Android) Added XenDroid standalone as an alternative emulator for the xbox360 system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
+* (Linux ARM) Removed all RetroArch cores that are not built by the RetroArch project
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin
 * (Linux) Added support for parsing the Path key in .desktop shortcut files

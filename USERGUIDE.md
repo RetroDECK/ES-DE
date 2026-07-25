@@ -418,6 +418,12 @@ This semi-official app will let you display game media on the second screen by u
 
 https://github.com/RobZombie9043/es-de-companion
 
+**Járngreipr** _(Android only)_
+
+https://github.com/BrianJr03/Jarngreipr
+
+This launcher allows you to display game media on the second screen, and it's an alternative to using the semi-official companion app.
+
 **Gamelist Manager**
 
 This application that is available for Linux and Windows lets you view and edit your ES-DE gamelist files, and you can scrape your games using the built-in scraper that supports ArcadeDB, ScreenScraper and EmuMovies. It also supports gamelist bulk editing and has many additional features.
