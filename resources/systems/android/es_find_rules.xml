@@ -607,6 +607,12 @@
             <entry>com.izzy2lost.x1box/.LauncherActivity</entry>
         </rule>
     </emulator>
+    <emulator name="XENDROID">
+        <!-- Microsoft Xbox 360 emulator XenDroid -->
+        <rule type="androidpackage">
+            <entry>xendroid.compose/.EmulatorHostActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="YABASANSHIRO-2">
         <!-- Sega Saturn emulator Yaba Sanshiro 2 -->
         <rule type="androidpackage">
