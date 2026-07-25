@@ -420,9 +420,9 @@ https://github.com/RobZombie9043/es-de-companion
 
 **Járngreipr** _(Android only)_
 
-https://github.com/BrianJr03/Jarngreipr
-
 This launcher allows you to display game media on the second screen, and it's an alternative to using the semi-official companion app.
+
+https://github.com/BrianJr03/Jarngreipr
 
 **Gamelist Manager**
 

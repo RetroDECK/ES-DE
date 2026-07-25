@@ -61,7 +61,7 @@ If you have set ES-DE as your home app then for some devices the onboarding conf
 ## Does ES-DE run on dual-screen devices?
 
 Yes ES-DE runs fine on dual-screen devices, for example you can launch the app on either screen, move it between the screens on the fly (which will just cause a reload and an adjustment to the aspect ratio of the new screen) and you can also choose to launch games from ES-DE on the other display via the _Launch games on the other screen_ setting in the _Other settings_ menu. ES-DE does however not render on both screens. Although it's possible that support for this will get added in the future it's unlikely as the app would need to be rearchitected, and more importantly the theme developers would need to support it for a wide range of devices. But there is a solution available in the form of a semi-official companion app which will allow you to use the custom event scripts functionality in ES-DE to display game media on the second screen. You can read the setup instructions and download the app from its GitHub site:\
-https://github.com/RobZombie9043/es-de-companion\
+https://github.com/RobZombie9043/es-de-companion \
 As an alternative to the companion app you could use Járngreipr:\
 https://github.com/BrianJr03/Jarngreipr
 

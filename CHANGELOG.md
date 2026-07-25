@@ -40,8 +40,8 @@
 * (Android) Added XenDroid standalone as an alternative emulator for the xbox360 system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Linux ARM) Removed all RetroArch cores that are not built by the RetroArch project
-* (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin
+* (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
 * (Linux) Added ~/AppImages/ as an additional search path for all AppImages
 * (Linux) Changed the AppImage find rule entries for PCSX2 to avoid collisions with PCSX2x6
