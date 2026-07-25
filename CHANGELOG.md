@@ -37,6 +37,7 @@
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
 * (Android) Added D.Smile standalone as an alternative emulator for the vsmile system
+* (Android) Added XenDroid standalone as an alternative emulator for the xbox360 system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin

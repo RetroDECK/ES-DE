@@ -8,9 +8,9 @@ Table of contents:
 
 ## Overview
 
-Although the official ARM64/AArch64 AppImage may run on single-board computers and handhelds and whatnot, this is not the main objective for the port, but rather to run on current and future AArch64 desktop-class machines. For example Ampere Altra workstations, Qualcomm Snapdragon X Elite laptops and Apple Macintosh computers running Asahi Linux. Future devices like the Steam Frame and computers using the Nvidia N1X and Qualcomm X2 Elite processors are also in scope. For this reason the AppImage is not built with OpenGL ES support but instead relies on desktop OpenGL drivers, or the Zink translation layer on top of Vulkan.
+Although the official ARM64/AArch64 AppImage may run on single-board computers and whatnot, this is not the main objective for the port, but rather to run on AArch64 desktop-class operating systems. For example any device running SteamOS, or Linux on Ampere Altra workstations, Qualcomm Snapdragon X Elite laptops or Nvidia N1 and N1X hardware. Apple Macintosh computers running Asahi Linux is also an intended target platform. For this reason the AppImage is not built with OpenGL ES support but instead relies on desktop OpenGL drivers, or the Zink translation layer on top of Vulkan.
 
-The build is currently experimental, but it will hopefully mature over time. Note that at the time of writing the RetroArch AArch64 release does not include any downloadable cores, instead a somehow limited set of cores can be downloaded from the following repository: \
+Note that at the time of writing the RetroArch AArch64 release does not include any downloadable cores, instead a somehow limited set of cores can be downloaded from the following repository: \
 https://github.com/christianhaitian/retroarch-cores
 
 Support for a lot of standalone emulators is also missing as compared to Linux on x86/x64, but as many of these have been ported to macOS ARM and Android they will hopefully be officially released on Linux AArch64 as well.

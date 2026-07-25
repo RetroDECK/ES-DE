@@ -469,9 +469,9 @@ https://github.com/woesss/JL-Mod/releases
 
 ### Kenji-NX
 
-This emulator can be downloaded from their GitHub site.
+This emulator can be downloaded from their Forgejo site.
 
-https://github.com/Kenji-NX/Android-Releases/releases
+https://git.ryujinx.app/projects/Kenji-NX/releases
 
 ### Lime3DS
 

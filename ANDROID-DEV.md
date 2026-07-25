@@ -479,9 +479,9 @@ https://github.com/woesss/JL-Mod/releases
 
 ### Kenji-NX
 
-This emulator can be downloaded from their GitHub site.
+This emulator can be downloaded from their Forgejo site.
 
-https://github.com/Kenji-NX/Android-Releases/releases
+https://git.ryujinx.app/projects/Kenji-NX/releases
 
 ### Lime3DS
 
@@ -735,6 +735,12 @@ This emulator can be installed from the Play store (as a paid app) or downloaded
 
 https://play.google.com/store/apps/details?id=com.izzy2lost.x1box \
 https://github.com/izzy2lost/xemu/releases
+
+### XenDroid
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/rfandango/XenDroid/releases
 
 ### Yaba Sanshiro 2
 
@@ -1084,7 +1090,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x1                    | Sharp X1                                       | X Millennium                      | MAME4droid Current [Diskette] **(Standalone)**,<br>MAME4droid Current [Tape] **(Standalone)** | Yes for MAME4droid Current | Single archive or diskette/tape file |
 | x68000                | Sharp X68000                                   | PX68k                             | MAME4droid Current **(Standalone)**  | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | X1 BOX **(Standalone)**           | hakuX **(Standalone)**            | Yes          | Single .iso or .xiso file            |
-| xbox360               | Microsoft Xbox 360                             | aX360e **(Standalone)**           |                                   | No           | See the specific _Microsoft Xbox 360_ section in the user guide |
+| xbox360               | Microsoft Xbox 360                             | aX360e **(Standalone)**           | XenDroid **(Standalone)**         | No           | See the specific _Microsoft Xbox 360_ section in the user guide |
 | xboxone               | Microsoft Xbox One                             | _Placeholder_                     |                                   |              |                                      |
 | zmachine              | Infocom Z-machine                              | MojoZork                          |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   | No           |                                      |
