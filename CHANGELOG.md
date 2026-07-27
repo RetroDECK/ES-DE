@@ -8,6 +8,7 @@
 
 ### Detailed list of changes
 
+* Added support for scraping videos using TheGamesDB
 * Added translations for Czech (cs_CZ)
 * Added a "Y" button shortcut to the game importer selection screen
 * Added a SplashScreenProgressBarColor option that can be manually set in es_settings.xml to customize the splash screen progress bar color
@@ -54,6 +55,9 @@
 * Added the .a0, .b0 and .rom file extensions to the vic20 system
 * Added the .dsi and .ids file extensions to the nds system
 * (linear-es-de) Updated the system metadata from the upstream system-metadata repository
+* (Linux) Fixed an AppImage build issue caused by a URL change on GitLab
+* Added .m4v as a supported video file extension
+* The scraper will no longer download media with unsupported file extensions
 * The UTF8-CPP dependency is now only built on Android
 * (Android) Updated the build environment
 * (Android) Updated a number of Java and Kotlin dependencies

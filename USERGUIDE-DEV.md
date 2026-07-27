@@ -3585,7 +3585,7 @@ Here's an overview of what's supported when using these scrapers:
 | Game names                        | Yes           | Yes        |
 | Ratings                           | Yes           | No         |
 | Other game metadata               | Yes           | Yes        |
-| Videos                            | Yes           | No         |
+| Videos                            | Yes           | Yes        |
 | Screenshots                       | Yes           | Yes        |
 | Title screens                     | Yes           | Yes        |
 | Box covers                        | Yes           | Yes        |
@@ -3791,7 +3791,7 @@ Downloads game ratings.
 
 This includes the game description, release date, developer, publisher, genre and the number of players.
 
-**Videos** _(ScreenScraper only)_
+**Videos**
 
 Videos of actual gameplay.
 
