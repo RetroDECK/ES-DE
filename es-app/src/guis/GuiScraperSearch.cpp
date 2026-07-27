@@ -893,32 +893,39 @@ void GuiScraperSearch::update(int deltaTime)
     }
 
     if (mMDRetrieveURLsHandle && mMDRetrieveURLsHandle->status() != ASYNC_IN_PROGRESS) {
+        // This is only used when scraping with TheGamesDB.
         if (mMDRetrieveURLsHandle->status() == ASYNC_DONE) {
-            auto results_media = mMDRetrieveURLsHandle->getResults();
-            auto statusString_media = mMDRetrieveURLsHandle->getStatusString();
-            auto results_scrape = mScraperResults;
+            auto resultsMedia = mMDRetrieveURLsHandle->getResults();
+            auto statusStringMedia = mMDRetrieveURLsHandle->getStatusString();
+            auto resultsScrape = mScraperResults;
             mMDRetrieveURLsHandle.reset();
             mScraperResults.clear();
 
-            // Combine the intial scrape results with the media URL results.
-            for (auto it = results_media.cbegin(); it != results_media.cend(); ++it) {
-                for (unsigned int i = 0; i < results_scrape.size(); ++i) {
-                    if (results_scrape[i].gameID == it->gameID) {
-                        results_scrape[i].box3DUrl = it->box3DUrl;
-                        results_scrape[i].backcoverUrl = it->backcoverUrl;
-                        results_scrape[i].coverUrl = it->coverUrl;
-                        results_scrape[i].fanartUrl = it->fanartUrl;
-                        results_scrape[i].marqueeUrl = it->marqueeUrl;
-                        results_scrape[i].screenshotUrl = it->screenshotUrl;
-                        results_scrape[i].titlescreenUrl = it->titlescreenUrl;
-                        results_scrape[i].physicalmediaUrl = it->physicalmediaUrl;
-                        results_scrape[i].videoUrl = it->videoUrl;
-                        results_scrape[i].scraperRequestAllowance = it->scraperRequestAllowance;
-                        results_scrape[i].mediaURLFetch = COMPLETED;
+            // Combine the initial scrape results with the media URL results, and if video scraping
+            // is enabled we need to combine the two results as there is a separate API call for
+            // retrieving the video URL.
+            for (auto it = resultsMedia.cbegin(); it != resultsMedia.cend(); ++it) {
+                for (unsigned int i {0}; i < resultsScrape.size(); ++i) {
+                    if (it->videoRequest && resultsScrape[i].gameID == it->gameID) {
+                        resultsScrape[i].videoUrl = it->videoUrl;
+                        continue;
+                    }
+
+                    if (resultsScrape[i].gameID == it->gameID) {
+                        resultsScrape[i].box3DUrl = it->box3DUrl;
+                        resultsScrape[i].backcoverUrl = it->backcoverUrl;
+                        resultsScrape[i].coverUrl = it->coverUrl;
+                        resultsScrape[i].fanartUrl = it->fanartUrl;
+                        resultsScrape[i].marqueeUrl = it->marqueeUrl;
+                        resultsScrape[i].screenshotUrl = it->screenshotUrl;
+                        resultsScrape[i].titlescreenUrl = it->titlescreenUrl;
+                        resultsScrape[i].physicalmediaUrl = it->physicalmediaUrl;
+                        resultsScrape[i].scraperRequestAllowance = it->scraperRequestAllowance;
+                        resultsScrape[i].mediaURLFetch = COMPLETED;
                     }
                 }
             }
-            onSearchDone(results_scrape);
+            onSearchDone(resultsScrape);
         }
         else if (mMDRetrieveURLsHandle->status() == ASYNC_ERROR) {
             onSearchError(mMDRetrieveURLsHandle->getStatusString(),

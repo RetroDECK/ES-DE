@@ -257,13 +257,22 @@ void thegamesdb_generate_json_scraper_requests(
     std::vector<ScraperSearchResult>& results)
 {
     resources.prepare();
-    std::string path {"https://api.thegamesdb.net/v1"};
     const std::string apiKey {std::string("apikey=") + resources.getApiKey()};
 
-    path.append("/Games/Images/GamesImages?").append(apiKey).append("&games_id=").append(gameIDs);
+    std::string pathImages {"https://api.thegamesdb.net/v1"};
+    pathImages.append("/Games/Images?").append(apiKey).append("&games_id=").append(gameIDs);
 
     requests.push(
-        std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(requests, results, path)));
+        std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(requests, results, pathImages)));
+
+    // If video scraping is disabled then don't check for videos as it would waste an API call.
+    if (Settings::getInstance()->getBool("ScrapeVideos")) {
+        std::string pathVideos {"https://api.thegamesdb.net/v1"};
+        pathVideos.append("/Games/Videos?").append(apiKey).append("&games_id=").append(gameIDs);
+
+        requests.push(std::unique_ptr<ScraperRequest>(
+            new TheGamesDBJSONRequest(requests, results, pathVideos)));
+    }
 }
 
 namespace
@@ -427,25 +436,30 @@ namespace
     }
 } // namespace
 
-void processMediaURLs(const Value& images,
+void processMediaURLs(const Value& media,
                       const std::string& base_url,
-                      std::vector<ScraperSearchResult>& results)
+                      std::vector<ScraperSearchResult>& results,
+                      bool isImages)
 {
     ScraperSearchResult result;
 
     // Step through each game ID in the JSON server response.
-    for (auto it = images.MemberBegin(); it != images.MemberEnd(); ++it) {
+    for (auto it = media.MemberBegin(); it != media.MemberEnd(); ++it) {
         result.gameID = it->name.GetString();
-        const Value& gameMedia {images[it->name]};
+        const Value& gameMedia {media[it->name]};
         result.coverUrl = "";
         result.fanartUrl = "";
         result.marqueeUrl = "";
         result.screenshotUrl = "";
         result.titlescreenUrl = "";
+        result.videoUrl = "";
+
+        if (!isImages)
+            result.videoRequest = true;
 
         // Quite excessive testing for valid values, but you never know what the server has
         // returned and we don't want to crash the program due to malformed data.
-        if (gameMedia.IsArray()) {
+        if (gameMedia.IsArray() && isImages) {
             for (SizeType i {0}; i < gameMedia.Size(); ++i) {
                 std::string mediatype;
                 std::string mediaside;
@@ -473,6 +487,15 @@ void processMediaURLs(const Value& images,
                 if (mediatype == "titlescreen")
                     if (gameMedia[i]["filename"].IsString())
                         result.titlescreenUrl = base_url + gameMedia[i]["filename"].GetString();
+            }
+        }
+        else if (gameMedia.IsArray()) {
+            for (SizeType i {0}; i < gameMedia.Size(); ++i) {
+                // Always select the first video entry in the response.
+                if (gameMedia[i].HasMember("filename") && gameMedia[i]["filename"].IsString()) {
+                    result.videoUrl = base_url + gameMedia[i]["filename"].GetString();
+                    break;
+                }
             }
         }
         result.mediaURLFetch = COMPLETED;
@@ -508,15 +531,16 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             baseImageUrlLarge = base_url["large"].GetString();
         }
         else {
-            LOG(LogWarning) << "TheGamesDBJSONRequest - No URL path for large images\n";
+            LOG(LogWarning)
+                << "TheGamesDBJSONRequest: Response contained no URL path for large images";
             return;
         }
 
         try {
-            processMediaURLs(images, baseImageUrlLarge, results);
+            processMediaURLs(images, baseImageUrlLarge, results, true);
         }
         catch (std::runtime_error& e) {
-            LOG(LogError) << "Error while processing media URLs: " << e.what();
+            LOG(LogError) << "Error while processing image URLs: " << e.what();
         }
 
         // Find how many more requests we can make before the scraper
@@ -539,11 +563,32 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         }
         return;
     }
+    else if (doc.HasMember("data") && doc["data"].HasMember("videos") &&
+             doc["data"]["videos"].IsObject()) {
+        const Value& videos {doc["data"]["videos"]};
+        std::string baseVideoUrl;
+
+        if (doc["data"].HasMember("base_url") && doc["data"]["base_url"].IsString()) {
+            baseVideoUrl = doc["data"]["base_url"].GetString();
+        }
+        else {
+            LOG(LogWarning) << "TheGamesDBJSONRequest: Response contained no URL path for videos";
+            return;
+        }
+
+        try {
+            processMediaURLs(videos, baseVideoUrl, results, false);
+        }
+        catch (std::runtime_error& e) {
+            LOG(LogError) << "Error while processing video URLs: " << e.what();
+        }
+        return;
+    }
 
     // These process steps are for the initial scraping response.
     if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
         !doc["data"]["games"].IsArray()) {
-        LOG(LogWarning) << "TheGamesDBJSONRequest - Response had no game data\n";
+        LOG(LogWarning) << "TheGamesDBJSONRequest: Response contained no game data";
         return;
     }
 

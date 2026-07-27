@@ -307,15 +307,6 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Videos are not supported by TheGamesDB, so gray out the option if this scraper is selected.
-    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scrapeVideos->setEnabled(false);
-        scrapeVideos->setOpacity(DISABLED_OPACITY);
-        scrapeVideos->getParent()
-            ->getChild(scrapeVideos->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
-
     // Scrape screenshots images.
     auto scrapeScreenshots = std::make_shared<SwitchComponent>();
     scrapeScreenshots->setState(Settings::getInstance()->getBool("ScrapeScreenshots"));
@@ -1313,7 +1304,7 @@ void GuiScraperMenu::start()
             contentToScrape = true;
             break;
         }
-        if (scraperService == "screenscraper" && Settings::getInstance()->getBool("ScrapeVideos")) {
+        if (Settings::getInstance()->getBool("ScrapeVideos")) {
             contentToScrape = true;
             break;
         }
