@@ -584,6 +584,11 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         }
         return;
     }
+    else if (doc.HasMember("data") && !doc["data"].HasMember("games") &&
+             doc["data"].HasMember("videos")) {
+        // No videos were available for the game, but it's still a valid response.
+        return;
+    }
 
     // These process steps are for the initial scraping response.
     if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
