@@ -419,9 +419,6 @@ void RomMLibrarySync::applyResults()
                 continue;
             seenRomIds.insert(rom.id);
 
-            // The name shown in the list is also the name the file will be saved under once
-            // downloaded (GuiRomMDownload just saves to the synthetic FileData's own path), so
-            // it needs to be filesystem-safe and keep the original extension.
             const std::string& displayName {displayNames.at(rom.id)};
             // RomM's list endpoint only reliably reports has_multiple_files, not the files
             // array itself (only hydrated on the single-rom detail endpoint GuiRomMDownload
@@ -437,7 +434,9 @@ void RomMLibrarySync::applyResults()
             // getExtension() returns "." for "no extension" - never emit a bare trailing dot.
             if (extension == ".")
                 extension = ".m3u";
-            const std::string localFileName {sanitizeForFileName(displayName) + extension};
+            const std::string baseName {isMultiDisc ? displayName :
+                                                      Utils::FileSystem::getStem(rom.fsName)};
+            const std::string localFileName {sanitizeForFileName(baseName) + extension};
             const std::string desiredPath {system->getStartPath() + "/" + localFileName};
 
             std::string carriedOverLastPlayed;
