@@ -10,6 +10,7 @@
 #include "HttpReq.h"
 #include "Log.h"
 #include "RomM/RomMApiClient.h"
+#include "RomM/RomMLocalFavorites.h"
 #include "Settings.h"
 #include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
@@ -289,6 +290,10 @@ void GuiRomMDownload::finishOnMainThread()
         const std::string oldName {newName.substr(0, newName.size() - extension.size())};
         migrateMultiDiscMedia(oldName, newName, mGame->getSystemName());
     }
+
+    // Favorite now persists as ordinary metadata - the local-only intent entry is no longer needed.
+    RomMLocalFavorites::getInstance().setFavorite(atoi(mGame->metadata.get("rommid").c_str()),
+                                                  false);
 
     // Clears the badge on the next onFileChanged() and lets GamelistFileParser's write-side
     // guard stop excluding this entry, so it gets persisted to gamelist.xml normally.

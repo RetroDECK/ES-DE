@@ -10,6 +10,7 @@
 #include "FileFilterIndex.h"
 #include "Log.h"
 #include "RomM/RomMCache.h"
+#include "RomM/RomMLocalFavorites.h"
 #include "RomM/RomMUtils.h"
 #include "Settings.h"
 #include "SystemData.h"
@@ -109,15 +110,18 @@ namespace
                                Utils::Time::DateTime(static_cast<time_t>(rommLastPlayedUnix)));
     }
 
-    // Only called for still-remote entries - once downloaded, hidden/completed become the
-    // user's own to control, never silently overwritten by a later sync.
+    // Only called for still-remote entries - once downloaded, hidden/completed/favorite become
+    // the user's own to control, never silently overwritten by a later sync.
     void applyRomMPlayerData(FileData* file, const RomMApiClient::Rom& rom)
     {
         file->metadata.set("hidden", rom.userHidden ? "true" : "false");
         file->metadata.set(
             "completed",
-            (rom.userStatus == "finished" || rom.userStatus == "completed_100") ? "true" :
-                                                                                   "false");
+            (rom.userStatus == "finished" || rom.userStatus == "completed_100") ? "true" : "false");
+        // Favorite is local-only intent (RomMLocalFavorites), not mirrored from RomM - reapply
+        // it since this FileData is rebuilt from scratch every sync.
+        file->metadata.set("favorite",
+                           RomMLocalFavorites::getInstance().isFavorite(rom.id) ? "true" : "false");
     }
 
     // Only called for still-remote entries - once downloaded, these become the scraper's (or
@@ -510,8 +514,12 @@ void RomMLibrarySync::applyResults()
                 seenRomIds.find(atoi(file->metadata.get("rommid").c_str())) == seenRomIds.cend())
                 toRemove.push_back(file);
         }
-        for (FileData* file : toRemove)
+        for (FileData* file : toRemove) {
+            // Gone from RomM entirely - drop any lingering local-only favorite intent for it too.
+            RomMLocalFavorites::getInstance().setFavorite(
+                atoi(file->metadata.get("rommid").c_str()), false);
             ViewController::getInstance()->getGamelistView(system)->remove(file, false);
+        }
 
         if (addedAny || !toRemove.empty()) {
             rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),

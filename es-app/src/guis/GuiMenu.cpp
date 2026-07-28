@@ -22,6 +22,7 @@
 #include "Log.h"
 #include "RomM/RomMCache.h"
 #include "RomM/RomMLibrarySync.h"
+#include "RomM/RomMLocalFavorites.h"
 #include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "SystemData.h"
@@ -209,6 +210,7 @@ void GuiMenu::openRomMLoginOptions()
             Settings::getInstance()->saveFile();
             RomMCache::getInstance().clearAll();
             RomMCache::getInstance().flush();
+            RomMLocalFavorites::getInstance().clearAll();
             // Must close before rescanning - rescanROMDirectory() may push its own GUI (e.g.
             // noGamesDialog()), which closing afterward would immediately tear down again.
             GuiMenu::close(true);

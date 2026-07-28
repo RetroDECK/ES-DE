@@ -22,6 +22,7 @@
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
 #include "MameNames.h"
+#include "RomM/RomMLocalFavorites.h"
 #include "Sound.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -31,6 +32,8 @@
 #include "views/ViewController.h"
 
 #include <SDL2/SDL.h>
+
+#include <cstdlib>
 
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     : mMenu {_("GAMELIST OPTIONS")}
@@ -517,6 +520,8 @@ void GuiGamelistOptions::openMetaDataEd()
             else
                 Utils::FileSystem::removeFile(file->getPath());
 
+            const bool wasFavorite {file->metadata.get("favorite") == "true"};
+
             resetMetadataFunc();
 
             file->setDeletionFlag(true);
@@ -524,6 +529,11 @@ void GuiGamelistOptions::openMetaDataEd()
             file->setDeletionFlag(false);
 
             file->metadata.set("rommremote", "true");
+            if (wasFavorite) {
+                RomMLocalFavorites::getInstance().setFavorite(
+                    atoi(file->metadata.get("rommid").c_str()), true);
+                file->metadata.set("favorite", "true");
+            }
             file->getSystem()->onMetaDataSavePoint();
 
             mWindow->invalidateCachedBackground();
