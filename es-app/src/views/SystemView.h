@@ -112,6 +112,12 @@ public:
 
     std::vector<HelpPrompt> getHelpPrompts() override;
 
+    void updateAllGameCounts()
+    {
+        for (auto& elements : mSystemElements)
+            updateGameCount(elements.system);
+    }
+
 protected:
     void onCursorChanged(const CursorState& state);
 

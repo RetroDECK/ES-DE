@@ -1392,6 +1392,10 @@ void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync, bool resc
     sync.applyResults();
     LOG(LogInfo) << "RomM sync complete: " << sync.getAddedCount() << " game(s) added, "
                  << sync.getRemovedCount() << " game(s) removed";
+
+    if (mSystemListView)
+        mSystemListView->updateAllGameCounts();
+
     mWindow->setBlockInput(false);
 }
 
