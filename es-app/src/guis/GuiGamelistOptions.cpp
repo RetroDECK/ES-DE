@@ -536,6 +536,13 @@ void GuiGamelistOptions::openMetaDataEd()
             }
             file->getSystem()->onMetaDataSavePoint();
 
+            // The game just moved into the "not yet downloaded" bucket, so its position among
+            // its siblings needs to be recomputed - onFileChanged() alone just redisplays the
+            // existing child order.
+            FileData* rootFolder {file->getSystem()->getRootFolder()};
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                             Settings::getInstance()->getBool("FavoritesFirst"));
+
             mWindow->invalidateCachedBackground();
             ViewController::getInstance()->onFileChanged(file, true);
             return;

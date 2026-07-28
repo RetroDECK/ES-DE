@@ -12,6 +12,7 @@
 #include "RomM/RomMApiClient.h"
 #include "RomM/RomMLocalFavorites.h"
 #include "Settings.h"
+#include "SystemData.h"
 #include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/LocalizationUtil.h"
@@ -299,6 +300,12 @@ void GuiRomMDownload::finishOnMainThread()
     // guard stop excluding this entry, so it gets persisted to gamelist.xml normally.
     mGame->metadata.set("rommremote", "false");
     mGame->getSystem()->onMetaDataSavePoint();
+
+    // The game just left the "not yet downloaded" bucket, so its position among its siblings
+    // needs to be recomputed - onFileChanged() alone just redisplays the existing child order.
+    FileData* rootFolder {mGame->getSystem()->getRootFolder()};
+    rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                     Settings::getInstance()->getBool("FavoritesFirst"));
     ViewController::getInstance()->onFileChanged(mGame, true);
 
     // Per design: no auto-launch, a second explicit select/launch is required.
