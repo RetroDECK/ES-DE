@@ -113,7 +113,8 @@ public:
                SystemEnvironmentData* envData,
                const std::string& themeFolder,
                bool CollectionSystem = false,
-               bool CustomCollectionSystem = false);
+               bool CustomCollectionSystem = false,
+               bool matchesRomMPlatform = false);
 
     ~SystemData();
 

@@ -537,7 +537,8 @@ SystemData::SystemData(const std::string& name,
                        SystemEnvironmentData* envData,
                        const std::string& themeFolder,
                        bool CollectionSystem,
-                       bool CustomCollectionSystem)
+                       bool CustomCollectionSystem,
+                       bool matchesRomMPlatform)
     : mName {name}
     , mFullName {fullName}
     , mSortName {sortName}
@@ -561,9 +562,7 @@ SystemData::SystemData(const std::string& name,
         mRootFolder->metadata.set("name", mFullName);
 
         if (!Settings::getInstance()->getBool("ParseGamelistOnly")) {
-            // If there was an error populating the folder or if there were no games found,
-            // then don't continue with any additional process steps for this system.
-            if (!populateFolder(mRootFolder))
+            if (!populateFolder(mRootFolder) && !matchesRomMPlatform)
                 return;
         }
 
@@ -1198,7 +1197,8 @@ bool SystemData::loadConfig()
             envData->mLaunchCommands = commands;
             envData->mPlatformIds = platformIds;
 
-            SystemData* newSys {new SystemData(name, fullname, sortName, envData, themeFolder)};
+            SystemData* newSys {new SystemData(name, fullname, sortName, envData, themeFolder,
+                                               false, false, matchesRomMPlatform)};
             bool onlyHidden {false};
 
             // If the option to show hidden games has been disabled, then check whether all
