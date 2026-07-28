@@ -2584,7 +2584,10 @@ void GuiMenu::openUtilities()
                     for (auto system : SystemData::sSystemVector)
                         system->writeMetaData();
                 }
-                ViewController::getInstance()->rescanROMDirectory();
+                if (RomMUtils::isLoggedIn())
+                    ViewController::getInstance()->runRomMSyncWithSplashScreen(false, true);
+                else
+                    ViewController::getInstance()->rescanROMDirectory();
             },
             _("CANCEL"), nullptr, "", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
