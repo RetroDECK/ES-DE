@@ -48,6 +48,11 @@ target_link_libraries(es-pdf-convert PRIVATE ${POPPLER_CPP_LIBRARY})
 
 if(WIN32)
     set_target_properties(es-pdf-convert PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/es-pdf-converter" INSTALL_RPATH_USE_LINK_PATH TRUE)
+    if(CMAKE_BUILD_TYPE MATCHES Debug)
+        # Always make a release build of es-pdf-convert.exe or otherwise it will crash as Poppler is a release build and the two have to match.
+        target_compile_options(es-pdf-convert PRIVATE /O2 /MD)
+        string(REPLACE "/RTC1" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+    endif()
 elseif(IOS)
     set_target_properties(es-pdf-convert PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE
                           XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${IOS_DEVELOPMENT_TEAM})
