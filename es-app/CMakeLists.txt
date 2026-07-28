@@ -40,6 +40,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMLogin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
@@ -105,6 +106,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMLogin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp

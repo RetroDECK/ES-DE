@@ -35,6 +35,7 @@
 #include "guis/GuiMenu.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiRomMDownload.h"
+#include "guis/GuiRomMLogin.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/LocalizationUtil.h"
@@ -271,16 +272,18 @@ void ViewController::invalidSystemsFileDialog()
 void ViewController::noGamesDialog()
 {
 #if defined(__ANDROID__) || defined(__IOS__)
-    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR "
-                             "PLACE THEM MANUALLY IN THE CONFIGURED ROM DIRECTORY. "
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES, "
+                             "PLACE THEM MANUALLY IN THE CONFIGURED ROM DIRECTORY, "
+                             "OR LOG IN TO A ROMM SERVER TO DOWNLOAD GAMES REMOTELY. "
                              "OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY STRUCTURE "
                              "WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING "
                              "SOME INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. "
                              "THIS IS THE CONFIGURED ROM DIRECTORY:\n");
 #else
-    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR "
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES, "
                              "PLACE THEM MANUALLY IN THE CURRENTLY CONFIGURED ROM "
-                             "DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+                             "DIRECTORY, OR LOG IN TO A ROMM SERVER TO DOWNLOAD GAMES "
+                             "REMOTELY. YOU CAN ALSO CHANGE THE ROM PATH AND "
                              "OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE "
                              "WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING "
                              "SOME INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. "
@@ -296,6 +299,19 @@ void ViewController::noGamesDialog()
     auto gameImporterUpdateFunc = [&]() {
         delete mNoGamesMessageBox;
         ViewController::getInstance()->rescanROMDirectory();
+    };
+
+    auto rommLoginButtonFunc = [this] {
+        GuiRomMLogin::push(
+            mWindow, mMenuColorPrimary,
+            [this](const std::string&) {
+                delete mNoGamesMessageBox;
+                ViewController::getInstance()->runRomMSyncWithSplashScreen();
+            },
+            [this] {
+                delete mNoGamesMessageBox;
+                ViewController::getInstance()->rescanROMDirectory();
+            });
     };
 
 #if defined(__ANDROID__) || defined(__IOS__)
@@ -413,22 +429,28 @@ void ViewController::noGamesDialog()
                      0.78f :
                      0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
         },
-        _("QUIT"),
+#if defined(__ANDROID__) || defined(__IOS__)
+        _("ROMM"), rommLoginButtonFunc, _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-#if defined(__ANDROID__) || defined(__IOS__)
-        "", nullptr, nullptr, true, false,
+        nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
 #else
-        nullptr, true, false,
+        _("ROMM"), rommLoginButtonFunc, nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
-             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+             0.62f * (1.778f / mRenderer->getScreenAspectRatio())),
+        _("QUIT"),
+        [] {
+            SDL_Event quit {};
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+        });
 #endif
 
     mWindow->pushGui(mNoGamesMessageBox);

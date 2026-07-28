@@ -20,9 +20,7 @@
 #include "FileSorts.h"
 #include "GamelistFileParser.h"
 #include "Log.h"
-#include "RomM/RomMCache.h"
 #include "RomM/RomMLibrarySync.h"
-#include "RomM/RomMLocalFavorites.h"
 #include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "SystemData.h"
@@ -38,7 +36,7 @@
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOrphanedDataCleanup.h"
-#include "guis/GuiRomMPairing.h"
+#include "guis/GuiRomMLogin.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiSystemStatusOptions.h"
@@ -188,70 +186,17 @@ void GuiMenu::openRomMOptions()
 
 void GuiMenu::openRomMLoginOptions()
 {
-    auto s = new GuiSettings(_("LOGIN"));
-
-    const bool isLoggedIn {RomMUtils::isLoggedIn()};
-
-    // Fixed while logged in - changing it out from under an active pairing would leave
-    // RomMToken silently associated with the wrong server.
-    std::shared_ptr<TextComponent> rommServerURL;
-    if (isLoggedIn) {
-        auto serverURLDisplay = std::make_shared<TextComponent>(
-            Settings::getInstance()->getString("RomMServerURL"), Font::get(FONT_SIZE_MEDIUM),
-            mMenuColorPrimary, ALIGN_RIGHT);
-        s->addWithLabel(_("SERVER URL"), serverURLDisplay);
-    }
-    else {
-        rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
-                                                        mMenuColorPrimary, ALIGN_RIGHT);
-        s->addEditableTextComponent(_("SERVER URL"), rommServerURL,
-                                    Settings::getInstance()->getString("RomMServerURL"));
-        rommServerURL->setSize(0.0f, rommServerURL->getFont()->getHeight());
-        s->addSaveFunc([rommServerURL, s] {
-            if (rommServerURL->getValue() != Settings::getInstance()->getString("RomMServerURL")) {
-                Settings::getInstance()->setString("RomMServerURL", rommServerURL->getValue());
-                s->setNeedsSaving();
-            }
-        });
-    }
-
-    if (isLoggedIn) {
-        ComponentListRow logoutRow;
-        logoutRow.addElement(std::make_shared<TextComponent>(
-                                 _("LOG OUT"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
-                             true);
-        logoutRow.makeAcceptInputHandler([this] {
-            Settings::getInstance()->setString("RomMToken", "");
-            Settings::getInstance()->setString("RomMTokenExpiresAt", "");
-            Settings::getInstance()->saveFile();
-            RomMCache::getInstance().clearAll();
-            RomMCache::getInstance().flush();
-            RomMLocalFavorites::getInstance().clearAll();
-            // Must close before rescanning - rescanROMDirectory() may push its own GUI (e.g.
-            // noGamesDialog()), which closing afterward would immediately tear down again.
+    // close(true) deletes this GuiMenu - don't touch `this`/mWindow after it.
+    GuiRomMLogin::push(
+        mWindow, mMenuColorPrimary,
+        [this](const std::string&) {
+            GuiMenu::close(true);
+            ViewController::getInstance()->runRomMSyncWithSplashScreen();
+        },
+        [this] {
             GuiMenu::close(true);
             ViewController::getInstance()->rescanROMDirectory();
         });
-        s->addRow(logoutRow);
-    }
-    else {
-        ComponentListRow pairRow;
-        pairRow.addElement(std::make_shared<TextComponent>(
-                               _("START PAIR"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
-                           true);
-        pairRow.makeAcceptInputHandler([this, rommServerURL] {
-            auto onPaired = [this, rommServerURL](const std::string& resolvedUrl) {
-                rommServerURL->setValue(resolvedUrl);
-                // close(true) deletes this GuiMenu - don't touch `this`/mWindow after it.
-                GuiMenu::close(true);
-                ViewController::getInstance()->runRomMSyncWithSplashScreen();
-            };
-            mWindow->pushGui(new GuiRomMPairing(rommServerURL->getValue(), onPaired));
-        });
-        s->addRow(pairRow);
-    }
-
-    mWindow->pushGui(s);
 }
 
 void GuiMenu::openRomMSyncOptions()

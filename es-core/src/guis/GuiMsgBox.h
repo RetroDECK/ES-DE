@@ -3,8 +3,8 @@
 //  ES-DE Frontend
 //  GuiMsgBox.h
 //
-//  Popup message dialog with a notification text and a choice of one,
-//  two or three buttons.
+//  Popup message dialog with a notification text and a choice of up to
+//  five buttons.
 //
 
 #ifndef ES_CORE_GUIS_GUI_MSG_BOX_H
@@ -33,7 +33,9 @@ public:
               const std::function<void()>& backFunc = nullptr,
               const bool disableBackButton = false,
               const bool deleteOnButtonPress = true,
-              const float maxWidthMultiplier = 0.0f);
+              const float maxWidthMultiplier = 0.0f,
+              const std::string& name5 = "",
+              const std::function<void()>& func5 = nullptr);
 
     void calculateSize();
 
