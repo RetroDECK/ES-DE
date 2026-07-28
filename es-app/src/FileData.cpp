@@ -630,10 +630,12 @@ void FileData::sort(ComparisonFunction& comparator,
     mOnlyFolders = true;
     mHasFolders = false;
     bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
+    bool downloadedFirst {Settings::getInstance()->getBool("RomMDownloadedFirst")};
     bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
     bool isKidMode {UIModeController::getInstance()->isUIModeKid()};
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
+    std::vector<FileData*> mChildrenRemote;
 
     if (mSystem->isGroupedCustomCollection())
         gameCount = {0, 0};
@@ -672,10 +674,14 @@ void FileData::sort(ComparisonFunction& comparator,
         return;
     }
 
-    if (foldersOnTop) {
+    if (foldersOnTop || downloadedFirst) {
         for (unsigned int i {0}; i < mChildren.size(); ++i) {
-            if (mChildren[i]->getType() == FOLDER) {
+            if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
                 mChildrenFolders.emplace_back(mChildren[i]);
+            }
+            else if (downloadedFirst && mChildren[i]->getRomMRemote()) {
+                mChildrenRemote.emplace_back(mChildren[i]);
+                mOnlyFolders = false;
             }
             else {
                 mChildrenOthers.emplace_back(mChildren[i]);
@@ -691,17 +697,22 @@ void FileData::sort(ComparisonFunction& comparator,
                              getSortTypeFromString("name, ascending").comparisonFunction);
             std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
                              getSortTypeFromString("name, ascending").comparisonFunction);
+            std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(),
+                             getSortTypeFromString("name, ascending").comparisonFunction);
         }
 
         if (foldersOnTop)
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
 
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
+        std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(), comparator);
 
         mChildren.erase(mChildren.begin(), mChildren.end());
-        mChildren.reserve(mChildrenFolders.size() + mChildrenOthers.size());
+        mChildren.reserve(mChildrenFolders.size() + mChildrenOthers.size() +
+                          mChildrenRemote.size());
         mChildren.insert(mChildren.end(), mChildrenFolders.begin(), mChildrenFolders.end());
         mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
+        mChildren.insert(mChildren.end(), mChildrenRemote.begin(), mChildrenRemote.end());
     }
     else {
         // If the requested sorting is not by name, then sort in ascending name order as a first
@@ -744,12 +755,15 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     mOnlyFolders = true;
     mHasFolders = false;
     bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
+    bool downloadedFirst {Settings::getInstance()->getBool("RomMDownloadedFirst")};
     bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
     bool isKidMode {UIModeController::getInstance()->isUIModeKid()};
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
+    std::vector<FileData*> mChildrenFavoritesRemote;
+    std::vector<FileData*> mChildrenRemote;
 
     if (mSystem->isGroupedCustomCollection())
         gameCount = {0, 0};
@@ -797,10 +811,16 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                 mChildrenFavoritesFolders.emplace_back(mChildren[i]);
         }
         else if (mChildren[i]->getFavorite()) {
-            mChildrenFavorites.emplace_back(mChildren[i]);
+            if (mChildren[i]->getRomMRemote())
+                mChildrenFavoritesRemote.emplace_back(mChildren[i]);
+            else
+                mChildrenFavorites.emplace_back(mChildren[i]);
         }
         else {
-            mChildrenOthers.emplace_back(mChildren[i]);
+            if (mChildren[i]->getRomMRemote())
+                mChildrenRemote.emplace_back(mChildren[i]);
+            else
+                mChildrenOthers.emplace_back(mChildren[i]);
         }
 
         if (mChildren[i]->getType() != FOLDER)
@@ -825,6 +845,18 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                          getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
+    // If downloaded (local) games are not requested to be sorted above not-yet-downloaded
+    // RomM games, then merge the remote buckets back into the regular ones.
+    if (!downloadedFirst) {
+        mChildrenFavorites.insert(mChildrenFavorites.end(), mChildrenFavoritesRemote.begin(),
+                                  mChildrenFavoritesRemote.end());
+        mChildrenFavoritesRemote.erase(mChildrenFavoritesRemote.begin(),
+                                       mChildrenFavoritesRemote.end());
+        mChildrenOthers.insert(mChildrenOthers.end(), mChildrenRemote.begin(),
+                               mChildrenRemote.end());
+        mChildrenRemote.erase(mChildrenRemote.begin(), mChildrenRemote.end());
+    }
+
     // If the requested sorting is not by name, then sort in ascending name order as a first
     // step, in order to get a correct secondary sorting.
     if (getSortTypeFromString("name, ascending").comparisonFunction != comparator &&
@@ -837,6 +869,10 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                          getSortTypeFromString("name, ascending").comparisonFunction);
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
                          getSortTypeFromString("name, ascending").comparisonFunction);
+        std::stable_sort(mChildrenFavoritesRemote.begin(), mChildrenFavoritesRemote.end(),
+                         getSortTypeFromString("name, ascending").comparisonFunction);
+        std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(),
+                         getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
     // Sort favorite games and the other games separately.
@@ -847,6 +883,8 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     }
     std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(), comparator);
     std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
+    std::stable_sort(mChildrenFavoritesRemote.begin(), mChildrenFavoritesRemote.end(), comparator);
+    std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(), comparator);
 
     // Iterate through any child favorite folders.
     for (auto it = mChildrenFavoritesFolders.cbegin(); // Line break.
@@ -874,12 +912,16 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     // Combine the individually sorted favorite games and other games vectors.
     mChildren.erase(mChildren.begin(), mChildren.end());
     mChildren.reserve(mChildrenFavoritesFolders.size() + mChildrenFolders.size() +
-                      mChildrenFavorites.size() + mChildrenOthers.size());
+                      mChildrenFavorites.size() + mChildrenOthers.size() +
+                      mChildrenFavoritesRemote.size() + mChildrenRemote.size());
     mChildren.insert(mChildren.end(), mChildrenFavoritesFolders.begin(),
                      mChildrenFavoritesFolders.end());
     mChildren.insert(mChildren.end(), mChildrenFolders.begin(), mChildrenFolders.end());
     mChildren.insert(mChildren.end(), mChildrenFavorites.begin(), mChildrenFavorites.end());
     mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
+    mChildren.insert(mChildren.end(), mChildrenFavoritesRemote.begin(),
+                     mChildrenFavoritesRemote.end());
+    mChildren.insert(mChildren.end(), mChildrenRemote.begin(), mChildrenRemote.end());
 }
 
 void FileData::sort(const SortType& type, bool mFavoritesOnTop)

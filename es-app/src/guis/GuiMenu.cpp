@@ -158,6 +158,22 @@ void GuiMenu::openRomMOptions()
         }
     });
 
+    // Whether to sort downloaded games above not-yet-downloaded (remote) RomM entries.
+    auto rommDownloadedFirst = std::make_shared<SwitchComponent>();
+    rommDownloadedFirst->setState(Settings::getInstance()->getBool("RomMDownloadedFirst"));
+    s->addWithLabel(_("SORT DOWNLOADED GAMES ABOVE NOT-YET-DOWNLOADED GAMES"), rommDownloadedFirst);
+    s->addSaveFunc([rommDownloadedFirst, s] {
+        if (rommDownloadedFirst->getState() !=
+            Settings::getInstance()->getBool("RomMDownloadedFirst")) {
+            Settings::getInstance()->setBool("RomMDownloadedFirst",
+                                             rommDownloadedFirst->getState());
+            s->setNeedsSaving();
+            s->setNeedsSorting();
+            s->setNeedsSortingCollections();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
     // Sync.
     ComponentListRow syncRow;
     syncRow.addElement(std::make_shared<TextComponent>(
