@@ -58,6 +58,7 @@
 * (Linux) Fixed an AppImage build issue caused by a URL change on GitLab
 * Added .m4v as a supported video file extension
 * The scraper will no longer download media with unsupported file extensions
+* Made multiple improvements to the PDF viewer (optimizations, fixed memory leaks etc.)
 * The UTF8-CPP dependency is now only built on Android
 * (Android) Updated the build environment
 * (Android) Updated a number of Java and Kotlin dependencies

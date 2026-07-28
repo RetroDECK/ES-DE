@@ -198,7 +198,7 @@ To enable AddressSanitizer which helps with identifying memory issues like corru
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
 make -j8
 ```
-Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
+To avoid false positives caused by small memory leaks in some system libraries it could be a good idea to use the `LSAN_suppressions` file included in the repository:
 ```
 LSAN_OPTIONS="suppressions=tools/LSAN_suppressions" ./es-de --debug --resolution 2560 1440
 ```

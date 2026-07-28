@@ -2635,7 +2635,7 @@ Properties:
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored. This is true even if the property does not point to an existing video file. As well, when defining this for the gamelist view the video will not immediately restart when navigating between games.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored. This is true even if the property does not point to an existing video file. As well, when defining this for the gamelist view the video will not immediately restart when navigating between games. The supported file extensions are .mp4, .mkv, .avi, .wmv, .mov, .webm and .m4v.
 * `default` - type: PATH
     - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system. Takes precedence over `defaultImage`.
 * `defaultImage` - type: PATH

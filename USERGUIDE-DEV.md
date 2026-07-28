@@ -3722,7 +3722,7 @@ The media files for this directory which is interpreted as a file will be:
 
 This is not a bug as these are not really file extensions after all, it's just a directory with a dot in the filename that happens to look like a file extension because that's how the _Directories interpreted as files_ logic works.
 
-For images .jpg, .png and .webp file extensions are supported and for videos .mp4, .mkv, .avi, .wmv, .mov and .webm are supported.
+For images .jpg, .png and .webp file extensions are supported and for videos .mp4, .mkv, .avi, .wmv, .mov, .webm and .m4v are supported.
 
 Remember that on Linux filenames are case sensitive, and as well the file extensions must be in lower case, such as .png instead of .PNG or .Png or the file won't be found.
 
