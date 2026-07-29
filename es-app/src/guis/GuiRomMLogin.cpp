@@ -59,11 +59,14 @@ void GuiRomMLogin::push(Window* window,
             RomMCache::getInstance().clearAll();
             RomMCache::getInstance().flush();
             RomMLocalFavorites::getInstance().clearAll();
+            // Copy onLoggedOut to the stack before deleting s - this lambda's captures live
+            // inside s's own ComponentList, so delete s would free onLoggedOut mid-call.
+            const auto onLoggedOutCopy = onLoggedOut;
             // Delete before invoking the callback - it may push its own GUI (e.g.
             // noGamesDialog()), which deleting afterward would immediately tear down again.
             delete s;
-            if (onLoggedOut)
-                onLoggedOut();
+            if (onLoggedOutCopy)
+                onLoggedOutCopy();
         });
         s->addRow(logoutRow);
     }
