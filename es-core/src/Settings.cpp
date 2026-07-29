@@ -460,13 +460,34 @@ void Settings::loadFile()
         return;
     }
 
-    for (pugi::xml_node node = doc.child("bool"); node; node = node.next_sibling("bool"))
+    // The long term plan is to move each setting element into a "settings" root element in order
+    // to become fully XML standards compliant. During a transition period we'll have forward
+    // compatibility with this format by attempting to load any setting inside such a root element.
+    // Note that this is simplistic by design, any setting placed outside the "settings" root
+    // element will still be loaded and the file will be automatically converted to the old flat
+    // and noncompliant XML format. When the new format is rolled out in a future release, ES-DE
+    // will automatically restructure any legacy file to the new format on application startup.
+    // This will make it possible to move back and forth between versions without screwing up the
+    // configuration file, until support for the legacy format is completely removed.
+    const pugi::xml_node& root {doc.child("settings")};
+    if (root != nullptr) {
+        for (pugi::xml_node node {root.child("bool")}; node; node = node.next_sibling("bool"))
+            setBool(node.attribute("name").as_string(), node.attribute("value").as_bool());
+        for (pugi::xml_node node {root.child("int")}; node; node = node.next_sibling("int"))
+            setInt(node.attribute("name").as_string(), node.attribute("value").as_int());
+        for (pugi::xml_node node {root.child("float")}; node; node = node.next_sibling("float"))
+            setFloat(node.attribute("name").as_string(), node.attribute("value").as_float());
+        for (pugi::xml_node node {root.child("string")}; node; node = node.next_sibling("string"))
+            setString(node.attribute("name").as_string(), node.attribute("value").as_string());
+    }
+
+    for (pugi::xml_node node {doc.child("bool")}; node; node = node.next_sibling("bool"))
         setBool(node.attribute("name").as_string(), node.attribute("value").as_bool());
-    for (pugi::xml_node node = doc.child("int"); node; node = node.next_sibling("int"))
+    for (pugi::xml_node node {doc.child("int")}; node; node = node.next_sibling("int"))
         setInt(node.attribute("name").as_string(), node.attribute("value").as_int());
-    for (pugi::xml_node node = doc.child("float"); node; node = node.next_sibling("float"))
+    for (pugi::xml_node node {doc.child("float")}; node; node = node.next_sibling("float"))
         setFloat(node.attribute("name").as_string(), node.attribute("value").as_float());
-    for (pugi::xml_node node = doc.child("string"); node; node = node.next_sibling("string"))
+    for (pugi::xml_node node {doc.child("string")}; node; node = node.next_sibling("string"))
         setString(node.attribute("name").as_string(), node.attribute("value").as_string());
 }
 
