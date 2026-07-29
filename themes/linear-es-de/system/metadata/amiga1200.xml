@@ -60,7 +60,11 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Amiga è una famiglia di personal computer commercializzata da Commodore negli anni '80 e '90. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e multi-tasking. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e di multitasking. L'Amiga rappresentava un aggiornamento significativo rispetto ai computer a 8 bit, come il Commodore 64, e la piattaforma crebbe rapidamente di popolarità tra gli appassionati di computer. Il modello più venduto, l'Amiga 500, fu introdotto nel 1987 e divenne il principale home computer della fine degli anni '80 e dell'inizio degli anni '90 in gran parte dell'Europa occidentale.</systemDescription>
+            <systemDescription>Il Commodore Amiga 1200 o Commodore A1200 (produzione Commodore International) ed in seguito Amiga 1200 o Amiga A1200 (produzione Amiga Technologies), è un home computer basato sulla piattaforma Amiga.
+
+Evoluzione dell'Amiga 600, l'Amiga 1200 è stato lanciato sul mercato il 21 ottobre 1992 al prezzo di 399 sterline, in Gran Bretagna, e di 599 dollari, negli Stati Uniti ed è stato commercializzato fino al 1996.
+
+L'Amiga 1200 era in diretta competizione con l'Atari Falcon, ma essendo proposto come home computer era in competizione anche con i personal computer IBM compatibili e le console a 16 bit.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

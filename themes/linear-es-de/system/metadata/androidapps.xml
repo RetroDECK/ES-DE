@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Android è un sistema operativo mobile basato su una versione modificata del kernel Linux e su altri software open-source, progettato principalmente per dispositivi mobili touchscreen come smartphone e tablet. Android è sviluppato da un consorzio di sviluppatori noto come Open Handset Alliance, anche se la sua versione più diffusa è sviluppata principalmente da Google. È stato presentato nel novembre 2007 e il primo dispositivo Android commerciale, l'HTC Dream, è stato lanciato nel settembre 2008.</systemDescription>
+            <systemDescription>Android è un sistema operativo mobile basato su una versione modificata del kernel Linux e su altri software open-source, progettato principalmente per dispositivi mobili touchscreen, come smartphone e tablet. Android è sviluppato da un consorzio di sviluppatori noto come Open Handset Alliance, anche se la sua versione più diffusa è sviluppata principalmente da Google. È stato presentato nel novembre 2007 ed il primo dispositivo Android commerciale, l'HTC Dream, è stato lanciato nel settembre 2008.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
         </variables>
     </language>

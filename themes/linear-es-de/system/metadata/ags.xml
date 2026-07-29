@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Adventure Game Studio (AGS) è uno strumento di sviluppo open source utilizzato principalmente per creare giochi di avventura grafica. Si rivolge a progettisti di giochi di livello intermedio e combina un ambiente di sviluppo integrato (IDE) con un linguaggio di scripting basato sul linguaggio di programmazione C per elaborare la logica di gioco.</systemDescription>
+            <systemDescription>Adventure Game Studio (AGS) è uno strumento di sviluppo open source utilizzato principalmente per creare avventure grafiche. Si rivolge a progettisti di giochi di livello intermedio e combina un ambiente di sviluppo integrato (IDE) con un linguaggio di scripting basato sul "C" per elaborare la logica di gioco.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

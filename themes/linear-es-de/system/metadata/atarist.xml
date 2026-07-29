@@ -92,11 +92,11 @@ ST je prodat ili Atarijevim monitorom u boji ili s jeftinijim jednobojnim monito
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'Atari ST è una linea di home computer di Atari Corporation e il successore della famiglia Atari 8-bit. Il modello iniziale, il 520ST, è stato distribuito in maniera limitata tra aprile e giugno 1985, per poi essere ampiamente disponibile a luglio. Il 520ST è il primo personal computer dotato di un'interfaccia grafica a colori bitmap, che utilizza una versione di GEM di Digital Research rilasciata nel febbraio 1985. Il 1040ST, rilasciato nel 1986, è il primo personal computer a essere fornito con un megabyte di RAM nella configurazione base e anche il primo con un costo per kilobyte inferiore a 1 dollaro USA.
+            <systemDescription>L'Atari ST è una linea di home computer di Atari Corporation ed il successore della famiglia Atari 8-bit. Il modello iniziale, il 520ST, è stato distribuito in maniera limitata tra aprile e giugno 1985, per poi essere ampiamente disponibile a luglio. Il 520ST è il primo personal computer dotato di un'interfaccia grafica a colori bitmap, che utilizza una versione di GEM di Digital Research rilasciata nel febbraio 1985. Il 1040ST, rilasciato nel 1986, è il primo personal computer ad essere fornito con un Megayte di RAM nella configurazione base ed anche il primo con un costo per Kilobyte inferiore ad 1 dollaro USA.
 
-L'Atari ST fa parte di una generazione di home computer della metà degli anni '80 con processori a 16 o 32 bit, 256 KB o più di RAM e interfacce grafiche controllate dal mouse. Questa generazione comprende il Macintosh, l'Amiga, l'Apple IIGS e, in alcuni mercati, l'Acorn Archimedes. "ST" è ufficialmente l'acronimo di "Sixteen/Thirty-two", che si riferisce al bus esterno a 16 bit e agli interni a 32 bit del Motorola 68000.
+L'Atari ST fa parte di una generazione di home computer della metà degli anni '80 con processori a 16 o 32 bit, 256 KB o più di RAM ed interfacce grafiche controllabili dal mouse. Questa generazione comprende il Macintosh, l'Amiga, l'Apple IIGS e, in alcuni mercati, l'Acorn Archimedes. "ST" è ufficialmente l'acronimo di "Sixteen/Thirty-two", che si riferisce al bus esterno a 16 bit ed agli interni a 32 bit del Motorola 68000.
 
-L'ST veniva venduto con il monitor a colori di Atari o con il meno costoso monitor monocromatico. Le modalità grafiche a colori del sistema sono disponibili solo sul primo, mentre la modalità a più alta risoluzione richiede il monitor monocromatico.</systemDescription>
+L'ST veniva venduto con il monitor a colori di Atari, o con il meno costoso monitor monocromatico. Le modalità grafiche a colori del sistema sono disponibili solo sul primo, mentre la modalità a più alta risoluzione richiede il monitor monocromatico.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

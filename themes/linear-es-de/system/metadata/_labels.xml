@@ -334,22 +334,22 @@
             <langLabelHardwareType>Tipo</langLabelHardwareType>
             <langLabelGames>Giochi</langLabelGames>
             <langLabelFavorites>Preferiti</langLabelFavorites>
-            <langLabelLastPlay>Ostatnio odtwarzane</langLabelLastPlay>
-            <langLabelTimePlay>Tempi giocati</langLabelTimePlay>
-            <langLabelSysName>Nome del sistema</langLabelSysName>
+            <langLabelLastPlay>Ultima Partita</langLabelLastPlay>
+            <langLabelTimePlay>Minuti Giocati</langLabelTimePlay>
+            <langLabelSysName>Nome del Sistema</langLabelSysName>
             <langLabelCompleted>Completato</langLabelCompleted>
-            <langLabelChild>Sicuro per i bambini</langLabelChild>
+            <langLabelChild>Sicuro per Bambini</langLabelChild>
             <langLabelContain>Contiene</langLabelContain>
-            <langLabelInclude>Compreso</langLabelInclude>
+            <langLabelInclude>Include</langLabelInclude>
             <langLabelEmulator>Emulatore</langLabelEmulator>
-            <langLabelSystemSelect>Seleziona sistema</langLabelSystemSelect>
+            <langLabelSystemSelect>Seleziona Sistema</langLabelSystemSelect>
             <langLabelSystem>Sistema</langLabelSystem>
-            <langLabelSystemLogo>Logo du système</langLabelSystemLogo>
-            <langLabelGF>Frontend di gioco</langLabelGF>
-            <langLabelGameSelection>Selezione del gioco</langLabelGameSelection>
-            <langLabelGameSynopsis>Sinossi del gioco</langLabelGameSynopsis>
+            <langLabelSystemLogo>Logo del Sistema</langLabelSystemLogo>
+            <langLabelGF>Frontend di Gioco</langLabelGF>
+            <langLabelGameSelection>Selezione del Gioco</langLabelGameSelection>
+            <langLabelGameSynopsis>Sinossi</langLabelGameSynopsis>
             <langLabelPower>Accensione</langLabelPower>
-            <langLabelPowerby>Offerto da</langLabelPowerby>
+            <langLabelPowerby>Basato su</langLabelPowerby>
             <langLabelInfo>Informazioni</langLabelInfo>
             <langUnknown>Sconosciuto</langUnknown>
             <langLabelPlayed>Giocato</langLabelPlayed>
@@ -357,7 +357,7 @@
             <langLabelCover>Copertina</langLabelCover>
             <langLabelGame>Gioco</langLabelGame>
             <langLabelImage>Immagine</langLabelImage>
-            <langLabelBadge>Distintivo</langLabelBadge>
+            <langLabelBadge>Medaglia</langLabelBadge>
             <langLabelNever>Mai</langLabelNever>
             <langLabelVar>Varie</langLabelVar>
         </variables>

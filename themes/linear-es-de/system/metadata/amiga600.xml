@@ -60,7 +60,9 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Amiga è una famiglia di personal computer commercializzata da Commodore negli anni '80 e '90. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e multi-tasking. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e di multitasking. L'Amiga rappresentava un aggiornamento significativo rispetto ai computer a 8 bit, come il Commodore 64, e la piattaforma crebbe rapidamente di popolarità tra gli appassionati di computer. Il modello più venduto, l'Amiga 500, fu introdotto nel 1987 e divenne il principale home computer della fine degli anni '80 e dell'inizio degli anni '90 in gran parte dell'Europa occidentale.</systemDescription>
+            <systemDescription>Il Commodore Amiga 600 o Commodore A600 (nome in codice: "June Bug") è un home computer basato sulla piattaforma informatica Amiga e prodotto dalla Commodore Business Machines Inc. tra il 1992 e il 1993.
+
+Sono state commercializzate due diverse versioni di Amiga 600: una destinata ai Paesi utilizzanti lo standard televisivo PAL e l'altra destinata ai Paesi utilizzanti lo standard televisivo NTSC. Fu commercializzata anche la versione Amiga 600HD che montava di serie un hard disk interno.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
