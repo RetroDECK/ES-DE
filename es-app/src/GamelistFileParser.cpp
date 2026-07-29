@@ -182,7 +182,15 @@ namespace GamelistFileParser
             return;
         }
 
-        const pugi::xml_node& alternativeEmulator {doc.child("alternativeEmulator")};
+        // The long term plan is to move the alternativeEmulator element so it becomes a child to
+        // the gameList root element in order to become fully XML standards compliant. This code
+        // will allow ES-DE to read the alternativeEmulator element in either location during a
+        // transition period, so when a future ES-DE release saves it to the new location there
+        // is forward compatibility in place also for older releases.
+        const pugi::xml_node& alternativeEmulator {doc.child("alternativeEmulator") != nullptr ?
+                                                       doc.child("alternativeEmulator") :
+                                                       root.child("alternativeEmulator")};
+
         if (alternativeEmulator) {
             const std::string& label {alternativeEmulator.child("label").text().get()};
             if (label != "") {
@@ -394,7 +402,15 @@ namespace GamelistFileParser
                 return;
             }
             if (updateAlternativeEmulator) {
-                pugi::xml_node alternativeEmulator {doc.child("alternativeEmulator")};
+                // The long term plan is to move the alternativeEmulator element so it becomes a
+                // child to the gameList root element in order to become fully XML standards
+                // compliant. This code will allow ES-DE to read the alternativeEmulator element
+                // in either location during a transition period, so when a future ES-DE release
+                // saves it to the new location there is forward compatibility in place also for
+                // older releases.
+                pugi::xml_node alternativeEmulator {doc.child("alternativeEmulator") != nullptr ?
+                                                        doc.child("alternativeEmulator") :
+                                                        root.child("alternativeEmulator")};
 
                 if (alternativeEmulator)
                     hasAlternativeEmulatorTag = true;
@@ -419,7 +435,7 @@ namespace GamelistFileParser
                     }
                 }
                 else if (alternativeEmulator) {
-                    doc.remove_child("alternativeEmulator");
+                    alternativeEmulator.parent().remove_child(alternativeEmulator);
                 }
             }
         }
