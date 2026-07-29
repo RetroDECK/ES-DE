@@ -173,7 +173,12 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Og -g3 -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+    endif()
+    # The NOPTIMIZE macro is used to temporarily disable optimizations per function when debugging.
+    if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
         add_compile_options("-DNOPTIMIZE=__attribute__((optimize(\"O0\")))")
+    elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
+        add_compile_options("-DNOPTIMIZE=__attribute__((optnone))")
     endif()
     # If using Clang, then add additional debug data needed by GDB.
     # Comment this out if you're using LLDB for debugging as this flag makes the binary
