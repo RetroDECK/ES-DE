@@ -277,14 +277,11 @@ void RomMLibrarySync::fetchInBackground()
             }
         }
         else {
-            // Merge: mergeBaseRoms overlaid by every rom this fetch returned (whether that's
-            // the platform's full list - first-ever sync/forced full resync/empty stored
-            // cursor - or a delta of only changed roms since storedCursor). Delta entries
-            // always win on id collision. Note this only ever ADDS/UPDATES - a rom deleted from
-            // RomM stays in the cache (and keeps showing as available locally) until a forced
-            // full resync, where mergeBaseRoms is empty and this merge collapses to exactly
-            // "fetched", the server's authoritative current list, which is what actually
-            // reconciles deletions.
+            // mergeBaseRoms overlaid by this fetch (the platform's full list on a first/forced
+            // sync, or a delta since storedCursor otherwise); fetched entries win on id
+            // collision. This only adds/updates - a server-side deletion stays cached until a
+            // forced full resync, where mergeBaseRoms is empty and the merge collapses to
+            // exactly "fetched", reconciling deletions.
             std::unordered_map<int, RomMApiClient::Rom> merged;
             for (const auto& cachedRom : task.mergeBaseRoms)
                 merged[cachedRom.id] = RomMCache::toApiRom(cachedRom);

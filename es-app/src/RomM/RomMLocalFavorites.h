@@ -25,7 +25,7 @@ public:
     // Persists to disk immediately - toggles are rare, user-initiated events, not part of a
     // sync's bulk write path.
     void setFavorite(int rommId, bool favorite);
-    // Called on logout - rommids are meaningless once paired with a (possibly different) server.
+    // Called on logout - rommids don't carry over to a different server.
     void clearAll();
 
 private:

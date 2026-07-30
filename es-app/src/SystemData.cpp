@@ -1135,8 +1135,6 @@ bool SystemData::loadConfig()
                 Utils::String::toLower(commands.front().first).find("placeholder") !=
                     std::string::npos};
 
-            // Check that the ROM directory for the system is valid or otherwise abort the
-            // processing.
             if (!Utils::FileSystem::exists(path)) {
                 if (matchesRomMPlatform && Utils::FileSystem::createDirectory(path)) {
                     LOG(LogInfo) << "SystemData::loadConfig(): Activating system \"" << name
@@ -1152,7 +1150,6 @@ bool SystemData::loadConfig()
 #endif
                                   << "\" does not exist";
 
-                    // Record this as a bundled-but-currently-inactive system.
                     if (!isPlaceholder) {
                         sInactiveSystemTemplates.push_back({name, fullname, path, platformList});
                     }

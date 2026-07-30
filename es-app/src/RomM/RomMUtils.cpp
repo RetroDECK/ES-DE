@@ -277,7 +277,6 @@ namespace RomMUtils
 
     std::string formatCommunityRating(float averageRating0to100)
     {
-        // RomM ratings are on a 0-100 scale, ES-DE expects 0.0-1.0.
         float ratingVal {averageRating0to100 / 100.0f};
         ratingVal = std::min(1.0f, std::max(0.0f, ratingVal));
         ratingVal = ceilf(ratingVal / 0.1f) / 10.0f;

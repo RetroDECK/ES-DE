@@ -34,15 +34,11 @@
 class RomMCache
 {
 public:
-    // The fields RomMLibrarySync::applyResults() actually reads (directly, or via
-    // RomMUtils::formatReleaseDate()/formatCommunityRating() or
-    // RomMApiClient::resolveCoverUrl()) - still deliberately excludes files/updatedAt: files is
-    // only ever refreshed from the single-rom detail endpoint at download time (see
-    // GuiRomMDownload), and updatedAt is diagnostic-only.
-    // Every field here must round-trip through fromApiRom()/toApiRom(), since an incremental
-    // (non-full-resync) sync reconstructs any rom NOT included in that run's delta fetch purely
-    // from this cache - a field left out here silently reverts to its default for every
-    // unchanged rom on every sync after the first.
+    // Mirrors the fields RomMLibrarySync::applyResults() reads, minus files (refreshed only at
+    // download time, see GuiRomMDownload) and updatedAt (diagnostic-only). Every remaining field
+    // must round-trip through fromApiRom()/toApiRom(): an incremental sync reconstructs any rom
+    // outside that run's delta purely from this cache, so an omitted field silently reverts to
+    // its default on every sync after the first.
     struct CachedRom {
         int id {0};
         std::string name;

@@ -550,7 +550,6 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
     std::vector<FileData*> out;
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
-        // Not-yet-downloaded RomM placeholder, skip it regardless of type when requested.
         const bool isRomMRemote {excludeRomMRemote && (*it)->metadata.get("rommremote") == "true"};
 
         if (includeFolders && (*it)->getType() == FOLDER) {
@@ -845,8 +844,6 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                          getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
-    // If downloaded (local) games are not requested to be sorted above not-yet-downloaded
-    // RomM games, then merge the remote buckets back into the regular ones.
     if (!downloadedFirst) {
         mChildrenFavorites.insert(mChildrenFavorites.end(), mChildrenFavoritesRemote.begin(),
                                   mChildrenFavoritesRemote.end());

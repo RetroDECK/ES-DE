@@ -21,7 +21,7 @@
 class RomMDeviceAuthClient
 {
 public:
-    // DeviceAuthInitResponse.
+    // Mirrors RomM's DeviceAuthInitResponse schema.
     struct DeviceAuthInit {
         std::string deviceCode;
         std::string userCode;
@@ -32,7 +32,7 @@ public:
         int interval {0};
     };
 
-    // DeviceAuthTokenResponse.
+    // Mirrors RomM's DeviceAuthTokenResponse schema.
     struct DeviceAuthToken {
         std::string accessToken;
         std::string deviceId;
@@ -52,7 +52,7 @@ public:
 
     explicit RomMDeviceAuthClient(const std::string& serverURL);
 
-    // Returns true and populates outInit on success (201).
+    // Succeeds only on HTTP 201.
     bool initDeviceAuth(const std::string& clientDeviceIdentifier,
                         const std::string& deviceName,
                         DeviceAuthInit& outInit,

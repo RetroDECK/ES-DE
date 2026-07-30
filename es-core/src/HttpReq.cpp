@@ -101,7 +101,6 @@ HttpReq::HttpReq(const std::string& url,
         return;
     }
 
-    // Set a bearer token via the Authorization header, e.g. for the RomM integration.
     if (!bearerToken.empty()) {
         const std::string headerValue {"Authorization: Bearer " + bearerToken};
         mHeaderList = curl_slist_append(mHeaderList, headerValue.c_str());

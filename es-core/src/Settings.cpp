@@ -160,7 +160,6 @@ void Settings::setDefaults()
     mBoolMap["ScraperAutomaticRemoveDots"] = {true, true};
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
-    // RomM integration.
     mStringMap["RomMServerURL"] = {"", ""};
     // A RomM API bearer token, obtained via the device-pairing flow (GuiRomMPairing).
     mStringMap["RomMToken"] = {"", ""};

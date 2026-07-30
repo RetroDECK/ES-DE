@@ -142,7 +142,6 @@ void GuiMenu::openRomMOptions()
     loginRow.makeAcceptInputHandler([this] { openRomMLoginOptions(); });
     s->addRow(loginRow);
 
-    // Whether the multi-scraper should skip not-yet-downloaded RomM entries.
     auto rommScrapeDownloadedOnly = std::make_shared<SwitchComponent>();
     rommScrapeDownloadedOnly->setState(
         Settings::getInstance()->getBool("RomMScrapeDownloadedOnly"));
@@ -156,7 +155,6 @@ void GuiMenu::openRomMOptions()
         }
     });
 
-    // Whether to sort downloaded games above not-yet-downloaded (remote) RomM entries.
     auto rommDownloadedFirst = std::make_shared<SwitchComponent>();
     rommDownloadedFirst->setState(Settings::getInstance()->getBool("RomMDownloadedFirst"));
     s->addWithLabel(_("SORT DOWNLOADED GAMES ABOVE NOT-YET-DOWNLOADED GAMES"), rommDownloadedFirst);
@@ -172,7 +170,6 @@ void GuiMenu::openRomMOptions()
         }
     });
 
-    // Whether to lazily show a not-yet-downloaded RomM entry's cover while browsing.
     auto rommShowRemoteMedia = std::make_shared<SwitchComponent>();
     rommShowRemoteMedia->setState(Settings::getInstance()->getBool("RomMShowRemoteMedia"));
     s->addWithLabel(_("SHOW IMAGES WHILE BROWSING"), rommShowRemoteMedia);
@@ -185,7 +182,6 @@ void GuiMenu::openRomMOptions()
         }
     });
 
-    // Sync.
     ComponentListRow syncRow;
     syncRow.addElement(std::make_shared<TextComponent>(
                            _("SYNC SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
@@ -230,7 +226,6 @@ void GuiMenu::openRomMSyncOptions()
         return;
     }
 
-    // Whether to sync the RomM library as part of the loading screen on startup.
     auto rommSyncOnStartup = std::make_shared<SwitchComponent>();
     rommSyncOnStartup->setState(Settings::getInstance()->getBool("RomMSyncOnStartup"));
     s->addWithLabel(_("SYNC ON STARTUP"), rommSyncOnStartup);
