@@ -58,17 +58,6 @@ bool RomMApiClient::waitForRequest(HttpReq& req, int maxWaitMs)
     return false;
 }
 
-bool RomMApiClient::testConnection()
-{
-    if (mServerURL.empty()) {
-        mLastError = "No RomM server URL configured";
-        return false;
-    }
-
-    HttpReq req {buildUrl("/api/platforms"), false, "", mToken};
-    return waitForRequest(req);
-}
-
 std::vector<RomMApiClient::Platform> RomMApiClient::fetchPlatforms()
 {
     std::vector<Platform> platforms;
@@ -295,31 +284,6 @@ std::vector<RomMApiClient::Rom> RomMApiClient::fetchRoms(
     } while (offset < total);
 
     return roms;
-}
-
-bool RomMApiClient::fetchRomByHash(const std::string& md5Hash, Rom& outRom)
-{
-    if (mServerURL.empty()) {
-        mLastError = "No RomM server URL configured";
-        return false;
-    }
-
-    const std::string url {buildUrl("/api/roms/by-hash?md5_hash=" + md5Hash)};
-    HttpReq req {url, false, "", mToken};
-    if (!waitForRequest(req))
-        return false;
-
-    Document doc;
-    doc.Parse(req.getContent().c_str());
-    if (doc.HasParseError() || !doc.IsObject()) {
-        mLastError = "Unexpected RomM rom-by-hash response format";
-        return false;
-    }
-    if (!doc.HasMember("id") || !doc["id"].IsInt())
-        return false;
-
-    outRom = parseRom(doc);
-    return true;
 }
 
 bool RomMApiClient::fetchRomById(int romId, Rom& outRom)

@@ -41,7 +41,6 @@ public:
 
     // Valid once getState() is AwaitingApproval or a terminal state reached from it.
     const std::string& getVerificationUrl() const { return mVerificationUrl; }
-    const std::string& getUserCode() const { return mUserCode; }
     const std::string& getResolvedServerUrl() const { return mServerUrl; }
 
     // Valid once getState() == Success.
@@ -64,7 +63,6 @@ private:
     std::atomic<bool> mCancelled;
 
     std::string mVerificationUrl;
-    std::string mUserCode;
     std::string mAccessToken;
     std::string mExpiresAt;
     std::string mLastError;

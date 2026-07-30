@@ -4,9 +4,8 @@
 //  RomMApiClient.h
 //
 //  Thin client for the subset of the RomM (https://github.com/rommapp/romm) REST API that
-//  ES-DE needs: listing platforms/roms and looking up a rom by hash. Used both by the RomM
-//  scraper backend (matching an already-local game to its RomM record) and by the library
-//  sync that lists not-yet-downloaded games inline in the gamelists.
+//  ES-DE needs: listing platforms/roms and downloading rom files. Used by the library sync
+//  that lists not-yet-downloaded games inline in the gamelists.
 //
 //  Every method performs one or more blocking network calls and must therefore only be
 //  invoked from a background thread, never from the render/main thread.
@@ -16,7 +15,6 @@
 #define ES_APP_ROMM_ROMM_API_CLIENT_H
 
 #include <cstdint>
-#include <ctime>
 #include <functional>
 #include <string>
 #include <vector>
@@ -87,30 +85,21 @@ public:
 
     RomMApiClient(const std::string& serverURL, const std::string& token);
 
-    // Performs a lightweight request (fetching the platform list) purely to validate that
-    // the server URL and credentials are correct. Returns false and sets lastError() on
-    // any failure (unreachable server, wrong credentials, invalid response, etc.).
-    bool testConnection();
-
     // Returns all platforms configured on the RomM server. Returns an empty vector and sets
     // lastError() on failure.
     std::vector<Platform> fetchPlatforms();
 
     // Pages through and returns every rom belonging to the given RomM platform id. If
-    // updatedAfterUtc is non-empty (see formatTimestampUtc()), restricts the result to roms
-    // whose updated_at is after that timestamp instead of the platform's full list - pass ""
-    // for the original full-fetch behavior. Returns an empty vector and sets lastError() on
-    // failure (an empty vector is also returned, with no error, if the platform/delta
-    // genuinely has no roms). If set, onRomsFetched(1, total) is called once per rom parsed -
-    // total is scoped to this exact query, so an incremental fetch's total is just what changed,
-    // not the platform's full library.
+    // updatedAfterUtc is non-empty (see RomMUtils::formatTimestampUtc()), restricts the
+    // result to roms whose updated_at is after that timestamp instead of the platform's full
+    // list - pass "" for the original full-fetch behavior. Returns an empty vector and sets
+    // lastError() on failure (an empty vector is also returned, with no error, if the
+    // platform/delta genuinely has no roms). If set, onRomsFetched(1, total) is called once
+    // per rom parsed - total is scoped to this exact query, so an incremental fetch's total
+    // is just what changed, not the platform's full library.
     std::vector<Rom> fetchRoms(int platformId,
                                const std::string& updatedAfterUtc = "",
                                const std::function<void(int, int)>& onRomsFetched = nullptr);
-
-    // Looks up a single rom by MD5 hash. Returns true and populates outRom on a match, false
-    // otherwise (not found or a request error - check lastError() to disambiguate).
-    bool fetchRomByHash(const std::string& md5Hash, Rom& outRom);
 
     // Fetches the full, current detail for a single rom by its RomM id (e.g. the "rommid"
     // metadata already stashed on a synced FileData). Used at download time to get an
@@ -129,12 +118,6 @@ public:
     std::string getFileDownloadUrl(int fileId, const std::string& fileName) const;
 
     const std::string& lastError() const { return mLastError; }
-
-    // Formats a UTC time_t as "YYYY-MM-DDTHH:MM:SSZ", the format RomM's updated_after query
-    // parameter accepts (empirically verified against a live RomM instance). Public and
-    // static so callers (e.g. RomMLibrarySync/RomMCache) can format a persisted sync cursor
-    // without duplicating the gmtime_r/gmtime_s platform split.
-    static std::string formatTimestampUtc(time_t time);
 
 private:
     std::string buildUrl(const std::string& path) const;

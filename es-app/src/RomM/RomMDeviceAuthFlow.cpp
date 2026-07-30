@@ -97,7 +97,6 @@ void RomMDeviceAuthFlow::run()
     }
 
     mVerificationUrl = RomMUtils::joinUrl(mServerUrl, init.verificationPathComplete);
-    mUserCode = init.userCode;
     mState = State::AwaitingApproval;
 
     int intervalSeconds {init.interval > 0 ? init.interval : 5};
