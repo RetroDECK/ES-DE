@@ -123,12 +123,7 @@ protected:
 class ScraperHttpRequest : public ScraperRequest
 {
 public:
-    // bearerToken is only used by scrapers that require token-based auth (e.g. RomM);
-    // ScreenScraper and TheGamesDB pass their credentials as URL query parameters instead
-    // and leave this empty.
-    ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite,
-                       const std::string& url,
-                       const std::string& bearerToken = "");
+    ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url);
     void update() override;
 
 protected:

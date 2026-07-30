@@ -12,7 +12,6 @@
 #include "FileData.h"
 #include "GamesDBJSONScraper.h"
 #include "Log.h"
-#include "RomM.h"
 #include "ScreenScraper.h"
 #include "Settings.h"
 #include "SystemData.h"
@@ -31,15 +30,14 @@ namespace
 {
     const std::map<std::string, generate_scraper_requests_func> scraper_request_funcs {
         {"thegamesdb", &thegamesdb_generate_json_scraper_requests},
-        {"screenscraper", &screenscraper_generate_scraper_requests},
-        {"romm", &romm_generate_scraper_requests}};
+        {"screenscraper", &screenscraper_generate_scraper_requests}};
 }
 
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params)
 {
     std::string name {Settings::getInstance()->getString("Scraper")};
     // Handle a potentially invalid entry in the configuration file.
-    if (name != "screenscraper" && name != "thegamesdb" && name != "romm") {
+    if (name != "screenscraper" && name != "thegamesdb") {
         name = "screenscraper";
         Settings::getInstance()->setString("Scraper", name);
         Settings::getInstance()->saveFile();
@@ -140,12 +138,11 @@ ScraperRequest::ScraperRequest(std::vector<ScraperSearchResult>& resultsWrite)
 
 // ScraperHttpRequest.
 ScraperHttpRequest::ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite,
-                                       const std::string& url,
-                                       const std::string& bearerToken)
+                                       const std::string& url)
     : ScraperRequest(resultsWrite)
 {
     setStatus(ASYNC_IN_PROGRESS);
-    mReq = std::unique_ptr<HttpReq>(new HttpReq(url, true, "", bearerToken));
+    mReq = std::unique_ptr<HttpReq>(new HttpReq(url, true));
 }
 
 void ScraperHttpRequest::update()
