@@ -23,6 +23,7 @@
 #include "GuiMetaDataEd.h"
 #include "MameNames.h"
 #include "RomM/RomMCache.h"
+#include "RomM/RomMLibrarySync.h"
 #include "RomM/RomMLocalFavorites.h"
 #include "RomM/RomMUtils.h"
 #include "Sound.h"
@@ -550,6 +551,7 @@ void GuiGamelistOptions::openMetaDataEd()
                 RomMUtils::applyRomMData(file, rom);
             }
 
+            RomMLibrarySync::reregisterRemoteMedia(atoi(file->metadata.get("rommid").c_str()));
             file->getSystem()->onMetaDataSavePoint();
 
             // The game just moved into the "not yet downloaded" bucket, so its position among

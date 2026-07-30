@@ -110,6 +110,15 @@ namespace
     }
 } // namespace
 
+void RomMLibrarySync::reregisterRemoteMedia(int rommId)
+{
+    RomMCache::CachedRom cachedRom;
+    if (!RomMCache::getInstance().findCachedRom(rommId, cachedRom))
+        return;
+
+    registerRemoteMedia(RomMCache::toApiRom(cachedRom), RomMUtils::getServerUrl());
+}
+
 RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
     : mDoneSyncing {false}
     , mSystemsAdded {0}

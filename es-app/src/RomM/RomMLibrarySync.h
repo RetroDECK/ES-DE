@@ -48,6 +48,15 @@ public:
     explicit RomMLibrarySync(bool forceFullResync = false);
     ~RomMLibrarySync();
 
+    // Re-resolves rommId's cover source URL from RomMCache and re-records it with
+    // RomMRemoteMediaLoader, exactly as applyResults() does for every rom on a normal sync.
+    // Needed when a FileData reverts to a remote ("rommremote") entry outside of a sync - e.g.
+    // GuiGamelistOptions deleting a downloaded RomM game's local file - since
+    // RomMRemoteMediaLoader::forget() dropped its entry at download time and nothing else would
+    // otherwise re-populate it before the next full sync. No-op if rommId isn't in the cache
+    // (e.g. it's since been removed from RomM entirely).
+    static void reregisterRemoteMedia(int rommId);
+
     // Spawns the background fetch thread. Activating newly-matched systems is handled by
     // SystemData::loadConfig() itself, already run by the time any caller constructs this class.
     void start();
