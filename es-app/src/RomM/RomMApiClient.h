@@ -29,6 +29,7 @@ public:
         std::string slug;
         std::string fsSlug;
         std::string name;
+        int romCount {0};
     };
 
     // One disc/part of a multi-file rom (RomM's RomFileSchema). "id" here identifies the file
@@ -90,8 +91,11 @@ public:
 
     RomMApiClient(const std::string& serverURL, const std::string& token);
 
-    // Returns all platforms configured on the RomM server. Returns an empty vector and sets
-    // lastError() on failure.
+    // Returns all platforms configured on the RomM server that have at least one rom - an empty
+    // platform can't ever populate a system, so it's filtered out here rather than pushed onto
+    // every caller (both current ones only use this to decide which ES-DE system gets
+    // created/synced for a given platform). Returns an empty vector and sets lastError() on
+    // failure.
     std::vector<Platform> fetchPlatforms();
 
     // Pages through and returns every rom belonging to the given RomM platform id. If

@@ -89,6 +89,13 @@ std::vector<RomMApiClient::Platform> RomMApiClient::fetchPlatforms()
         if (!entry.IsObject() || !entry.HasMember("id") || !entry["id"].IsInt())
             continue;
 
+        // Skip platforms with no roms - an empty platform can't populate any system, so surfacing
+        // it here would only make an otherwise-inactive system get auto-created/kept visible (see
+        // matchesRomMPlatform in SystemData::loadConfig()) for content that will never appear.
+        if (entry.HasMember("rom_count") && entry["rom_count"].IsInt() &&
+            entry["rom_count"].GetInt() <= 0)
+            continue;
+
         Platform platform;
         platform.id = entry["id"].GetInt();
         if (entry.HasMember("slug") && entry["slug"].IsString())
@@ -97,6 +104,8 @@ std::vector<RomMApiClient::Platform> RomMApiClient::fetchPlatforms()
             platform.fsSlug = entry["fs_slug"].GetString();
         if (entry.HasMember("name") && entry["name"].IsString())
             platform.name = entry["name"].GetString();
+        if (entry.HasMember("rom_count") && entry["rom_count"].IsInt())
+            platform.romCount = entry["rom_count"].GetInt();
         platforms.emplace_back(platform);
     }
 
