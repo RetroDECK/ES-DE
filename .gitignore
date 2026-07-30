@@ -124,3 +124,6 @@ CPackSourceConfig.cmake
 # VSCode
 .vscode/
 .continueignore
+
+# Cache
+.cache/
