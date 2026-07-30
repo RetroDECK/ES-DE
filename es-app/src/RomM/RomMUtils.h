@@ -11,7 +11,11 @@
 #ifndef ES_APP_ROMM_ROMM_UTILS_H
 #define ES_APP_ROMM_ROMM_UTILS_H
 
+#include "RomM/RomMApiClient.h"
+
 #include <string>
+
+class FileData;
 
 namespace RomMUtils
 {
@@ -54,6 +58,25 @@ namespace RomMUtils
     // MD_RATING string, rounded to the closest half-star like the ScreenScraper backend does for
     // its own rating scale. Returns "" if the result would be 0.
     std::string formatCommunityRating(float averageRating0to100);
+
+    // Applies everything ES-DE tracks about a rom from RomM onto file's metadata: server-sourced
+    // descriptive fields (releasedate/rating/genre/developer/publisher/players, from RomM's rom
+    // metadata), per-user state (hidden/completed, from RomM's rom_user resource), local favorite
+    // intent (RomMLocalFavorites - favorite is never mirrored from RomM itself), and lastplayed
+    // (merged forward only, since a game can be played through ES-DE or RomM's own web player and
+    // neither source is authoritative alone). Each field is only set/merged when rom actually
+    // carries a value for it, so passing a rom reconstructed from a cache that's missing some of
+    // these (see RomMCache::toApiRom()) never regresses an existing value back to blank/default.
+    // Called for still-remote entries during a sync (RomMLibrarySync, every run) and by
+    // GuiGamelistOptions' "delete downloaded file" path (reverting an entry back to remote).
+    void applyRomMData(FileData* file, const RomMApiClient::Rom& rom);
+
+    // Only ever moves lastplayed forward - a game can be played through ES-DE (once downloaded) or
+    // through RomM's own web player, so neither source can be trusted as authoritative on its own.
+    // Exposed on its own (rather than only via applyRomMData()) for RomMLibrarySync's "already
+    // downloaded" entries, which want just this merge without the rest of applyRomMData() touching
+    // fields the downloaded copy now owns.
+    void mergeLastPlayed(FileData* file, int64_t rommLastPlayedUnix);
 } // namespace RomMUtils
 
 #endif // ES_APP_ROMM_ROMM_UTILS_H

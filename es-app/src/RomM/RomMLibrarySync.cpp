@@ -21,7 +21,6 @@
 #include "views/ViewController.h"
 
 #include <cstdlib>
-#include <sstream>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -98,66 +97,6 @@ namespace
         return displayNames;
     }
 
-    // A game can be played through ES-DE (once downloaded) or through RomM's own web player, so
-    // neither source can be trusted as authoritative - only ever move the value forward.
-    void mergeLastPlayed(FileData* file, int64_t rommLastPlayedUnix)
-    {
-        if (rommLastPlayedUnix <= 0)
-            return;
-        const int64_t currentUnix {Utils::Time::stringToTime(file->metadata.get("lastplayed"))};
-        if (rommLastPlayedUnix > currentUnix)
-            file->metadata.set("lastplayed",
-                               Utils::Time::DateTime(static_cast<time_t>(rommLastPlayedUnix)));
-    }
-
-    // Only called for still-remote entries - once downloaded, hidden/completed/favorite become
-    // the user's own to control, never silently overwritten by a later sync.
-    void applyRomMPlayerData(FileData* file, const RomMApiClient::Rom& rom)
-    {
-        file->metadata.set("hidden", rom.userHidden ? "true" : "false");
-        file->metadata.set(
-            "completed",
-            (rom.userStatus == "finished" || rom.userStatus == "completed_100") ? "true" : "false");
-        // Favorite is local-only intent (RomMLocalFavorites), not mirrored from RomM - reapply
-        // it since this FileData is rebuilt from scratch every sync.
-        file->metadata.set("favorite",
-                           RomMLocalFavorites::getInstance().isFavorite(rom.id) ? "true" : "false");
-    }
-
-    // Only called for still-remote entries - once downloaded, these become the scraper's (or
-    // the user's own edits') responsibility, never silently overwritten by a later sync.
-    void applyRomMGameData(FileData* file, const RomMApiClient::Rom& rom)
-    {
-        const std::string releaseDate {
-            RomMUtils::formatReleaseDate(rom.firstReleaseDate, rom.name)};
-        if (!releaseDate.empty())
-            file->metadata.set("releasedate", releaseDate);
-
-        // Community rating first, so the value doesn't change meaning once downloaded and
-        // scraped - personal rom_user.rating is only a fallback for an unmatched rom.
-        std::string rating {RomMUtils::formatCommunityRating(rom.averageRating)};
-        if (rating.empty() && rom.userRating > 0) {
-            std::stringstream ss;
-            ss << (static_cast<float>(rom.userRating) / 10.0f);
-            rating = ss.str();
-        }
-        if (!rating.empty())
-            file->metadata.set("rating", rating);
-
-        if (!rom.genres.empty())
-            file->metadata.set("genre", Utils::String::vectorToDelimitedString(rom.genres, ", "));
-
-        // RomM doesn't distinguish developer from publisher.
-        if (!rom.companies.empty()) {
-            const std::string companies {
-                Utils::String::vectorToDelimitedString(rom.companies, ", ")};
-            file->metadata.set("developer", companies);
-            file->metadata.set("publisher", companies);
-        }
-
-        if (!rom.playerCount.empty())
-            file->metadata.set("players", rom.playerCount);
-    }
 } // namespace
 
 RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
@@ -446,7 +385,7 @@ void RomMLibrarySync::applyResults()
                 if (existing->metadata.get("rommremote") != "true") {
                     // Already downloaded - leave the real local file untouched, other than a
                     // last-played merge, which is always safe since it only moves forward.
-                    mergeLastPlayed(existing, rom.lastPlayed);
+                    RomMUtils::mergeLastPlayed(existing, rom.lastPlayed);
                     continue;
                 }
                 if (existing->getPath() == desiredPath) {
@@ -454,9 +393,7 @@ void RomMLibrarySync::applyResults()
                     existing->metadata.set("name", displayName);
                     if (!rom.summary.empty())
                         existing->metadata.set("desc", rom.summary);
-                    applyRomMPlayerData(existing, rom);
-                    applyRomMGameData(existing, rom);
-                    mergeLastPlayed(existing, rom.lastPlayed);
+                    RomMUtils::applyRomMData(existing, rom);
                     continue;
                 }
                 // The computed name changed since the last sync (e.g. a newly-added sibling rom
@@ -493,9 +430,7 @@ void RomMLibrarySync::applyResults()
             newGame->metadata.set("rommid", std::to_string(rom.id));
             if (!carriedOverLastPlayed.empty())
                 newGame->metadata.set("lastplayed", carriedOverLastPlayed);
-            applyRomMPlayerData(newGame, rom);
-            applyRomMGameData(newGame, rom);
-            mergeLastPlayed(newGame, rom.lastPlayed);
+            RomMUtils::applyRomMData(newGame, rom);
             rootFolder->addChild(newGame);
             fileIndex->addToIndex(newGame);
             addedAny = true;

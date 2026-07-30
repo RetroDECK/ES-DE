@@ -24,20 +24,21 @@
 // ViewController::runRomMSyncWithSplashScreen(), which blocks the main thread until done, so only
 // one RomMLibrarySync background thread ever exists at a time, and it's the only caller of this
 // class - no locking is needed. Writes (setPlatform()/flush()) must never be touched from the
-// main/render thread. The one exception is findCachedSize(): a read-only lookup called from
-// ViewController::update() (main thread) to show a not-yet-downloaded game's size without a
-// network round-trip. This is safe without locking because runRomMSyncWithSplashScreen() blocks
-// the main thread for a sync's entire duration - update() (and thus findCachedSize()) can never
-// run while the sync thread is writing.
+// main/render thread. The exceptions are findCachedSize() and findCachedRom(): read-only lookups
+// called from the main thread (ViewController::update(), to show a not-yet-downloaded game's size
+// without a network round-trip; and GuiGamelistOptions' "delete downloaded file" path, to refill
+// an entry's descriptive metadata when reverting it back to remote). Both are safe without
+// locking because runRomMSyncWithSplashScreen() blocks the main thread for a sync's entire
+// duration - the main thread (and thus these lookups) can never run while the sync thread is
+// writing.
 class RomMCache
 {
 public:
-    // Only the fields RomMLibrarySync::applyResults()/buildDisplayNames() actually read -
-    // deliberately excludes urlCover/genres/companies/firstReleaseDate/averageRating/
-    // playerCount/files/updatedAt, which together account for the vast majority of a rom's
-    // payload size and are never used by the sync path. The per-user "rom_user" fields below
-    // are the exception - kept here so an incremental sync reusing a cached rom entry doesn't
-    // regress a previously-known value back to its default.
+    // Deliberately excludes urlCover/files/updatedAt, which RomM's sync/revert paths never read.
+    // Everything else is kept: a still-remote FileData is rebuilt from scratch every app run, and
+    // an incremental sync only re-fetches changed roms, so an unchanged (or reverted-to-remote)
+    // rom is reconstructed via toApiRom() from exactly what's cached here - without these fields
+    // it would regress to blank/default values instead of keeping what RomM last reported.
     struct CachedRom {
         int id {0};
         std::string name;
@@ -52,6 +53,11 @@ public:
         bool userHidden {false};
         int userRating {0};
         std::string userStatus;
+        std::vector<std::string> genres;
+        std::vector<std::string> companies;
+        int64_t firstReleaseDate {0};
+        float averageRating {0.0f};
+        std::string playerCount;
     };
 
     static RomMCache& getInstance();
@@ -63,6 +69,10 @@ public:
     // Scans every cached platform for a rom with this id. Returns false (leaving sizeBytesOut
     // untouched) if not found in any cached platform.
     bool findCachedSize(int rommId, int64_t& sizeBytesOut) const;
+    // Scans every cached platform for a rom with this id. Returns false (leaving cachedOut
+    // untouched) if not found in any cached platform. Read-only, so it's safe to call from the
+    // main thread under the same invariant as findCachedSize() above.
+    bool findCachedRom(int rommId, CachedRom& cachedOut) const;
     // In-memory only - call flush() to persist. Overwrites any prior entry for this platform.
     void setPlatform(int rommPlatformId,
                      const std::string& cursor,

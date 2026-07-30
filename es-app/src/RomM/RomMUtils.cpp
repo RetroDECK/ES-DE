@@ -6,8 +6,10 @@
 
 #include "RomM/RomMUtils.h"
 
+#include "FileData.h"
 #include "HttpReq.h"
 #include "Log.h"
+#include "RomM/RomMLocalFavorites.h"
 #include "Settings.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
@@ -289,6 +291,83 @@ namespace RomMUtils
         std::stringstream ss;
         ss << ratingVal;
         return ss.str();
+    }
+
+    // A game can be played through ES-DE (once downloaded) or through RomM's own web player, so
+    // neither source can be trusted as authoritative - only ever move the value forward. Exposed
+    // on its own (not folded into applyRomMData() below) since an already-downloaded entry still
+    // wants its last-played time merged in on every sync, without the rest of applyRomMData()
+    // touching fields the downloaded copy now owns (see the "Already downloaded" branch in
+    // RomMLibrarySync::applyResults()).
+    void mergeLastPlayed(FileData* file, int64_t rommLastPlayedUnix)
+    {
+        if (rommLastPlayedUnix <= 0)
+            return;
+        const int64_t currentUnix {Utils::Time::stringToTime(file->metadata.get("lastplayed"))};
+        if (rommLastPlayedUnix > currentUnix)
+            file->metadata.set("lastplayed",
+                               Utils::Time::DateTime(static_cast<time_t>(rommLastPlayedUnix)));
+    }
+
+    namespace
+    {
+        // Descriptive fields (from RomM's rom metadata, IGDB-sourced) and per-user/local fields
+        // (from RomM's rom_user resource, plus local favorite intent) are kept as separate
+        // helpers below since they come from distinct data provenance/update streams (see the
+        // comment on Rom::lastPlayed in RomMApiClient.h) - but every current caller wants both
+        // together, so applyRomMData() below is the only one exposed outside this file.
+        void applyRomMGameData(FileData* file, const RomMApiClient::Rom& rom)
+        {
+            const std::string releaseDate {formatReleaseDate(rom.firstReleaseDate, rom.name)};
+            if (!releaseDate.empty())
+                file->metadata.set("releasedate", releaseDate);
+
+            // Community rating first, so the value doesn't change meaning once downloaded and
+            // scraped - personal rom_user.rating is only a fallback for an unmatched rom.
+            std::string rating {formatCommunityRating(rom.averageRating)};
+            if (rating.empty() && rom.userRating > 0) {
+                std::stringstream ss;
+                ss << (static_cast<float>(rom.userRating) / 10.0f);
+                rating = ss.str();
+            }
+            if (!rating.empty())
+                file->metadata.set("rating", rating);
+
+            if (!rom.genres.empty())
+                file->metadata.set("genre",
+                                   Utils::String::vectorToDelimitedString(rom.genres, ", "));
+
+            // RomM doesn't distinguish developer from publisher.
+            if (!rom.companies.empty()) {
+                const std::string companies {
+                    Utils::String::vectorToDelimitedString(rom.companies, ", ")};
+                file->metadata.set("developer", companies);
+                file->metadata.set("publisher", companies);
+            }
+
+            if (!rom.playerCount.empty())
+                file->metadata.set("players", rom.playerCount);
+        }
+
+        void applyRomMPlayerData(FileData* file, const RomMApiClient::Rom& rom)
+        {
+            file->metadata.set("hidden", rom.userHidden ? "true" : "false");
+            file->metadata.set("completed",
+                               (rom.userStatus == "finished" || rom.userStatus == "completed_100") ?
+                                   "true" :
+                                   "false");
+            // Favorite is local-only intent (RomMLocalFavorites), not mirrored from RomM -
+            // reapply it since a still-remote FileData is rebuilt from scratch every sync.
+            file->metadata.set(
+                "favorite", RomMLocalFavorites::getInstance().isFavorite(rom.id) ? "true" : "false");
+        }
+    } // namespace
+
+    void applyRomMData(FileData* file, const RomMApiClient::Rom& rom)
+    {
+        applyRomMGameData(file, rom);
+        applyRomMPlayerData(file, rom);
+        mergeLastPlayed(file, rom.lastPlayed);
     }
 
 } // namespace RomMUtils

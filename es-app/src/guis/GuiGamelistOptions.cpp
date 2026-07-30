@@ -22,7 +22,9 @@
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
 #include "MameNames.h"
+#include "RomM/RomMCache.h"
 #include "RomM/RomMLocalFavorites.h"
+#include "RomM/RomMUtils.h"
 #include "Sound.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -534,6 +536,20 @@ void GuiGamelistOptions::openMetaDataEd()
                     atoi(file->metadata.get("rommid").c_str()), true);
                 file->metadata.set("favorite", "true");
             }
+
+            // resetMetadataFunc() just wiped desc/genre/rating/hidden/completed/lastplayed/etc.
+            // back to their generic defaults - refill them from RomMCache so the entry
+            // immediately looks like the remote placeholder it's reverting to, rather than
+            // sitting blank/reset until the next sync re-applies them.
+            RomMCache::CachedRom cachedRom;
+            if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
+                                                       cachedRom)) {
+                const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
+                if (!rom.summary.empty())
+                    file->metadata.set("desc", rom.summary);
+                RomMUtils::applyRomMData(file, rom);
+            }
+
             file->getSystem()->onMetaDataSavePoint();
 
             // The game just moved into the "not yet downloaded" bucket, so its position among
