@@ -24,6 +24,16 @@ namespace RomMUtils
 
     std::string joinUrl(const std::string& serverURL, const std::string& path);
 
+    // Strips trailing slashes so callers that need a bare normalized server URL (e.g. to pass
+    // into another API expecting to append its own leading-slash path) match RomMApiClient's own
+    // normalization without duplicating this loop at each call site.
+    std::string stripTrailingSlashes(const std::string& url);
+
+    // Reads the configured RomMServerURL setting and trims it via stripTrailingSlashes(). For
+    // callers (e.g. RomMLibrarySync) that need the normalized server URL itself rather than
+    // constructing a RomMApiClient (which already normalizes internally).
+    std::string getServerUrl();
+
     bool checkHeartbeat(const std::string& serverURL);
 
     // Tries https:// then http:// if rawInput has no scheme. Returns true and sets

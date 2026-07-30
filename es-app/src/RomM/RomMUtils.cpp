@@ -158,10 +158,20 @@ namespace RomMUtils
 
     std::string joinUrl(const std::string& serverURL, const std::string& path)
     {
-        std::string trimmedServerURL {serverURL};
-        while (!trimmedServerURL.empty() && trimmedServerURL.back() == '/')
-            trimmedServerURL.pop_back();
-        return trimmedServerURL + path;
+        return stripTrailingSlashes(serverURL) + path;
+    }
+
+    std::string stripTrailingSlashes(const std::string& url)
+    {
+        std::string trimmed {url};
+        while (!trimmed.empty() && trimmed.back() == '/')
+            trimmed.pop_back();
+        return trimmed;
+    }
+
+    std::string getServerUrl()
+    {
+        return stripTrailingSlashes(Settings::getInstance()->getString("RomMServerURL"));
     }
 
     bool checkHeartbeat(const std::string& serverURL)
@@ -180,9 +190,7 @@ namespace RomMUtils
 
     bool resolveServerUrl(const std::string& rawInput, std::string& outResolvedUrl)
     {
-        std::string trimmed {Utils::String::trim(rawInput)};
-        while (!trimmed.empty() && trimmed.back() == '/')
-            trimmed.pop_back();
+        const std::string trimmed {stripTrailingSlashes(Utils::String::trim(rawInput))};
 
         if (trimmed.empty())
             return false;

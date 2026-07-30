@@ -344,12 +344,10 @@ void RomMLibrarySync::applyResults()
 {
     // Used below to resolve each rom's cover source URL for RomMRemoteMediaLoader - read fresh
     // here (main thread) rather than threading it through from fetchInBackground(), since it's
-    // a plain settings read with no threading concerns of its own. Trailing slash stripped to
-    // match RomMApiClient's own normalization, since resolveCoverUrl() just concatenates this
-    // directly with a leading-slash path.
-    std::string serverURL {Settings::getInstance()->getString("RomMServerURL")};
-    while (!serverURL.empty() && serverURL.back() == '/')
-        serverURL.pop_back();
+    // a plain settings read with no threading concerns of its own. Normalized (trailing slash
+    // stripped) to match RomMApiClient's own normalization, since resolveCoverUrl() just
+    // concatenates this directly with a leading-slash path.
+    const std::string serverURL {RomMUtils::getServerUrl()};
 
     for (auto& result : mResults) {
         SystemData* system {result.system};

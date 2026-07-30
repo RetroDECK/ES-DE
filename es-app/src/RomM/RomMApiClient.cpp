@@ -29,12 +29,9 @@ namespace
 } // namespace
 
 RomMApiClient::RomMApiClient(const std::string& serverURL, const std::string& token)
-    : mServerURL {serverURL}
+    : mServerURL {RomMUtils::stripTrailingSlashes(serverURL)}
     , mToken {token}
 {
-    // Strip any trailing slash so buildUrl() can always just append "/api/...".
-    while (!mServerURL.empty() && mServerURL.back() == '/')
-        mServerURL.pop_back();
 }
 
 std::string RomMApiClient::buildUrl(const std::string& path) const
