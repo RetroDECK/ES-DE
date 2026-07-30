@@ -1097,10 +1097,8 @@ bool SystemData::loadConfig()
             for (const auto& platform : rommPlatforms) {
                 if (claimedRomMPlatformIds.find(platform.id) != claimedRomMPlatformIds.cend())
                     continue;
-                for (const std::string& token :
-                     Utils::String::delimitedStringToVector(platformList, ",")) {
-                    if (RomMUtils::platformNameMatches(Utils::String::trim(token), platform.slug,
-                                                       platform.fsSlug)) {
+                for (const std::string& token : platformStrs) {
+                    if (RomMUtils::platformNameMatches(token, platform.slug, platform.fsSlug)) {
                         matchesRomMPlatform = true;
                         claimedRomMPlatformIds.insert(platform.id);
                         break;
