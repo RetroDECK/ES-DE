@@ -157,7 +157,7 @@ void GuiMenu::openRomMOptions()
 
     auto rommDownloadedFirst = std::make_shared<SwitchComponent>();
     rommDownloadedFirst->setState(Settings::getInstance()->getBool("RomMDownloadedFirst"));
-    s->addWithLabel(_("SORT DOWNLOADED GAMES ABOVE NOT-YET-DOWNLOADED GAMES"), rommDownloadedFirst);
+    s->addWithLabel(_("SORT DOWNLOADED GAMES ABOVE NON-DOWNLOADED"), rommDownloadedFirst);
     s->addSaveFunc([rommDownloadedFirst, s] {
         if (rommDownloadedFirst->getState() !=
             Settings::getInstance()->getBool("RomMDownloadedFirst")) {
@@ -172,7 +172,7 @@ void GuiMenu::openRomMOptions()
 
     auto rommShowRemoteMedia = std::make_shared<SwitchComponent>();
     rommShowRemoteMedia->setState(Settings::getInstance()->getBool("RomMShowRemoteMedia"));
-    s->addWithLabel(_("SHOW IMAGES WHILE BROWSING"), rommShowRemoteMedia);
+    s->addWithLabel(_("SHOW COVER IMAGES WHILE BROWSING"), rommShowRemoteMedia);
     s->addSaveFunc([rommShowRemoteMedia, s] {
         if (rommShowRemoteMedia->getState() !=
             Settings::getInstance()->getBool("RomMShowRemoteMedia")) {
