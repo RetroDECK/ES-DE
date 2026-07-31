@@ -30,8 +30,8 @@ namespace RomMUtils
     std::string stripTrailingSlashes(const std::string& url);
 
     // Reads the configured RomMServerURL setting and trims it via stripTrailingSlashes(). For
-    // callers (e.g. RomMLibrarySync) that need the normalized server URL itself rather than
-    // constructing a RomMApiClient (which already normalizes internally).
+    // callers that need the normalized server URL itself rather than constructing a
+    // RomMApiClient (which already normalizes internally).
     std::string getServerUrl();
 
     bool checkHeartbeat(const std::string& serverURL);
@@ -52,8 +52,8 @@ namespace RomMUtils
 
     // Formats a UTC time_t as "YYYY-MM-DDTHH:MM:SSZ", the format RomM's updated_after query
     // parameter accepts (empirically verified against a live RomM instance). Public and
-    // static so callers (e.g. RomMLibrarySync/RomMCache) can format a persisted sync cursor
-    // without duplicating the gmtime_r/gmtime_s platform split.
+    // static so callers can format a persisted sync cursor without duplicating the
+    // gmtime_r/gmtime_s platform split.
     std::string formatTimestampUtc(time_t time);
 
     // Formats a RomM rom's metadatum.first_release_date (Unix seconds, UTC - the caller divides
@@ -77,15 +77,13 @@ namespace RomMUtils
     // neither source is authoritative alone). Each field is only set/merged when rom actually
     // carries a value for it, so passing a rom reconstructed from a cache that's missing some of
     // these (see RomMCache::toApiRom()) never regresses an existing value back to blank/default.
-    // Called for still-remote entries during a sync (RomMLibrarySync, every run) and by
-    // GuiGamelistOptions' "delete downloaded file" path (reverting an entry back to remote).
     void applyRomMData(FileData* file, const RomMApiClient::Rom& rom);
 
     // Only ever moves lastplayed forward - a game can be played through ES-DE (once downloaded) or
     // through RomM's own web player, so neither source can be trusted as authoritative on its own.
-    // Exposed on its own (rather than only via applyRomMData()) for RomMLibrarySync's "already
-    // downloaded" entries, which want just this merge without the rest of applyRomMData() touching
-    // fields the downloaded copy now owns.
+    // Exposed on its own (rather than only via applyRomMData()) for already-downloaded entries,
+    // which want just this merge without the rest of applyRomMData() touching fields the
+    // downloaded copy now owns.
     void mergeLastPlayed(FileData* file, int64_t rommLastPlayedUnix);
 } // namespace RomMUtils
 

@@ -22,20 +22,17 @@
 
 // Not thread-safe by design: every RomM sync runs via
 // ViewController::runRomMSyncWithSplashScreen(), which blocks the main thread until done, so only
-// one RomMLibrarySync background thread ever exists at a time, and it's the only caller of this
-// class - no locking is needed. Writes (setPlatform()/flush()) must never be touched from the
-// main/render thread. The exceptions are findCachedSize() and findCachedRom(): read-only lookups
-// called from the main thread (ViewController::update(), to show a not-yet-downloaded game's size
-// without a network round-trip; and GuiGamelistOptions' "delete downloaded file" path, to refill
-// an entry's descriptive metadata when reverting it back to remote). Both are safe without
-// locking because runRomMSyncWithSplashScreen() blocks the main thread for a sync's entire
-// duration - the main thread (and thus these lookups) can never run while the sync thread is
-// writing.
+// one RomMLibrarySync background thread ever exists at a time, and it's the only caller of
+// writes - no locking is needed. Writes (setPlatform()/flush()) must never be touched from the
+// main/render thread. findCachedSize() and findCachedRom() are the exceptions: read-only lookups
+// that are called from the main thread, safe without locking because
+// runRomMSyncWithSplashScreen() blocks the main thread for a sync's entire duration - the main
+// thread (and thus these lookups) can never run while the sync thread is writing.
 class RomMCache
 {
 public:
     // Mirrors the fields RomMLibrarySync::applyResults() reads, minus files (refreshed only at
-    // download time, see GuiRomMDownload) and updatedAt (diagnostic-only). Every remaining field
+    // download time) and updatedAt (diagnostic-only). Every remaining field
     // must round-trip through fromApiRom()/toApiRom(): an incremental sync reconstructs any rom
     // outside that run's delta purely from this cache, so an omitted field silently reverts to
     // its default on every sync after the first.

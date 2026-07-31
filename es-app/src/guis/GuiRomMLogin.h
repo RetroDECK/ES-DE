@@ -4,7 +4,7 @@
 //  GuiRomMLogin.h
 //
 //  Shared "LOGIN" screen for RomM (server URL entry plus pairing, or LOG OUT if already
-//  paired). Used by both the main Settings menu and the no-games-found startup dialog.
+//  paired).
 //
 
 #ifndef ES_APP_GUIS_GUI_ROMM_LOGIN_H

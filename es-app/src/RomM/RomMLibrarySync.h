@@ -3,9 +3,7 @@
 //  ES-DE Frontend
 //  RomMLibrarySync.h
 //
-//  Synchronizes ES-DE's gamelists with a RomM server. Driven by
-//  ViewController::runRomMSyncWithSplashScreen(), used at startup, right after pairing, and by
-//  the manual "FORCE FULL RESYNC" menu action.
+//  Synchronizes ES-DE's gamelists with a RomM server.
 //
 
 #ifndef ES_APP_ROMM_ROMM_LIBRARY_SYNC_H
@@ -51,10 +49,10 @@ public:
     // Re-resolves rommId's cover source URL from RomMCache and re-records it with
     // RomMRemoteMediaLoader, exactly as applyResults() does for every rom on a normal sync.
     // Needed when a FileData reverts to a remote ("rommremote") entry outside of a sync - e.g.
-    // GuiGamelistOptions deleting a downloaded RomM game's local file - since
-    // RomMRemoteMediaLoader::forget() dropped its entry at download time and nothing else would
-    // otherwise re-populate it before the next full sync. No-op if rommId isn't in the cache
-    // (e.g. it's since been removed from RomM entirely).
+    // after deleting a downloaded game's local file - since RomMRemoteMediaLoader::forget()
+    // dropped its entry at download time and nothing else would otherwise re-populate it before
+    // the next full sync. No-op if rommId isn't in the cache (e.g. it's since been removed from
+    // RomM entirely).
     static void reregisterRemoteMedia(int rommId);
 
     // Spawns the background fetch thread. Activating newly-matched systems is handled by
@@ -88,9 +86,6 @@ private:
     std::unique_ptr<std::thread> mSyncThread;
     std::atomic<bool> mDoneSyncing;
     std::vector<SystemSyncResult> mResults;
-    // Refreshed on every sync (best-effort - left empty on failure, in which case applyResults()
-    // leaves any already-persisted Settings value untouched) so an already-paired session picks
-    // up a username set by a version of ES-DE predating this field, without requiring a re-pair.
     std::string mFetchedUsername;
     int mSystemsAdded;
     int mSystemsRemoved;

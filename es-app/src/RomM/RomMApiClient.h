@@ -4,8 +4,7 @@
 //  RomMApiClient.h
 //
 //  Thin client for the subset of the RomM (https://github.com/rommapp/romm) REST API that
-//  ES-DE needs: listing platforms/roms and downloading rom files. Used by the library sync
-//  that lists not-yet-downloaded games inline in the gamelists.
+//  ES-DE needs: listing platforms/roms and downloading rom files.
 //
 //  Every method performs one or more blocking network calls and must therefore only be
 //  invoked from a background thread, never from the render/main thread.
@@ -98,13 +97,10 @@ public:
 
     // Returns all platforms configured on the RomM server that have at least one rom - an empty
     // platform can't ever populate a system, so it's filtered out here rather than pushed onto
-    // every caller (both current ones only use this to decide which ES-DE system gets
-    // created/synced for a given platform). Returns an empty vector and sets lastError() on
-    // failure.
+    // every caller. Returns an empty vector and sets lastError() on failure.
     std::vector<Platform> fetchPlatforms();
 
-    // Fetches the currently-authenticated user's profile (GET /api/users/me). Used only to
-    // display who's logged in (GuiRomMLogin) - a failure here doesn't otherwise affect sync.
+    // Fetches the currently-authenticated user's profile (GET /api/users/me).
     // Returns true and populates outUser on success, false (with lastError() set) otherwise.
     bool fetchCurrentUser(User& outUser);
 
@@ -128,8 +124,8 @@ public:
 
     // Builds the URL for downloading a rom's file content. Unlike the fetch*() methods above,
     // this doesn't perform a network call itself - the caller is expected to stream the
-    // download via its own HttpReq (see GuiRomMDownload), since that needs to run on a
-    // dedicated background thread with live progress tracking.
+    // download via its own HttpReq, since that needs to run on a dedicated background thread
+    // with live progress tracking.
     std::string getDownloadUrl(int romId, const std::string& fsName) const;
 
     // Builds the URL for downloading a single disc/part of a multi-file rom (Rom::files[i]).

@@ -161,13 +161,10 @@ void Settings::setDefaults()
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
     mStringMap["RomMServerURL"] = {"", ""};
-    // A RomM API bearer token, obtained via the device-pairing flow (GuiRomMPairing).
     mStringMap["RomMToken"] = {"", ""};
     // ISO-8601 timestamp for when RomMToken expires, or empty if it doesn't.
     mStringMap["RomMTokenExpiresAt"] = {"", ""};
-    // The logged-in RomM account's username, shown in GuiRomMLogin. Refreshed on pairing and on
-    // every library sync (RomMLibrarySync) - never displayed as authoritative on its own, purely
-    // informational.
+
     mStringMap["RomMUsername"] = {"", ""};
     // Random per-install identifier sent as the pairing flow's client_device_identifier.
     mStringMap["RomMDeviceIdentifier"] = {"", ""};
@@ -182,8 +179,8 @@ void Settings::setDefaults()
     // independently of the FavoritesFirst setting.
     mBoolMap["RomMDownloadedFirst"] = {true, true};
     // Whether to lazily fetch and display a not-yet-downloaded RomM entry's cover while
-    // browsing the gamelist (RomMRemoteMediaLoader), independent of RomM integration as a
-    // whole - lets a user on a slow/metered connection opt out of this extra network traffic.
+    // browsing the gamelist, independent of RomM integration as a whole - lets a user on a
+    // slow/metered connection opt out of this extra network traffic.
     mBoolMap["RomMShowRemoteMedia"] = {true, true};
 
     // UI settings.

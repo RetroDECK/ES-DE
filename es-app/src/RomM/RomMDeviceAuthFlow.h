@@ -4,9 +4,8 @@
 //  RomMDeviceAuthFlow.h
 //
 //  Runs RomM's device-authorization pairing flow (POST /api/auth/device/init, then repeated
-//  polling of /api/auth/device/token) on a background thread, for the "PAIR WITH SERVER" menu
-//  action (GuiRomMPairing). Mirrors the headless-engine/GUI-driver split RomMLibrarySync uses
-//  with ViewController::runRomMSyncWithSplashScreen().
+//  polling of /api/auth/device/token) on a background thread. Mirrors the headless-engine/
+//  GUI-driver split RomMLibrarySync uses with ViewController::runRomMSyncWithSplashScreen().
 //
 
 #ifndef ES_APP_ROMM_ROMM_DEVICE_AUTH_FLOW_H

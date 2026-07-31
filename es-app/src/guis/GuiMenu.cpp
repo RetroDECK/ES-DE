@@ -210,9 +210,6 @@ void GuiMenu::openRomMLoginOptions()
 
 void GuiMenu::openRomMSyncOptions()
 {
-    // A small submenu rather than putting "PLATFORM SYNC" directly under the top-level RomM
-    // screen, so a future custom-collection sync feature has a natural home here later without
-    // touching the top-level menu again.
     auto s = new GuiSettings(_("SYNC SETTINGS"));
 
     if (!RomMUtils::isLoggedIn()) {

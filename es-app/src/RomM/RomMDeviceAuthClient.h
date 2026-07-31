@@ -4,9 +4,8 @@
 //  RomMDeviceAuthClient.h
 //
 //  Thin client for RomM's device-authorization pairing protocol (POST /api/auth/device/init,
-//  then polling /api/auth/device/token) - the unauthenticated counterpart to RomMApiClient,
-//  used only by RomMDeviceAuthFlow. Constructed with an already-resolved server URL (see
-//  RomMUtils::resolveServerUrl()).
+//  then polling /api/auth/device/token) - the unauthenticated counterpart to RomMApiClient.
+//  Constructed with an already-resolved server URL (see RomMUtils::resolveServerUrl()).
 //
 //  Every method performs a blocking network call and must therefore only be invoked from a
 //  background thread, never from the render/main thread.

@@ -90,8 +90,8 @@ std::vector<RomMApiClient::Platform> RomMApiClient::fetchPlatforms()
             continue;
 
         // Skip platforms with no roms - an empty platform can't populate any system, so surfacing
-        // it here would only make an otherwise-inactive system get auto-created/kept visible (see
-        // matchesRomMPlatform in SystemData::loadConfig()) for content that will never appear.
+        // it here would only make an otherwise-inactive system get auto-created/kept visible
+        // for content that will never appear.
         if (entry.HasMember("rom_count") && entry["rom_count"].IsInt() &&
             entry["rom_count"].GetInt() <= 0)
             continue;
@@ -364,10 +364,9 @@ std::string RomMApiClient::getFileDownloadUrl(int fileId, const std::string& fil
 
 namespace
 {
-    // Used by resolveCoverUrl(): treats path as a server-relative path (RomM's own re-hosted
-    // asset), prefixing serverURL and fixing up the cache-busting query's raw unencoded space,
-    // exactly as scrapers/RomM.cpp's processGame() already does inline for
-    // path_cover_large/path_cover_small.
+    // Treats path as a server-relative path (RomM's own re-hosted asset), prefixing serverURL
+    // and fixing up the cache-busting query's raw unencoded space, exactly as scrapers/RomM.cpp's
+    // processGame() already does inline for path_cover_large/path_cover_small.
     std::string resolveServerRelativePath(const std::string& serverURL,
                                           const std::string& path,
                                           std::string& outFormat)
@@ -379,10 +378,10 @@ namespace
         return serverURL + fixedPath;
     }
 
-    // Used by resolveCoverUrl(): the upstream-hosted fallback URL is only trusted when its path
-    // (ignoring any query string) ends in a plausible image extension - RomM/IGDB URLs otherwise
-    // often end in just the provider's API script name (e.g. ".php"), with the real format only
-    // conveyed via a query parameter.
+    // The upstream-hosted fallback URL is only trusted when its path (ignoring any query
+    // string) ends in a plausible image extension - RomM/IGDB URLs otherwise often end in just
+    // the provider's API script name (e.g. ".php"), with the real format only conveyed via a
+    // query parameter.
     std::string resolveUpstreamUrl(const std::string& url, std::string& outFormat)
     {
         std::string path {url};

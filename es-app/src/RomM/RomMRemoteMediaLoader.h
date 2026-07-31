@@ -40,8 +40,8 @@ public:
     static RomMRemoteMediaLoader& getInstance();
 
     // Records the cover source URL for a rom, as resolved by RomMApiClient::resolveCoverUrl().
-    // Called once per rom on every sync (RomMLibrarySync::applyResults()). Does not itself start
-    // any network I/O. If the url is unchanged from what's already recorded, any existing fetch
+    // Called once per rom on every sync. Does not itself start any network I/O. If the url is
+    // unchanged from what's already recorded, any existing fetch
     // state/bytes/in-flight request is left untouched (so re-syncing doesn't throw away
     // already-fetched art). If the url genuinely changed since last recorded (e.g. the server
     // regenerated the cover) and no fetch is currently in flight, any previously fetched
@@ -62,7 +62,7 @@ public:
     const std::string* getCoverBytes(int rommId) const;
     const std::string& getCoverFormat(int rommId) const;
 
-    // Polls every in-flight HttpReq. Call once per frame (e.g. from GamelistView::update()).
+    // Polls every in-flight HttpReq. Call once per frame.
     void update();
 
     // Drops all cached state (source, bytes, in-flight request) for a rom, e.g. once it's been

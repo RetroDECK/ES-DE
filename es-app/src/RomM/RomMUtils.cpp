@@ -308,8 +308,7 @@ namespace RomMUtils
         // Descriptive fields (from RomM's rom metadata, IGDB-sourced) and per-user/local fields
         // (from RomM's rom_user resource, plus local favorite intent) are kept as separate
         // helpers below since they come from distinct data provenance/update streams (see the
-        // comment on Rom::lastPlayed in RomMApiClient.h) - but every current caller wants both
-        // together, so applyRomMData() below is the only one exposed outside this file.
+        // comment on Rom::lastPlayed in RomMApiClient.h).
         void applyRomMGameData(FileData* file, const RomMApiClient::Rom& rom)
         {
             const std::string releaseDate {formatReleaseDate(rom.firstReleaseDate, rom.name)};
