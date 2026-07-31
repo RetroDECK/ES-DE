@@ -307,10 +307,8 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Videos are not supported by TheGamesDB, so gray out the option if this scraper is
-    // selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    // Videos are not supported by TheGamesDB, so gray out the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrapeVideos->setEnabled(false);
         scrapeVideos->setOpacity(DISABLED_OPACITY);
         scrapeVideos->getParent()
@@ -388,8 +386,7 @@ void GuiScraperMenu::openContentOptions()
 
     // 3D box images are not supported by TheGamesDB, so gray out the option if this scraper
     // is selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrape3dBoxes->setEnabled(false);
         scrape3dBoxes->setOpacity(DISABLED_OPACITY);
         scrape3dBoxes->getParent()
@@ -412,8 +409,7 @@ void GuiScraperMenu::openContentOptions()
 
     // Physical media images are not supported by TheGamesDB, so gray out the option if this
     // scraper is selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrapePhysicalMedia->setEnabled(false);
         scrapePhysicalMedia->setOpacity(DISABLED_OPACITY);
         scrapePhysicalMedia->getParent()
@@ -445,8 +441,7 @@ void GuiScraperMenu::openContentOptions()
 
     // Game manuals are not supported by TheGamesDB, so gray out the option if this scraper
     // is selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrapeManuals->setEnabled(false);
         scrapeManuals->setOpacity(DISABLED_OPACITY);
         scrapeManuals->getParent()
@@ -861,10 +856,8 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // Regions are not supported by TheGamesDB, so gray out the option if this scraper is
-    // selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    // Regions are not supported by TheGamesDB, so gray out the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scraperRegion->setEnabled(false);
         scraperRegion->setOpacity(DISABLED_OPACITY);
         scraperRegion->getParent()
@@ -913,8 +906,7 @@ void GuiScraperMenu::openOtherOptions()
 
     // Languages are not supported by TheGamesDB, so gray out the option if this scraper is
     // selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scraperLanguage->setEnabled(false);
         scraperLanguage->setOpacity(DISABLED_OPACITY);
         scraperLanguage->getParent()
@@ -1170,10 +1162,8 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // Regions are not supported by TheGamesDB, so gray out the option if this scraper is
-    // selected.
-    if (const std::string& scraperName = Settings::getInstance()->getString("Scraper");
-        scraperName == "thegamesdb") {
+    // Regions are not supported by TheGamesDB, so gray out the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scraperRegionFallback->setEnabled(false);
         scraperRegionFallback->setOpacity(DISABLED_OPACITY);
         scraperRegionFallback->getParent()
