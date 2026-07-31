@@ -32,6 +32,11 @@ public:
         int romCount {0};
     };
 
+    // The currently-authenticated user (RomM's UserSchema, narrowed to what ES-DE displays).
+    struct User {
+        std::string username;
+    };
+
     // One disc/part of a multi-file rom (RomM's RomFileSchema). "id" here identifies the file
     // itself, not the rom - required by getFileDownloadUrl() below.
     struct RomFile {
@@ -97,6 +102,11 @@ public:
     // created/synced for a given platform). Returns an empty vector and sets lastError() on
     // failure.
     std::vector<Platform> fetchPlatforms();
+
+    // Fetches the currently-authenticated user's profile (GET /api/users/me). Used only to
+    // display who's logged in (GuiRomMLogin) - a failure here doesn't otherwise affect sync.
+    // Returns true and populates outUser on success, false (with lastError() set) otherwise.
+    bool fetchCurrentUser(User& outUser);
 
     // Pages through and returns every rom belonging to the given RomM platform id. If
     // updatedAfterUtc is non-empty (see RomMUtils::formatTimestampUtc()), restricts the result

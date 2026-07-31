@@ -88,6 +88,10 @@ private:
     std::unique_ptr<std::thread> mSyncThread;
     std::atomic<bool> mDoneSyncing;
     std::vector<SystemSyncResult> mResults;
+    // Refreshed on every sync (best-effort - left empty on failure, in which case applyResults()
+    // leaves any already-persisted Settings value untouched) so an already-paired session picks
+    // up a username set by a version of ES-DE predating this field, without requiring a re-pair.
+    std::string mFetchedUsername;
     int mSystemsAdded;
     int mSystemsRemoved;
     bool mForceFullResync;

@@ -179,6 +179,10 @@ void RomMLibrarySync::fetchInBackground()
     RomMApiClient platformClient {serverURL, token};
     const std::vector<RomMApiClient::Platform> rommPlatforms {platformClient.fetchPlatforms()};
 
+    RomMApiClient::User currentUser;
+    if (platformClient.fetchCurrentUser(currentUser))
+        mFetchedUsername = currentUser.username;
+
     // Enforces a one-to-one match: multiple active systems can alias to the same RomM platform
     // (e.g. both "genesis" and "megadrive" match RomM's single "genesis-slash-megadrive"), and
     // without this, each would independently fetch and count the same platform's roms, doubling
@@ -348,6 +352,11 @@ void RomMLibrarySync::fetchInBackground()
 
 void RomMLibrarySync::applyResults()
 {
+    if (!mFetchedUsername.empty()) {
+        Settings::getInstance()->setString("RomMUsername", mFetchedUsername);
+        Settings::getInstance()->saveFile();
+    }
+
     // Used below to resolve each rom's cover source URL for RomMRemoteMediaLoader - read fresh
     // here (main thread) rather than threading it through from fetchInBackground(), since it's
     // a plain settings read with no threading concerns of its own. Normalized (trailing slash

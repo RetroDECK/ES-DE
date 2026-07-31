@@ -165,6 +165,10 @@ void Settings::setDefaults()
     mStringMap["RomMToken"] = {"", ""};
     // ISO-8601 timestamp for when RomMToken expires, or empty if it doesn't.
     mStringMap["RomMTokenExpiresAt"] = {"", ""};
+    // The logged-in RomM account's username, shown in GuiRomMLogin. Refreshed on pairing and on
+    // every library sync (RomMLibrarySync) - never displayed as authoritative on its own, purely
+    // informational.
+    mStringMap["RomMUsername"] = {"", ""};
     // Random per-install identifier sent as the pairing flow's client_device_identifier.
     mStringMap["RomMDeviceIdentifier"] = {"", ""};
     // Whether to silently sync the RomM library in the background on startup, so opted-in

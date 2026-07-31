@@ -32,6 +32,13 @@ void GuiRomMLogin::push(Window* window,
             Settings::getInstance()->getString("RomMServerURL"), Font::get(FONT_SIZE_MEDIUM),
             menuColorPrimary, ALIGN_RIGHT);
         s->addWithLabel(_("SERVER URL"), serverURLDisplay);
+
+        const std::string username {Settings::getInstance()->getString("RomMUsername")};
+        if (!username.empty()) {
+            auto usernameDisplay = std::make_shared<TextComponent>(
+                username, Font::get(FONT_SIZE_MEDIUM), menuColorPrimary, ALIGN_RIGHT);
+            s->addWithLabel(_("LOGGED IN AS"), usernameDisplay);
+        }
     }
     else {
         rommServerURL = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
@@ -55,6 +62,7 @@ void GuiRomMLogin::push(Window* window,
         logoutRow.makeAcceptInputHandler([s, onLoggedOut] {
             Settings::getInstance()->setString("RomMToken", "");
             Settings::getInstance()->setString("RomMTokenExpiresAt", "");
+            Settings::getInstance()->setString("RomMUsername", "");
             Settings::getInstance()->saveFile();
             RomMCache::getInstance().clearAll();
             RomMCache::getInstance().flush();

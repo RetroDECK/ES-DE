@@ -112,6 +112,32 @@ std::vector<RomMApiClient::Platform> RomMApiClient::fetchPlatforms()
     return platforms;
 }
 
+bool RomMApiClient::fetchCurrentUser(User& outUser)
+{
+    if (mServerURL.empty()) {
+        mLastError = "No RomM server URL configured";
+        return false;
+    }
+
+    HttpReq req {buildUrl("/api/users/me"), false, "", mToken};
+    if (!waitForRequest(req))
+        return false;
+
+    Document doc;
+    doc.Parse(req.getContent().c_str());
+    if (doc.HasParseError() || !doc.IsObject()) {
+        mLastError = "Unexpected RomM user response format";
+        return false;
+    }
+    if (!doc.HasMember("username") || !doc["username"].IsString()) {
+        mLastError = "Unexpected RomM user response format";
+        return false;
+    }
+
+    outUser.username = doc["username"].GetString();
+    return true;
+}
+
 namespace
 {
     // Parses the fixed "YYYY-MM-DDTHH:MM:SS" prefix of an ISO-8601 timestamp as returned by
