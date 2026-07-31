@@ -239,7 +239,8 @@ void RomMCache::flush()
             romNode.append_attribute("regions").set_value(joinComma(rom.regions).c_str());
             romNode.append_attribute("languages").set_value(joinComma(rom.languages).c_str());
             romNode.append_attribute("hasMultipleFiles").set_value(rom.hasMultipleFiles);
-            romNode.append_attribute("lastPlayed").set_value(static_cast<long long>(rom.lastPlayed));
+            romNode.append_attribute("lastPlayed")
+                .set_value(static_cast<long long>(rom.lastPlayed));
             romNode.append_attribute("userHidden").set_value(rom.userHidden);
             romNode.append_attribute("userRating").set_value(rom.userRating);
             romNode.append_attribute("userStatus").set_value(rom.userStatus.c_str());

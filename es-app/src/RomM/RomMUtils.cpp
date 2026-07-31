@@ -257,13 +257,13 @@ namespace RomMUtils
         gmtime_r(&releaseTimestamp, &utcTime);
 #endif
         const int year {utcTime.tm_year + 1900};
-        const int currentYear {
-            Utils::Time::DateTime(Utils::Time::now()).getTimeStruct().tm_year + 1900};
+        const int currentYear {Utils::Time::DateTime(Utils::Time::now()).getTimeStruct().tm_year +
+                               1900};
 
         if (year < 1950 || year > currentYear + 2) {
             LOG(LogWarning) << "RomM: Ignoring implausible release date for \"" << gameName
-                            << "\" (raw timestamp " << firstReleaseDateUnixSeconds
-                            << " s -> year " << year << ")";
+                            << "\" (raw timestamp " << firstReleaseDateUnixSeconds << " s -> year "
+                            << year << ")";
             return "";
         }
 
@@ -352,8 +352,9 @@ namespace RomMUtils
                                    "false");
             // Favorite is local-only intent (RomMLocalFavorites), not mirrored from RomM -
             // reapply it since a still-remote FileData is rebuilt from scratch every sync.
-            file->metadata.set(
-                "favorite", RomMLocalFavorites::getInstance().isFavorite(rom.id) ? "true" : "false");
+            file->metadata.set("favorite", RomMLocalFavorites::getInstance().isFavorite(rom.id) ?
+                                               "true" :
+                                               "false");
         }
     } // namespace
 
