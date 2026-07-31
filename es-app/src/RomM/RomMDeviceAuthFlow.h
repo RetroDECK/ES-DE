@@ -15,6 +15,7 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <vector>
 
 class RomMDeviceAuthFlow
 {
@@ -45,6 +46,7 @@ public:
     // Valid once getState() == Success.
     const std::string& getAccessToken() const { return mAccessToken; }
     const std::string& getExpiresAt() const { return mExpiresAt; } // empty if no expiry
+    const std::vector<std::string>& getScopes() const { return mScopes; }
 
     // Valid once getState() == Error.
     const std::string& getLastError() const { return mLastError; }
@@ -64,6 +66,7 @@ private:
     std::string mVerificationUrl;
     std::string mAccessToken;
     std::string mExpiresAt;
+    std::vector<std::string> mScopes;
     std::string mLastError;
 };
 

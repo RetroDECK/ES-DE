@@ -98,6 +98,8 @@ void GuiRomMPairing::finishOnMainThread()
         Settings::getInstance()->setString("RomMServerURL", resolvedServerUrl);
         Settings::getInstance()->setString("RomMToken", mFlow->getAccessToken());
         Settings::getInstance()->setString("RomMTokenExpiresAt", mFlow->getExpiresAt());
+        Settings::getInstance()->setString(
+            "RomMTokenScopes", Utils::String::vectorToDelimitedString(mFlow->getScopes(), ","));
         Settings::getInstance()->saveFile();
         const std::function<void(const std::string&)> onSuccess {mOnSuccess};
         // Delete before invoking the callback, matching GuiMsgBox::deleteMeAndCall()'s pattern -

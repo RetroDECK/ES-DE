@@ -51,6 +51,8 @@ public:
 
     explicit RomMDeviceAuthClient(const std::string& serverURL);
 
+    static const std::vector<std::string>& requiredScopes();
+
     // Succeeds only on HTTP 201.
     bool initDeviceAuth(const std::string& clientDeviceIdentifier,
                         const std::string& deviceName,

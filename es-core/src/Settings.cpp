@@ -164,6 +164,9 @@ void Settings::setDefaults()
     mStringMap["RomMToken"] = {"", ""};
     // ISO-8601 timestamp for when RomMToken expires, or empty if it doesn't.
     mStringMap["RomMTokenExpiresAt"] = {"", ""};
+    // Comma-separated OAuth scopes actually granted for RomMToken, as reported by the server at
+    // pairing time.
+    mStringMap["RomMTokenScopes"] = {"", ""};
 
     mStringMap["RomMUsername"] = {"", ""};
     // Random per-install identifier sent as the pairing flow's client_device_identifier.

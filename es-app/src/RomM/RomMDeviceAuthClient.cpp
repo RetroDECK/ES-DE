@@ -68,14 +68,6 @@ namespace
 #endif
     }
 
-    const std::vector<std::string>& deviceAuthScopes()
-    {
-        static const std::vector<std::string> scopes {"me.read",        "roms.read",
-                                                      "platforms.read", "assets.read",
-                                                      "assets.write",   "firmware.read"};
-        return scopes;
-    }
-
     std::string buildDeviceAuthInitBody(const std::string& clientDeviceIdentifier,
                                         const std::string& deviceName)
     {
@@ -94,7 +86,7 @@ namespace
         writer.String(PROGRAM_VERSION_STRING);
         writer.Key("requested_scopes");
         writer.StartArray();
-        for (const auto& scope : deviceAuthScopes())
+        for (const auto& scope : RomMDeviceAuthClient::requiredScopes())
             writer.String(scope.c_str());
         writer.EndArray();
         writer.EndObject();
@@ -116,6 +108,13 @@ namespace
 RomMDeviceAuthClient::RomMDeviceAuthClient(const std::string& serverURL)
     : mServerURL {serverURL}
 {
+}
+
+const std::vector<std::string>& RomMDeviceAuthClient::requiredScopes()
+{
+    static const std::vector<std::string> scopes {"me.read",     "roms.read",    "platforms.read",
+                                                  "assets.read", "assets.write", "firmware.read"};
+    return scopes;
 }
 
 bool RomMDeviceAuthClient::initDeviceAuth(const std::string& clientDeviceIdentifier,

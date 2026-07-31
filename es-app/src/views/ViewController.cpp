@@ -303,7 +303,7 @@ void ViewController::noGamesDialog()
 
     auto rommLoginButtonFunc = [this] {
         GuiRomMLogin::push(
-            mWindow, mMenuColorPrimary,
+            mWindow, mMenuColorPrimary, mMenuColorRed,
             [this](const std::string&) {
                 delete mNoGamesMessageBox;
                 ViewController::getInstance()->runRomMSyncWithSplashScreen();

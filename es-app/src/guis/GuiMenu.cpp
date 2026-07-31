@@ -197,7 +197,7 @@ void GuiMenu::openRomMLoginOptions()
 {
     // close(true) deletes this GuiMenu - don't touch `this`/mWindow after it.
     GuiRomMLogin::push(
-        mWindow, mMenuColorPrimary,
+        mWindow, mMenuColorPrimary, mMenuColorRed,
         [this](const std::string&) {
             GuiMenu::close(true);
             ViewController::getInstance()->runRomMSyncWithSplashScreen();

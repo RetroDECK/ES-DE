@@ -134,6 +134,7 @@ void RomMDeviceAuthFlow::run()
             case RomMDeviceAuthClient::TokenPollResult::Success:
                 mAccessToken = token.accessToken;
                 mExpiresAt = token.expiresAt;
+                mScopes = token.scopes;
                 mState = State::Success;
                 LOG(LogInfo) << "RomM Device Pairing: Paired successfully (device_id="
                              << token.deviceId << ", scopes=" << joinScopes(token.scopes)

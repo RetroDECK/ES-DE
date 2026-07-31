@@ -9,6 +9,7 @@
 #include "FileData.h"
 #include "HttpReq.h"
 #include "Log.h"
+#include "RomM/RomMDeviceAuthClient.h"
 #include "RomM/RomMLocalFavorites.h"
 #include "Settings.h"
 #include "utils/StringUtil.h"
@@ -141,6 +142,22 @@ namespace RomMUtils
             return true; // Unparseable - fail open rather than lock the user out over this.
 
         return std::time(nullptr) < expiresAtUnix;
+    }
+
+    bool needsRePairForScopes()
+    {
+        if (!isLoggedIn())
+            return false;
+
+        const std::vector<std::string> grantedScopes {Utils::String::delimitedStringToVector(
+            Settings::getInstance()->getString("RomMTokenScopes"), ",")};
+
+        for (const auto& requiredScope : RomMDeviceAuthClient::requiredScopes()) {
+            if (std::find(grantedScopes.cbegin(), grantedScopes.cend(), requiredScope) ==
+                grantedScopes.cend())
+                return true;
+        }
+        return false;
     }
 
     std::string joinUrl(const std::string& serverURL, const std::string& path)

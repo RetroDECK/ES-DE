@@ -22,6 +22,10 @@ namespace RomMUtils
     // Non-empty RomMToken with an unexpired (or absent) RomMTokenExpiresAt. Local check only.
     bool isLoggedIn();
 
+    // True if isLoggedIn() but the persisted RomMTokenScopes doesn't cover every scope. Local check
+    // only, no network call.
+    bool needsRePairForScopes();
+
     std::string joinUrl(const std::string& serverURL, const std::string& path);
 
     // Strips trailing slashes so callers that need a bare normalized server URL (e.g. to pass

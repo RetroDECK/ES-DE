@@ -14,9 +14,11 @@
 #include "guis/GuiRomMPairing.h"
 #include "guis/GuiSettings.h"
 #include "utils/LocalizationUtil.h"
+#include "views/ViewController.h"
 
 void GuiRomMLogin::push(Window* window,
                         unsigned int menuColorPrimary,
+                        unsigned int menuColorRed,
                         const std::function<void(const std::string&)>& onPaired,
                         const std::function<void()>& onLoggedOut)
 {
@@ -38,6 +40,16 @@ void GuiRomMLogin::push(Window* window,
             auto usernameDisplay = std::make_shared<TextComponent>(
                 username, Font::get(FONT_SIZE_MEDIUM), menuColorPrimary, ALIGN_RIGHT);
             s->addWithLabel(_("LOGGED IN AS"), usernameDisplay);
+        }
+
+        if (RomMUtils::needsRePairForScopes()) {
+            ComponentListRow noticeRow;
+            noticeRow.addElement(std::make_shared<TextComponent>(
+                                     ViewController::EXCLAMATION_CHAR + " " +
+                                         _("LOG OUT AND PAIR AGAIN TO ENABLE NEW FEATURES"),
+                                     Font::get(FONT_SIZE_SMALL), menuColorRed, ALIGN_CENTER),
+                                 false);
+            s->addRow(noticeRow);
         }
     }
     else {
@@ -62,6 +74,7 @@ void GuiRomMLogin::push(Window* window,
         logoutRow.makeAcceptInputHandler([s, onLoggedOut] {
             Settings::getInstance()->setString("RomMToken", "");
             Settings::getInstance()->setString("RomMTokenExpiresAt", "");
+            Settings::getInstance()->setString("RomMTokenScopes", "");
             Settings::getInstance()->setString("RomMUsername", "");
             Settings::getInstance()->saveFile();
             RomMCache::getInstance().clearAll();

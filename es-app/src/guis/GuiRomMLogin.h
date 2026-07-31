@@ -22,10 +22,11 @@ namespace GuiRomMLogin
     // whatever's above it on the window stack.
     // onPaired is called with the resolved server URL after a successful pairing.
     // onLoggedOut is called after the user logs out of an already-paired server.
-    // menuColorPrimary is the caller's current GuiComponent::mMenuColorPrimary (protected, so
-    // it can't be read directly from this free function).
+    // menuColorPrimary/menuColorRed are the caller's current GuiComponent::mMenuColorPrimary/
+    // mMenuColorRed (protected, so neither can be read directly from this free function).
     void push(Window* window,
               unsigned int menuColorPrimary,
+              unsigned int menuColorRed,
               const std::function<void(const std::string&)>& onPaired,
               const std::function<void()>& onLoggedOut);
 } // namespace GuiRomMLogin
