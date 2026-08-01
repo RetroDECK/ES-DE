@@ -4382,6 +4382,10 @@ Using this interface it's possible to select alternative emulators to use per ga
 ![alt text](images/es-de_alternative_emulators.png "ES-DE Scraper Settings")
 _The system-wide alternative emulators interface. An entry in bold and with a gear symbol indicates that an alternative emulator has been selected._
 
+**Launch on other screen** _(Android only)_
+
+Via this interface you can enable support for launching games on the other screen on dual-screen Android devices. To enable overall support make sure to toggle _Enable launch on other screen_ and following this you can control the behavior per system via this GUI. By default all systems will launch on the other screen, so only disable it for the systems where you prefer to have games launching on the primary screen instead. When you enable this option there will also be an additional entry added to the metadata editor named _Launch on screen_ where you can override the screen launching on a per-game basis.
+
 **Game media directory**
 
 This setting defines the directory for game media, i.e. images, videos and PDF manuals that have normally been downloaded by the scraper. The default location is _~/ES-DE/downloaded_media_
@@ -4762,6 +4766,10 @@ This entry provides a selection of controller icons that are built into ES-DE (a
 **Alternative emulator** _(files only)_
 
 If the option _Enable alternative emulators per game_ has been enabled, there will be an entry shown where you can select between alternative emulators for the specific game. There is a similar _Alternative emulators_ entry under the _Other settings_ menu, but that will apply the selection to the entire game system. If you select an alternative for a specific game using the metadata editor, that will take precedence and override any system-wide emulator selection (the currently selected system-wide emulator will be clearly marked in the selection screen). The alternative emulators need to be defined in the es_systems.xml file, and if there are no alternatives available for the current system, this row in the metadata editor will be grayed out. If you select an alternative emulator and later remove its corresponding entry from the es_systems.xml file, an error notice will be shown on this row. In this case you have the option to remove the invalid entry. But even if there is an invalid entry, games will still launch using the default emulator while logging a warning message to the es_log.txt file. Apart from this, the emulator selection should hopefully be self-explanatory.
+
+**Launch on screen** _(Android only, and files only)_
+
+If the option _Enable launch on other screen_ has been enabled, there will be an entry shown where you can override on which screen to launch the game, instead of just accepting the system-wide configuration setup via the _Launch on the other screen_ interface in the _Other settings_ menu. The default value will either be _System default (Other)_ or _System default (Primary)_ depending on the system-wide configuration. The other two options are _Always on other_ and _Always on primary_.
 
 **Folder link** _(folders only)_
 

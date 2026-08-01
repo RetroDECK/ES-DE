@@ -2276,6 +2276,7 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 * `playtime` - integer, the number of seconds that the game has been played
 * `controller` - string, used to display controller badges
 * `altemulator` - string, overrides the emulator/launch command on a per game basis
+* `screen` - string, overrides on which screen to launch the game, can be set to `other` or `primary` (only used on Android)
 * `lastplayed` - statistic, datetime, the last date and time this game was played
 
 For folders, most of the fields are identical although some are removed. In the list below, the fields with identical function compared to the game files described above have been left without a description.

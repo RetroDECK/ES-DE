@@ -8,6 +8,7 @@
 
 ### Detailed list of changes
 
+* (Android) Added per-system and per-game configuration for launching games on the other screen on dual-screen devices
 * Added support for scraping videos using TheGamesDB
 * Added translations for Czech (cs_CZ)
 * Added a "Y" button shortcut to the game importer selection screen
@@ -57,6 +58,8 @@
 * (linear-es-de) Updated the system metadata from the upstream system-metadata repository
 * (Linux) Fixed an AppImage build issue caused by a URL change on GitLab
 * Added .m4v as a supported video file extension
+* Added forward compatibility for reading the alternativeEmulator element from the gameList root element of the gamelist.xml files
+* Added forward compatibility for reading es_settings.xml files with a "settings" root element
 * The scraper will no longer download media with unsupported file extensions
 * Made multiple improvements to the PDF viewer (optimizations, fixed memory leaks etc.)
 * The UTF8-CPP dependency is now only built on Android
