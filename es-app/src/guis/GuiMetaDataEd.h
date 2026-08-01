@@ -44,6 +44,7 @@ private:
     void fetch();
     void fetchDone(const ScraperSearchResult& result);
     void close();
+    std::string getScreenValue(const std::string& lookup, const bool displayNameLookup);
 
     Renderer* mRenderer;
     BackgroundComponent mBackground;
@@ -62,6 +63,7 @@ private:
 
     std::vector<GameControllers> mControllerBadges;
     std::vector<std::shared_ptr<GuiComponent>> mEditors;
+    std::vector<std::pair<std::string, std::string>> mScreenEntries;
 
     std::vector<MetaDataDecl> mMetaDataDecl;
     MetaDataList* mMetaData;

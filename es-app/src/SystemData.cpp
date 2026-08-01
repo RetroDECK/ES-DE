@@ -547,6 +547,7 @@ SystemData::SystemData(const std::string& name,
     , mIsGameSystem {true}
     , mScrapeFlag {false}
     , mFlattenFolders {false}
+    , mLaunchOnOtherScreen {true}
     , mPlaceholder {nullptr}
 {
     mFilterIndex = new FileFilterIndex();

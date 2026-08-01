@@ -961,6 +961,9 @@ void FileData::launchGame()
     SystemData* gameSystem {nullptr};
     std::string command;
     std::string alternativeEmulator;
+#if defined(__ANDROID__)
+    bool launchOnOtherScreen {false};
+#endif
 
     if (mSystem->isCollection())
         gameSystem = SystemData::getSystemByName(mSystemName);
@@ -1011,6 +1014,41 @@ void FileData::launchGame()
             LOG(LogDebug) << "FileData::launchGame(): Using default emulator";
         }
     }
+
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+        launchOnOtherScreen = gameSystem->getLaunchOnOtherScreen();
+        std::string screenValue {metadata.get("screen")};
+
+        if (screenValue != "" && screenValue != "other" && screenValue != "primary")
+            screenValue = "";
+
+        if (screenValue == "") {
+            if (launchOnOtherScreen) {
+                LOG(LogDebug)
+                    << "FileData::launchGame(): Launching game on other screen as configured "
+                       "for system \""
+                    << gameSystem->getName() << "\"";
+            }
+            else {
+                LOG(LogDebug)
+                    << "FileData::launchGame(): Launching game on primary screen as configured "
+                       "for system \""
+                    << gameSystem->getName() << "\"";
+            }
+        }
+        else if (screenValue == "other") {
+            LOG(LogDebug) << "FileData::launchGame(): Launching on other screen as configured "
+                             "for the specific game";
+            launchOnOtherScreen = true;
+        }
+        else if (screenValue == "primary") {
+            LOG(LogDebug) << "FileData::launchGame(): Launching on primary screen as configured "
+                             "for the specific game";
+            launchOnOtherScreen = false;
+        }
+    }
+#endif
 
     if (command.empty())
         command = mEnvData->mLaunchCommands.front().first;
@@ -2201,8 +2239,7 @@ void FileData::launchGame()
     returnValue = Utils::Platform::Android::launchGame(
         androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
         androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
-        androidExtrasInteger, androidExtrasBool, androidActivityFlags,
-        Settings::getInstance()->getBool("LaunchOnOtherScreen"));
+        androidExtrasInteger, androidExtrasBool, androidActivityFlags, launchOnOtherScreen);
 #else
 
 #if defined(DEINIT_ON_LAUNCH)

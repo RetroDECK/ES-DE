@@ -216,6 +216,18 @@ namespace GamelistFileParser
             }
         }
 
+        const pugi::xml_node& launchOnOtherScreen {root.child("launchOnOtherScreen")};
+
+        if (launchOnOtherScreen) {
+#if defined(__ANDROID__)
+            const std::string value {Utils::String::toLower(launchOnOtherScreen.text().get())};
+            if (value == "false")
+                system->setLaunchOnOtherScreen(false);
+            else
+                system->setLaunchOnOtherScreen(true);
+#endif
+        }
+
         const std::string& relativeTo {system->getStartPath()};
         const bool showHiddenFiles {Settings::getInstance()->getBool("ShowHiddenFiles")};
 
@@ -363,7 +375,9 @@ namespace GamelistFileParser
         }
     }
 
-    void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
+    void updateGamelist(SystemData* system,
+                        bool updateAlternativeEmulator,
+                        const bool updateScreenLaunch)
     {
         // We do this by reading the XML again, adding changes and then writing them back,
         // because there might be information missing in our systemdata which we would otherwise
@@ -377,6 +391,7 @@ namespace GamelistFileParser
         pugi::xml_node root;
         const std::string& xmlReadPath {system->getGamelistPath(false)};
         bool hasAlternativeEmulatorTag {false};
+        bool hasLaunchOnOtherScreenTag {false};
 
         if (Utils::FileSystem::exists(xmlReadPath) &&
             Utils::FileSystem::getFileSize(xmlReadPath) != 0) {
@@ -438,6 +453,25 @@ namespace GamelistFileParser
                     alternativeEmulator.parent().remove_child(alternativeEmulator);
                 }
             }
+            if (updateScreenLaunch) {
+                pugi::xml_node launchOnOtherScreen {root.child("launchOnOtherScreen")};
+
+                if (!system->getLaunchOnOtherScreen()) {
+                    if (launchOnOtherScreen) {
+                        launchOnOtherScreen.parent().remove_child(launchOnOtherScreen);
+                        LOG(LogWarning) << "GamelistFileParser::updateGamelist(): Removed an extra "
+                                           "launchOnOtherScreen tag for system \""
+                                        << system->getName() << "\"";
+                    }
+
+                    root.prepend_child("launchOnOtherScreen").text().set("false");
+                    launchOnOtherScreen = root.child("launchOnOtherScreen");
+                }
+                else if (launchOnOtherScreen) {
+                    hasLaunchOnOtherScreenTag = true;
+                    launchOnOtherScreen.parent().remove_child(launchOnOtherScreen);
+                }
+            }
         }
         else {
             if (updateAlternativeEmulator && system->getAlternativeEmulator() != "") {
@@ -447,6 +481,9 @@ namespace GamelistFileParser
             }
             // Set up an empty gamelist to append to.
             root = doc.append_child("gameList");
+
+            if (updateScreenLaunch && !system->getLaunchOnOtherScreen())
+                root.prepend_child("launchOnOtherScreen").text().set("false");
         }
 
         // Now we have all the information from the XML file, so iterate
@@ -500,7 +537,7 @@ namespace GamelistFileParser
             }
 
             // Now write the file.
-            if (numUpdated > 0 || updateAlternativeEmulator) {
+            if (numUpdated > 0 || updateAlternativeEmulator || updateScreenLaunch) {
                 // Make sure the folders leading up to this path exist (or the write will fail).
                 const std::string& xmlWritePath {system->getGamelistPath(true)};
                 Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
@@ -518,6 +555,18 @@ namespace GamelistFileParser
                                          "Added/updated the alternativeEmulator tag for system \""
                                       << system->getName() << "\" to \""
                                       << system->getAlternativeEmulator() << "\"";
+                    }
+                }
+                if (updateScreenLaunch) {
+                    if (hasLaunchOnOtherScreenTag && system->getLaunchOnOtherScreen()) {
+                        LOG(LogDebug) << "GamelistFileParser::updateGamelist(): Removed the "
+                                         "launchOnOtherScreen tag for system \""
+                                      << system->getName() << "\"";
+                    }
+                    else if (!system->getLaunchOnOtherScreen()) {
+                        LOG(LogDebug) << "GamelistFileParser::updateGamelist(): "
+                                         "Added the launchOnOtherScreen tag for system \""
+                                      << system->getName() << "\"";
                     }
                 }
                 if (numUpdated > 0) {

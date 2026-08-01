@@ -18,6 +18,7 @@
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
+#include "GamelistFileParser.h"
 #include "Scripting.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -1660,6 +1661,19 @@ void GuiMenu::openOtherOptions()
         std::bind([this] { mWindow->pushGui(new GuiAlternativeEmulators); }));
     s->addRow(alternativeEmulatorsRow);
 
+#if defined(__ANDROID__)
+    // Launch on other screen.
+    ComponentListRow screenLaunchingRow;
+    screenLaunchingRow.elements.clear();
+    screenLaunchingRow.addElement(std::make_shared<TextComponent>(_("LAUNCH ON OTHER SCREEN"),
+                                                                  Font::get(FONT_SIZE_MEDIUM),
+                                                                  mMenuColorPrimary),
+                                  true);
+    screenLaunchingRow.addElement(mMenu.makeArrow(), false);
+    screenLaunchingRow.makeAcceptInputHandler(std::bind(&GuiMenu::openScreenLaunchOptions, this));
+    s->addRow(screenLaunchingRow);
+#endif
+
 #if !defined(__IOS__)
     // Game media directory.
     ComponentListRow rowMediaDir;
@@ -2011,21 +2025,6 @@ void GuiMenu::openOtherOptions()
             s->setNeedsRescanROMDirectory();
         }
     });
-
-#if defined(__ANDROID__)
-    // Launch games on the other screen.
-    auto launchOnOtherScreen = std::make_shared<SwitchComponent>();
-    launchOnOtherScreen->setState(Settings::getInstance()->getBool("LaunchOnOtherScreen"));
-    s->addWithLabel(_("LAUNCH GAMES ON THE OTHER SCREEN"), launchOnOtherScreen);
-    s->addSaveFunc([launchOnOtherScreen, s] {
-        if (launchOnOtherScreen->getState() !=
-            Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
-            Settings::getInstance()->setBool("LaunchOnOtherScreen",
-                                             launchOnOtherScreen->getState());
-            s->setNeedsSaving();
-        }
-    });
-#endif
 
 #if !defined(__IOS__)
     // Custom event scripts, fired using Scripting::fireEvent().
@@ -2537,6 +2536,91 @@ void GuiMenu::openMediaViewerOptions()
 void GuiMenu::openScreensaverOptions()
 {
     mWindow->pushGui(new GuiScreensaverOptions(_p("short", "SCREENSAVER SETTINGS")));
+}
+
+void GuiMenu::openScreenLaunchOptions()
+{
+#if defined(__ANDROID__)
+    auto s = new GuiSettings(_("LAUNCH ON OTHER SCREEN"));
+
+    Window* window {mWindow};
+    ComponentListRow row;
+
+    // Launch games on the other screen.
+    auto launchOnOtherScreen = std::make_shared<SwitchComponent>();
+    launchOnOtherScreen->setState(Settings::getInstance()->getBool("LaunchOnOtherScreen"));
+    s->addWithLabel(_("ENABLE LAUNCH ON OTHER SCREEN"), launchOnOtherScreen);
+    s->addSaveFunc([launchOnOtherScreen, s] {
+        if (launchOnOtherScreen->getState() !=
+            Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+            Settings::getInstance()->setBool("LaunchOnOtherScreen",
+                                             launchOnOtherScreen->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    std::vector<SystemData*> sortedSystems {SystemData::sSystemVector};
+
+    // Sort systems by short name.
+    std::sort(std::begin(sortedSystems), std::end(sortedSystems), [](SystemData* a, SystemData* b) {
+        return Utils::String::toUpper(a->getName()) < Utils::String::toUpper(b->getName());
+    });
+
+    std::vector<std::shared_ptr<SwitchComponent>> systemEntries;
+
+    for (auto it = sortedSystems.cbegin(); it != sortedSystems.cend(); ++it) {
+        if ((*it)->isCollection())
+            continue;
+
+        auto systemEntry = std::make_shared<SwitchComponent>();
+        systemEntry->setState((*it)->getLaunchOnOtherScreen());
+        systemEntries.emplace_back(systemEntry);
+        SystemData* system {(*it)};
+
+        s->addWithLabel((*it)->getName(), systemEntry);
+        s->addSaveFunc([systemEntry, system] {
+            if (systemEntry->getState() != system->getLaunchOnOtherScreen()) {
+                system->setLaunchOnOtherScreen(systemEntry->getState());
+                GamelistFileParser::updateGamelist(system, false, true);
+            }
+        });
+
+        if (!Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+            systemEntry->setEnabled(false);
+            systemEntry->setOpacity(DISABLED_OPACITY);
+            systemEntry->getParent()
+                ->getChild(systemEntry->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    }
+
+    auto launchOnOtherScreenWeak = std::weak_ptr<SwitchComponent>(launchOnOtherScreen);
+
+    auto launchOnOtherScreenCallback = [launchOnOtherScreenWeak, systemEntries]() {
+        auto lock = launchOnOtherScreenWeak.lock();
+        const bool otherScreen {lock->getState()};
+        for (auto it = systemEntries.begin(); it != systemEntries.end(); ++it) {
+            if (otherScreen) {
+                (*it)->setEnabled(true);
+                (*it)->setOpacity(1.0f);
+                (*it)->getParent()->getChild((*it)->getChildIndex() - 1)->setOpacity(1.0f);
+            }
+            else {
+                (*it)->setEnabled(false);
+                (*it)->setOpacity(DISABLED_OPACITY);
+                (*it)
+                    ->getParent()
+                    ->getChild((*it)->getChildIndex() - 1)
+                    ->setOpacity(DISABLED_OPACITY);
+            }
+        }
+    };
+
+    launchOnOtherScreen->setCallback(launchOnOtherScreenCallback);
+
+    s->setSize(mSize);
+    window->pushGui(s);
+#endif
 }
 
 void GuiMenu::openCollectionSystemOptions()
