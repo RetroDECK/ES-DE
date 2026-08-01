@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
+"POT-Creation-Date: 2026-08-01 18:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -597,6 +597,9 @@ msgstr ""
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr ""
 
+msgid "import"
+msgstr ""
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -611,15 +614,6 @@ msgstr ""
 msgid "IMPORT"
 msgstr ""
 
-msgid "import"
-msgstr ""
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "SELECT ALL"
 msgstr ""
 
@@ -631,6 +625,12 @@ msgstr ""
 
 msgid "select none"
 msgstr ""
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "FILTER GAMELIST"
 msgstr ""
@@ -1063,6 +1063,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr ""
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr ""
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr ""
 
@@ -1172,9 +1175,6 @@ msgstr ""
 msgid "SHOW HIDDEN GAMES"
 msgstr ""
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr ""
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr ""
 
@@ -1271,10 +1271,25 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr ""
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr ""
+
 msgid "choose"
 msgstr ""
 
 msgid "close menu"
+msgstr ""
+
+msgid "System default (Other)"
+msgstr ""
+
+msgid "System default (Primary)"
+msgstr ""
+
+msgid "Always on other"
+msgstr ""
+
+msgid "Always on primary"
 msgstr ""
 
 msgid "EDIT METADATA"
@@ -2376,6 +2391,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr ""
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr ""
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr ""
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr ""
 
@@ -2603,8 +2626,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr ""
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2633,9 +2656,9 @@ msgstr ""
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 
