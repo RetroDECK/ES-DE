@@ -2411,9 +2411,10 @@
         <name>xbox</name>
         <fullname>Microsoft Xbox</fullname>
         <path>%ROMPATH%\xbox</path>
-        <extension>.iso .ISO .xbe .XBE .xiso .XISO</extension>
+        <extension>.iso .ISO .lnk .LNK .xbe .XBE .xiso .XISO</extension>
         <command label="xemu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XEMU% -dvd_path %ROM%</command>
         <command label="Cxbx-Reloaded (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_CXBX-RELOADED% %ROM%</command>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>xbox</platform>
         <theme>xbox</theme>
     </system>
