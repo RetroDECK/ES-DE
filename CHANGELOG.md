@@ -49,6 +49,9 @@
 * (Linux) Changed the AppImage find rule entries for PCSX2 to avoid collisions with PCSX2x6
 * (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (Windows) Added an additional find rule entry for PCSX2
+* (Windows) Added "Shortcut or script" as an alternative emulator for the xbox system
+* (Windows) Added the .lnk file extension to the xbox system
+* (Windows) Added import rules for the xbox system
 * (Windows) Added the .lindbergh file extension to the arcade, mame and pcarcade systems
 * (Android) Added the .port file extension to the ports system
 * Added the .acgame file extension to the consolearcade system on Linux, macOS and Windows
