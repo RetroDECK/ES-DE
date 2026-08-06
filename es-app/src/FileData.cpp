@@ -203,10 +203,12 @@ const std::string FileData::getPlayTimeString(const std::string& playTimeSeconds
     int playTimeValue {0};
 
     try {
-        playTimeValue = std::stoi(playTimeSeconds);
+        if (playTimeSeconds != "") {
+            playTimeValue = std::stoi(playTimeSeconds);
 
-        if (playTimeValue < 0)
-            playTimeValue = 0;
+            if (playTimeValue < 0)
+                playTimeValue = 0;
+        }
     }
     catch (...) {
         playTimeValue = 0;
