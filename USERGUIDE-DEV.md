@@ -4460,7 +4460,11 @@ It's possible to trigger custom scripts for a number of actions in ES-DE, as is 
 
 **Browsing custom events**
 
-This option, which depends on _Enable custom event scripts_ being activated, will also generate custom events when navigating the system and gamelist views. Note that this could introduce a lot of latency into the application so only enable it if you absolutely need it.
+This option, which depends on _Enable custom event scripts_ being activated, will also generate custom events when navigating the system and gamelist views. Note that this could introduce a lot of latency into the application unless _Run browsing events as non-blocking_ has been enabled.
+
+**Run browsing events as non-blocking**
+
+This option, which depends on _Browsing custom events_ being activated, will make these events run in separate threads, i.e. completely non-blocking. While this greatly reduces latency in ES-DE when browsing games and systems, it does come with some risks. One issue could be race conditions where scripts are executed so fast that they finish processing in a different order than they were executed by ES-DE. Another issue is specific to Windows as this operating system uses file locking, and here a script could attempt to write to a file while another script has already locked the file for writing. Thirdly, if a script hangs forever for some reason, then ES-DE will not care and it will just continue to execute scripts as you continue browsing. There is however a limit set to 8 parallel scripts, so if there are already 8 scripts running then ES-DE will refuse to launch any more browsing event scripts until at least one of the previously launched scripts has finished executing.
 
 **Only show games from gamelist.xml files**
 

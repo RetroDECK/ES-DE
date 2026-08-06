@@ -10,6 +10,7 @@
 
 * (Android) Added per-system and per-game configuration for launching games on the other screen on dual-screen devices
 * Added support for scraping videos using TheGamesDB
+* Added a "Run browsing events as non-blocking" menu option to greatly reduce latency for browsing event scripts
 * Added translations for Czech (cs_CZ)
 * Added a "Y" button shortcut to the game importer selection screen
 * Added a SplashScreenProgressBarColor option that can be manually set in es_settings.xml to customize the splash screen progress bar color
