@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>LowRes NX si ispira ai sistemi reali a 8 e 16 bit e simula i chip per la grafica, il suono e l'I/O, che funzionano effettivamente come l'hardware classico. Supporta gli sprite hardware e lo scorrimento parallasse hardware, e offre anche interruzioni verticali e raster per creare autentici effetti retrò.  Immaginate LowRes NX come una console di gioco portatile con un d-pad, due pulsanti di azione e una piccola tastiera di gomma sotto un touchscreen scorrevole.</systemDescription>
+            <systemDescription>LowRes NX si ispira ai sistemi reali a 8 e 16 bit e simula i chip grafici, sonori ed "I/O", che funzionano effettivamente come l'hardware classico. Supporta gli sprite e lo scorrimento parallasse, entrambi via hardware ed offre anche interruzioni verticali e raster per creare autentici effetti retrò. Immagina LowRes NX come una console di gioco portatile con un d-pad, due pulsanti di azione ed una piccola tastiera di gomma sotto un touchscreen scorrevole.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

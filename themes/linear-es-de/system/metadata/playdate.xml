@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Playdate è una console portatile per videogiochi sviluppata da Panic. Oltre ai pulsanti e al pad direzionale, il dispositivo è dotato di una manovella meccanica sul lato. La console è stata annunciata per la prima volta il 22 maggio 2019 sulla copertina della rivista Edge ed è stata rilasciata il 18 aprile 2022. Il nome fa riferimento alla programmazione settimanale dei giochi.</systemDescription>
+            <systemDescription>Playdate è una console portatile per videogiochi sviluppata da Panic. Oltre ai pulsanti ed al pad multi-direzionale, il dispositivo è dotato di una manovella meccanica sul lato. La console è stata annunciata per la prima volta il 22 maggio 2019 sulla copertina della rivista Edge ed è stata rilasciata il 18 aprile 2022. Il nome fa riferimento alla programmazione settimanale dei giochi.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>

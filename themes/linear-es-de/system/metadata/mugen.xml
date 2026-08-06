@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Mugen (stilizzato come M.U.G.E.N) è un motore freeware per giochi di combattimento 2D progettato da Elecbyte. I contenuti sono creati dalla comunità e sono stati creati migliaia di combattenti, sia originali che tratti da fiction popolari. È scritto in C e originariamente utilizzava la libreria Allegro. Le ultime versioni del motore utilizzano la libreria SDL.</systemDescription>
+            <systemDescription>Mugen (stilizzato come M.U.G.E.N.) è un motore freeware per picchiaduro ad incontri 2D progettato da Elecbyte. I contenuti sono creati dalla comunità e sono stati creati migliaia di combattenti, sia originali che tratti da fiction popolari. È scritto in C ed originariamente utilizzava la libreria Allegro. Le ultime versioni del motore utilizzano la libreria SDL.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

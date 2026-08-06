@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Commodore 64 è un home computer a 8 bit introdotto nel gennaio 1982 da Commodore International. È elencato nel Guinness World Records come il modello di computer singolo più venduto di tutti i tempi, con stime indipendenti che collocano il numero di unità vendute tra i 10 e i 17 milioni. La produzione in serie è iniziata all'inizio del 1982, con la commercializzazione in agosto al prezzo di 595 dollari (equivalenti a 1.461 dollari nel 2015). Preceduto dal Commodore VIC-20 e dal Commodore PET, il C64 prende il nome dai suoi 64 kilobyte (65.536 byte) di RAM. Aveva specifiche sonore e grafiche superiori rispetto ad altri sistemi precedenti come l'Apple II e l'Atari 800, con sprite multicolore e un processore sonoro più avanzato.</systemDescription>
+            <systemDescription>Il Commodore 64 è un home computer ad 8 bit introdotto nel gennaio 1982 da Commodore International. È elencato nel Guinness World Records come il modello di computer singolo più venduto di tutti i tempi, con stime indipendenti che collocano il numero di unità vendute tra i 10 e i 17 milioni. La produzione in serie è iniziata all'inizio del 1982, con la commercializzazione, in agosto, al prezzo di 595 dollari (equivalenti a 1.461 dollari nel 2015). Preceduto dal Commodore VIC-20 e dal Commodore PET, il C64 prende il nome dai suoi 64 Kilobyte (65.536 byte) di RAM. Aveva specifiche sonore e grafiche superiori rispetto ad altri sistemi precedenti, come l'Apple II e l'Atari 800, con sprite multicolore ed un processore audio più avanzato.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

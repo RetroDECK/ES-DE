@@ -60,7 +60,15 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Quake è uno sparatutto in prima persona sviluppato da id Software e pubblicato da GT Interactive. Primo gioco della serie Quake, è stato originariamente pubblicato per MS-DOS, Microsoft Windows e Linux nel 1996, seguito da Mac OS e Sega Saturn nel 1997 e da Nintendo 64 nel 1998. Nel gioco, i giocatori devono farsi strada attraverso vari ambienti medievali simili a labirinti, mentre combattono i mostri utilizzando una serie di armi. L'atmosfera generale è cupa e grintosa, con molte texture in pietra e un carattere arrugginito e maiuscolo. Quake si ispira alla narrativa gotica e alle opere di H. P. Lovecraft.</systemDescription>
+            <systemDescription>Quake è un videogioco del genere sparatutto in prima persona, sviluppato da id Software e pubblicato da GT Interactive nel 1996 per PC. È il primo gioco della serie Quake. Il giocatore deve farsi strada attraverso livelli a labirinto dall'aspetto antico, mentre si combattono diversi mostri usando armi futuristiche.
+
+Inizialmente disponibile solo per MS-DOS, è stato in seguito convertito per Windows dalla stessa id Software; inoltre è uscito ufficialmente per Sega Saturn (ma usando un altro motore grafico) e Nintendo 64; era stato realizzato un prototipo di coin-op, ma che non è mai stato usato commercialmente.
+
+È il successore spirituale della serie di Doom di id Software, infatti Quake è costruito sulla tecnologia e sul gameplay del predecessore. Diversamente dal motore grafico di Doom, il motore di Quake dispone di un rendering real-time 3D ed ebbe un supporto iniziale per l'accelerazione 3D attraverso OpenGL. Dopo che Doom aiutò il diffondersi dei deathmatch multiplayer, Quake aggiunse nuove opzioni multigiocatore. Il comparto multiplayer divenne sempre più comune, grazie anche all'aggiornamento QuakeWorld e a nuovi software come QuakeSpy rendendo il processo di ricerca di nuovi giocatori con cui scontrarsi più facile e affidabile. Sono presenti anche musiche composte da Trent Reznor e Nine Inch Nails.
+
+Fu inoltre l'ultimo prodotto id Software pubblicato come shareware. Il codice sorgente venne distribuito sotto licenza GNU GPL nel dicembre del 1999
+
+Il 19 agosto 2021, viene pubblicata una versione rimasterizzata con tutte le espansioni incluse, disponibile per PC, Xbox One, Xbox Series X/S, PlayStation 4 e PlayStation 5.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

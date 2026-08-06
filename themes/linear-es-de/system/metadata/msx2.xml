@@ -76,9 +76,7 @@ MSX sustavi bili su popularni u Japanu i nekoliko drugih zemalja. Sony je bio gl
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>MSX è un'architettura standardizzata per home computer, annunciata da Microsoft e ASCII Corporation il 16 giugno 1983. Fu inizialmente concepito da Microsoft come prodotto per il settore orientale e commercializzato congiuntamente da Kazuhiko Nishi, allora vicepresidente di Microsoft e direttore di ASCII Corporation. Microsoft e Nishi concepirono il progetto come un tentativo di creare standard unificati tra i vari produttori di sistemi informatici domestici dell'epoca, alla stregua dello standard VHS per le macchine videofonografiche domestiche.
-
-I sistemi MSX erano popolari in Giappone e in diversi altri paesi. Sony fu il principale produttore di sistemi MSX al momento del lancio e per la maggior parte della durata del prodotto, producendo più unità di qualsiasi altro produttore. Solo in Giappone furono venduti 5 milioni di unità basate su MSX. Nonostante il coinvolgimento di Microsoft, negli Stati Uniti furono rilasciate poche macchine basate su MSX.</systemDescription>
+            <systemDescription>L'MSX conobbe diverse evoluzioni nel corso degli anni. Il secondo MSX, poi distinto come MSX2 o MSX 2 (1986) ed il seguente MSx2+ o MSX 2+ (1988) erano dotati di un processore Zilog Z80A con frequenza di 3,576 MHz, una ROM da 48 KB (64 KB sull'MSX2+), contenente il BIOS, l'Extended BIOS, il sistema operativo (MSX BASIC V2.0 su MSX2 e V3.0 su MSX2+), una DiskROM (opzionale sull'msx2), il Kun-BASIC (MSX2+) e la Kanji ROM (MSX2+), un chip per il clock, un quantitativo di RAM variabile (64-256 KB espandibile fino a 4 MB), un chip video Yamaha V9958 supportato da 64-128 KB di memoria che supportava 32 sprite a 16 colori, un chip audio General Instrument AY-3-8910 (PSG) a 3 canali + white noise, con l'aggiunta, su MSX2+ di un chiip sonoro aggiuntivo Yamaha YM2413 (OPLL) (MSX-Music) a 9 canali FM.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

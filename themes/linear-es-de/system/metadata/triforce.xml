@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>The Triforce (トライフォース) è una scheda arcade sviluppata in una joint venture tra Sega, Nintendo e Namco. È basata sulla console per videogiochi Nintendo GameCube per ridurre i costi di sviluppo e ha permesso di portare in sala giochi i giochi per console domestiche e viceversa. Prende il nome dall'oggetto magico, spesso ricercato, della famosa serie The Legend of Zelda di Nintendo.</systemDescription>
+            <systemDescription>Il Triforce (トライフォース) è una scheda arcade sviluppata in una joint venture tra Sega, Nintendo e Namco. È basata sull'hardware della console per videogiochi Nintendo GameCube, per ridurre i costi di sviluppo ed ha permesso di portare in sala giochi i videogames per console e viceversa. Prende il nome dall'oggetto magico, spesso ricercato, della famosa serie The Legend of Zelda, di Nintendo.</systemDescription>
             <systemHardwareType>Arcade</systemHardwareType>
         </variables>
     </language>

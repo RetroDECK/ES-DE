@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>ChaiLove è un framework fantastico che si può usare per creare giochi 2D in ChaiScript. È gratuito, open-source e funziona su Windows, Mac OS X, Linux, Android e ARM tramite libretro/RetroArch.</systemDescription>
+            <systemDescription>ChaiLove è un "fantasy framework" che può essere utilizzato per creare videogiochi 2D in ChaiScript. È gratuito, open-source e funziona su Windows, Mac OS X, Linux, Android ed ARM, tramite libretro/RetroArch.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

@@ -76,9 +76,9 @@ L’objectiu de disseny era ser el més senzill possible, però tenir un so i un
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Uzebox è una console di gioco open source retro-minimalista a 8 bit. È basata su un microcontrollore generale a 8 bit AVR di Atmel. La particolarità del sistema è che utilizza un kernel guidato da interrupt e non ha frame buffer. Funzioni come la generazione del segnale video, il rendering dei tile e il mixaggio della musica vengono eseguite in tempo reale da un task in background, in modo che il gioco possa essere facilmente sviluppato in C.
+            <systemDescription>Uzebox è una console di gioco open source retro-minimalista ad 8 bit. È basata su un microcontrollore generale ad 8 bit AVR di Atmel. La particolarità del sistema è che utilizza un kernel guidato da interrupt e non ha frame buffer. Funzioni come la generazione del segnale video, il rendering dei tile ed il mixaggio della musica vengono eseguite in tempo reale da un task in background, in modo che il gioco possa essere facilmente sviluppato in C.
 
-   L'obiettivo del progetto era quello di essere il più semplice possibile, ma con un suono e una grafica sufficientemente buoni per implementare giochi interessanti. L'enfasi è stata posta sul fatto di renderlo facile e divertente da assemblare e programmare per qualsiasi hobbista. Il progetto finale contiene solo due chip: un ATmega644 e un convertitore RGB-NTSC AD725.</systemDescription>
+   L'obiettivo del progetto era quello di essere il più semplice possibile, ma con un suono ed una grafica sufficientemente buoni per implementare giochi interessanti. L'enfasi è stata posta sul fatto di renderlo facile e divertente da assemblare e programmare per qualsiasi hobbista. Il progetto finale contiene solo due chip: un ATmega644 ed un convertitore RGB-NTSC AD725.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>

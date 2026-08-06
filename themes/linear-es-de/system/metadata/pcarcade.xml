@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>All'inizio degli anni 2000 i produttori di sistemi arcade hanno iniziato ad abbandonare la progettazione di schede personalizzate e, nell'ambito di questo cambiamento, molti hanno adattato l'architettura standard dei PC. Esistono numerosi progetti di questo tipo che funzionano con Linux o Windows, ad esempio Sega Lindbergh, Namco System N2 e Taito Type X.</systemDescription>
+            <systemDescription>All'inizio degli anni 2000 i produttori di sistemi arcade iniziarono ad abbandonare la progettazione di schede personalizzate e, nell'ambito di questo cambiamento, molti adottarono l'architettura standard dei PC. Esistono numerosi progetti di questo tipo che funzionano con Linux o Windows, come ad esempio Sega Lindbergh, Namco System N2 e Taito Type X.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>

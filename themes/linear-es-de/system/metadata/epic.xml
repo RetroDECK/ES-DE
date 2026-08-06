@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'Epic Games Store è un negozio digitale di videogiochi per Microsoft Windows e macOS, gestito da Epic Games. È stato lanciato nel dicembre 2018 sia come sito web che come launcher standalone, quest'ultimo necessario per scaricare e giocare. La vetrina fornisce un catalogo di base, la gestione della lista amici, il matchmaking e altre funzionalità. Epic Games ha in programma di espandere ulteriormente il set di funzionalità della vetrina, ma non intende aggiungere tante funzioni come altre piattaforme di distribuzione digitale, come le bacheche di discussione o le recensioni degli utenti, utilizzando invece le piattaforme di social media esistenti per supportarle.</systemDescription>
+            <systemDescription>L'Epic Games Store è un negozio digitale di videogiochi per Microsoft Windows e macOS, gestito da Epic Games. È stato lanciato nel dicembre 2018 sia come sito web che come launcher standalone (quest'ultimo necessario per scaricare e giocare). La vetrina fornisce un catalogo di base, la gestione della lista degli amici, il matchmaking ed altre funzionalità. Epic Games ha in programma di espandere ulteriormente il set di funzionalità della vetrina, ma non intende aggiungere tante funzioni come altre piattaforme di distribuzione digitale, come i forum, o le recensioni degli utenti, utilizzando invece le piattaforme di social media già esistenti per supportarle.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>

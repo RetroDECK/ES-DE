@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Steam è un servizio di distribuzione digitale di videogiochi e un negozio di Valve. È stato lanciato come client software nel settembre 2003, come modo per Valve di fornire aggiornamenti automatici per i propri giochi, e si è esteso alla distribuzione e all'offerta di titoli di editori di giochi terzi alla fine del 2005.</systemDescription>
+            <systemDescription>Steam è un servizio di distribuzione e vendita digitale di videogiochi, creato da Valve. È stato lanciato come client software nel settembre 2003, come modo per Valve di fornire aggiornamenti automatici per i propri giochi e si è esteso alla distribuzione e all'offerta di titoli di editori di giochi terzi alla fine del 2005.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>

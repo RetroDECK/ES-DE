@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'FM-7 ("Fujitsu Micro 7") è un home computer creato da Fujitsu. È stato rilasciato per la prima volta nel 1982 ed è stato venduto in Giappone e in Spagna. Si tratta di una versione ridotta del precedente computer FM-8 di Fujitsu, e durante lo sviluppo veniva chiamato "FM-8 Jr.".</systemDescription>
+            <systemDescription>L'FM-7 ("Fujitsu Micro 7") è un home computer creato da Fujitsu. È stato rilasciato per la prima volta nel 1982 ed è stato venduto in Giappone ed in Spagna. Si tratta di una versione ridotta del precedente computer FM-8 di Fujitsu, che durante lo sviluppo veniva chiamato "FM-8 Jr.".</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

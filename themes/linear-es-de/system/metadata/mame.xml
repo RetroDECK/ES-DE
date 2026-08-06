@@ -76,9 +76,9 @@ Prvo javno izdanje Mame bila je Nicola Salmoria 5. veljače 1997. godine. Sada p
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>MAME (già acronimo di Multiple Arcade Machine Emulator) è un emulatore gratuito e open-source progettato per ricreare l'hardware dei sistemi di gioco arcade nel software dei moderni personal computer e di altre piattaforme. Il suo scopo è quello di preservare la storia del gioco, evitando che i giochi d'epoca vadano persi o dimenticati. Lo fa emulando il funzionamento interno delle macchine arcade emulate; la possibilità di giocare effettivamente ai giochi è considerata "un piacevole effetto collaterale". Joystiq ha indicato MAME come un'applicazione che ogni giocatore Windows e Mac dovrebbe avere.
+            <systemDescription>MAME (già acronimo di Multiple Arcade Machine Emulator) è un emulatore gratuito ed open-source progettato che ricrea l'hardware dei sistemi di gioco arcade nel software dei moderni personal computer e di altre piattaforme. Il suo scopo è quello di preservare la storia del videogaming, evitando che i videogiochi d'epoca vadano persi o dimenticati. Lo fa emulando il funzionamento interno delle macchine arcade; la possibilità di giocare effettivamente ai videogiochi è considerata "un piacevole effetto collaterale". Joystiq ha indicato MAME come un'applicazione che ogni giocatore Windows e Mac dovrebbe avere.
 
-La prima versione pubblica del MAME è stata realizzata da Nicola Salmoria il 5 febbraio 1997. Attualmente supporta oltre 7.000 giochi unici e 10.000 immagini ROM, anche se non tutti i giochi sono giocabili. MESS, un emulatore per molte console di videogiochi e sistemi informatici, basato sul nucleo di MAME, è stato integrato in MAME nel 2015.</systemDescription>
+La prima versione pubblica del MAME è stata realizzata da Nicola Salmoria il 5 febbraio 1997. Attualmente supporta oltre 7.000 videogiochi unici e 10.000 immagini ROM, anche se non tutti i videogiochi sono giocabili. MESS, un emulatore per molte console di videogiochi e sistemi informatici, basato sul nucleo di MAME, è stato integrato in MAME nel 2015.</systemDescription>
             <systemHardwareType>Emulatore</systemHardwareType>
         </variables>
     </language>

@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>WASM-4 è una console di gioco fantasy di basso livello per la creazione di piccoli giochi con WebAssembly. Le cartucce di gioco (ROM) sono piccoli file .wasm autocontenuti che possono essere costruiti con qualsiasi linguaggio di programmazione che compili WebAssembly.</systemDescription>
+            <systemDescription>WASM-4 è una console di gioco virtuale di basso livello per la creazione di piccoli giochi con WebAssembly. Le cartucce di gioco (ROM) sono piccoli file .wasm autocontenuti che possono essere costruiti con qualsiasi linguaggio di programmazione che compili WebAssembly.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

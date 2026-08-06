@@ -76,9 +76,9 @@ It includes a simplified internal design, a full-travel keyboard, improved graph
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il TI-99/4 è un home computer rilasciato alla fine del 1979 da Texas Instruments. Basato sul microprocessore Texas Instruments TMS9900, originariamente utilizzato nei minicomputer, è stato il primo home computer a 16 bit. Il controller video associato fornisce grafica a colori e uno dei migliori supporti per gli sprite dell'epoca.
+            <systemDescription>Il TI-99/4 è un home computer rilasciato alla fine del 1979 da Texas Instruments. Basato sul microprocessore Texas Instruments TMS9900, originariamente utilizzato nei minicomputer, è stato il primo home computer a 16 bit. Il controller video associato fornisce grafica a colori ed uno dei migliori supporti per gli sprite dell'epoca.
 
-Include un design interno semplificato, una tastiera a corsa completa, una grafica migliorata e un sistema di espansione unico. Con un prezzo dimezzato rispetto al modello originale, le vendite aumentarono notevolmente. TI supportò il 4A con periferiche, tra cui un sintetizzatore vocale e un box "Peripheral Expansion System" per contenere componenti hardware aggiuntivi. TI rilasciò informazioni e strumenti per gli sviluppatori, ma l'insistenza nel voler rimanere l'unico editore continuò a privare la piattaforma di software.</systemDescription>
+Include un design interno semplificato, una tastiera a corsa completa, una grafica migliorata ed un sistema di espansione unico. Con un prezzo dimezzato rispetto al modello originale, le vendite aumentarono notevolmente. TI supportò il 4A con periferiche, tra cui un sintetizzatore vocale ed un box "Peripheral Expansion System" per contenere componenti hardware aggiuntivi. TI rilasciò informazioni e strumenti per gli sviluppatori, ma l'insistenza nel voler rimanere l'unico editore continuò a privare la piattaforma di software.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

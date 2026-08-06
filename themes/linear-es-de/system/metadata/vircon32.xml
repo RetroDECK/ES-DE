@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Vircon32 è una console virtuale ispirata ai classici sistemi a 16 e 32 bit e all'era degli arcade.</systemDescription>
+            <systemDescription>Vircon32 è una console virtuale ispirata ai classici sistemi a 16 e 32 bit e all'era degli arcade. Nell'ultimo tempo, lo sviluppatore si è dedicato alla produzione di una versione fisica della console e delle cartucce dei videogiochi, i cui progetti sono reperibili sul proprio sito web.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

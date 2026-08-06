@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Super Famicom è una console per videogiochi domestici a 16 bit sviluppata da Nintendo e pubblicata nel 1990 in Giappone, nel 1991 in Nord America, nel 1992 in Europa e Australasia (Oceania) e nel 1993 in Sud America.</systemDescription>
+            <systemDescription>Il Super Famicom è una console per videogiochi a 16 bit sviluppata da Nintendo e pubblicata nel 1990 in Giappone. Uscì nel 1991 in Nord America, nel 1992 in Europa e Australasia (Oceania) e nel 1993 in Sud America ed in questi mercati venne pubblicata come "Super Nintendo" (o anche Super NES).</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>

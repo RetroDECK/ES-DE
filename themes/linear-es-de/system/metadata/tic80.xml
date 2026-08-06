@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>TIC-80 è un computer fantasy gratuito e open source per creare, giocare e condividere piccoli giochi. Ci sono strumenti integrati per lo sviluppo: codice, sprite, mappe, editor di suoni e linea di comando, sufficienti per creare un mini gioco retrò. All'uscita si otterrà un file di cartuccia, che potrà essere memorizzato e giocato sul sito web. Inoltre, il gioco può essere inserito in un lettore che funziona su tutte le piattaforme più diffuse e distribuito a piacimento. Per realizzare un gioco in stile retrò, l'intero processo di creazione si svolge con alcune limitazioni tecniche: Display da 240x136 pixel, tavolozza di 16 colori, 256 sprite da 8x8 colori, suono a 4 canali e così via.</systemDescription>
+            <systemDescription>TIC-80 è un computer virtuale gratuito e open source per creare, giocare e condividere piccoli giochi. Ci sono strumenti integrati per lo sviluppo: codice, sprite, mappe, editor di suoni e linea di comando, sufficienti per creare un mini gioco retrò. In output viene creato file "cartuccia", che può essere memorizzato e giocato sul sito web. Inoltre il gioco può essere impacchettato come auto-eseguibile in grado di funzionare su tutte le piattaforme più diffuse e può essere distribuito a piacimento. Per realizzare un gioco in stile retrò, l'intero processo di creazione si svolge con alcune limitazioni tecniche: Display da 240x136 pixel, tavolozza di 16 colori, 256 sprite da 8x8 colori, suono a 4 canali e così via.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

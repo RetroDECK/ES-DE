@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Sebbene i tabelloni arcade siano stati tradizionalmente progettati su misura, sono stati realizzati diversi sistemi basati sulle piattaforme delle console domestiche. La prima console di questo tipo è stata la Nintendo VS. System, basato sul Famicom e rilasciato nel 1984. L'ultima scheda basata su una console è stata Namco System 369, uscita nel 2011 e basata sulla PlayStation 3 di Sony.</systemDescription>
+            <systemDescription>Sebbene le schede arcade siano state tradizionalmente progettati personalizzati, sono stati realizzati anche diversi sistemi basati sulle piattaforme delle console domestiche. Il primo sistema di questo tipo è stato il Nintendo VS. System, basato sul Famicom e rilasciato nel 1984. L'ultimo sistema, la cui scheda è basata sull'hardware di una console domestica è stato il Namco System 369, uscito nel 2011 e basato sulla PlayStation 3 di Sony.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>

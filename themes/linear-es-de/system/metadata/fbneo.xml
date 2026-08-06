@@ -92,11 +92,9 @@ Razlog odvajanja starije grane, FB Alpha i nove podružnice Spin-Off, FB Neo, bi
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>FinalBurn Neo è un emulatore arcade multiplo molto popolare per l'emulazione di giochi Neo-Geo, Capcom, Konami e Cave. È sviluppato dal team di FinalBurn ed è nato da FinalBurn by Dave e dalle vecchie versioni del MAME.
+            <systemDescription>FinalBurn Neo è un emulatore arcade multiplo molto popolare per l'emulazione di giochi Sega, Neo-Geo, Capcom, Konami, Taito, Cave, etc. È sviluppato e mantenuto dalla quasi totalità del team di FinalBurn Alpha di cui è il teorico successore.
 
-FinalBurn Neo è un fork attivo dell'emulatore FinalBurn Alpha, creato da molti degli ex sviluppatori di FBA.
-
-La ragione della separazione tra il ramo più vecchio, FB Alpha, e il nuovo ramo spin-off, FB Neo, è dovuta a un apparente disaccordo tra Barry Harris e il resto dei membri principali del team FBA per una questione di licenze.</systemDescription>
+La ragione della separazione tra il ramo più vecchio, FB Alpha ed il nuovo ramo spin-off, FB Neo, è dovuta ad un apparente disaccordo tra Barry Harris ed il resto dei membri principali del team FBA per una questione di licenze.</systemDescription>
             <systemHardwareType>Emulatore</systemHardwareType>
         </variables>
     </language>

@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Moonlight (ex Limelight) è un'implementazione open source del protocollo GameStream di NVIDIA. Abbiamo implementato il protocollo utilizzato da NVIDIA Shield e scritto una serie di client di terze parti.  Moonlight permette di giocare ai propri giochi per PC su quasi tutti i dispositivi, sia che ci si trovi in un'altra stanza o a chilometri di distanza dal proprio impianto di gioco.</systemDescription>
+            <systemDescription>Moonlight (ex Limelight) è un'implementazione open source del protocollo GameStream di NVIDIA. È stato implementato il protocollo utilizzato da NVIDIA Shield e sono stati sviluppati una serie di client di terze parti. Moonlight permette di giocare ai propri videogiochi per PC su quasi tutti i dispositivi, sia che ci si trovi in un'altra stanza o a chilometri di distanza dal proprio PC.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>

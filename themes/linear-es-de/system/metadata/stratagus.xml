@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Stratagus è un motore di gioco multipiattaforma gratuito e open-source utilizzato per costruire videogiochi di strategia in tempo reale. È concesso in licenza GNU GPL-2.0,[2] ed è scritto principalmente in C++, mentre il linguaggio di configurazione è Lua.</systemDescription>
+            <systemDescription>Stratagus è un motore di gioco multipiattaforma gratuito ed open-source utilizzato per creare videogiochi di strategia in tempo reale. È concesso in licenza GNU GPL-2.0 ed è scritto principalmente in C++, mentre il linguaggio di configurazione è Lua.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>

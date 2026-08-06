@@ -92,9 +92,9 @@ Serija je prodala kombinirano od 43,4 milijuna jedinica širom svijeta.</systemD
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il marchio Game &amp; Watch è una serie di giochi elettronici portatili sviluppati, prodotti, distribuiti e commercializzati da Nintendo dal 1980 al 1991. Creato dal designer di giochi Gunpei Yokoi, il prodotto deve il suo nome alla presenza di un singolo gioco e di un orologio su uno schermo LCD. I modelli dal 1981 in poi erano dotati anche di una sveglia. È stato il primo prodotto videoludico Nintendo a riscuotere un grande successo.
+            <systemDescription>Il marchio Game &amp; Watch è proprio di serie di giochi elettronici portatili sviluppati, prodotti, distribuiti e commercializzati da Nintendo dal 1980 al 1991. Creato dal designer di giochi Gunpei Yokoi, il prodotto deve il suo nome alla presenza di un singolo gioco e di un orologio su uno schermo LCD. I modelli dal 1981 in poi erano dotati anche di una sveglia. È stato il primo prodotto videoludico Nintendo a riscuotere un grande successo.
 
-Le unità sono basate su una CPU a 4 bit, della famiglia Sharp SM5xx, che include una piccola area ROM e RAM e un circuito di pilotaggio dello schermo LCD, anche se, prima della sua simulazione in MAME, c'era un'idea sbagliata secondo cui ogni unità utilizzava un ASIC personalizzato invece di un microcontrollore vero e proprio.
+Le unità sono basate su una CPU a 4 bit, della famiglia Sharp SM5xx, che include una piccola area ROM e RAM ed un circuito di pilotaggio dello schermo LCD anche se, prima della sua simulazione in MAME, c'era un'idea sbagliata secondo cui ogni unità utilizzava un ASIC personalizzato invece di un microcontrollore vero e proprio.
 
 La serie ha venduto complessivamente 43,4 milioni di unità in tutto il mondo.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>

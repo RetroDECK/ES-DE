@@ -76,9 +76,9 @@ MSX sustavi bili su popularni u Japanu i nekoliko drugih zemalja. Sony je bio gl
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>MSX è un'architettura standardizzata per home computer, annunciata da Microsoft e ASCII Corporation il 16 giugno 1983. Fu inizialmente concepito da Microsoft come prodotto per il settore orientale e commercializzato congiuntamente da Kazuhiko Nishi, allora vicepresidente di Microsoft e direttore di ASCII Corporation. Microsoft e Nishi concepirono il progetto come un tentativo di creare standard unificati tra i vari produttori di sistemi informatici domestici dell'epoca, alla stregua dello standard VHS per le macchine videofonografiche domestiche.
+            <systemDescription>L'MSX conobbe diverse evoluzioni nel corso degli anni. Il primo MSX, poi distinto come MSX1 o MSX 1 (1983) era dotato di un processore Zilog Z80A con frequenza di 3,576 MHz, una ROM da 32 KB, in cui erano presenti il BIOS ed il sistema operativo MSX BASIC V1.0, un quantitativo di RAM variabile (16-64 KB, espandibile fino ad 1 MB), un chip video Texas Instruments TMS99180 con 16 KB di memoria in grado di supportare 32 sprite ad un colore, un chip audio General Instrument AY-3-8910 (PSG) a 3 canali ad onda quadra + white noise bianco a 12 bit.
 
-I sistemi MSX erano popolari in Giappone e in diversi altri paesi. Sony fu il principale produttore di sistemi MSX al momento del lancio e per la maggior parte della durata del prodotto, producendo più unità di qualsiasi altro produttore. Solo in Giappone furono venduti 5 milioni di unità basate su MSX. Nonostante il coinvolgimento di Microsoft, negli Stati Uniti furono rilasciate poche macchine basate su MSX.</systemDescription>
+Vari videogiochi in cartuccia contenevano anche un chip aggiuntivo SCC o SCC+, che aggiungeva altri 5 canali sonori oltre ad implementare la logica di mappatura della memoria necessaria ad interfacciare ROM di dimensioni fino a 4 Mbit. Ogni canale è pilotato da un sample di 32 byte che ne definisce la forma d'onda. La differenza tra le due versioni è che nella prima i canali 4 e 5 condividono un solo sample di 32 byte, mentre nella seconda i 5 canali sono tutti indipendenti.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>

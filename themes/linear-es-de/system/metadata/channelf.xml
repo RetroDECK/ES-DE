@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Fairchild Channel F è una console per videogiochi domestica rilasciata da Fairchild Semiconductor nel novembre 1976.<br />It has the distinction of being the first programmable ROM cartridge–based video game console, and the first console to use a microprocessor. It was launched as the Video Entertainment System, or VES, but when Atari released their VCS the next year, Fairchild renamed it's machine.</systemDescription>
+            <systemDescription>Il Fairchild Channel F è una console per videogiochi domestica rilasciata da Fairchild Semiconductor, nel novembre 1976.<br />Ha il primato di essere la prima console per videogiochi programmabile basata su cartucce ROM e la prima ad utilizzare un microprocessore. Fu lanciata con il nome di "Video Entertainment System" (o VES), ma quando l'anno successivo Atari mise in commercio la propria VCS, Fairchild cambiò il nome della sua macchina.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>

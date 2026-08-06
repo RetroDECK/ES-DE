@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Visualizzare ed eseguire i collegamenti al desktop</systemDescription>
+            <systemDescription>Visualizza ed esegui i collegamenti presenti sul desktop</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>

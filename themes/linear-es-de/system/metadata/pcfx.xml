@@ -76,9 +76,9 @@ Konzola je oblikovana poput tornja i trebala je biti na sličan način nadogradn
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il PC-FX è una console per videogiochi domestici a 32 bit sviluppata da NEC e Hudson Soft e rilasciata in Giappone nel 1994. Alimentata da una CPU NEC V810 e con l'utilizzo di CD-ROM, il PC-FX doveva essere il successore del PC Engine e della sua controparte internazionale TurboGrafx-16, due console per videogiochi di successo della fine degli anni Ottanta. È l'ultima incursione di NEC nel mercato delle console domestiche.
+            <systemDescription>Il PC-FX è una console per videogiochi a 32 bit sviluppata da NEC e Hudson Soft e rilasciata in Giappone nel 1994. Alimentata da una CPU NEC V810 e con l'utilizzo di CD-ROM, il PC-FX doveva essere il successore del PC Engine e della sua controparte internazionale TurboGrafx-16, due console per videogiochi di successo della fine degli anni Ottanta. È l'ultima incursione di NEC nel mercato delle console domestiche.
 
-La console ha la forma di un PC a torre e doveva essere aggiornabile in modo simile. Tuttavia, il PC-FX non disponeva di un chip grafico 3D basato su poligoni, il che rendeva il sistema poco potente rispetto ai suoi concorrenti. Inoltre, era costoso e mancava di supporto agli sviluppatori, e di conseguenza non era in grado di competere efficacemente con i suoi colleghi di quinta generazione. Il PC-FX fu l'ultima console per videogiochi domestica di NEC e venne dismessa nel febbraio 1998. Fu considerata un fallimento commerciale.</systemDescription>
+La console ha la forma di un PC a torre e doveva essere aggiornabile in modo simile. Tuttavia, il PC-FX non disponeva di un chip grafico 3D basato su poligoni, il che rendeva il sistema poco potente rispetto ai suoi concorrenti. Inoltre, era costoso e mancava di supporto agli sviluppatori e di conseguenza non era in grado di competere efficacemente con i suoi colleghi di quinta generazione. Il PC-FX fu l'ultima console per videogiochi domestica di NEC e venne dismessa nel febbraio 1998. Fu considerata un fallimento commerciale.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>

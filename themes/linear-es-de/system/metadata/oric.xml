@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Oric è il nome utilizzato da Tangerine Computer Systems, società con sede nel Regno Unito, per una serie di home computer basati su 6502 venduti negli anni '80, principalmente in Europa. Con il successo dello ZX Spectrum di Sinclair Research, i finanziatori di Tangerine suggerirono un home computer e Tangerine formò Oric Products International Ltd per sviluppare l'Oric-1. Il computer fu presentato nel 1982. Il computer fu presentato nel 1982.[5] Nel corso del 1983 furono venduti circa 160.000 computer Oric-1 nel Regno Unito, più altri 50.000 in Francia (dove fu la macchina più venduta dell'anno). Questo ha portato all'acquisizione di Oric e al finanziamento di un modello successivo, l'Oric Atmos del 1984.</systemDescription>
+            <systemDescription>Oric è il nome utilizzato da Tangerine Computer Systems, società con sede nel Regno Unito, per una serie di home computer basati su chip 6502 venduti negli anni '80, principalmente in Europa. Con il successo dello ZX Spectrum di Sinclair Research, i finanziatori di Tangerine suggerirono un home computer e Tangerine formò Oric Products International Ltd per sviluppare l'Oric-1. Il computer fu presentato nel 1982. Nel corso del 1983 furono vendute circa 160.000 unità Oric-1 nel Regno Unito, più altri 50.000 in Francia (dove fu la macchina più venduta dell'anno). Questo portò all'acquisizione di Oric ed al finanziamento di un modello successivo, l'Oric Atmos del 1984.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
