@@ -1303,8 +1303,9 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
     const bool isRomMRemote {file->getRomMRemote()};
     const int rommId {isRomMRemote ? atoi(file->metadata.get("rommid").c_str()) : -1};
     auto& mediaLoader = RomMRemoteMediaLoader::getInstance();
-    // Tries the in-memory bytes fetched for a not-yet-downloaded RomM entry before falling
-    // through to the normal on-disk path lookup (which would otherwise just find nothing).
+    // Falls back to the in-memory bytes fetched for a not-yet-downloaded RomM entry only
+    // when the normal on-disk path lookup finds nothing, so an already-scraped cover on
+    // disk (e.g. left over from before the game was re-synced as remote) always wins.
     // Returns true if bytes were applied, meaning the caller should stop and not touch `path`.
     auto tryRemoteMedia = [&](const std::string* bytes) {
         if (!isRomMRemote || !bytes)
@@ -1316,13 +1317,13 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
     std::string path;
     for (auto& imageType : comp->getThemeImageTypes()) {
         if (imageType == "image") {
-            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
-                return;
             path = file->getImagePath();
             if (path != "") {
                 comp->setImage(path);
                 return;
             }
+            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
+                return;
         }
         else if (imageType == "miximage") {
             path = file->getMiximagePath();
@@ -1353,13 +1354,13 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
             }
         }
         else if (imageType == "cover") {
-            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
-                return;
             path = file->getCoverPath();
             if (path != "") {
                 comp->setImage(path);
                 return;
             }
+            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
+                return;
         }
         else if (imageType == "backcover") {
             path = file->getBackCoverPath();
