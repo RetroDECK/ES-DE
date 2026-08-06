@@ -309,6 +309,7 @@ void Settings::setDefaults()
 #if !defined(__IOS__)
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["CustomEventScriptsBrowsing"] = {false, false};
+    mBoolMap["CustomEventScriptsBrowsingNonBlocking"] = {true, true};
 #endif
     mBoolMap["ParseGamelistOnly"] = {false, false};
     mBoolMap["MAMENameStripExtraInfo"] = {true, true};

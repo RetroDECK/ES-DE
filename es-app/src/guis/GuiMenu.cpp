@@ -2061,6 +2061,32 @@ void GuiMenu::openOtherOptions()
             ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
     }
+
+    // Whether to run browsing custom event scripts as non-blocking.
+    auto customEventScriptsBrowsingNonBlocking = std::make_shared<SwitchComponent>();
+    customEventScriptsBrowsingNonBlocking->setState(
+        Settings::getInstance()->getBool("CustomEventScriptsBrowsingNonBlocking"));
+    s->addWithLabel(_("RUN BROWSING EVENTS AS NON-BLOCKING"),
+                    customEventScriptsBrowsingNonBlocking);
+    s->addSaveFunc([customEventScriptsBrowsingNonBlocking, s] {
+        if (customEventScriptsBrowsingNonBlocking->getState() !=
+            Settings::getInstance()->getBool("CustomEventScriptsBrowsingNonBlocking")) {
+            Settings::getInstance()->setBool("CustomEventScriptsBrowsingNonBlocking",
+                                             customEventScriptsBrowsingNonBlocking->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // If custom event scripts or browsing custom event scripts are disabled, then gray out this
+    // option.
+    if (!Settings::getInstance()->getBool("CustomEventScripts") ||
+        !Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
+        customEventScriptsBrowsingNonBlocking->setEnabled(false);
+        customEventScriptsBrowsingNonBlocking->setOpacity(DISABLED_OPACITY);
+        customEventScriptsBrowsingNonBlocking->getParent()
+            ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
 #endif
 
     // Only show games included in the gamelist.xml files.
@@ -2230,12 +2256,19 @@ void GuiMenu::openOtherOptions()
 #endif
 
 #if !defined(__IOS__)
-    auto browsingEventsToggleFunc = [customEventScriptsBrowsing]() {
+    auto browsingEventsToggleFunc = [customEventScriptsBrowsing,
+                                     customEventScriptsBrowsingNonBlocking]() {
         if (customEventScriptsBrowsing->getEnabled()) {
             customEventScriptsBrowsing->setEnabled(false);
             customEventScriptsBrowsing->setOpacity(DISABLED_OPACITY);
             customEventScriptsBrowsing->getParent()
                 ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            customEventScriptsBrowsingNonBlocking->setEnabled(false);
+            customEventScriptsBrowsingNonBlocking->setOpacity(DISABLED_OPACITY);
+            customEventScriptsBrowsingNonBlocking->getParent()
+                ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
         else {
@@ -2244,10 +2277,36 @@ void GuiMenu::openOtherOptions()
             customEventScriptsBrowsing->getParent()
                 ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
                 ->setOpacity(1.0f);
+
+            if (customEventScriptsBrowsing->getState()) {
+                customEventScriptsBrowsingNonBlocking->setEnabled(true);
+                customEventScriptsBrowsingNonBlocking->setOpacity(1.0f);
+                customEventScriptsBrowsingNonBlocking->getParent()
+                    ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+                    ->setOpacity(1.0f);
+            }
+        }
+    };
+
+    auto browsingEventsNonBlockingToggleFunc = [customEventScriptsBrowsingNonBlocking]() {
+        if (customEventScriptsBrowsingNonBlocking->getEnabled()) {
+            customEventScriptsBrowsingNonBlocking->setEnabled(false);
+            customEventScriptsBrowsingNonBlocking->setOpacity(DISABLED_OPACITY);
+            customEventScriptsBrowsingNonBlocking->getParent()
+                ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            customEventScriptsBrowsingNonBlocking->setEnabled(true);
+            customEventScriptsBrowsingNonBlocking->setOpacity(1.0f);
+            customEventScriptsBrowsingNonBlocking->getParent()
+                ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+                ->setOpacity(1.0f);
         }
     };
 
     customEventScripts->setCallback(browsingEventsToggleFunc);
+    customEventScriptsBrowsing->setCallback(browsingEventsNonBlockingToggleFunc);
 #endif
 
     s->setSize(mSize);

@@ -41,6 +41,12 @@ namespace Scripting
 
         std::list<std::string> scriptDirList;
         std::string scriptDir;
+        bool blocking {true};
+
+        if ((eventName == "game-select" || eventName == "system-select") &&
+            Settings::getInstance()->getBool("CustomEventScriptsBrowsingNonBlocking")) {
+            blocking = false;
+        }
 
         // Check in application data directory.
         scriptDir = Utils::FileSystem::getAppDataDirectory() + "/scripts/" + eventName;
@@ -98,11 +104,12 @@ namespace Scripting
                 LOG(LogDebug) << "Executing: " << script;
 #endif
 #if defined(__ANDROID__)
-                Utils::Platform::runSystemCommand("sh " + script);
+                Utils::Platform::runSystemCommand("sh " + script, blocking);
 #elif defined(_WIN64)
-                Utils::Platform::runSystemCommand(Utils::String::stringToWideString(script));
+                Utils::Platform::runSystemCommand(Utils::String::stringToWideString(script),
+                                                  blocking);
 #else
-                Utils::Platform::runSystemCommand(script);
+                Utils::Platform::runSystemCommand(script, blocking);
 #endif
             }
         }

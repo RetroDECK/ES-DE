@@ -334,7 +334,9 @@ namespace Utils
 
             for (auto it = pathList.cbegin(); it != pathList.cend(); ++it) {
                 Utils::Platform::runSystemCommand("flatpak-spawn --host which " + *it + "/" +
-                                                  executable + " > " + tempFile + " 2>/dev/null");
+                                                      executable + " > " + tempFile +
+                                                      " 2>/dev/null",
+                                                  true);
                 std::ifstream tempFileStream;
                 tempFileStream.open(tempFile, std::ios::binary);
                 getline(tempFileStream, emulatorPath);
