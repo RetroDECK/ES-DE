@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-08-01 18:04+0200\n"
+"POT-Creation-Date: 2026-08-07 10:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <info@es-de.org>\n"
@@ -1179,6 +1179,9 @@ msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr ""
 
 msgid "BROWSING CUSTOM EVENTS"
+msgstr ""
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
 msgstr ""
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
