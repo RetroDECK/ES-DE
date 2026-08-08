@@ -46,6 +46,8 @@
 * (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
 * (Android) Added D.Smile standalone as an alternative emulator for the vsmile system
 * (Android) Added XenDroid standalone as an alternative emulator for the xbox360 system
+* (Android) Added GameNative Amazon standalone as an alternative emulator for the windows system
+* (Android) Added the .amazon file extension to the windows system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Linux ARM) Removed all RetroArch cores that are not built by the RetroArch project
 * (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin

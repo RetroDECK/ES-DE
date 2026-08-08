@@ -211,7 +211,7 @@ This device incorrectly reports two screens as being present even when just one 
 
 ### AYN Odin 3
 
-With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Odin Settings->Advanced Settings->Force SeLinux_.
 
 ### Logitech G Cloud
 
@@ -223,7 +223,7 @@ There is an issue with this device where starting ES-DE once will permanently sl
 
 ### Retroid Pocket G2
 
-With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the Android operating system setting _Handheld Settings->Advanced->Is it force start selinux_.
 
 ### Samsung devices
 
@@ -1094,7 +1094,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section in the user guide |
-| windows               | Microsoft Windows                              | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)**,<br>GameNative Steam **(Standalone)**,<br>GameNative Epic **(Standalone)**,<br>GameNative GOG **(Standalone)**,<br>GameNative Custom Game **(Standalone)**,<br>GameHub Lite **(Standalone)**,<br>GameHub Lite Local **(Standalone)** | No           | For general Windows games see the _Winlator_ section elsewhere in this document and for Steam games see the specific _Steam_ section in the user guide |
+| windows               | Microsoft Windows                              | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)**,<br>GameNative Steam **(Standalone)**,<br>GameNative Epic **(Standalone)**,<br>GameNative GOG **(Standalone)**,<br>GameNative Amazon **(Standalone)**,<br>GameNative Custom Game **(Standalone)**,<br>GameHub Lite **(Standalone)**,<br>GameHub Lite Local **(Standalone)** | No           | For general Windows games see the _Winlator_ section elsewhere in this document and for Steam games see the specific _Steam_ section in the user guide |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Swan.emu **(Standalone)**         | No           | Single archive or ROM file           |

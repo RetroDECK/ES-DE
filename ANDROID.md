@@ -211,7 +211,7 @@ This device incorrectly reports two screens as being present even when just one 
 
 ### AYN Odin 3
 
-With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Odin Settings->Advanced Settings->Force SeLinux_.
 
 ### Logitech G Cloud
 
@@ -223,7 +223,7 @@ There is an issue with this device where starting ES-DE once will permanently sl
 
 ### Retroid Pocket G2
 
-With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the Android operating system setting _Handheld Settings->Advanced->Is it force start selinux_.
 
 ### Samsung devices
 
