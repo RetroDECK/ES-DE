@@ -1525,6 +1525,7 @@
         <command label="aPS3e Game Serial (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/aps3e/config/dev_hdd0/game/%INJECT%=%BASENAME%.ps3</command>
         <command label="aPS3e Directory (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%ROM%</command>
         <command label="aPS3e ISO (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_iso_uri%=%ROMSAF%</command>
+        <command label="ARMSX3 (Standalone)">%EMULATOR_ARMSX3% %EXTRA_path%=%ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>

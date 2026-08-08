@@ -37,6 +37,12 @@
             <entry>come.nanodata.armsx2.debug/kr.co.iefriends.pcsx2.MainActivity</entry>
         </rule>
     </emulator>
+    <emulator name="ARMSX3">
+        <!-- Sony PlayStation 3 emulator ARMSX3-->
+        <rule type="androidpackage">
+            <entry>com.armsx3/com.armsx2.Main</entry>
+        </rule>
+    </emulator>
     <emulator name="AX360E">
         <!-- Microsoft Xbox 360 emulator aX360e -->
         <rule type="androidpackage">
