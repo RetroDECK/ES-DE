@@ -448,6 +448,12 @@ If you run RetroDECK then these instructions will let you use frontend music ins
 
 https://retrodeck.readthedocs.io/en/latest/wiki_experiments/retrodeck-music-player/retrodeck-music-player
 
+**ES-DE Portable Updater** _(Windows only)_
+
+This utility helps with upgrading, downgrading and repairing the ES-DE portable release, while preserving all games, emulators and settings.
+
+https://github.com/saikouforgames-glitch/ES-DE-Portable-Updater
+
 **BG_MPlayer for ES-DE** _(Windows only)_
 
 This adds frontend music to ES-DE on Windows (built-in music support is on the roadmap for a future release).

@@ -450,6 +450,12 @@ If you run RetroDECK then these instructions will let you use frontend music ins
 
 https://retrodeck.readthedocs.io/en/latest/wiki_experiments/retrodeck-music-player/retrodeck-music-player
 
+**ES-DE Portable Updater** _(Windows only)_
+
+This utility helps with upgrading, downgrading and repairing the ES-DE portable release, while preserving all games, emulators and settings.
+
+https://github.com/saikouforgames-glitch/ES-DE-Portable-Updater
+
 **BG_MPlayer for ES-DE** _(Windows only)_
 
 This adds frontend music to ES-DE on Windows (built-in music support is on the roadmap for a future release).
@@ -3093,7 +3099,7 @@ Regardless of how you've installed RPCS3, make sure to always test the shortcuts
 
 **Game serial files**
 
-_Note that at the time of writing, this option does not seem to be possible to use with the ARMSX3 emulator on Android._
+_Note that at the time of writing, this installation method does not seem to be possible with the ARMSX3 emulator on Android._
 
 First install your games inside aPS3e or RPCS3, then create an empty file in `~/ROMs/ps3` and name it as the game name followed by the .ps3 file extension, such as the following:
 ```
