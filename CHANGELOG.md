@@ -32,9 +32,14 @@
 * Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp and sega32xna systems on Linux and Windows
 * Added GroovyMAME standalone as an alternative emulator for the arcade and mame systems on Linux and Windows
 * Added veesem standalone as an alternative emulator for the vsmile system on Linux and Windows
+* Added the Virtual Jaguar RetroArch core as the default emulator for the atarijaguarcd system on Linux and Windows
+* (Android) Added support for the Atari Jaguar CD (atarijaguarcd) system using the Virtual Jaguar RetroArch core
 * (Android) Added NetherSX2 standalone as the default emulator for the ps2 system
 * (Android) Added NetherSX2-Turnip and NetherSX2-Turnip Classic standalone as alternative emulators for the ps2 system
 * (Android) Added a find rule entry for the new package name for ARMSX2 Refresh
+* (Android) Added a find rule entry for the new package name for ARMSX2 Refresh
+* (Android) Added ARMSX1 standalone as an alternative emulator for the psx system
+* (Android) Added ARMSX3 standalone as an alternative emulator for the ps3 system
 * (Android) Added Starboard standalone as an alternative emulator for the ports system
 * (Android) Added MAME4droid Current [Software list] standalone as an alternative emulator for the apple2gs system
 * (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
@@ -48,6 +53,7 @@
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
 * (Linux) Added ~/AppImages/ as an additional search path for all AppImages
 * (Linux) Changed the AppImage find rule entries for PCSX2 to avoid collisions with PCSX2x6
+* (macOS) Added support for the Atari Jaguar CD (atarijaguarcd) system using the Virtual Jaguar RetroArch core
 * (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (Windows) Added an additional find rule entry for PCSX2
 * (Windows) Added "Shortcut or script" as an alternative emulator for the xbox system

@@ -2456,7 +2456,7 @@ There are up to four parameters that will be passed to these scripts, as detaile
 
 ***)** Parameters in _italics_ are literal strings.
 
-Note that the _game-select_ and _system-select_ events require that the _Browsing custom events_ option in the Other settings menu is enabled. Also note that enabling this could lead to a lot of latency in the application as the event is triggered so frequently. So only enable these events if you really need them. And if you do, then make sure to execute scripts that run their activities in the background and immediately return to ES-DE, rather than blocking ES-DE during the script execution.
+Note that the _game-select_ and _system-select_ events require that the _Browsing custom events_ option in the Other settings menu is enabled. Also note that due to these events being triggered so frequently, enabling this could lead to a lot of latency in the application unless the _Run browsing events as non-blocking_ option has been enabled.
 
 For the _game-select_ event, when starting to fast scroll in the gamelist view, an event containing blank parameters will be triggered so that you can detect this state.
 

@@ -1723,7 +1723,7 @@ ln -s /usr/local/Cellar/mame/0.248/share/mame/hash ~/.mame/         # on x86/Int
 
 These systems are generally straightforward to setup. For regular Atari Jaguar games you'll have a single ROM or zip archive per game that you place in the root of the `~/ROMs/atarijaguar` system directory. For Atari Jaguar CD games it's recommended to go for the .cdi format and you place these directly in the root of the `~/ROMs/atarijaguarcd` directory.
 
-The only emulator that can run Atari Jaguar CD games is [BigPEmu](https://www.richwhitehouse.com/jaguar/) which is available for Linux and Windows. On Linux you can also run the Windows release of this emulator, should you want to. To accomplish this you need to run it via the Wine (or Proton) translation layer.
+You can run these games using Virtual Jaguar in RetroArch, or via [BigPEmu](https://www.richwhitehouse.com/jaguar/) which is available for Linux and Windows. On Linux you can also run the Windows release of this emulator, should you want to. To accomplish this you need to run it via the Wine (or Proton) translation layer.
 
 How to setup Wine is covered in the [Running Windows emulators on Linux using Wine or Proton](USERGUIDE-DEV.md#running-windows-emulators-on-linux-using-wine-or-proton) section.
 
@@ -3057,11 +3057,11 @@ On Android there are three ways to add PS3 games to ES-DE, by adding game serial
 
 On desktop operating systems there are four ways to add PS3 games to ES-DE, by using shortcuts, by adding game serial files, by adding game directories directly to the `~/ROMs/ps3` folder and interpreting these as files, and by adding ISO files to the `~/ROMs/ps3` folder. Shortcuts is generally the way to go as they're easier to setup. Launching as directories also doesn't work for HDD/pkg games unless you symlink from the internal RPCS3 directory structure. So another benefit with shortcuts and game serials is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game. The drawback to using shortcuts is that they're not portable, if you change the location of RPCS3 or your games, you need to manually update the shortcut files as well.
 
-Be aware that if you want to have games installed using the directory method, then you will need to change to the alternative emulator _aPS3e Directory (Standalone)_ on Android and _RPCS3 Directory (Standalone)_ on desktop operating systems, or you won't be able to launch these games. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
+Be aware that if you want to have games installed using the directory method, then you will need to change to the alternative emulator _aPS3e Directory (Standalone)_ on Android and _RPCS3 Directory (Standalone)_ on desktop operating systems, or you won't be able to launch these games. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis. The ARMSX3 emulator on Android will auto-detect whether the game is in a directory or is an ISO file, so just selecting _ARMSX3 (Standalone)_ should work for both cases.
 
 If using the Flatpak release of RPCS3 on Linux and your games are stored on an external device (such as a memory card), then you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
-Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the aPS3e and RPCS3 documentation.
+Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the aPS3e, ARMSX3 and RPCS3 documentation.
 
 **Shortcuts**
 
@@ -3093,6 +3093,8 @@ Regardless of how you've installed RPCS3, make sure to always test the shortcuts
 
 **Game serial files**
 
+_Note that at the time of writing, this option does not seem to be possible to use with the ARMSX3 emulator on Android._
+
 First install your games inside aPS3e or RPCS3, then create an empty file in `~/ROMs/ps3` and name it as the game name followed by the .ps3 file extension, such as the following:
 ```
 ~/ROMs/ps3/Braid.ps3
@@ -3116,11 +3118,11 @@ Here's an example of what a game entry could look like:
 
 On desktop operating systems it's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension. But if you want to locate your games outside the `~/ROMs/ps3` directory anyway, then it's probably easier to just use shortcuts.
 
-When using this setup method you need to use the alternative emulator _aPS3e Directory (Standalone)_ or _RPCS3 Directory (Standalone)_ or game launching will not work.
+When using this setup method you need to use the alternative emulator _aPS3e Directory (Standalone)_ or _RPCS3 Directory (Standalone)_ or game launching will not work. The ARMSX3 emulator on Android will auto-detect whether the game is in a directory, so just selecting _ARMSX3 (Standalone)_ should work.
 
 **ISO files**
 
-On Android you can run ISO files directly using aPS3e, you simply add the files to the _ps3_ directory and use the _aPS3e ISO (Standalone)_ alternative emulator entry to run the file.
+On Android you can run ISO files directly using aPS3e and ARMSX3, you simply add the files to the _ps3_ directory and use the _aPS3e ISO (Standalone)_ alternative emulator entry to run the file. The ARMSX3 emulator will auto-detect whether the game is an ISO file, so just selecting _ARMSX3 (Standalone)_ should work.
 
 Likewise on desktop operating systems you can run ISO files using RPCS3 by selecting the _RPCS3 ISO (Standalone)_ alternative emulator entry.
 
@@ -4464,7 +4466,7 @@ This option, which depends on _Enable custom event scripts_ being activated, wil
 
 **Run browsing events as non-blocking**
 
-This option, which depends on _Browsing custom events_ being activated, will make these events run in separate threads, i.e. completely non-blocking. While this greatly reduces latency in ES-DE when browsing games and systems, it does come with some risks. One issue could be race conditions where scripts are executed so fast that they finish processing in a different order than they were executed by ES-DE. Another issue is specific to Windows as this operating system uses file locking, and here a script could attempt to write to a file while another script has already locked the file for writing. Thirdly, if a script hangs forever for some reason, then ES-DE will not care and it will just continue to execute scripts as you continue browsing. There is however a limit set to 8 parallel scripts, so if there are already 8 scripts running then ES-DE will refuse to launch any more browsing event scripts until at least one of the previously launched scripts has finished executing.
+This option, which depends on _Browsing custom events_ being activated, will make these events run in separate threads, i.e. completely non-blocking. While this greatly reduces latency in ES-DE when browsing games and systems, it does come with some risks. One issue could be race conditions where scripts are triggered so fast that they finish processing in a different order than they were executed by ES-DE. Another issue is specific to Windows as this operating system uses file locking, and here a script could attempt to write to a file while another script has already locked the file for writing. Thirdly, if a script hangs forever for some reason, then ES-DE will not care and it will just continue to execute scripts as you continue browsing. There is however a limit set to 8 parallel scripts, so if there are already 8 scripts running then ES-DE will refuse to launch any more browsing event scripts until at least one of the previously launched scripts has finished executing.
 
 **Only show games from gamelist.xml files**
 
@@ -4984,7 +4986,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME - Current,<br>MAME **(Standalone)**,<br>A7800 **(Standalone)** [LW] | Yes          | Single archive or ROM file |
 | atari800              | Atari 800                                      | Atari800                          | Atari800 **(Standalone)**,<br>Altirra **(Standalone)** [W] | Yes except for Altirra |                                      |
 | atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | BigPEmu **(Standalone)** [LW],<br>BigPEmu **(Wine)** [L],<br>BigPEmu **(Proton)** [L],<br>MAME **(Standalone)** | Yes for MAME | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
-| atarijaguarcd         | Atari Jaguar CD                                | BigPEmu **(Standalone)** [LW]     | BigPEmu **(Wine)** [L],<br>BigPEmu **(Proton)** [L]   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
+| atarijaguarcd         | Atari Jaguar CD                                | Virtual Jaguar                    | BigPEmu **(Standalone)** [LW],<br>BigPEmu **(Wine)** [L],<br>BigPEmu **(Proton)** [L]   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section elsewhere in this guide |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Mednafen **(Standalone)**,<br>Gearlynx,<br>Holani | Yes for Gearlynx | Single archive or ROM file           |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**,<br>Altirra **(Standalone)** [W] | Yes except for Altirra |                                      |

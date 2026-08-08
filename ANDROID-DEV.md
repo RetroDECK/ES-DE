@@ -254,11 +254,23 @@ https://play.google.com/store/apps/details?id=aenu.aps3e \
 https://play.google.com/store/apps/details?id=aenu.aps3e.premium \
 https://github.com/aenu1/aps3e/releases
 
+### ARMSX1
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/ARMSX2/ARMSX1/releases
+
 ### ARMSX2
 
 This emulator can be downloaded from their GitHub site.
 
 https://github.com/ARMSX2/ARMSX2/releases
+
+### ARMSX3
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/ARMSX2/ARMSX3/releases
 
 ### aX360e
 
@@ -924,7 +936,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME4droid Current **(Standalone)**  | Yes          | Single archive or ROM file           |
 | atari800              | Atari 800                                      | Atari800                          |                                   | Yes          |                                      |
 | atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | IrataJaguar **(Standalone)**,<br>MAME4droid Current **(Standalone)** | Yes for MAME4droid Current | Single archive or ROM file           |
-| atarijaguarcd         | Atari Jaguar CD                                | _Placeholder_                     |                                   |              |                                      |
+| atarijaguarcd         | Atari Jaguar CD                                | Virtual Jaguar                    |                                   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section in the user guide |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Gearlynx,<br>Holani,<br>Lynx.emu **(Standalone)** | Yes for Gearlynx | Single archive or ROM file           |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            |                                   | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          |                                   | Yes          |                                      |
@@ -1030,11 +1042,11 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Craft (Minecraft),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War,<br>Starboard **(Standalone)**,<br>idTech4A++ **(Standalone)** | Yes for ECWolf |                                      |
 | ps2                   | Sony PlayStation 2                             | NetherSX2 **(Standalone)**        | NetherSX2-Turnip **(Standalone)**,<br>NetherSX2-Turnip Classic **(Standalone)**,<br>AetherSX2 **(Standalone)**,<br>ARMSX2 **(Standalone)**,<br>EmuCoreX **(Standalone)**,<br>Play! **(Standalone)**            | Yes except for Play! |                                      |
-| ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
+| ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)**,<br>ARMSX3 **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
 | psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           | EmuCoreV **(Standalone)**         | Yes          | See the specific _Sony PlayStation Vita_ section in the User guide |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>ePSXe **(Standalone)**,<br>FPseNG **(Standalone)**,<br>FPse **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>ARMSX1 **(Standalone)**,<br>ePSXe **(Standalone)**,<br>FPseNG **(Standalone)**,<br>FPse **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | pv1000                | Casio PV-1000                                  | MAME4droid Current **(Standalone)**  |                                   | No           | Single archive or ROM file           |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero],<br>idTech4A++ **(Standalone)** | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | Speccy **(Standalone)**           |                                   | No           | Single archive or ROM file           |
