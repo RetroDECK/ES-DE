@@ -183,8 +183,8 @@ void GuiRomMDownload::downloadSingleFileInBackground()
             break;
         }
         else {
-            const long downloaded {request.getDownloadedBytes()};
-            const long total {request.getTotalBytes()};
+            const int64_t downloaded {request.getDownloadedBytes()};
+            const int64_t total {request.getTotalBytes()};
             if (total > 0)
                 mPercentage = static_cast<int>((downloaded * 100) / total);
         }
@@ -260,7 +260,7 @@ void GuiRomMDownload::downloadMultiDiscInBackground(const RomMApiClient::Rom& ro
                 return;
             }
             else {
-                const long downloaded {request.getDownloadedBytes()};
+                const int64_t downloaded {request.getDownloadedBytes()};
                 if (totalBytes > 0) {
                     mPercentage =
                         static_cast<int>(((completedBytes + downloaded) * 100) / totalBytes);

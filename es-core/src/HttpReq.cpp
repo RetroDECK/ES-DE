@@ -340,9 +340,9 @@ int HttpReq::transferProgress(
     if (validEntry) {
         // Note that it's not guaranteed that the server will actually provide the total size.
         if (dltotal > 0)
-            static_cast<HttpReq*>(clientp)->mTotalBytes = static_cast<long>(dltotal);
+            static_cast<HttpReq*>(clientp)->mTotalBytes = static_cast<int64_t>(dltotal);
         if (dlnow > 0)
-            static_cast<HttpReq*>(clientp)->mDownloadedBytes = static_cast<long>(dlnow);
+            static_cast<HttpReq*>(clientp)->mDownloadedBytes = static_cast<int64_t>(dlnow);
     }
 
     requestLock.unlock();

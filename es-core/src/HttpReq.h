@@ -13,6 +13,7 @@
 #include <curl/curl.h>
 
 #include <atomic>
+#include <cstdint>
 #include <fstream>
 #include <map>
 #include <mutex>
@@ -59,8 +60,8 @@ public:
     // Returns the full response body. Not valid if constructed with a downloadFilePath. Valid
     // for REQ_SUCCESS and REQ_BAD_STATUS_CODE (the latter can still carry a useful body).
     std::string getContent() const;
-    long getTotalBytes() { return mTotalBytes; }
-    long getDownloadedBytes() { return mDownloadedBytes; }
+    int64_t getTotalBytes() { return mTotalBytes; }
+    int64_t getDownloadedBytes() { return mDownloadedBytes; }
     // The HTTP response status code, e.g. 200 or 401. Only meaningful once the request has
     // left the REQ_IN_PROGRESS state.
     long getHttpStatusCode() { return mHttpStatusCode; }
@@ -133,8 +134,8 @@ private:
     struct curl_slist* mHeaderList;
     std::string mErrorMsg;
     static inline std::atomic<bool> sStopPoll = false;
-    std::atomic<long> mTotalBytes;
-    std::atomic<long> mDownloadedBytes;
+    std::atomic<int64_t> mTotalBytes;
+    std::atomic<int64_t> mDownloadedBytes;
     std::atomic<long> mHttpStatusCode;
     bool mScraperRequest;
 };
