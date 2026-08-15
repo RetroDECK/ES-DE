@@ -230,7 +230,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     }
     else {
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
-            !(mSystem->isCollection() && file->getType() == FOLDER)) {
+            !(mSystem->isCollection() && file->getType() == FOLDER) && !file->getRomMRemote()) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>(_("EDIT THIS GAME'S METADATA"),
                                                            Font::get(FONT_SIZE_MEDIUM),
@@ -489,7 +489,7 @@ void GuiGamelistOptions::openMetaDataEd()
         if (isRomMGame) {
             RomMCache::CachedRom cachedRom;
             if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
-                                                        cachedRom)) {
+                                                       cachedRom)) {
                 const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
                 if (!rom.name.empty())
                     file->metadata.set("name", rom.name);

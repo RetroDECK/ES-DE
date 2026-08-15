@@ -804,7 +804,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         }
     }
     else {
-        if (mClearGameFunc && Utils::FileSystem::exists(scraperParams.game->getPath())) {
+        if (mClearGameFunc) {
             auto clearSelf = [&] {
                 mClearGameFunc();
                 delete this;
@@ -831,10 +831,10 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         // RomM-tracked directory, since ES-DE downloaded it and controls its contents.
         const bool isRomMGame {scraperParams.game->metadata.get("rommid") != ""};
 #if defined(__ANDROID__)
-        if (mDeleteGameFunc && Utils::FileSystem::exists(scraperParams.game->getPath()) &&
+        if (mDeleteGameFunc &&
             (isRomMGame || !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
 #else
-        if (mDeleteGameFunc && Utils::FileSystem::exists(scraperParams.game->getPath()) &&
+        if (mDeleteGameFunc &&
             (isRomMGame || Utils::FileSystem::isSymlink(scraperParams.game->getPath()) ||
              !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
 #endif
