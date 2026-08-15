@@ -178,6 +178,9 @@ void Settings::setDefaults()
     // (rommremote == "true"), rather than scraping/searching for placeholder games the user
     // may never actually download.
     mBoolMap["RomMScrapeDownloadedOnly"] = {true, true};
+    // Whether the multi-scraper should skip writing the "name" field for any game linked to
+    // RomM, so a RomM-provided name is never overwritten by the general scraper name settings.
+    mBoolMap["RomMAvoidScrapingNames"] = {true, true};
     // Whether to sort downloaded games above not-yet-downloaded (remote) RomM entries,
     // independently of the FavoritesFirst setting.
     mBoolMap["RomMDownloadedFirst"] = {true, true};

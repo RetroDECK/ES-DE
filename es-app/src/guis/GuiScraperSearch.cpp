@@ -1163,6 +1163,10 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
         if (key == "name" && !Settings::getInstance()->getBool("ScrapeGameNames"))
             continue;
 
+        if (key == "name" && !scrapedGame->metadata.get("rommid").empty() &&
+            Settings::getInstance()->getBool("RomMAvoidScrapingNames"))
+            continue;
+
         // Skip elements that are empty.
         if (result.mdl.get(key) == "")
             continue;

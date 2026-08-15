@@ -142,19 +142,6 @@ void GuiMenu::openRomMOptions()
     loginRow.makeAcceptInputHandler([this] { openRomMLoginOptions(); });
     s->addRow(loginRow);
 
-    auto rommScrapeDownloadedOnly = std::make_shared<SwitchComponent>();
-    rommScrapeDownloadedOnly->setState(
-        Settings::getInstance()->getBool("RomMScrapeDownloadedOnly"));
-    s->addWithLabel(_("ONLY SCRAPE DOWNLOADED GAMES"), rommScrapeDownloadedOnly);
-    s->addSaveFunc([rommScrapeDownloadedOnly, s] {
-        if (rommScrapeDownloadedOnly->getState() !=
-            Settings::getInstance()->getBool("RomMScrapeDownloadedOnly")) {
-            Settings::getInstance()->setBool("RomMScrapeDownloadedOnly",
-                                             rommScrapeDownloadedOnly->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     auto rommDownloadedFirst = std::make_shared<SwitchComponent>();
     rommDownloadedFirst->setState(Settings::getInstance()->getBool("RomMDownloadedFirst"));
     s->addWithLabel(_("SORT DOWNLOADED GAMES ABOVE NON-DOWNLOADED"), rommDownloadedFirst);
@@ -182,6 +169,14 @@ void GuiMenu::openRomMOptions()
         }
     });
 
+    ComponentListRow scrapeRow;
+    scrapeRow.addElement(std::make_shared<TextComponent>(
+                             _("SCRAPE SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                         true);
+    scrapeRow.addElement(mMenu.makeArrow(), false);
+    scrapeRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMScrapeOptions, this));
+    s->addRow(scrapeRow);
+
     ComponentListRow syncRow;
     syncRow.addElement(std::make_shared<TextComponent>(
                            _("SYNC SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
@@ -206,6 +201,38 @@ void GuiMenu::openRomMLoginOptions()
             GuiMenu::close(true);
             ViewController::getInstance()->rescanROMDirectory();
         });
+}
+
+void GuiMenu::openRomMScrapeOptions()
+{
+    auto s = new GuiSettings(_("SCRAPE SETTINGS"));
+
+    auto rommScrapeDownloadedOnly = std::make_shared<SwitchComponent>();
+    rommScrapeDownloadedOnly->setState(
+        Settings::getInstance()->getBool("RomMScrapeDownloadedOnly"));
+    s->addWithLabel(_("ONLY SCRAPE DOWNLOADED GAMES"), rommScrapeDownloadedOnly);
+    s->addSaveFunc([rommScrapeDownloadedOnly, s] {
+        if (rommScrapeDownloadedOnly->getState() !=
+            Settings::getInstance()->getBool("RomMScrapeDownloadedOnly")) {
+            Settings::getInstance()->setBool("RomMScrapeDownloadedOnly",
+                                             rommScrapeDownloadedOnly->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    auto rommAvoidScrapingNames = std::make_shared<SwitchComponent>();
+    rommAvoidScrapingNames->setState(Settings::getInstance()->getBool("RomMAvoidScrapingNames"));
+    s->addWithLabel(_("AVOID SCRAPING NAMES"), rommAvoidScrapingNames);
+    s->addSaveFunc([rommAvoidScrapingNames, s] {
+        if (rommAvoidScrapingNames->getState() !=
+            Settings::getInstance()->getBool("RomMAvoidScrapingNames")) {
+            Settings::getInstance()->setBool("RomMAvoidScrapingNames",
+                                             rommAvoidScrapingNames->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    mWindow->pushGui(s);
 }
 
 void GuiMenu::openRomMSyncOptions()

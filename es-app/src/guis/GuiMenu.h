@@ -38,6 +38,7 @@ private:
     void openScraperOptions();
     void openRomMOptions();
     void openRomMLoginOptions();
+    void openRomMScrapeOptions();
     void openRomMSyncOptions();
     void openUIOptions();
     void openThemeDownloader(GuiSettings* settings);
