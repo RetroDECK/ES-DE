@@ -420,15 +420,14 @@ void GuiGamelistOptions::openMetaDataEd()
     std::function<void()> clearGameBtnFunc;
     std::function<void()> deleteGameBtnFunc;
 
-    // For a RomM-tracked game, keep the name and RomM's own bookkeeping fields untouched -
-    // resetting those would rename the entry away from what the server calls it and sever
-    // its RomM link, breaking future syncs.
+    // For a RomM-tracked game, keep rommid/rommremote untouched - they identify the RomM link
+    // and its download state, and clearing them would break future syncs.
     auto resetMetadataFunc = [file] {
         const std::vector<MetaDataDecl>& mdd {file->metadata.getMDD()};
         const bool isRomMGame {file->metadata.get("rommid") != ""};
         for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
             if (isRomMGame) {
-                if (it->key == "name" || it->key == "rommid" || it->key == "rommremote")
+                if (it->key == "rommid" || it->key == "rommremote")
                     continue;
             }
             if (it->key == "name") {
@@ -482,7 +481,27 @@ void GuiGamelistOptions::openMetaDataEd()
         }
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
 
+        const bool isRomMGame {file->metadata.get("rommid") != ""};
+        const bool wasFavorite {isRomMGame && file->metadata.get("favorite") == "true"};
+
         resetMetadataFunc();
+
+        if (isRomMGame) {
+            RomMCache::CachedRom cachedRom;
+            if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
+                                                        cachedRom)) {
+                const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
+                if (!rom.name.empty())
+                    file->metadata.set("name", rom.name);
+                if (!rom.summary.empty())
+                    file->metadata.set("desc", rom.summary);
+                RomMUtils::applyRomMData(file, rom);
+            }
+
+            // applyRomMData() derives favorite from RomMLocalFavorites, which is only kept in
+            // sync for remote (not yet downloaded) entries - restore the pre-clear value instead.
+            file->metadata.set("favorite", wasFavorite ? "true" : "false");
+        }
 
         // Update all collections where the game is present.
         if (file->getType() == GAME)
@@ -546,6 +565,8 @@ void GuiGamelistOptions::openMetaDataEd()
             if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
                                                        cachedRom)) {
                 const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
+                if (!rom.name.empty())
+                    file->metadata.set("name", rom.name);
                 if (!rom.summary.empty())
                     file->metadata.set("desc", rom.summary);
                 RomMUtils::applyRomMData(file, rom);
