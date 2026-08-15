@@ -80,6 +80,17 @@ bool RomMCache::findCachedRom(int rommId, CachedRom& cachedOut) const
     return false;
 }
 
+int RomMCache::findPlatformIdForRom(int rommId) const
+{
+    for (const auto& [rommPlatformId, entry] : mPlatforms) {
+        for (const auto& rom : entry.roms) {
+            if (rom.id == rommId)
+                return rommPlatformId;
+        }
+    }
+    return -1;
+}
+
 void RomMCache::setPlatform(int rommPlatformId,
                             const std::string& cursor,
                             const std::vector<CachedRom>& roms)

@@ -491,8 +491,9 @@ void GuiGamelistOptions::openMetaDataEd()
             if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
                                                        cachedRom)) {
                 const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
-                if (!rom.name.empty())
-                    file->metadata.set("name", rom.name);
+                const std::string displayName {RomMLibrarySync::computeDisplayName(rom.id)};
+                if (!displayName.empty())
+                    file->metadata.set("name", displayName);
                 if (!rom.summary.empty())
                     file->metadata.set("desc", rom.summary);
                 RomMUtils::applyRomMData(file, rom);
@@ -565,8 +566,9 @@ void GuiGamelistOptions::openMetaDataEd()
             if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
                                                        cachedRom)) {
                 const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
-                if (!rom.name.empty())
-                    file->metadata.set("name", rom.name);
+                const std::string displayName {RomMLibrarySync::computeDisplayName(rom.id)};
+                if (!displayName.empty())
+                    file->metadata.set("name", displayName);
                 if (!rom.summary.empty())
                     file->metadata.set("desc", rom.summary);
                 RomMUtils::applyRomMData(file, rom);

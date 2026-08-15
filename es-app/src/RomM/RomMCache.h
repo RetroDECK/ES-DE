@@ -73,6 +73,9 @@ public:
     // untouched) if not found in any cached platform. Read-only, so it's safe to call from the
     // main thread under the same invariant as findCachedSize() above.
     bool findCachedRom(int rommId, CachedRom& cachedOut) const;
+    // Scans every cached platform for a rom with this id. Returns -1 if not found in any
+    // cached platform. Same thread-safety as findCachedRom() above.
+    int findPlatformIdForRom(int rommId) const;
     // In-memory only - call flush() to persist. Overwrites any prior entry for this platform.
     void setPlatform(int rommPlatformId,
                      const std::string& cursor,

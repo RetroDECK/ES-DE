@@ -119,6 +119,21 @@ void RomMLibrarySync::reregisterRemoteMedia(int rommId)
     registerRemoteMedia(RomMCache::toApiRom(cachedRom), RomMUtils::getServerUrl());
 }
 
+std::string RomMLibrarySync::computeDisplayName(int rommId)
+{
+    const int platformId {RomMCache::getInstance().findPlatformIdForRom(rommId)};
+    if (platformId < 0)
+        return "";
+
+    std::vector<RomMApiClient::Rom> roms;
+    for (const auto& cachedRom : RomMCache::getInstance().getRoms(platformId))
+        roms.emplace_back(RomMCache::toApiRom(cachedRom));
+
+    const std::unordered_map<int, std::string> displayNames {buildDisplayNames(roms)};
+    const auto it {displayNames.find(rommId)};
+    return it == displayNames.cend() ? "" : it->second;
+}
+
 RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
     : mDoneSyncing {false}
     , mSystemsAdded {0}

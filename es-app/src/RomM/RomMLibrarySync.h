@@ -13,6 +13,7 @@
 
 #include <atomic>
 #include <memory>
+#include <string>
 #include <thread>
 #include <vector>
 
@@ -54,6 +55,11 @@ public:
     // the next full sync. No-op if rommId isn't in the cache (e.g. it's since been removed from
     // RomM entirely).
     static void reregisterRemoteMedia(int rommId);
+
+    // Replays buildDisplayNames() over rommId's cached platform siblings to reconstruct the
+    // disambiguated name (region/revision/language tag, or a numeric suffix for ties) it would
+    // have had at sync time. Returns "" if rommId isn't cached.
+    static std::string computeDisplayName(int rommId);
 
     // Spawns the background fetch thread. Activating newly-matched systems is handled by
     // SystemData::loadConfig() itself, already run by the time any caller constructs this class.
