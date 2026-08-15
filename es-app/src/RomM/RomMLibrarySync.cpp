@@ -438,17 +438,31 @@ void RomMLibrarySync::applyResults()
                 ViewController::getInstance()->getGamelistView(system)->remove(existing, false);
             }
 
-            // New (or renamed) remote-only entry. The synthetic path is exactly where the file
-            // will land once downloaded, using the same name the user sees in the list - so no
-            // other code needs to change once that happens.
-            //
-            // A rom the user already owns as a plain local file (not tracked via rommid, so
-            // byRommId above missed it) would collide here on filename - mChildrenByFilename is
-            // keyed by FileData::getKey(), just the filename for plain FileData (see FileData.h).
-            // Skip rather than risk mislinking by name alone - addChild() below would otherwise
-            // silently no-op on the collision and leak the newly constructed object.
             const std::string desiredFileName {Utils::FileSystem::getFileName(desiredPath)};
             const auto& childrenByFilename = rootFolder->getChildrenByFilename();
+
+            // Requiring the existing entry's directory-ness to match isMultiDisc means a bare
+            // file can never be linked against a multi-file rom even if has_multiple_files
+            // under-reports it (see the comment above) - GuiRomMDownload always wraps a
+            // multi-file rom's discs in a "<title>.m3u" directory, never a bare file.
+            const std::string linkCandidateName {isMultiDisc ? desiredFileName :
+                                                               sanitizeForFileName(rom.fsName)};
+            const auto filenameIt {childrenByFilename.find(linkCandidateName)};
+            if (filenameIt != childrenByFilename.cend() &&
+                Utils::FileSystem::isDirectory(filenameIt->second->getPath()) == isMultiDisc) {
+                FileData* existingLocal {filenameIt->second};
+                if (!existingLocal->metadata.get("rommid").empty()) {
+                    LOG(LogWarning)
+                        << "RomM sync: Skipping rom \"" << displayName << "\" for system \""
+                        << system->getName() << "\" as the name \"" << linkCandidateName
+                        << "\" is already linked to a different RomM rom";
+                    continue;
+                }
+                existingLocal->metadata.set("rommid", std::to_string(rom.id));
+                RomMUtils::mergeLastPlayed(existingLocal, rom.lastPlayed);
+                continue;
+            }
+
             if (childrenByFilename.find(desiredFileName) != childrenByFilename.cend()) {
                 LOG(LogWarning) << "RomM sync: Skipping rom \"" << displayName << "\" for system \""
                                 << system->getName() << "\" as the filename \"" << desiredFileName
