@@ -10,6 +10,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "utils/StringUtil.h"
+#include <cstring>
 
 #if defined(RETRODECK)
 #include <algorithm>
