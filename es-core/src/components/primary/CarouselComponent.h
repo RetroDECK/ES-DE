@@ -162,6 +162,8 @@ private:
     glm::vec2 mSelectedItemOffset;
     glm::vec2 mItemSize;
     float mItemScale;
+    glm::vec2 mItemLinearScale;
+    glm::vec2 mItemLinearSpacing;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
     bool mItemAxisHorizontal;
@@ -241,6 +243,8 @@ CarouselComponent<T>::CarouselComponent()
     , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
                             Renderer::getScreenHeight() * 0.155f}}
     , mItemScale {1.2f}
+    , mItemLinearScale {0.0f, 0.0f}
+    , mItemLinearSpacing {0.0f, 0.0f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
     , mItemAxisHorizontal {false}
@@ -910,12 +914,33 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         if (mItemScale >= 1.0f) {
             scale = 1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)));
             scale = std::min(mItemScale, std::max(1.0f, scale));
+
+            if (mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
+                // Calculate linear item scaling, if applicable.
+                if (mItemLinearScale.x != 0.0f && distance < 0)
+                    scale -= distance * mItemLinearScale.x;
+
+                if (mItemLinearScale.y != 0.0f && distance > 0)
+                    scale -= -distance * mItemLinearScale.y;
+            }
+
             scale /= mItemScale;
         }
         else {
             scale = 1.0f + ((1.0f - mItemScale) * (fabsf(distance) - 1.0f));
             scale = std::max(mItemScale, std::min(1.0f, scale));
+
+            if (mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
+                if (mItemLinearScale.x != 0.0f && distance < 0)
+                    scale -= distance * mItemLinearScale.x;
+
+                if (mItemLinearScale.y != 0.0f && distance > 0)
+                    scale -= -distance * mItemLinearScale.y;
+            }
         }
+
+        if (scale < 0.0f)
+            scale = 0.0f;
 
         glm::vec2 selectedItemMargins {0.0f, 0.0f};
 
@@ -947,15 +972,45 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         }
 
         glm::mat4 itemTrans {carouselTrans};
-        if (singleEntry)
+
+        if (singleEntry) {
             itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff + itemHorizontalOffset,
                                                                  yOff + itemVerticalOffset, 0.0f});
-        else
+        }
+        else {
+            // Calculate linear item spacing, if applicable.
+            float linearSpacingOffsetX {0.0f};
+            float linearSpacingOffsetY {0.0f};
+
+            if (mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
+                if (mItemLinearSpacing.x != 0.0f || mItemLinearSpacing.y != 0.0f) {
+                    const float absDistance {std::abs(distance)};
+
+                    if (absDistance > 0.0f) {
+                        const float direction {(distance > 0.0f) ? 1.0f : -1.0f};
+                        const bool isIncreasing {(distance > 0.0f) ? mItemLinearSpacing.y > 0.0f :
+                                                                     mItemLinearSpacing.x > 0.0f};
+                        const float scale {(distance > 0.0f) ? std::fabs(mItemLinearSpacing.y) :
+                                                               std::fabs(mItemLinearSpacing.x)};
+                        const float multiplier {isIncreasing ?
+                                                    (absDistance * (absDistance + 1.0f) * 0.5f) :
+                                                    -(absDistance * absDistance)};
+
+                        if (mType == CarouselType::HORIZONTAL)
+                            linearSpacingOffsetX = direction * multiplier * (itemSpacing.x * scale);
+                        else
+                            linearSpacingOffsetY = direction * multiplier * (itemSpacing.y * scale);
+                    }
+                }
+            }
+
             itemTrans = glm::translate(
-                itemTrans,
-                glm::vec3 {
-                    (i * itemSpacing.x) + xOff + itemHorizontalOffset + selectedItemMargins.x,
-                    (i * itemSpacing.y) + yOff + itemVerticalOffset + selectedItemMargins.y, 0.0f});
+                itemTrans, glm::vec3 {(i * itemSpacing.x) + xOff + linearSpacingOffsetX +
+                                          itemHorizontalOffset + selectedItemMargins.x,
+                                      (i * itemSpacing.y) + yOff + linearSpacingOffsetY +
+                                          itemVerticalOffset + selectedItemMargins.y,
+                                      0.0f});
+        }
 
         if (mType == CarouselType::HORIZONTAL_WHEEL)
             itemTrans = glm::rotate(itemTrans, glm::radians(-90.0f), glm::vec3 {0.0f, 0.0f, 1.0f});
@@ -1422,6 +1477,12 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
         mItemSize = itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     }
+
+    if (elem->has("itemLinearScale"))
+        mItemLinearScale = glm::clamp(elem->get<glm::vec2>("itemLinearScale"), -0.5f, 1.0f);
+
+    if (elem->has("itemLinearSpacing"))
+        mItemLinearSpacing = glm::clamp(elem->get<glm::vec2>("itemLinearSpacing"), -0.5f, 1.0f);
 
     if (elem->has("itemStacking")) {
         const std::string& itemStacking {elem->get<std::string>("itemStacking")};

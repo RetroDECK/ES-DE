@@ -14,7 +14,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>عرض الألعاب التي لعبتها مؤخراً عبر المكتبة بأكملها.</systemDescription>
-            <systemHardwareType>المجموعة</systemHardwareType>
+            <systemHardwareType>مجموعة</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -55,7 +55,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Visualizzare i giochi giocati di recente nell'intera libreria.</systemDescription>
+            <systemDescription>Visualizza i giochi giocati di recente, di tutta la libreria.</systemDescription>
             <systemHardwareType>Collezione</systemHardwareType>
         </variables>
     </language>
@@ -117,6 +117,12 @@
         <variables>
             <systemDescription>Visa dina senast spelade spel i hela biblioteket.</systemDescription>
             <systemHardwareType>Samling</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Xem các trò chơi bạn đã chơi gần đây trong toàn bộ thư viện.</systemDescription>
+            <systemHardwareType>Bộ sưu tập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

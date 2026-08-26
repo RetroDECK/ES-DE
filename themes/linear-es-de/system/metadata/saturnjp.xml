@@ -23,7 +23,7 @@ Development of the Saturn began in 1992, the same year Sega's groundbreaking 3D 
             <systemDescription>سيجا ساتورن هو جهاز ألعاب فيديو منزلي تم تطويره من قبل شركة سيجا وتم إصداره في 22 نوفمبر 1994 في اليابان، و11 مايو 1995 في أمريكا الشمالية، و8 يوليو 1995 في أوروبا. كان جزءًا من الجيل الخامس من أجهزة ألعاب الفيديو، وكان خليفة جهاز Sega Genesis الناجح. يحتوي Saturn على بنية وحدة معالجة مركزية مزدوجة وثمانية معالجات. وألعابه في شكل أقراص مدمجة CD-ROM، وتحتوي مكتبة الألعاب الخاصة به على العديد من منافذ ألعاب الأركيد بالإضافة إلى ألعاب أصلية.
 
 بدأ تطوير ساتورن في عام 1992، وهو نفس العام الذي ظهر فيه جهاز الآركيد ثلاثي الأبعاد من طراز 1 الرائد من سيجا. تم تصميم Saturn حول وحدة معالجة مركزية جديدة من شركة الإلكترونيات اليابانية Hitachi. أضافت سيجا معالج عرض فيديو آخر في أوائل عام 1994 لمنافسة جهاز PlayStation القادم من سوني بشكل أفضل.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,9 +76,9 @@ Development of the Saturn began in 1992, the same year Sega's groundbreaking 3D 
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Sega Saturn è una console per videogiochi domestica sviluppata da Sega e rilasciata il 22 novembre 1994 in Giappone, l'11 maggio 1995 in Nord America e l'8 luglio 1995 in Europa. Appartenente alla quinta generazione di console per videogiochi, è il successore della fortunata Sega Genesis. Il Saturn ha un'architettura dual-CPU e otto processori. I suoi giochi sono in formato CD-ROM e la sua libreria di giochi contiene diversi porting di giochi arcade e giochi originali.
+            <systemDescription>Il Sega Saturn è una console per videogiochi sviluppata da Sega e rilasciata il 22 novembre 1994 in Giappone, l'11 maggio 1995 in Nord America e l'8 luglio 1995 in Europa. Appartenente alla quinta generazione di console per videogiochi, è il successore del fortunato Sega Genesis (o Sega MegaDrive). Il Saturn ha un'architettura dual-CPU ed otto processori. I suoi giochi sono in formato CD-ROM e la sua libreria di giochi contiene diversi porting di giochi arcade e giochi originali.
 
-Lo sviluppo del Saturn iniziò nel 1992, lo stesso anno in cui debuttò l'innovativo hardware arcade 3D Model 1 di Sega. Il Saturn fu progettato con una nuova CPU dell'azienda elettronica giapponese Hitachi. All'inizio del 1994 Sega aggiunse un altro processore di visualizzazione video per competere meglio con l'imminente PlayStation di Sony.</systemDescription>
+Lo sviluppo del Saturn iniziò nel 1992, lo stesso anno in cui debuttò l'innovativo hardware arcade 3D "Model 1" di Sega. Il Saturn fu progettato con una nuova CPU dell'azienda elettronica giapponese Hitachi. All'inizio del 1994 Sega aggiunse un altro processore di visualizzazione video per competere meglio con l'imminente PlayStation di Sony.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ Development of the Saturn began in 1992, the same year Sega's groundbreaking 3D 
 
 Utvecklingen av Saturn började 1992, samma år som Segas banbrytande arkadmaskin 3D Model 1 lanserades. Saturn konstruerades kring en ny CPU från det japanska elektronikföretaget Hitachi. Sega lade till ytterligare en videoskärmsprocessor i början av 1994 för att bättre kunna konkurrera med Sonys kommande PlayStation.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega Saturn là một hệ máy chơi game gia đình do Sega phát triển và ra mắt vào ngày 22 tháng 11 năm 1994 tại Nhật Bản, ngày 11 tháng 5 năm 1995 tại Bắc Mỹ và ngày 8 tháng 7 năm 1995 tại châu Âu. Là một phần của thế hệ thứ năm các hệ máy chơi game, nó là phiên bản kế nhiệm của Sega Genesis – một sản phẩm từng gặt hái nhiều thành công. Sega Saturn sở hữu kiến trúc CPU kép và tám bộ xử lý. Các trò chơi của nó được phát hành dưới định dạng CD-ROM, và thư viện trò chơi của nó bao gồm nhiều phiên bản chuyển thể từ các trò chơi arcade cũng như các trò chơi gốc.
+
+Quá trình phát triển Saturn bắt đầu vào năm 1992, cùng năm mà phần cứng arcade 3D Model 1 đột phá của Sega ra mắt. Saturn được thiết kế dựa trên một CPU mới của công ty điện tử Nhật Bản Hitachi. Vào đầu năm 1994, Sega đã bổ sung thêm một bộ xử lý hiển thị video để cạnh tranh tốt hơn với PlayStation sắp ra mắt của Sony.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

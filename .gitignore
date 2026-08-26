@@ -134,3 +134,6 @@ net.retrodeck.es-de.yml.bak
 net.retrodeck.es-de.appdata.xml.bak
 ./RetroDECK
 RetroDECK-Artifact-cooker.sha
+
+# Cache
+.cache/

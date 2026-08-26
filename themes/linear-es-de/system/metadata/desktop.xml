@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>عرض اختصارات سطح المكتب وتشغيلها</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Visualizzare ed eseguire i collegamenti al desktop</systemDescription>
+            <systemDescription>Visualizza ed esegui i collegamenti presenti sul desktop</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Visa och kör dina genvägar på skrivbordet</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Xem và chạy các phím tắt trên màn hình Desktop</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

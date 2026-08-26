@@ -19,6 +19,7 @@
 #include "renderers/Renderer.h"
 #include "utils/StringUtil.h"
 
+#include <memory>
 #include <vector>
 
 class GamelistView;
@@ -61,6 +62,13 @@ public:
 
     // Rescan the ROM directory for any changes to games and systems.
     void rescanROMDirectory();
+
+    // Runs a RomM library sync synchronously with Window::SplashScreenState::SYNCING, blocking
+    // input for the duration; results are logged rather than shown in a message box.
+    // forceFullResync is forwarded to RomMLibrarySync - see its constructor for details.
+    // rescanFirst can be false to skip the redundant rescanROMDirectory() call right after
+    // startup's own initial system load.
+    void runRomMSyncWithSplashScreen(bool forceFullResync = false, bool rescanFirst = true);
 
     // Navigation.
     void goToNextGamelist();
@@ -149,6 +157,7 @@ public:
     static inline const std::string CONTROLLER_CHAR {Utils::String::wideStringToString(L"\uf11b")};
     static inline const std::string CROSSEDCIRCLE_CHAR {
         Utils::String::wideStringToString(L"\uf05e")};
+    static inline const std::string DOWNLOAD_CHAR {Utils::String::wideStringToString(L"\uf0ed")};
     static inline const std::string EXCLAMATION_CHAR {Utils::String::wideStringToString(L"\uf06a")};
     static inline const std::string FAVORITE_CHAR {Utils::String::wideStringToString(L"\uf005")};
     static inline const std::string FILTER_CHAR {Utils::String::wideStringToString(L"\uf0b0")};
@@ -163,6 +172,7 @@ public:
     static inline const std::string BRANCH_CHAR {"\uf18c"};
     static inline const std::string CONTROLLER_CHAR {"\uf11b"};
     static inline const std::string CROSSEDCIRCLE_CHAR {"\uf05e"};
+    static inline const std::string DOWNLOAD_CHAR {"\uf0ed"};
     static inline const std::string EXCLAMATION_CHAR {"\uf06a"};
     static inline const std::string FAVORITE_CHAR {"\uf005"};
     static inline const std::string FILTER_CHAR {"\uf0b0"};

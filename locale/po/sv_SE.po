@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-09 22:50+0200\n"
+"POT-Creation-Date: 2026-08-07 10:36+0200\n"
+"PO-Revision-Date: 2026-08-07 10:37+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Svenska <info@es-de.org>\n"
 "Language: sv_SE\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Network error (status:"
@@ -610,6 +610,9 @@ msgstr "ARBETAR..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "KUNDE INTE HITTA NÅGOT ATT IMPORTERA"
 
+msgid "import"
+msgstr "importera"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -628,15 +631,6 @@ msgstr "GÖR DINA VAL"
 msgid "IMPORT"
 msgstr "IMPORTERA"
 
-msgid "import"
-msgstr "importera"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "IMPORTERADE %i POST"
-msgstr[1] "IMPORTERADE %i POSTER"
-
 msgid "SELECT ALL"
 msgstr "VÄLJ ALLA"
 
@@ -648,6 +642,12 @@ msgstr "VÄLJ INGA"
 
 msgid "select none"
 msgstr "välj inga"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "IMPORTERADE %i POST"
+msgstr[1] "IMPORTERADE %i POSTER"
 
 msgid "FILTER GAMELIST"
 msgstr "FILTRERA SPELLISTA"
@@ -1106,6 +1106,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "FORTSÄTT"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "STARTA PÅ DEN ANDRA SKÄRMEN"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "KATALOG FÖR SPELMEDIA"
 
@@ -1215,14 +1218,14 @@ msgstr "VISA DOLDA FILER OCH KATALOGER"
 msgid "SHOW HIDDEN GAMES"
 msgstr "VISA DOLDA SPEL"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "STARTA SPEL PÅ DEN ANDRA SKÄRMEN"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "AKTIVERA ANPASSADE HÄNDELSESKRIPT"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "ANPASSAD HÄNDELSE VID BLÄDDRING"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "KÖR BLÄDDRINGS-HÄNDELSER SOM ICKE-BLOCKERANDE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "VISA BARA SPEL FRÅN GAMELIST.XML-FILERNA"
@@ -1323,11 +1326,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "INSTÄLLNINGAR SKÄRMSLÄCKARE"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "AKTIVERA START PÅ ANDRA SKÄRMEN"
+
 msgid "choose"
 msgstr "navigera"
 
 msgid "close menu"
 msgstr "stäng menyn"
+
+msgid "System default (Other)"
+msgstr "Standard för system (Den andra)"
+
+msgid "System default (Primary)"
+msgstr "Standard för system (Den primära)"
+
+msgid "Always on other"
+msgstr "Alltid på den andra"
+
+msgid "Always on primary"
+msgstr "Alltid på den primära"
 
 msgid "EDIT METADATA"
 msgstr "REDIGERA METADATA"
@@ -2493,6 +2511,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "VÄLJ ALTERNATIV EMULATOR"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "STARTA PÅ SKÄRM"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "STARTA PÅ VILKEN SKÄRM"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "MAPPLÄNK"
 
@@ -2742,8 +2768,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "RENSA (LÄMNA TOMT FÖR STANDARDSÖKVÄG)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2787,14 +2813,14 @@ msgstr "UPPDATERA"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "APPLIKATIONSUPPDATERAREN KOMMER HÄMTA NER DEN SENASTE PORTABLA WINDOWS-"
-"VERSIONEN ÅT DIG, MEN DU MÅSTE MANUELLT GENOMFÖRA UPPGRADERINGEN. SE README."
-"TXT FILEN I DEN HÄMTADE ZIP-FILEN FÖR INSTRUKTIONER OM HUR DETTA GÅR "
+"VERSIONEN ÅT DIG, MEN DU MÅSTE MANUELLT GENOMFÖRA UPPGRADERINGEN. SE "
+"README.TXT FILEN I DEN HÄMTADE ZIP-FILEN FÖR INSTRUKTIONER OM HUR DETTA GÅR "
 "TILLVÄGA. SOM ÄVEN BESKRIVS I DETTA DOKUMENT SÅ SKA DU ALDRIG PACKA UPP DEN "
 "NYA UTGÅVAN OVANPÅ DEN GAMLA DÅ DETTA KAN FÖRSTÖRA APPLIKATIONEN."
 

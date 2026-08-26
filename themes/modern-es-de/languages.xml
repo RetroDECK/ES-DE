@@ -34,6 +34,18 @@
             <langUnknown>Desconegut</langUnknown>
         </variables>
     </language>
+    <language name="cs_CZ">
+        <variables>
+            <langLabelRating>Hodnocení</langLabelRating>
+            <langLabelReleasedate>Datum vydání</langLabelReleasedate>
+            <langLabelPlayers>Hráči</langLabelPlayers>
+            <langLabelGenre>Žánr</langLabelGenre>
+            <langLabelPlayTime>Doba hraní</langLabelPlayTime>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Vydavatel</langLabelPublisher>
+            <langUnknown>Neznámý</langUnknown>
+        </variables>
+    </language>
     <language name="de_DE">
         <variables>
             <langLabelRating>Bewertung</langLabelRating>

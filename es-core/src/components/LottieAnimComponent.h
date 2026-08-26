@@ -90,6 +90,7 @@ private:
     int mPlayCount;
     bool mTargetIsMax;
 
+    float mScaleFactor;
     float mCornerRadius;
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;

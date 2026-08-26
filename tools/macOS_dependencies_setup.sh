@@ -24,30 +24,30 @@ mkdir local_install
 echo
 echo "Setting up libiconv"
 rm -rf libiconv*
-curl -LO https://ftpmirror.gnu.org/libiconv/libiconv-1.18.tar.gz
-tar xvzf libiconv-1.18.tar.gz
+curl -LO https://ftpmirror.gnu.org/libiconv/libiconv-1.19.tar.gz
+tar xvzf libiconv-1.19.tar.gz
 
-if [ ! -d libiconv-1.18 ]; then
+if [ ! -d libiconv-1.19 ]; then
   echo "libiconv directory is missing, aborting."
   exit
 fi
 
-mv libiconv-1.18 libiconv
-rm libiconv-1.18.tar.gz
+mv libiconv-1.19 libiconv
+rm libiconv-1.19.tar.gz
 
 echo
 echo "Setting up gettext"
 rm -rf gettext*
-curl -LO https://ftpmirror.gnu.org/gettext/gettext-0.24.tar.gz
-tar xvzf gettext-0.24.tar.gz
+curl -LO https://ftpmirror.gnu.org/gettext/gettext-1.0.tar.gz
+tar xvzf gettext-1.0.tar.gz
 
-if [ ! -d gettext-0.24 ]; then
+if [ ! -d gettext-1.0 ]; then
   echo "gettext directory is missing, aborting."
   exit
 fi
 
-mv gettext-0.24 gettext
-rm gettext-0.24.tar.gz
+mv gettext-1.0 gettext
+rm gettext-1.0.tar.gz
 
 echo
 echo "Setting up ICU"
@@ -55,7 +55,7 @@ rm -rf icu
 git clone -n --filter=tree:0 https://github.com/unicode-org/icu.git
 cd icu
 git sparse-checkout set --no-cone icu4c
-git checkout release-77-1
+git checkout release-78.3
 cp ../../es-app/assets/icu_filters.json icu4c/source/
 cd ..
 
@@ -71,7 +71,7 @@ fi
 
 mv code libpng
 cd libpng
-git checkout v1.6.47
+git checkout v1.6.58
 cd ..
 
 echo
@@ -85,7 +85,7 @@ if [ ! -d harfbuzz ]; then
 fi
 
 cd harfbuzz
-git checkout 11.0.1
+git checkout 14.2.1
 mkdir build
 cd ..
 
@@ -100,7 +100,7 @@ if [ ! -d freetype ]; then
 fi
 
 cd freetype
-git checkout VER-2-13-3
+git checkout VER-2-14-3
 mkdir build
 cd ..
 
@@ -119,6 +119,20 @@ git checkout 2.16.1
 cd ..
 
 echo
+echo "Setting up zstd"
+rm -rf zstd
+git clone https://github.com/facebook/zstd.git
+
+if [ ! -d zstd]; then
+  echo "zstd directory is missing, aborting."
+  exit
+fi
+
+cd zstd
+git checkout v1.5.7
+cd ..
+
+echo
 echo "Setting up libjpeg-turbo"
 rm -rf libjpeg-turbo
 git clone https://github.com/libjpeg-turbo/libjpeg-turbo.git
@@ -129,7 +143,7 @@ if [ ! -d libjpeg-turbo ]; then
 fi
 
 cd libjpeg-turbo
-git checkout 3.1.0
+git checkout 3.1.4.1
 mkdir build
 cd ..
 
@@ -144,7 +158,7 @@ if [ ! -d libtiff ]; then
 fi
 
 cd libtiff
-git checkout v4.7.0
+git checkout v4.7.1
 cd ..
 
 echo
@@ -158,7 +172,7 @@ if [ ! -d openjpeg ]; then
 fi
 
 cd openjpeg
-git checkout v2.5.3
+git checkout v2.5.4
 mkdir build
 cd ..
 
@@ -173,7 +187,7 @@ if [ ! -d poppler ]; then
 fi
 
 cd poppler
-git checkout poppler-25.04.0
+git checkout poppler-26.06.0
 mkdir build
 cd ..
 
@@ -313,7 +327,7 @@ if [ ! -d libgit2 ]; then
 fi
 
 cd libgit2
-git checkout v1.9.1
+git checkout v1.9.4
 mkdir build
 cd ..
 
@@ -372,7 +386,7 @@ if [ ! -d dav1d ]; then
 fi
 
 cd dav1d
-git checkout 1.5.1
+git checkout 1.5.3
 cd ..
 
 echo
@@ -386,7 +400,7 @@ if [ ! -d FFmpeg ]; then
 fi
 
 cd FFmpeg
-git checkout n7.1
+git checkout n8.1.1
 
 echo
 echo "Done setting up all dependencies."

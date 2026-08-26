@@ -113,7 +113,8 @@ public:
                SystemEnvironmentData* envData,
                const std::string& themeFolder,
                bool CollectionSystem = false,
-               bool CustomCollectionSystem = false);
+               bool CustomCollectionSystem = false,
+               bool matchesRomMPlatform = false);
 
     ~SystemData();
 
@@ -149,6 +150,8 @@ public:
 
     const std::string& getAlternativeEmulator() const { return mAlternativeEmulator; }
     void setAlternativeEmulator(const std::string& command) { mAlternativeEmulator = command; }
+    const bool getLaunchOnOtherScreen() const { return mLaunchOnOtherScreen; }
+    void setLaunchOnOtherScreen(bool state) { mLaunchOnOtherScreen = state; }
     std::string getLaunchCommandFromLabel(const std::string& label);
 
     static void deleteSystems();
@@ -165,6 +168,18 @@ public:
     static inline std::unique_ptr<FindRules> sFindRules;
     static inline std::unique_ptr<ImportRules> sImportRules;
     static inline bool sStartupExitSignal {false};
+
+    // A bundled es_systems.xml entry whose ROM directory doesn't exist yet, so it was never
+    // turned into a live SystemData. Lets loadConfig() auto-activate it if its platform later
+    // matches something on the logged-in RomM server.
+    struct InactiveSystemTemplate {
+        std::string name;
+        std::string fullName;
+        std::string path;
+        // Raw, lowercased, comma-separated <platform> tag value.
+        std::string platform;
+    };
+    static inline std::vector<InactiveSystemTemplate> sInactiveSystemTemplates;
 
     const bool isCollection() const { return mIsCollectionSystem; }
     const bool isCustomCollection() const { return mIsCustomCollectionSystem; }
@@ -209,6 +224,7 @@ private:
     bool mIsGameSystem;
     bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
     bool mFlattenFolders;
+    bool mLaunchOnOtherScreen;
 
     bool populateFolder(FileData* folder);
     void indexAllGameFilters(const FileData* folder);

@@ -39,6 +39,9 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMLogin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.h
@@ -47,6 +50,16 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSystemStatusOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeDownloader.h
+
+    # RomM
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMCache.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthClient.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthFlow.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLocalFavorites.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMRemoteMediaLoader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMUtils.h
 
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.h
@@ -92,6 +105,9 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOrphanedDataCleanup.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMDownload.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMLogin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRomMPairing.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.cpp
@@ -100,6 +116,16 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSystemStatusOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeDownloader.cpp
+
+    # RomM
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMApiClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMCache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMDeviceAuthFlow.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLibrarySync.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMLocalFavorites.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMRemoteMediaLoader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/RomM/RomMUtils.cpp
 
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.cpp
@@ -159,26 +185,25 @@ if(WIN32)
     if(CMAKE_BUILD_TYPE MATCHES Debug)
         set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
     endif()
-    install(FILES ../avcodec-61.dll
-                  ../avfilter-10.dll
-                  ../avformat-61.dll
-                  ../avutil-59.dll
-                  ../postproc-58.dll
-                  ../swresample-5.dll
-                  ../swscale-8.dll
+    install(FILES ../avcodec-62.dll
+                  ../avfilter-11.dll
+                  ../avformat-62.dll
+                  ../avutil-60.dll
+                  ../swresample-6.dll
+                  ../swscale-9.dll
                   ../FreeImage.dll
                   ../freetype.dll
                   ../git2.dll
                   ../glew32.dll
                   ../harfbuzz.dll
-                  ../icudt77.dll
-                  ../icuin77.dll
-                  ../icuuc77.dll
-                  ../libcrypto-3-x64.dll
+                  ../icudt78.dll
+                  ../icuin78.dll
+                  ../icuuc78.dll
+                  ../libcrypto-4-x64.dll
                   ../libcurl-x64.dll
                   ../libiconv-2.dll
                   ../libintl-8.dll
-                  ../libssl-3-x64.dll
+                  ../libssl-4-x64.dll
                   ../lunasvg.dll
                   ../plutovg.dll
                   ../pugixml.dll
@@ -228,19 +253,17 @@ elseif(APPLE AND NOT IOS)
                                 GROUP_READ GROUP_EXECUTE
                                 WORLD_READ WORLD_EXECUTE)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.61.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.62.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.10.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.11.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.61.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.62.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.59.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.60.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.58.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.5.dylib
-        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.8.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.9.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libdav1d.7.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
@@ -252,11 +275,11 @@ elseif(APPLE AND NOT IOS)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libharfbuzz.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libicudata.77.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libicudata.78.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libicui18n.77.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libicui18n.78.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libicuuc.77.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libicuuc.78.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libintl.8.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
@@ -264,11 +287,13 @@ elseif(APPLE AND NOT IOS)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libopenjp2.7.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler-cpp.2.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler-cpp.3.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler.148.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler.161.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libtiff.6.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libzstd.1.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)

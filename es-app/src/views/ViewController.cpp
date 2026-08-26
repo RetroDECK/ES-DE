@@ -18,6 +18,8 @@
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
+#include "RomM/RomMCache.h"
+#include "RomM/RomMLibrarySync.h"
 #include "Scripting.h"
 #include "Settings.h"
 #include "Sound.h"
@@ -31,15 +33,41 @@
 #include "guis/GuiApplicationUpdater.h"
 #include "guis/GuiGameImporter.h"
 #include "guis/GuiMenu.h"
+#include "guis/GuiMsgBox.h"
+#include "guis/GuiRomMDownload.h"
+#include "guis/GuiRomMLogin.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/LocalizationUtil.h"
+#include "utils/StringUtil.h"
 #include "views/GamelistView.h"
 #include "views/SystemView.h"
 
 #if defined(__ANDROID__)
 #include "utils/PlatformUtilAndroid.h"
 #endif
+
+#include <algorithm>
+#include <cstdlib>
+
+namespace
+{
+    std::string formatByteSize(int64_t bytes)
+    {
+        constexpr double KiB {1024.0};
+        constexpr double MiB {KiB * 1024.0};
+        constexpr double GiB {MiB * 1024.0};
+
+        char buffer[32];
+        if (bytes >= static_cast<int64_t>(GiB))
+            snprintf(buffer, sizeof(buffer), "%.1f GiB", bytes / GiB);
+        else if (bytes >= static_cast<int64_t>(MiB))
+            snprintf(buffer, sizeof(buffer), "%.1f MiB", bytes / MiB);
+        else
+            snprintf(buffer, sizeof(buffer), "%.1f KiB", bytes / KiB);
+        return std::string {buffer};
+    }
+} // namespace
 
 ViewController::ViewController() noexcept
     : mRenderer {Renderer::getInstance()}
@@ -244,16 +272,18 @@ void ViewController::invalidSystemsFileDialog()
 void ViewController::noGamesDialog()
 {
 #if defined(__ANDROID__) || defined(__IOS__)
-    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR "
-                             "PLACE THEM MANUALLY IN THE CONFIGURED ROM DIRECTORY. "
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES, "
+                             "PLACE THEM MANUALLY IN THE CONFIGURED ROM DIRECTORY, "
+                             "OR LOG IN TO A ROMM SERVER TO DOWNLOAD GAMES REMOTELY. "
                              "OPTIONALLY YOU CAN GENERATE THE ROM DIRECTORY STRUCTURE "
                              "WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING "
                              "SOME INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. "
                              "THIS IS THE CONFIGURED ROM DIRECTORY:\n");
 #else
-    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR "
+    mNoGamesErrorMessage = _("NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES, "
                              "PLACE THEM MANUALLY IN THE CURRENTLY CONFIGURED ROM "
-                             "DIRECTORY. YOU CAN ALSO CHANGE THE ROM PATH AND "
+                             "DIRECTORY, OR LOG IN TO A ROMM SERVER TO DOWNLOAD GAMES "
+                             "REMOTELY. YOU CAN ALSO CHANGE THE ROM PATH AND "
                              "OPTIONALLY GENERATE THE ROM DIRECTORY STRUCTURE "
                              "WHICH WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING "
                              "SOME INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS. "
@@ -271,8 +301,21 @@ void ViewController::noGamesDialog()
         ViewController::getInstance()->rescanROMDirectory();
     };
 
-// Show IMPORT button and, on regular desktop builds, also a CHANGE button to edit the ROM path.
-// For RETRODECK we keep the IMPORT (to allow the importer) but do not show CHANGE.
+    // Show IMPORT button and, on regular desktop builds, also a CHANGE button to edit the ROM path.
+    // For RETRODECK we keep the IMPORT (to allow the importer) but do not show CHANGE.
+    auto rommLoginButtonFunc = [this] {
+        GuiRomMLogin::push(
+            mWindow, mMenuColorPrimary, mMenuColorRed,
+            [this](const std::string&) {
+                delete mNoGamesMessageBox;
+                ViewController::getInstance()->runRomMSyncWithSplashScreen();
+            },
+            [this] {
+                delete mNoGamesMessageBox;
+                ViewController::getInstance()->rescanROMDirectory();
+            });
+    };
+
 #if defined(__ANDROID__) || defined(__IOS__)
     mNoGamesMessageBox = new GuiMsgBox(
         mNoGamesErrorMessage + mRomDirectory, _("IMPORT"),
@@ -395,22 +438,40 @@ void ViewController::noGamesDialog()
                      0.78f :
                      0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
         },
-        _("QUIT"),
+#if defined(__ANDROID__) || defined(__IOS__)
+        _("ROMM"), rommLoginButtonFunc, _("QUIT"),
         [] {
             SDL_Event quit {};
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-#if defined(__ANDROID__) || defined(__IOS__)
-        "", nullptr, nullptr, true, false,
+        nullptr, true, false,
         (mRenderer->getIsVerticalOrientation() ?
              0.90f :
              0.58f * (1.778f / mRenderer->getScreenAspectRatio())));
-#else
-    "", nullptr, nullptr, true, false,
+#elif defined(RETRODECK)
+    // The ROMM button is kept since the RomM integration works within the fixed ROM path.
+    _("ROMM"), rommLoginButtonFunc, _("QUIT"),
+    [] {
+        SDL_Event quit {};
+        quit.type = SDL_QUIT;
+        SDL_PushEvent(&quit);
+    },
+    nullptr, true, false,
     (mRenderer->getIsVerticalOrientation() ?
          0.90f :
          0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
+#else
+    _("ROMM"), rommLoginButtonFunc, nullptr, true, false,
+    (mRenderer->getIsVerticalOrientation() ?
+         0.90f :
+         0.62f * (1.778f / mRenderer->getScreenAspectRatio())),
+    _("QUIT"),
+    [] {
+        SDL_Event quit {};
+        quit.type = SDL_QUIT;
+        SDL_PushEvent(&quit);
+    });
 #endif
 
     mWindow->pushGui(mNoGamesMessageBox);
@@ -1325,6 +1386,62 @@ bool ViewController::input(InputConfig* config, Input input)
     return false;
 }
 
+void ViewController::runRomMSyncWithSplashScreen(bool forceFullResync, bool rescanFirst)
+{
+    if (rescanFirst)
+        rescanROMDirectory();
+
+    mWindow->setBlockInput(true);
+
+    mWindow->setSyncingSplashText(forceFullResync ? _("Performing full RomM resync...") :
+                                                    _("Syncing RomM library..."));
+
+    RomMLibrarySync sync {forceFullResync};
+    sync.start();
+
+    SystemData* lastShownSystem {nullptr};
+    int lastShownProgress {-1};
+    SDL_Event event {};
+    while (!sync.isDone()) {
+        // Matches preload()'s convention: keeps the OS from flagging the app as hung, and lets
+        // SDL_QUIT still get through.
+        while (SDL_PollEvent(&event)) {
+            InputManager::getInstance().parseEvent(event);
+            if (event.type == SDL_QUIT) {
+                SDL_PushEvent(&event);
+                mWindow->setBlockInput(false);
+                return;
+            }
+        }
+        SystemData* currentSystem {sync.getCurrentSystem()};
+        const int systemProcessed {sync.getCurrentSystemProcessed()};
+        const int systemTotal {sync.getCurrentSystemTotal()};
+        if (currentSystem != nullptr && systemTotal > 0 &&
+            (currentSystem != lastShownSystem || systemProcessed != lastShownProgress)) {
+            lastShownSystem = currentSystem;
+            lastShownProgress = systemProcessed;
+            mWindow->setSyncingSplashText(Utils::String::format(
+                forceFullResync ? _("Performing full RomM resync... %s (%d/%d roms)") :
+                                  _("Syncing RomM - %s library... (%d/%d roms)"),
+                currentSystem->getFullName().c_str(), systemProcessed, systemTotal));
+        }
+        const float progress {
+            systemTotal > 0 ? std::min(1.0f, static_cast<float>(systemProcessed) / systemTotal) :
+                              0.0f};
+        mWindow->renderSplashScreen(Window::SplashScreenState::SYNCING, progress);
+        SDL_Delay(10);
+    }
+
+    sync.applyResults();
+    LOG(LogInfo) << "RomM sync complete: " << sync.getAddedCount() << " game(s) added, "
+                 << sync.getRemovedCount() << " game(s) removed";
+
+    if (mSystemListView)
+        mSystemListView->updateAllGameCounts();
+
+    mWindow->setBlockInput(false);
+}
+
 void ViewController::update(int deltaTime)
 {
     if (mWindow->getChangedTheme())
@@ -1336,9 +1453,29 @@ void ViewController::update(int deltaTime)
     updateSelf(deltaTime);
 
     if (mGameToLaunch) {
-        launch(mGameToLaunch);
-        mWindow->setGameLaunched(mGameToLaunch);
-        mGameToLaunch = nullptr;
+        if (mGameToLaunch->metadata.get("rommremote") == "true") {
+            FileData* remoteGame {mGameToLaunch};
+            mGameToLaunch = nullptr;
+            // triggerGameLaunch() already called setBlockInput(true) - undo that so the
+            // confirm dialog below can actually receive input.
+            mWindow->setBlockInput(false);
+
+            int64_t sizeBytes {0};
+            RomMCache::getInstance().findCachedSize(
+                atoi(remoteGame->metadata.get("rommid").c_str()), sizeBytes);
+            const std::string message {
+                Utils::String::format(_("THIS GAME IS NOT INSTALLED\nDOWNLOAD FROM ROMM NOW? (%s)"),
+                                      formatByteSize(sizeBytes).c_str())};
+            mWindow->pushGui(new GuiMsgBox(
+                message, _("YES"),
+                [this, remoteGame] { mWindow->pushGui(new GuiRomMDownload(remoteGame)); }, _("NO"),
+                nullptr));
+        }
+        else {
+            launch(mGameToLaunch);
+            mWindow->setGameLaunched(mGameToLaunch);
+            mGameToLaunch = nullptr;
+        }
     }
 }
 
@@ -1497,13 +1634,19 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
             system->getIndex()->setKidModeFilters();
             std::shared_ptr<GamelistView> newView {getGamelistView(system)};
 
+            // This needs to happen before setCursor() below, as that call can synchronously
+            // trigger a help prompt refresh (via the cursor-changed callback), which reads
+            // mCurrentView. Leaving mCurrentView unset until after setCursor() meant that
+            // refresh would run with mCurrentView still null (or pointing at the old, just
+            // destroyed view), so the help system's component registration was never updated
+            // to reference the new view - leaving it pointing at freed memory.
+            if (isCurrent)
+                mCurrentView = newView;
+
             // Make sure we don't attempt to set the cursor to a nonexistent entry.
             auto children = system->getRootFolder()->getChildrenRecursive();
             if (std::find(children.cbegin(), children.cend(), cursor) != children.cend())
                 newView->setCursor(cursor);
-
-            if (isCurrent)
-                mCurrentView = newView;
 
             newView->populateCursorHistory(cursorHistoryTemp);
             // This is required to get the game count updated if the favorite metadata value has

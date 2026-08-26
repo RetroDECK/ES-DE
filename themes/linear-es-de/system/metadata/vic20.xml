@@ -23,7 +23,7 @@ The VIC-20 was called VC-20 in Germany because the pronunciation of VIC with a G
             <systemDescription>إن كومودور VIC-20 (المعروف باسم VC-20 في ألمانيا وVIC-1001 في اليابان) هو كمبيوتر منزلي من 8 بت تم بيعه من قبل كومودور بيزنس ماكينات. وقد تم الإعلان عن VIC-20 في عام 1980، أي بعد ثلاث سنوات تقريباً من أول كمبيوتر شخصي من كومودور وهو PET. كان VIC-20 أول كمبيوتر من أي نوع يبيع مليون وحدة. وقد وُصف بأنه "أحد أوائل الحواسيب غير النظريّة وغير المتخصّصة في التصميم... لم يعد الكمبيوتر الذي طورته كومودور كمبيوتر المستقبل.
 
 كان يُطلق على VIC-20 في ألمانيا اسم VC-20 لأن نطق VIC بلكنة ألمانية يشبه لفظة "فيك" أو "ويتشن" الألمانية. وقد تم تسويق مصطلح VC كما لو كان اختصارًا لكلمة VolksComputer ("كمبيوتر الشعب" على غرار فولكس فاجن وفولكس كمبيوتر الشعب).</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,7 +76,7 @@ The VIC-20 was called VC-20 in Germany because the pronunciation of VIC with a G
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Commodore VIC-20 (noto come VC-20 in Germania e VIC-1001 in Giappone) è un home computer a 8 bit venduto da Commodore Business Machines. Il VIC-20 fu annunciato nel 1980, circa tre anni dopo il primo personal computer di Commodore, il PET. Il VIC-20 è stato il primo computer di qualsiasi tipo a vendere un milione di unità. È stato descritto come "uno dei primi computer anti-speculatori, non esoterici per concezione... non più relegato agli hobbisti/entusiasti o a chi ha soldi, il computer sviluppato da Commodore era il computer del futuro".
+            <systemDescription>Il Commodore VIC-20 (noto come VC-20 in Germania e VIC-1001 in Giappone) è un home computer ad 8 bit prodotto e venduto da Commodore Business Machines. Il VIC-20 fu annunciato nel 1980, circa tre anni dopo il primo personal computer di Commodore: il PET. Il VIC-20 è stato il primo computer di qualsiasi tipo a raggiungere il milione di unità vendute. È stato descritto come "uno dei primi computer anti-speculatori, non esoterici per concezione... non più relegato agli hobbisti/entusiasti o a chi ha soldi. Il computer sviluppato da Commodore era il computer del futuro".
 
 Il VIC-20 era chiamato VC-20 in Germania perché la pronuncia di VIC con accento tedesco assomiglia alle imprecazioni tedesche "fick" o "wichsen". Il termine VC fu commercializzato come se fosse un'abbreviazione di VolksComputer ("computer del popolo", simile a Volkswagen e Volksempfänger).</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
@@ -160,6 +160,14 @@ The VIC-20 was called VC-20 in Germany because the pronunciation of VIC with a G
 
 VIC-20 kallades VC-20 i Tyskland eftersom uttalet av VIC med tysk accent låter som de tyska svordomarna "fick" eller "wichsen". Termen VC marknadsfördes som om den var en förkortning av VolksComputer ("folkets dator", i likhet med Volkswagen och Volksempfänger).</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Commodore VIC-20 (được gọi là VC-20 tại Đức và VIC-1001 tại Nhật Bản) là một máy tính gia đình 8-bit do Commodore Business Machines phân phối. VIC-20 được ra mắt vào năm 1980, khoảng ba năm sau khi Commodore giới thiệu máy tính cá nhân đầu tiên của mình, PET. VIC-20 là máy tính đầu tiên trên thế giới đạt mốc một triệu đơn vị bán ra. Nó được mô tả là "một trong những máy tính đầu tiên được thiết kế để không chỉ dành cho những người đam mê hay những người có điều kiện kinh tế, mà là máy tính của tương lai".
+
+VIC-20 được gọi là VC-20 ở Đức vì cách phát âm VIC với giọng Đức nghe giống như các từ chửi thề trong tiếng Đức "fick" hoặc "wichsen". Thuật ngữ VC được tiếp thị như thể nó là viết tắt của VolksComputer ("máy tính của nhân dân", tương tự như Volkswagen và Volksempfänger).</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

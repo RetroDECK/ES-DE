@@ -21,6 +21,7 @@
 #include "MameNames.h"
 #include "MediaViewer.h"
 #include "PDFViewer.h"
+#include "RomM/RomMUtils.h"
 #include "Screensaver.h"
 #include "Scripting.h"
 #include "Settings.h"
@@ -1195,6 +1196,12 @@ int main(int argc, char* argv[])
 
         // Preload system view and all gamelist views.
         ViewController::getInstance()->preload();
+
+        // Continues the same loading screen into a RomM sync, since loadSystemConfigFile()
+        // already fetched/matched platforms and activated/kept-alive systems accordingly -
+        // skip rescanFirst here to avoid redoing that work.
+        if (RomMUtils::isLoggedIn() && Settings::getInstance()->getBool("RomMSyncOnStartup"))
+            ViewController::getInstance()->runRomMSyncWithSplashScreen(false, false);
     }
 
     if (!SystemData::sStartupExitSignal) {

@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Watara Supervision, noto anche come QuickShot Supervision nel Regno Unito, è una console portatile monocromatica di origine asiatica, introdotta nel 1992 come concorrente a prezzo ridotto del Game Boy di Nintendo. Veniva fornita con un gioco chiamato Crystball, simile a Breakout. Una caratteristica unica del Supervision era la possibilità di collegarlo a un televisore tramite un cavo di collegamento. I giochi giocati in questo modo venivano visualizzati in quattro colori, proprio come il Super Game Boy add-on di Nintendo per il SNES. Era in progetto anche un collegamento televisivo a colori, ma a causa dell'insuccesso del Supervision tra i giocatori fu cancellato, insieme ai giochi che erano in fase di sviluppo per esso.</systemDescription>
+            <systemDescription>Il Watara Supervision, noto anche come QuickShot Supervision nel Regno Unito, è una console portatile monocromatica di origine asiatica, introdotta nel 1992 come concorrente a prezzo ridotto del Game Boy di Nintendo. Veniva fornita con un gioco chiamato Crystball, simile a Breakout. Una caratteristica unica del Supervision era la possibilità di collegarlo ad un televisore tramite un cavo di collegamento. In questa modalità i videogiochi venivano visualizzati in quattro colori, proprio come il Super Game Boy add-on di Nintendo per il SNES. Era in progetto anche un collegamento televisivo a colori ma, a causa dell'insuccesso del Supervision, fu cancellato, insieme ai giochi che erano in fase di sviluppo per esso.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Watara Supervision, även känd som QuickShot Supervision i Storbritannien, är en monokrom handhållen spelkonsol med ursprung i Asien som introducerades 1992 som en lågpriskonkurrent till Nintendos Game Boy. Den levererades med ett spel som heter Crystball, som liknar Breakout. En unik egenskap hos Supervision var att den kunde kopplas till en TV via en länkkabel. Spel som spelades på detta sätt visades i fyra färger, ungefär som Nintendos Super Game Boy-tillägg för SNES. En TV-länk i fullfärg var också på gång, men eftersom Supervision inte gjorde något större intryck på spelarna ställdes den in, liksom de spel som var under utveckling för den.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Watara Supervision, còn được gọi là QuickShot Supervision tại Anh, là một máy chơi game cầm tay đơn sắc có nguồn gốc từ châu Á, ra mắt vào năm 1992 với tư cách là đối thủ giá rẻ cạnh tranh với Game Boy của Nintendo. Máy được bán kèm với trò chơi Crystball, có lối chơi tương tự như Breakout. Một tính năng độc đáo của Supervision là nó có thể kết nối với tivi thông qua cáp kết nối. Các trò chơi chơi theo cách này sẽ hiển thị bốn màu, tương tự như phụ kiện Super Game Boy của Nintendo dành cho SNES. Một phiên bản kết nối tivi đầy đủ màu sắc cũng đang được phát triển, nhưng do Supervision không tạo được ấn tượng mạnh mẽ trong cộng đồng game thủ nên dự án đã bị hủy bỏ, cùng với các trò chơi đang được phát triển cho nó.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

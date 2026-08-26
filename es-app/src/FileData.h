@@ -49,6 +49,7 @@ public:
     const bool getFavorite();
     const bool getKidgame();
     const bool getHidden();
+    const bool getRomMRemote();
     const bool getCountAsGame();
     const std::pair<unsigned int, unsigned int>& getGameCount() const { return mGameCount; }
     const bool getExcludeFromScraper();
@@ -110,7 +111,8 @@ public:
                                              bool countAllGames = true) const;
     std::vector<FileData*> getScrapeFilesRecursive(bool includeFolders,
                                                    bool excludeRecursively,
-                                                   bool respectExclusions) const;
+                                                   bool respectExclusions,
+                                                   bool excludeRomMRemote) const;
 
     void addChild(FileData* file);
     void removeChild(FileData* file);
@@ -159,8 +161,8 @@ public:
     const FileData::SortType& getSortTypeFromString(const std::string& desc) const;
 
     static inline std::vector<std::string> sImageExtensions {".png", ".jpg", ".webp"};
-    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv", ".avi",
-                                                             ".wmv", ".mov", ".webm"};
+    static inline std::vector<std::string> sVideoExtensions {".mp4", ".mkv",  ".avi", ".wmv",
+                                                             ".mov", ".webm", ".m4v"};
 
 protected:
     FileData* mSourceFileData;

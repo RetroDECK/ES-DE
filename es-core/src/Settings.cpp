@@ -160,6 +160,35 @@ void Settings::setDefaults()
     mBoolMap["ScraperAutomaticRemoveDots"] = {true, true};
     mBoolMap["ScraperRegionFallback"] = {true, true};
 
+    mStringMap["RomMServerURL"] = {"", ""};
+    mStringMap["RomMToken"] = {"", ""};
+    // ISO-8601 timestamp for when RomMToken expires, or empty if it doesn't.
+    mStringMap["RomMTokenExpiresAt"] = {"", ""};
+    // Comma-separated OAuth scopes actually granted for RomMToken, as reported by the server at
+    // pairing time.
+    mStringMap["RomMTokenScopes"] = {"", ""};
+
+    mStringMap["RomMUsername"] = {"", ""};
+    // Random per-install identifier sent as the pairing flow's client_device_identifier.
+    mStringMap["RomMDeviceIdentifier"] = {"", ""};
+    // Whether to silently sync the RomM library in the background on startup, so opted-in
+    // systems are populated with remote entries without a manual "REFRESH ROMM LIBRARY NOW".
+    mBoolMap["RomMSyncOnStartup"] = {true, true};
+    // Whether the multi-scraper should skip RomM entries that haven't been downloaded yet
+    // (rommremote == "true"), rather than scraping/searching for placeholder games the user
+    // may never actually download.
+    mBoolMap["RomMScrapeDownloadedOnly"] = {true, true};
+    // Whether the multi-scraper should skip writing the "name" field for any game linked to
+    // RomM, so a RomM-provided name is never overwritten by the general scraper name settings.
+    mBoolMap["RomMAvoidScrapingNames"] = {true, true};
+    // Whether to sort downloaded games above not-yet-downloaded (remote) RomM entries,
+    // independently of the FavoritesFirst setting.
+    mBoolMap["RomMDownloadedFirst"] = {true, true};
+    // Whether to lazily fetch and display a not-yet-downloaded RomM entry's cover while
+    // browsing the gamelist, independent of RomM integration as a whole - lets a user on a
+    // slow/metered connection opt out of this extra network traffic.
+    mBoolMap["RomMShowRemoteMedia"] = {true, true};
+
     // UI settings.
     mStringMap["Theme"] = {"linear-es-de", "linear-es-de"};
     mStringMap["ThemeVariant"] = {"", ""};
@@ -309,6 +338,7 @@ void Settings::setDefaults()
 #if !defined(__IOS__)
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["CustomEventScriptsBrowsing"] = {false, false};
+    mBoolMap["CustomEventScriptsBrowsingNonBlocking"] = {true, true};
 #endif
     mBoolMap["ParseGamelistOnly"] = {false, false};
     mBoolMap["MAMENameStripExtraInfo"] = {true, true};
@@ -374,6 +404,7 @@ void Settings::setDefaults()
 #if !defined(__ANDROID__) && !defined(__IOS__)
     mStringMap["ROMDirectory"] = {"", ""};
 #endif
+    mStringMap["SplashScreenProgressBarColor"] = {"", ""};
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
 #if !defined(__ANDROID__) && !defined(__IOS__)
     mStringMap["UserThemeDirectory"] = {"", ""};
@@ -459,13 +490,34 @@ void Settings::loadFile()
         return;
     }
 
-    for (pugi::xml_node node = doc.child("bool"); node; node = node.next_sibling("bool"))
+    // The long term plan is to move each setting element into a "settings" root element in order
+    // to become fully XML standards compliant. During a transition period we'll have forward
+    // compatibility with this format by attempting to load any setting inside such a root element.
+    // Note that this is simplistic by design, any setting placed outside the "settings" root
+    // element will still be loaded and the file will be automatically converted to the old flat
+    // and noncompliant XML format. When the new format is rolled out in a future release, ES-DE
+    // will automatically restructure any legacy file to the new format on application startup.
+    // This will make it possible to move back and forth between versions without screwing up the
+    // configuration file, until support for the legacy format is completely removed.
+    const pugi::xml_node& root {doc.child("settings")};
+    if (root != nullptr) {
+        for (pugi::xml_node node {root.child("bool")}; node; node = node.next_sibling("bool"))
+            setBool(node.attribute("name").as_string(), node.attribute("value").as_bool());
+        for (pugi::xml_node node {root.child("int")}; node; node = node.next_sibling("int"))
+            setInt(node.attribute("name").as_string(), node.attribute("value").as_int());
+        for (pugi::xml_node node {root.child("float")}; node; node = node.next_sibling("float"))
+            setFloat(node.attribute("name").as_string(), node.attribute("value").as_float());
+        for (pugi::xml_node node {root.child("string")}; node; node = node.next_sibling("string"))
+            setString(node.attribute("name").as_string(), node.attribute("value").as_string());
+    }
+
+    for (pugi::xml_node node {doc.child("bool")}; node; node = node.next_sibling("bool"))
         setBool(node.attribute("name").as_string(), node.attribute("value").as_bool());
-    for (pugi::xml_node node = doc.child("int"); node; node = node.next_sibling("int"))
+    for (pugi::xml_node node {doc.child("int")}; node; node = node.next_sibling("int"))
         setInt(node.attribute("name").as_string(), node.attribute("value").as_int());
-    for (pugi::xml_node node = doc.child("float"); node; node = node.next_sibling("float"))
+    for (pugi::xml_node node {doc.child("float")}; node; node = node.next_sibling("float"))
         setFloat(node.attribute("name").as_string(), node.attribute("value").as_float());
-    for (pugi::xml_node node = doc.child("string"); node; node = node.next_sibling("string"))
+    for (pugi::xml_node node {doc.child("string")}; node; node = node.next_sibling("string"))
         setString(node.attribute("name").as_string(), node.attribute("value").as_string());
 }
 

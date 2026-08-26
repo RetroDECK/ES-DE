@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2025-06-24 19:40+0200\n"
+"POT-Creation-Date: 2026-06-29 17:36+0200\n"
 "PO-Revision-Date: 2025-03-28 18:31+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Ελληνικά <info@es-de.org>\n"
@@ -129,6 +129,24 @@ msgstr "Το '%s' φιλτράρεται, ώστε να υπάρχουν περ�
 #, c-format
 msgid "DELETED COLLECTION '%s'"
 msgstr "ΔΙΑΓΡΑΦΤΙΚΕ Η ΣΥΛΛΟΓΗ '%s'"
+
+msgctxt "theme"
+msgid "unknown"
+msgstr "άγνωστο"
+
+#, c-format
+msgctxt "theme"
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgctxt "theme"
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
@@ -294,6 +312,12 @@ msgstr "φορές έναρξης, αύξουσα"
 
 msgid "times played, descending"
 msgstr "φορές έναρξης, φθίνουσες"
+
+msgid "play time, ascending"
+msgstr ""
+
+msgid "play time, descending"
+msgstr ""
 
 msgid "system, ascending"
 msgstr "σύστημα, αύξουσα"
@@ -533,6 +557,9 @@ msgstr ""
 msgid "ALL UNSELECTED"
 msgstr ""
 
+msgid "STRIP SPECIAL CHARACTERS"
+msgstr ""
+
 msgid "MEDIA TARGET TYPE"
 msgstr ""
 
@@ -560,6 +587,9 @@ msgstr ""
 msgid "FAN ART"
 msgstr "FAN ART"
 
+msgid "MIXIMAGES"
+msgstr ""
+
 msgid "IMPORT MEDIA"
 msgstr ""
 
@@ -584,6 +614,9 @@ msgstr "ΔΟΥΛΕΥΕΙ..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr ""
 
+msgid "import"
+msgstr ""
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -598,15 +631,6 @@ msgstr ""
 msgid "IMPORT"
 msgstr ""
 
-msgid "import"
-msgstr ""
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "SELECT ALL"
 msgstr "ΕΠΙΛΟΓΗ ΟΛΩΝ"
 
@@ -618,6 +642,12 @@ msgstr "ΕΠΙΛΟΓΗ ΚΑΝΕΝΟΣ"
 
 msgid "select none"
 msgstr "επιλογή κανενός"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "FILTER GAMELIST"
 msgstr "ΦΙΛΤΡΟ ΣΤΗ ΛΙΣΤΑ ΠΑΙΧΝΙΔΙΩΝ"
@@ -1079,6 +1109,9 @@ msgstr "ΑΠΟΘΗΚΕΥΣΗ ΑΛΛΑΓΩΝ?"
 msgid "load default directory"
 msgstr "φόρτωση προεπιλεγμένου καταλόγου"
 
+msgid "MAX PLAY TIME TRACKING"
+msgstr ""
+
 msgid "VRAM LIMIT"
 msgstr "ΟΡΙΟ VRAM"
 
@@ -1167,6 +1200,9 @@ msgstr "ΠΡΟΒΟΛΗ ΚΡΥΜΜΕΝΩΝ ΑΡΧΕΙΩΝ ΚΑΙ ΦΑΚΕΛΩΝ"
 msgid "SHOW HIDDEN GAMES"
 msgstr "ΕΜΦΑΝΙΣΗ ΚΡΥΜΕΝΩΝ ΠΑΙΧΝΙΔΙΩΝ"
 
+msgid "LAUNCH GAMES ON THE OTHER SCREEN"
+msgstr ""
+
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr ""
 
@@ -1244,6 +1280,12 @@ msgstr "ΕΠΙΒΕΒΑΙΩΣΗ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗΣ?"
 
 msgid "POWER OFF SYSTEM"
 msgstr "ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ ΣΥΣΤΗΜΑΤΟΣ"
+
+msgid "REALLY SUSPEND?"
+msgstr ""
+
+msgid "SUSPEND SYSTEM"
+msgstr ""
 
 msgctxt "short"
 msgid "SYSTEM STATUS SETTINGS"
@@ -1621,6 +1663,9 @@ msgstr "ΕΓΧΕΙΡΙΔΙΑ ΠΑΙΧΝΙΔΙΟΥ"
 msgid "MIXIMAGE RESOLUTION"
 msgstr ""
 
+msgid "MIXIMAGE FILE FORMAT"
+msgstr ""
+
 msgctxt "short"
 msgid "HORIZONTAL SCREENSHOT FIT"
 msgstr ""
@@ -1730,8 +1775,56 @@ msgstr "ΙΑΠΩΝΙΑ"
 msgid "USA"
 msgstr "ΗΠΑ"
 
+msgid "NORTH AMERICA"
+msgstr ""
+
+msgid "ASIA"
+msgstr ""
+
 msgid "WORLD"
 msgstr "ΚΟΣΜΟΣ"
+
+msgid "AUSTRALIA"
+msgstr ""
+
+msgid "BRAZIL"
+msgstr ""
+
+msgid "CANADA"
+msgstr ""
+
+msgid "CHINA"
+msgstr ""
+
+msgid "GERMANY"
+msgstr ""
+
+msgid "FRANCE"
+msgstr ""
+
+msgid "ITALY"
+msgstr ""
+
+msgid "KOREA"
+msgstr ""
+
+msgid "NETHERLANDS"
+msgstr ""
+
+msgid "RUSSIA"
+msgstr ""
+
+msgid "SWEDEN"
+msgstr ""
+
+msgid "SPAIN"
+msgstr ""
+
+msgid "TAIWAN"
+msgstr ""
+
+msgid "UNITED KINGDOM"
+msgstr ""
 
 msgid "PREFERRED LANGUAGE"
 msgstr "ΕΠΙΛΕΓΜΕΝΗ ΓΛΩΣΣΑ"
@@ -2307,6 +2400,14 @@ msgid "ENTER NUMBER OF TIMES PLAYED"
 msgstr ""
 
 msgctxt "metadata"
+msgid "PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
+msgid "ENTER PLAY TIME"
+msgstr ""
+
+msgctxt "metadata"
 msgid "CONTROLLER"
 msgstr "ΧΕΙΡΙΣΤΗΡΙΟ"
 
@@ -2380,6 +2481,9 @@ msgstr "πολυμέσα παιχνιδιών"
 
 msgid "zoom"
 msgstr "zoom"
+
+msgid "You have exceeded your daily scrape quota"
+msgstr "Έχετε ξεπεράσει το ημερήσιο όριο"
 
 msgid "Network error:"
 msgstr "Σφάλμα δικτύου:"
@@ -2470,10 +2574,6 @@ msgid "jump to game"
 msgstr "άλμα στο παιχνίδι"
 
 msgctxt "theme"
-msgid "unknown"
-msgstr "άγνωστο"
-
-msgctxt "theme"
 msgid "yes"
 msgstr "ναι"
 
@@ -2562,7 +2662,7 @@ msgid ""
 "THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
 "xml\n"
 "\n"
-"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVICED TO REMOVE THE ONES YOU "
+"THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
 
@@ -2851,9 +2951,6 @@ msgstr "ΑΠΌΡΡΙΨΗ ΑΛΛΑΓΩΝ"
 
 msgid "discard changes"
 msgstr "απόρριψη αλλαγών"
-
-msgid "You have exceeded your daily scrape quota"
-msgstr "Έχετε ξεπεράσει το ημερήσιο όριο"
 
 #, c-format
 msgid "Server returned HTTP error code %s"

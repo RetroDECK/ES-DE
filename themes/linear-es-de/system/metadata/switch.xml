@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز نينتندو سويتش هو جهاز ألعاب فيديو منزلي من الجيل الثامن (من 2012 حتى الآن) تم تطويره وتوزيعه من قبل شركة نينتندو. تم إصداره في 3 مارس 2017 في أمريكا الشمالية بسعر تجزئة 299.99 دولار أمريكي. تم إصدار وحدة التحكم في نفس الوقت في اليابان (2017) وأوروبا (2017) وأمريكا الجنوبية (2017) وأستراليا (2017) وغيرها من الأسواق العالمية (2017). تم تصميم Switch ليكون وحدة تحكم هجينة، مما يسمح بلعب الألعاب على التلفزيون، ثم أثناء التنقل عن طريق فك النظام واللعب من الوحدة المحمولة باليد نفسها. حتى هذا التاريخ، لا تزال وحدة التحكم قيد الإنتاج.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>جهاز نينتندو سويتش هو جهاز ألعاب فيديو منزلي من الجيل الثامن (من 2012 حتى الآن) تم تطويره وتوزيعه من قبل شركة نينتندو. تم إصداره في 3 مارس 2017 في أمريكا الشمالية بسعر تجزئة 299.99 دولار أمريكي. تم إصدار كونسول في نفس الوقت في اليابان (2017) وأوروبا (2017) وأمريكا الجنوبية (2017) وأستراليا (2017) وغيرها من الأسواق العالمية (2017). تم تصميم Switch ليكون وحدة تحكم هجينة، مما يسمح بلعب الألعاب على التلفزيون، ثم أثناء التنقل عن طريق فك النظام واللعب من الوحدة المحمولة باليد نفسها. حتى هذا التاريخ، لا تزال كونسول قيد الإنتاج.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Nintendo Switch è una console per videogiochi domestici di ottava generazione (2012-presente) sviluppata e distribuita da Nintendo. È stata rilasciata il 3 marzo 2017 in Nord America al prezzo di vendita al pubblico di 299,99 dollari. La console è stata rilasciata contemporaneamente in Giappone (2017), Europa (2017), Sud America (2017), Australia (2017) e altri mercati mondiali (2017). La Switch è stata progettata per essere una console ibrida, che consente di giocare a un televisore e poi in movimento, sganciando il sistema e giocando dall'unità portatile stessa. A tutt'oggi, la console è ancora in fase di produzione.</systemDescription>
+            <systemDescription>Nintendo Switch è una console portatile per videogiochi di ottava generazione (2012-presente) sviluppata e distribuita da Nintendo. È stata rilasciata il 3 marzo 2017 in Nord America al prezzo di vendita al pubblico di 299,99 dollari. La console è stata rilasciata contemporaneamente in Giappone, Europa, Sud America, Australia ed altri mercati mondiali nel 2017. Nintendo Switch è stata progettata per essere una console ibrida, che consente di giocare sia collegandola ad un televisore, sia tenendola in mano come una classica console portatile. È stata succeduta da Nintendo Switch 2, nel 2026.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Nintendo Switch är en åttonde generationens (2012-nuvarande) hemkonsol för videospel som utvecklas och distribueras av Nintendo. Den släpptes den 3 mars 2017 i Nordamerika till ett detaljhandelspris på 299,99 USD. Konsolen släpptes samtidigt i Japan (2017), Europa (2017), Sydamerika (2017), Australien (2017) och på andra världsmarknader (2017). Switch är utformad för att vara en hybridkonsol som gör det möjligt att spela spel vid en TV och sedan på språng genom att koppla ur systemet och spela från själva den handhållna enheten. Vid denna tidpunkt är konsolen fortfarande under produktion.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Nintendo Switch là hệ máy chơi game gia đình thế hệ thứ tám (2012–nay) do Nintendo phát triển và phân phối. Sản phẩm được ra mắt vào ngày 3 tháng 3 năm 2017 tại Bắc Mỹ với giá bán lẻ là 299,99 USD. Hệ máy này cũng được phát hành đồng thời tại Nhật Bản (2017), Châu Âu (2017), Nam Mỹ (2017), Úc (2017) và các thị trường khác trên toàn thế giới (2017). Switch được thiết kế là một hệ máy lai, cho phép chơi game trên TV, sau đó có thể mang theo khi di chuyển bằng cách tháo rời hệ thống và chơi trực tiếp từ thiết bị cầm tay. Tính đến thời điểm hiện tại, hệ máy này vẫn đang được sản xuất.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>متجر Epic Games Store هو واجهة متجر ألعاب فيديو رقمية لألعاب الفيديو لنظامي التشغيل Microsoft Windows وmacOS، تديرها Epic Games. تم إطلاقه في ديسمبر 2018 كموقع إلكتروني ومشغّل مستقل، وهذا الأخير مطلوب لتنزيل الألعاب وتشغيلها. توفر واجهة المتجر كتالوجًا أساسيًا وإدارة قائمة الأصدقاء والتوفيق بين اللاعبين وميزات أخرى. لدى Epic Games المزيد من الخطط لتوسيع مجموعة ميزات واجهة المتجر ولكنها لا تخطط لإضافة العديد من الميزات مثل منصات التوزيع الرقمية الأخرى، مثل لوحات المناقشة أو مراجعات المستخدمين، وبدلاً من ذلك تستخدم منصات التواصل الاجتماعي الحالية لدعمها.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'Epic Games Store è un negozio digitale di videogiochi per Microsoft Windows e macOS, gestito da Epic Games. È stato lanciato nel dicembre 2018 sia come sito web che come launcher standalone, quest'ultimo necessario per scaricare e giocare. La vetrina fornisce un catalogo di base, la gestione della lista amici, il matchmaking e altre funzionalità. Epic Games ha in programma di espandere ulteriormente il set di funzionalità della vetrina, ma non intende aggiungere tante funzioni come altre piattaforme di distribuzione digitale, come le bacheche di discussione o le recensioni degli utenti, utilizzando invece le piattaforme di social media esistenti per supportarle.</systemDescription>
+            <systemDescription>L'Epic Games Store è un negozio digitale di videogiochi per Microsoft Windows e macOS, gestito da Epic Games. È stato lanciato nel dicembre 2018 sia come sito web che come launcher standalone (quest'ultimo necessario per scaricare e giocare). La vetrina fornisce un catalogo di base, la gestione della lista degli amici, il matchmaking ed altre funzionalità. Epic Games ha in programma di espandere ulteriormente il set di funzionalità della vetrina, ma non intende aggiungere tante funzioni come altre piattaforme di distribuzione digitale, come i forum, o le recensioni degli utenti, utilizzando invece le piattaforme di social media già esistenti per supportarle.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Epic Games Store är en digital butik för videospel för Microsoft Windows och macOS, som drivs av Epic Games. Den lanserades i december 2018 som både en webbplats och en fristående launcher, varav den senare krävs för att ladda ner och spela spel. Storefront tillhandahåller en grundläggande katalog, hantering av vänlistor, matchmaking och andra funktioner. Epic Games har ytterligare planer på att utöka funktionerna i butiksfronten men planerar inte att lägga till lika många funktioner som andra digitala distributionsplattformar, såsom diskussionsforum eller användarrecensioner, utan använder istället befintliga sociala medieplattformar för att stödja dessa.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Epic Games Store là một nền tảng phân phối trò chơi điện tử kỹ thuật số dành cho hệ điều hành Microsoft Windows và macOS, do Epic Games vận hành. Nền tảng này ra mắt vào tháng 12 năm 2018 dưới dạng cả trang web lẫn trình khởi chạy độc lập, trong đó trình khởi chạy độc lập là yêu cầu bắt buộc để tải xuống và chơi trò chơi. Nền tảng này cung cấp danh mục trò chơi cơ bản, quản lý danh sách bạn bè, tính năng ghép trận và các tính năng khác. Epic Games có kế hoạch mở rộng bộ tính năng của nền tảng này nhưng không dự định bổ sung nhiều tính năng như các nền tảng phân phối kỹ thuật số khác, chẳng hạn như diễn đàn thảo luận hay đánh giá của người dùng, mà thay vào đó sẽ sử dụng các nền tảng mạng xã hội hiện có để hỗ trợ các tính năng này.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

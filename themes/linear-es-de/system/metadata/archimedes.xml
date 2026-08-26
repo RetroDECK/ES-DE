@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن Acorn Archimedes هي عائلة من الحواسيب الشخصية التي صممتها شركة Acorn Computers في كامبريدج بإنجلترا. وتعتمد هذه الأنظمة على معالجات بنية ARM الخاصة بشركة Acorn وأنظمة التشغيل الخاصة بها Arthur و RISC OS. طُرحت النماذج الأولى في عام 1987، وتم بيع أنظمة عائلة أرخميدس حتى منتصف التسعينيات.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Acorn Archimedes è una famiglia di personal computer progettati da Acorn Computers di Cambridge, Inghilterra. I sistemi sono basati sui processori di architettura ARM di Acorn e sui sistemi operativi proprietari Arthur e RISC OS. I primi modelli sono stati introdotti nel 1987 e i sistemi della famiglia Archimedes sono stati venduti fino alla metà degli anni Novanta.</systemDescription>
+            <systemDescription>Acorn Archimedes è una famiglia di personal computer progettati da Acorn Computers di Cambridge, Inghilterra. I sistemi sono basati sui processori di architettura ARM di Acorn e sui sistemi operativi proprietari Arthur e RISC OS. I primi modelli sono stati introdotti nel 1987 ed i sistemi della famiglia Archimedes sono stati venduti fino alla metà degli anni Novanta.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Acorn Archimedes är en familj av persondatorer som designats av Acorn Computers i Cambridge, England. Systemen är baserade på Acorns egna processorer med ARM-arkitektur och de egenutvecklade operativsystemen Arthur och RISC OS. De första modellerna introducerades 1987 och system i Archimedes-familjen såldes fram till mitten av 1990-talet.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Acorn Archimedes là dòng máy tính cá nhân do công ty Acorn Computers tại Cambridge, Anh Quốc thiết kế. Các hệ thống này sử dụng bộ vi xử lý dựa trên kiến trúc ARM do chính Acorn phát triển cùng với hai hệ điều hành độc quyền là Arthur và RISC OS. Các mẫu máy đầu tiên được ra mắt vào năm 1987, và các hệ thống thuộc dòng Archimedes tiếp tục được bán ra thị trường cho đến giữa những năm 1990.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

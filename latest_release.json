@@ -3,60 +3,60 @@
     "website": "https://es-de.org/",
     "repository": "https://gitlab.com/es-de/",
     "stable": {
-        "version": "3.4.0",
-        "release": "50",
-        "date": "2025-11-07",
-        "androidVersionName": "3.4.0-56",
-        "androidVersionCode": "56",
-        "androidDate": "2025-11-07",
+        "version": "3.4.1",
+        "release": "51",
+        "date": "2026-04-10",
+        "androidVersionName": "3.4.1-58",
+        "androidVersionCode": "58",
+        "androidDate": "2026-04-10",
         "packages": [
             {
                 "name": "WindowsPortable",
-                "filename": "ES-DE_3.4.0-x64_Portable.zip",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196975/download",
-                "md5": "cd57bacfb62accbb10107d971dc8af57",
+                "filename": "ES-DE_3.4.1-x64_Portable.zip",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/288156909/download",
+                "md5": "81381d9a2a003071c3eff200685febbb",
                 "message": ""
             },
             {
                 "name": "WindowsInstaller",
-                "filename": "ES-DE_3.4.0-x64.exe",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196961/download",
-                "md5": "d71143ae768db963be90fba973f3e812",
+                "filename": "ES-DE_3.4.1-x64.exe",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/288156889/download",
+                "md5": "b2efdfc3da7e802e9a77345d329ef5f8",
                 "message": ""
             },
             {
                 "name": "macOSApple",
-                "filename": "ES-DE_3.4.0-arm64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196872/download",
-                "md5": "cb3aa237d63a8fd963a60680d24c4f01",
+                "filename": "ES-DE_3.4.1-arm64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/288889626/download",
+                "md5": "e57ba5b3d7d3aa324db9f28e0550cd26",
                 "message": ""
             },
             {
                 "name": "macOSIntel",
-                "filename": "ES-DE_3.4.0-x64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/243196947/download",
-                "md5": "4a2ca7ca5b4e6dcf92e1c5db0242629e",
+                "filename": "ES-DE_3.4.1-x64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/288889701/download",
+                "md5": "b3b98dc63317839a50b4af857a4e35be",
                 "message": ""
             },
             {
                 "name": "LinuxAppImage",
                 "filename": "ES-DE_x64.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/246875981/download",
-                "md5": "5a5820c0fd53d5a7aa3ac25352c28e67",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/288156961/download",
+                "md5": "ea7ea80def78acf08724c100755e4a69",
                 "message": ""
             },
             {
                 "name": "LinuxAArch64AppImage",
                 "filename": "ES-DE_aarch64.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/287278640/download",
-                "md5": "9cac0fb0987ae4c8b52742e58618bd7a",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/326321114/download",
+                "md5": "9e459692ebd86dc5f0524f4c2bbad3b3",
                 "message": ""
             },
             {
                 "name": "LinuxSteamDeckAppImage",
                 "filename": "ES-DE_x64_SteamDeck.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/246876039/download",
-                "md5": "940992cdb4d799bc207ea1aba537fb5d",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/288156987/download",
+                "md5": "b0e32c5d9906072559e7c52febe9fb18",
                 "message": ""
             }
         ]

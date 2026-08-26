@@ -15,6 +15,8 @@
 #include "guis/GuiSettings.h"
 #include "views/ViewController.h"
 
+class SystemData;
+
 class GuiMenu : public GuiComponent
 {
 public:
@@ -34,11 +36,16 @@ private:
     void addVersionInfo();
 
     void openScraperOptions();
+    void openRomMOptions();
+    void openRomMLoginOptions();
+    void openRomMScrapeOptions();
+    void openRomMSyncOptions();
     void openUIOptions();
     void openThemeDownloader(GuiSettings* settings);
     void openSystemStatusOptions();
     void openMediaViewerOptions();
     void openScreensaverOptions();
+    void openScreenLaunchOptions();
     void openSoundOptions();
     void openInputDeviceOptions();
     void openConfigInput(GuiSettings* settings);

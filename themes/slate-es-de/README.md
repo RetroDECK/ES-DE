@@ -24,12 +24,13 @@ The following options are included:
 - 4:3
 - 4:3 vertical
 
-23 languages:
+24 languages:
 
 - English (United States)
 - English (United Kingdom)
 - Bosanski
 - Català
+- Čeština
 - Deutsch
 - Español (España)
 - Français

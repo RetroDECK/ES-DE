@@ -15,10 +15,13 @@
 
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
+#include "RomM/RomMLocalFavorites.h"
 #include "UIModeController.h"
 #include "guis/GuiGamelistOptions.h"
 #include "utils/LocalizationUtil.h"
 #include "views/ViewController.h"
+
+#include <cstdlib>
 
 GamelistBase::GamelistBase(FileData* root)
     : mRoot {root}
@@ -440,6 +443,14 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 }
                 else if (CollectionSystemsManager::getInstance()->toggleGameInCollection(
                              entryToUpdate)) {
+                    // A still-remote entry is rebuilt from scratch every sync, so record the
+                    // intent in RomMLocalFavorites for RomMLibrarySync to reapply.
+                    if (!isEditing && entryToUpdate->getRomMRemote()) {
+                        RomMLocalFavorites::getInstance().setFavorite(
+                            atoi(entryToUpdate->metadata.get("rommid").c_str()),
+                            entryToUpdate->metadata.get("favorite") == "true");
+                    }
+
                     // Needed to avoid some minor transition animation glitches.
                     auto grid =
                         ViewController::getInstance()->getGamelistView(system).get()->mGrid.get();
@@ -942,6 +953,13 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     else {
                         name = inCollectionPrefix + (*it)->getName();
                     }
+                }
+
+                if (indicators != "none" && (*it)->getType() == GAME && (*it)->getRomMRemote()) {
+                    if (indicators == "ascii")
+                        name = "@ " + name;
+                    else
+                        name = ViewController::DOWNLOAD_CHAR + "  " + name;
                 }
 
                 if (letterCase == LetterCase::UPPERCASE)

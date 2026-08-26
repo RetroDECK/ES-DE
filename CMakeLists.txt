@@ -22,7 +22,7 @@ endif()
 project(es-de)
 
 # Application version, update this when making a new release.
-set(ES_VERSION 3.4.1)
+set(ES_VERSION 3.5.0-alpha)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
@@ -172,7 +172,13 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /Od /DEBUG:FULL")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O0 -g3 -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O0")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+    endif()
+    # The NOPTIMIZE macro is used to temporarily disable optimizations per function when debugging.
+    if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
+        add_compile_options("-DNOPTIMIZE=__attribute__((optimize(\"O0\")))")
+    elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
+        add_compile_options("-DNOPTIMIZE=__attribute__((optnone))")
     endif()
     # If using Clang, then add additional debug data needed by GDB.
     # Comment this out if you're using LLDB for debugging as this flag makes the binary
@@ -187,7 +193,7 @@ elseif(CMAKE_BUILD_TYPE MATCHES Profiling)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /O2 /DEBUG:FULL")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -g3 -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
     endif()
 else()
     # Enable the C++17 standard and enable optimizations as it's a release build.
@@ -197,9 +203,9 @@ else()
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -DNDEBUG -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
         if(APPLE)
-            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
+            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
         else()
-            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
+            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s")
         endif()
     endif()
 endif()
@@ -425,6 +431,7 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/lunasvg/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/external/qrcodegen
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rlottie/inc
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
@@ -532,19 +539,19 @@ if(IOS)
 elseif(APPLE)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          ${CURL_LIBRARIES}
-                         ${PROJECT_SOURCE_DIR}/libavcodec.61.dylib
-                         ${PROJECT_SOURCE_DIR}/libavfilter.10.dylib
-                         ${PROJECT_SOURCE_DIR}/libavformat.61.dylib
-                         ${PROJECT_SOURCE_DIR}/libavutil.59.dylib
-                         ${PROJECT_SOURCE_DIR}/libswresample.5.dylib
-                         ${PROJECT_SOURCE_DIR}/libswscale.8.dylib
+                         ${PROJECT_SOURCE_DIR}/libavcodec.62.dylib
+                         ${PROJECT_SOURCE_DIR}/libavfilter.11.dylib
+                         ${PROJECT_SOURCE_DIR}/libavformat.62.dylib
+                         ${PROJECT_SOURCE_DIR}/libavutil.60.dylib
+                         ${PROJECT_SOURCE_DIR}/libswresample.6.dylib
+                         ${PROJECT_SOURCE_DIR}/libswscale.9.dylib
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
                          ${PROJECT_SOURCE_DIR}/libgit2.1.9.dylib
                          ${PROJECT_SOURCE_DIR}/libharfbuzz.dylib
-                         ${PROJECT_SOURCE_DIR}/libicudata.77.dylib
-                         ${PROJECT_SOURCE_DIR}/libicui18n.77.dylib
-                         ${PROJECT_SOURCE_DIR}/libicuuc.77.dylib
+                         ${PROJECT_SOURCE_DIR}/libicudata.78.dylib
+                         ${PROJECT_SOURCE_DIR}/libicui18n.78.dylib
+                         ${PROJECT_SOURCE_DIR}/libicuuc.78.dylib
                          ${PROJECT_SOURCE_DIR}/libintl.8.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
@@ -567,6 +574,7 @@ elseif(WIN32)
                             ${PROJECT_SOURCE_DIR}/freetype.lib
                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
                             ${PROJECT_SOURCE_DIR}/pugixml.lib
+                            ${PROJECT_SOURCE_DIR}/qrcodegen.lib
                             ${PROJECT_SOURCE_DIR}/rlottie.lib
                             ${PROJECT_SOURCE_DIR}/SDL2main.lib
                             ${PROJECT_SOURCE_DIR}/SDL2.lib
@@ -646,16 +654,20 @@ else()
 endif()
 
 if(NOT WIN32)
-    # SVG rendering library LunaSVG and Lottie animation library rlottie.
+    # SVG rendering library LunaSVG, Lottie animation library rlottie and QR code generator
+    # library qrcodegen.
     if(ANDROID)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/librlottie.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI}/libqrcodegen.a)
     elseif(IOS)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/librlottie.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/${CMAKE_BUILD_TYPE}/libqrcodegen.a)
     else()
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/liblunasvg.a)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/libqrcodegen.a)
     endif()
 endif()
 
@@ -708,6 +720,7 @@ if(COMPILE_LOCALIZATIONS)
 endif()
 
 add_dependencies(es-core rlottie)
+add_dependencies(es-core qrcodegen)
 
 # Set lottie2gif to not be built.
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

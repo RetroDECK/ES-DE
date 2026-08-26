@@ -40,6 +40,7 @@ LottieAnimComponent::LottieAnimComponent()
     , mIterationCount {0}
     , mPlayCount {0}
     , mTargetIsMax {false}
+    , mScaleFactor {1.0f}
     , mCornerRadius {0.0f}
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
@@ -181,6 +182,11 @@ void LottieAnimComponent::setAnimation(const std::string& path)
     if (!mTargetIsMax)
         mTargetSize = mSize;
 
+    if (mScaleFactor != 1.0f) {
+        width = static_cast<int>(static_cast<float>(width) * mScaleFactor);
+        height = static_cast<int>(static_cast<float>(height) * mScaleFactor);
+    }
+
     mPictureRGBA.resize(width * height * 4);
     mSurface = std::make_unique<rlottie::Surface>(reinterpret_cast<uint32_t*>(&mPictureRGBA[0]),
                                                   width, height, width * sizeof(uint32_t));
@@ -287,6 +293,9 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mTargetIsMax = true;
         mTargetSize = mSize;
     }
+
+    if ((properties & ThemeFlags::SIZE) && elem->has("scaleFactor"))
+        mScaleFactor = glm::clamp(elem->get<float>("scaleFactor"), 0.1f, 1.0f);
 
     if (properties & ThemeFlags::POSITION && elem->has("stationary")) {
         const std::string& stationary {elem->get<std::string>("stationary")};
@@ -458,8 +467,8 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
 
     // This is necessary as there may otherwise be no texture to render when paused.
     if ((mExternalPause || mPause) && mTexture->getSize().x == 0.0f) {
-        mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
-                                 static_cast<size_t>(mSize.y));
+        mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x * mScaleFactor),
+                                 static_cast<size_t>(mSize.y * mScaleFactor));
     }
 
     bool doRender {true};
@@ -532,8 +541,9 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
                     }
                 }
 
-                mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
-                                         static_cast<size_t>(mSize.y));
+                mTexture->initFromPixels(&mPictureRGBA.at(0),
+                                         static_cast<size_t>(mSize.x * mScaleFactor),
+                                         static_cast<size_t>(mSize.y * mScaleFactor));
 
                 if (mDirection == "reverse")
                     --mFrameNum;
@@ -552,8 +562,8 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
             if (mFrameCache.find(mFrameNum) != mFrameCache.end()) {
                 if (!mHoldFrame) {
                     mTexture->initFromPixels(&mFrameCache[mFrameNum][0],
-                                             static_cast<size_t>(mSize.x),
-                                             static_cast<size_t>(mSize.y));
+                                             static_cast<size_t>(mSize.x * mScaleFactor),
+                                             static_cast<size_t>(mSize.y * mScaleFactor));
 
                     if (mDirection == "reverse")
                         --mFrameNum;

@@ -9,10 +9,14 @@
 #include "views/GamelistView.h"
 
 #include "CollectionSystemsManager.h"
+#include "RomM/RomMRemoteMediaLoader.h"
+#include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "UIModeController.h"
 #include "animations/LambdaAnimation.h"
 #include "utils/LocalizationUtil.h"
+
+#include <cstdlib>
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 325
@@ -317,7 +321,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mContainerTextComponents.back()->applyTheme(
                         theme, "gamelist", element.first,
                         ALL ^ POSITION ^ ORIGIN ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
-                    if (mContainerTextComponents.back()->getThemeMetadata() != "")
+                    if (mContainerTextComponents.back()->getThemeMetadata() != "" &&
+                        mContainerTextComponents.back()->getThemeMetadata() !=
+                            "customCollectionNameGames")
                         mContainerComponents.back()->setScrollHide(true);
                     else if (mContainerTextComponents.back()->getMetadataElement())
                         mContainerComponents.back()->setScrollHide(true);
@@ -330,7 +336,8 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     const std::string& metadata {mTextComponents.back()->getThemeMetadata()};
                     if (metadata != "" && metadata != "systemName" &&
                         metadata != "systemFullname" && metadata != "sourceSystemName" &&
-                        metadata != "sourceSystemFullname")
+                        metadata != "sourceSystemFullname" &&
+                        metadata != "customCollectionNameGames")
                         mTextComponents.back()->setScrollHide(true);
                     else if (mTextComponents.back()->getMetadataElement())
                         mTextComponents.back()->setScrollHide(true);
@@ -443,6 +450,18 @@ void GamelistView::update(int deltaTime)
     for (auto& anim : mGIFAnimComponents) {
         if (anim->isAnimationPlaying(0))
             anim->advanceAnimation(0, deltaTime);
+    }
+
+    // Poll any in-flight RomM cover fetch. If the entry we're currently waiting on just
+    // finished (successfully or not), re-run updateView() so the newly-arrived image (or the
+    // default image, on failure) gets displayed without requiring the user to move the cursor
+    // again.
+    RomMRemoteMediaLoader::getInstance().update();
+    if (mPendingRomMMediaId != -1 &&
+        RomMRemoteMediaLoader::getInstance().getCoverState(mPendingRomMMediaId) !=
+            RomMRemoteMediaLoader::State::IN_PROGRESS) {
+        mPendingRomMMediaId = -1;
+        updateView(CursorState::CURSOR_STOPPED, true);
     }
 
     if (mTriggerEvent) {
@@ -582,11 +601,16 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
             prompts.push_back(HelpPrompt("left/right", _("system")));
     }
 
+    FileData* cursor {mPrimary->size() > 0 ? getCursor() : nullptr};
+    const bool cursorIsRemote {cursor != nullptr && cursor->getType() == GAME &&
+                               cursor->metadata.get("rommremote") == "true"};
+    const std::string selectPromptText {cursorIsRemote ? _("download") : _("select")};
+
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::ViewMode::GAMELIST)
-        prompts.push_back(HelpPrompt("a", _("select")));
+        prompts.push_back(HelpPrompt("a", selectPromptText));
     else
-        prompts.push_back(HelpPrompt("a", _("select")));
+        prompts.push_back(HelpPrompt("a", selectPromptText));
 
     prompts.push_back(HelpPrompt("b", _("back")));
     prompts.push_back(HelpPrompt("x", _("view media")));
@@ -628,7 +652,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     return prompts;
 }
 
-void GamelistView::updateView(const CursorState& state)
+void GamelistView::updateView(const CursorState& state, bool forceRefresh)
 {
     bool loadedTexture {false};
     mTriggerEvent = false;
@@ -643,8 +667,10 @@ void GamelistView::updateView(const CursorState& state)
                         nullptr};
 
     // If the game data has already been rendered to the view, then skip it this time.
-    // This also happens when fast-scrolling.
-    if (file == mLastUpdated) {
+    // This also happens when fast-scrolling. A pending RomM cover fetch that resolves after the
+    // cursor has already stopped bypasses this via forceRefresh, so the newly-arrived image can
+    // be displayed without duplicating any population logic below.
+    if (file == mLastUpdated && !forceRefresh) {
         if (!mTriggeredEventFastScroll && state == CursorState::CURSOR_SCROLLING &&
             Settings::getInstance()->getBool("CustomEventScripts") &&
             Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
@@ -663,8 +689,13 @@ void GamelistView::updateView(const CursorState& state)
     if (!loadedTexture)
         onDemandTextureLoad();
 
-    if (state == CursorState::CURSOR_STOPPED)
+    if (state == CursorState::CURSOR_STOPPED) {
         mLastUpdated = file;
+        // The "select"/"download" help prompt depends on the selected entry's "rommremote"
+        // flag, so it needs refreshing whenever the cursor settles on a different entry -
+        // updateHelpPrompts() is otherwise only triggered when a GUI is pushed/popped.
+        updateHelpPrompts();
+    }
 
     bool hideMetaDataFields {false};
 
@@ -698,7 +729,9 @@ void GamelistView::updateView(const CursorState& state)
                 (text->getThemeMetadata() != "" && text->getThemeMetadata() != "systemName" &&
                  text->getThemeMetadata() != "systemFullname" &&
                  text->getThemeMetadata() != "sourceSystemName" &&
-                 text->getThemeMetadata() != "sourceSystemFullname"))
+                 text->getThemeMetadata() != "sourceSystemFullname" &&
+                 text->getThemeMetadata() != "customCollectionNameGrouped" &&
+                 text->getThemeMetadata() != "customCollectionNameGames"))
                 text->setVisible(false);
         }
         for (auto& date : mDateTimeComponents)
@@ -724,8 +757,12 @@ void GamelistView::updateView(const CursorState& state)
         for (auto& rating : mRatingComponents)
             rating->setVisible(false);
         for (auto& cText : mContainerTextComponents) {
-            if (cText->getThemeMetadata() != "description" || cText->getMetadataElement())
+            if ((cText->getThemeMetadata() != "description" &&
+                 cText->getThemeMetadata() != "customCollectionNameGrouped" &&
+                 cText->getThemeMetadata() != "customCollectionNameGames") ||
+                cText->getMetadataElement()) {
                 cText->setVisible(false);
+            }
         }
     }
     else {
@@ -821,6 +858,20 @@ void GamelistView::updateView(const CursorState& state)
             }
         }
         else {
+            // Kick off (or check on) a lazy cover fetch for a not-yet-downloaded RomM entry
+            // before populating images below, so setGameImage() can immediately use any bytes
+            // that already finished fetching on a previous visit to this entry. update()
+            // re-triggers this same updateView() call (via forceRefresh) once a pending fetch
+            // resolves, so the newly-arrived image gets displayed without the user having to
+            // move the cursor again.
+            mPendingRomMMediaId = -1;
+            if (file->getRomMRemote() && Settings::getInstance()->getBool("RomMShowRemoteMedia")) {
+                const int rommId {atoi(file->metadata.get("rommid").c_str())};
+                if (RomMRemoteMediaLoader::getInstance().requestCover(rommId) ==
+                    RomMRemoteMediaLoader::State::IN_PROGRESS)
+                    mPendingRomMMediaId = rommId;
+            }
+
             for (auto& image : mImageComponents)
                 setGameImage(file, image.get());
 
@@ -946,6 +997,10 @@ void GamelistView::updateView(const CursorState& state)
                     if (file->getManualPath() != "")
                         badgeSlots.emplace_back(badgeInfo);
                 }
+                else if (badge == "romm") {
+                    if (file->metadata.get("rommid") != "" && RomMUtils::isLoggedIn())
+                        badgeSlots.emplace_back(badgeInfo);
+                }
                 else {
                     if (file->metadata.get(badge) == "true")
                         badgeSlots.emplace_back(badgeInfo);
@@ -1062,6 +1117,28 @@ void GamelistView::updateView(const CursorState& state)
                 return file->getSourceFileData()->getSystem()->getName();
             else if (metadata == "sourceSystemFullname")
                 return file->getSourceFileData()->getSystem()->getFullName();
+            else if (!file->getSystem()->isGroupedCustomCollection() &&
+                     metadata == "customCollectionNameGrouped")
+                return "";
+            else if (!file->getSystem()->isCustomCollection() &&
+                     metadata == "customCollectionNameGames")
+                return "";
+            else if (file->getSystem()->isGroupedCustomCollection() &&
+                     metadata == "customCollectionNameGrouped" &&
+                     file->getPath() != file->getSystem()->getName())
+                return "";
+            else if (file->getSystem()->isCustomCollection() &&
+                     metadata == "customCollectionNameGames" &&
+                     file->getPath() == file->getSystem()->getName())
+                return "";
+            else if (file->getSystem()->isGroupedCustomCollection() &&
+                     metadata == "customCollectionNameGrouped" &&
+                     file->getPath() == file->getSystem()->getName())
+                return file->getSystem()->getFullName();
+            else if (file->getSystem()->isCustomCollection() &&
+                     metadata == "customCollectionNameGames" &&
+                     file->getPath() != file->getSystem()->getName())
+                return file->getSystem()->getFullName();
             else
                 return metadata;
         };
@@ -1223,6 +1300,20 @@ void GamelistView::updateView(const CursorState& state)
 
 void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
 {
+    const bool isRomMRemote {file->getRomMRemote()};
+    const int rommId {isRomMRemote ? atoi(file->metadata.get("rommid").c_str()) : -1};
+    auto& mediaLoader = RomMRemoteMediaLoader::getInstance();
+    // Falls back to the in-memory bytes fetched for a not-yet-downloaded RomM entry only
+    // when the normal on-disk path lookup finds nothing, so an already-scraped cover on
+    // disk (e.g. left over from before the game was re-synced as remote) always wins.
+    // Returns true if bytes were applied, meaning the caller should stop and not touch `path`.
+    auto tryRemoteMedia = [&](const std::string* bytes) {
+        if (!isRomMRemote || !bytes)
+            return false;
+        comp->setImage(bytes->data(), bytes->size());
+        return true;
+    };
+
     std::string path;
     for (auto& imageType : comp->getThemeImageTypes()) {
         if (imageType == "image") {
@@ -1231,6 +1322,8 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
                 comp->setImage(path);
                 return;
             }
+            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
+                return;
         }
         else if (imageType == "miximage") {
             path = file->getMiximagePath();
@@ -1266,6 +1359,8 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
                 comp->setImage(path);
                 return;
             }
+            if (tryRemoteMedia(mediaLoader.getCoverBytes(rommId)))
+                return;
         }
         else if (imageType == "backcover") {
             path = file->getBackCoverPath();

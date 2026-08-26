@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Stratagus هو محرك ألعاب مجاني ومفتوح المصدر متعدد المنصات يُستخدم لبناء ألعاب فيديو استراتيجية في الوقت الحقيقي. مرخّص بموجب GNU GPL-2.0 فقط،[2] وهو مكتوب في الغالب بلغة C++ مع لغة التكوين وهي لغة Lua.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Stratagus è un motore di gioco multipiattaforma gratuito e open-source utilizzato per costruire videogiochi di strategia in tempo reale. È concesso in licenza GNU GPL-2.0,[2] ed è scritto principalmente in C++, mentre il linguaggio di configurazione è Lua.</systemDescription>
+            <systemDescription>Stratagus è un motore di gioco multipiattaforma gratuito ed open-source utilizzato per creare videogiochi di strategia in tempo reale. È concesso in licenza GNU GPL-2.0 ed è scritto principalmente in C++, mentre il linguaggio di configurazione è Lua.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Stratagus är en spelmotor med fri och öppen källkod för flera plattformar som används för att bygga strategispel i realtid. Den är licensierad under GNU GPL-2.0-only,[2] och är huvudsakligen skriven i C++ med konfigurationsspråket Lua.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Stratagus là một công cụ phát triển trò chơi đa nền tảng miễn phí và mã nguồn mở, được sử dụng để phát triển các trò chơi điện tử chiến thuật thời gian thực. Công cụ này được cấp phép theo giấy phép GNU GPL-2.0-only,[2] được viết chủ yếu bằng ngôn ngữ C++ và sử dụng ngôn ngữ cấu hình là Lua.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

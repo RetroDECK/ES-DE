@@ -31,6 +31,17 @@
             <langLabelPlayTime>Temps De Joc</langLabelPlayTime>
         </variables>
     </language>
+    <language name="cs_CZ">
+        <variables>
+            <langLabelReleasedate>Datum vydání</langLabelReleasedate>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Vydavatel</langLabelPublisher>
+            <langLabelGenre>Žánr</langLabelGenre>
+            <langLabelPlayers>Hráči</langLabelPlayers>
+            <langLabelLastPlayed>Naposledy hrál</langLabelLastPlayed>
+            <langLabelPlayTime>Doba hraní</langLabelPlayTime>
+        </variables>
+    </language>
     <language name="de_DE">
         <variables>
             <langLabelReleasedate>Veröffentlicht</langLabelReleasedate>

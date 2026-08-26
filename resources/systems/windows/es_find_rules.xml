@@ -509,6 +509,17 @@
             <entry>%ESPATH%\..\Emulators\gopher64\gopher64-windows-x86_64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="GROOVYMAME">
+        <!-- Arcade emulator GroovyMAME -->
+        <rule type="systempath">
+            <entry>groovymame.exe</entry>
+            <entry>mame.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\groovymame\mame.exe</entry>
+            <entry>%ESPATH%\..\Emulators\groovymame\mame.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">
@@ -593,6 +604,16 @@
             <entry>%ESPATH%\..\Emulators\lime3ds\lime3ds-gui.exe</entry>
             <entry>%ESPATH%\Emulators\lime-qt\lime-qt.exe</entry>
             <entry>%ESPATH%\..\Emulators\lime-qt\lime-qt.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="LINUX-LOADER">
+        <!-- Sega Lindbergh emulator Linux Loader -->
+        <rule type="systempath">
+            <entry>linuxloader.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\linuxloader\linuxloader.exe</entry>
+            <entry>%ESPATH%\..\Emulators\linuxloader\linuxloader.exe</entry>
         </rule>
     </emulator>
     <emulator name="M2EMULATOR">
@@ -752,6 +773,7 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
             <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2\pcsx2-qt*.exe</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2-LEGACY">
@@ -767,6 +789,16 @@
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\Emulators\PCSX2\pcsx2.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="PCSX2X6">
+        <!-- Namco System 246 and 256 emulator PCSX2x6 -->
+        <rule type="systempath">
+            <entry>pcsx2x6.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\PCSX2x6\pcsx2x6*.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2x6\pcsx2-qt*.exe</entry>
         </rule>
     </emulator>
     <emulator name="PICO-8">
@@ -1082,6 +1114,16 @@
             <entry>%ESPATH%\..\Emulators\Supermodel-Dojo\supermodel.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SUPERZSNES">
+        <!-- Super Nintendo/Super Famicom emulator SUPER ZSNES -->
+        <rule type="systempath">
+            <entry>SUPERZSNES.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\SUPERZSNES\SUPERZSNES.exe</entry>
+            <entry>%ESPATH%\..\Emulators\SUPERZSNES\SUPERZSNES.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="TIC-80">
         <!-- TIC-80 Fantasy Computer (game engine) -->
         <rule type="systempath">
@@ -1120,6 +1162,16 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\VBA-M\visualboyadvance-m.exe</entry>
             <entry>%ESPATH%\..\Emulators\VBA-M\visualboyadvance-m.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="VEESEM">
+        <!-- VTech V.Smile emulator veesem -->
+        <rule type="systempath">
+            <entry>veesem.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\veesem\veesem.exe</entry>
+            <entry>%ESPATH%\..\Emulators\veesem\veesem.exe</entry>
         </rule>
     </emulator>
     <emulator name="VICE-X64SC">

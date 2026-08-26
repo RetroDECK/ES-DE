@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>Beats of Rage هي لعبة تحية من صنع المعجبين لسلسلة Streets of Rage من Sega. وهي تستبدل الرسومات والشخصيات الأصلية بموارد مأخوذة من سلسلة The King of Fighters، وإن كان ذلك مع إعادة تسمية ساخرة. تم تطويرها في الأصل من قِبل فريق Senile Team، وقد أصبح المحرك الأساسي الذي يعمل على تشغيل Beats of Rage لاحقًا مشروع محرك لعبة Open Beats of Rage (OpenBOR).</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemDescription>Beats of Rage هي لعبة تحية من صنع المعجبين لسلسلة Streets of Rage من Sega. وهي تستبدل الرسومات والشخصيات الأصلية بموارد مأخوذة من سلسلة The King of Fighters، وإن كان ذلك مع إعادة تسمية ساخرة. تم تطويرها في الأصل من قِبل فريق Senile Team، وقد أصبح محرك الأساسي الذي يعمل على تشغيل Beats of Rage لاحقًا مشروع محرك لعبة Open Beats of Rage (OpenBOR).</systemDescription>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Beats of Rage är ett fan-skapat hyllningsspel till Segas Streets of Rage-serie. Det ersätter originalgrafiken och karaktärerna med resurser hämtade från The King of Fighters-serien, om än med ironiska namnbyten. Spelet utvecklades ursprungligen av Senile Team, men den underliggande spelmotorn i Beats of Rage blev senare Open Beats of Rage (OpenBOR).</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Beats of Rage là một tựa game do người hâm mộ tự phát triển để tri ân series Streets of Rage của Sega. Trò chơi này thay thế đồ họa và nhân vật gốc bằng các tài nguyên lấy từ series The King of Fighters, kèm theo những cái tên được đặt lại một cách hài hước. Ban đầu được phát triển bởi Senile Team, bộ công cụ nền tảng vận hành Beats of Rage sau này đã phát triển thành dự án công cụ game Open Beats of Rage (OpenBOR).</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

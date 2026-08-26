@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>PICO-8 عبارة عن آلة افتراضية ومحرك ألعاب افتراضي تم إنشاؤه بواسطة Lexaloffle Games. وهو عبارة عن وحدة تحكم ألعاب فيديو خيالية تحاكي القدرات الرسومية والصوتية المحدودة لأنظمة 8 بت في الثمانينيات.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>PICO-8 è una macchina virtuale e un motore di gioco creato da Lexaloffle Games. È una console per videogiochi di fantasia che imita le limitate capacità grafiche e sonore dei sistemi a 8 bit degli anni Ottanta.</systemDescription>
+            <systemDescription>PICO-8 è una macchina virtuale ed un motore di gioco creato da Lexaloffle Games. È una console per videogiochi di fantasia che imita le limitate capacità grafiche e sonore dei sistemi ad 8 bit degli anni Ottanta.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>PICO-8 är en virtuell maskin och spelmotor som skapats av Lexaloffle Games. Det är en fantasy-konsol för videospel som efterliknar den begränsade grafiska och ljudmässiga kapaciteten hos 8-bitars system på 1980-talet.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>PICO-8 là một máy ảo và công cụ phát triển trò chơi do Lexaloffle Games phát triển. Đây là một hệ máy chơi game giả tưởng mô phỏng các khả năng đồ họa và âm thanh hạn chế của các hệ thống 8-bit thập niên 1980.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

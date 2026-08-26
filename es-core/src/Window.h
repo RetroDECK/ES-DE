@@ -112,11 +112,16 @@ public:
         POPULATING,
         RELOADING,
         RESOURCE_COPY,
-        DIR_CREATION
+        DIR_CREATION,
+        SYNCING
     };
 
     void updateSplashScreenText();
     void renderSplashScreen(SplashScreenState state, float progress);
+    // Overrides the SYNCING state's label (e.g. to show live "(3/12)" progress) - recentered
+    // automatically since renderSplashScreen() computes its X position from the text's current
+    // width on every call.
+    void setSyncingSplashText(const std::string& text) { mSplashTextSyncing->setText(text); }
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
     void renderListScrollOverlay(const float opacity, const std::string& text);
 
@@ -233,6 +238,7 @@ private:
     std::unique_ptr<TextComponent> mSplashTextReloading;
     std::unique_ptr<TextComponent> mSplashTextResourceCopy;
     std::unique_ptr<TextComponent> mSplashTextDirCreation;
+    std::unique_ptr<TextComponent> mSplashTextSyncing;
 
     glm::vec4 mSplashTextPositions;
     std::vector<ProgressBarRectangle> mProgressBarRectangles;

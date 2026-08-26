@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Lutro هو إطار عمل للألعاب ثنائية الأبعاد يهدف إلى البساطة وقابلية النقل القصوى. باستخدام Lutro، يمكنك تطوير أي نوع من الألعاب ثنائية الأبعاد القديمة، مثل ألعاب NES أو Genesis، وتشغيلها على مجموعة واسعة من المنصات من خلال RetroArch. يجعل Lutro من السهل كتابة الألعاب باستخدام Lua واتباع واجهة برمجة تطبيقات LÖVE. تتحقق قابلية النقل من خلال واجهة برمجة التطبيقات libretro API: يتم تحميل Lutro فقط كمكون إضافي في واجهة أمامية مثل RetroArch التي تهتم بالعرض والصوت والمدخلات.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Lutro è un framework per giochi 2D che punta alla semplicità e all'estrema portabilità. Utilizzando Lutro, è possibile sviluppare qualsiasi tipo di gioco 2D retrò, come quelli per NES o Genesis, ed eseguirli su un'ampia gamma di piattaforme attraverso RetroArch. Lutro semplifica la scrittura di giochi utilizzando Lua e seguendo le API LÖVE. La portabilità è ottenuta grazie all'API libretro: Lutro viene semplicemente caricato come plugin in un frontend come RetroArch che si occupa della visualizzazione, dell'audio e degli ingressi.</systemDescription>
+            <systemDescription>Lutro è un framework per giochi 2D che punta alla semplicità ed all'estrema portabilità. Utilizzando Lutro è possibile sviluppare qualsiasi tipo di gioco 2D retrò, come quelli per NES o Genesis ed eseguirli su un'ampia gamma di piattaforme, attraverso RetroArch. Lutro semplifica la scrittura di giochi utilizzando Lua e seguendo le API LÖVE. La portabilità è ottenuta grazie alle API libretro: Lutro, infatti, viene semplicemente caricato come plugin in un frontend come RetroArch, il quale si occupa della visualizzazione grafica, dell'audio e degli input.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Lutro är ett ramverk för 2D-spel som strävar efter enkelhet och extrem portabilitet. Med Lutro kan du utveckla alla typer av 2D-retrospel, som NES- eller Genesis-spel, och köra dem på ett brett utbud av plattformar via RetroArch. Lutro gör det enkelt att skriva spel genom att använda Lua och följa LÖVE API. Portabilitet uppnås genom libretro API: Lutro laddas bara som ett plugin i en frontend som RetroArch som tar hand om display, ljud och ingångar.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Lutro là một khung nền trò chơi 2D hướng đến sự đơn giản và khả năng tương thích cao. Với Lutro, bạn có thể phát triển bất kỳ loại trò chơi 2D cổ điển nào, như các trò chơi trên NES hay Genesis, và chạy chúng trên nhiều nền tảng khác nhau thông qua RetroArch. Lutro giúp việc viết trò chơi trở nên dễ dàng nhờ sử dụng ngôn ngữ Lua và tuân thủ giao diện lập trình ứng dụng (API) LÖVE. Khả năng tương thích được thực hiện thông qua API libretro: Lutro chỉ được tải dưới dạng một plugin trong một giao diện người dùng như RetroArch, nơi đảm nhiệm việc hiển thị, âm thanh và nhập liệu.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

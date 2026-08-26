@@ -239,12 +239,14 @@ namespace Utils
             return iterateString.toUTF8String(stringCapitalized);
         }
 
+#if defined(__ANDROID__)
         std::string filterUtf8(const std::string& stringArg)
         {
             std::string tempString;
             utf8::replace_invalid(stringArg.begin(), stringArg.end(), back_inserter(tempString));
             return tempString;
         }
+#endif
 
         std::string trim(const std::string& stringArg)
         {

@@ -76,9 +76,9 @@ Nakon dobrog početka prodaje i u SAD-u i u Japanu s 14 naslova za pokretanje (t
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Neo Geo Pocket Color è una console per videogiochi portatile a colori a 16 bit prodotta da SNK. È il successore della console portatile monocromatica Neo Geo Pocket di SNK, che ha debuttato nel 1998 in Giappone, e il Color è completamente retrocompatibile. Il Neo Geo Pocket Color è stato rilasciato il 16 marzo 1999 in Giappone, il 6 agosto 1999 in Nord America e il 1° ottobre 1999 in Europa, entrando nei mercati dominati da Nintendo e facendo concorrenza al Game Boy Color di Nintendo.
+            <systemDescription>Il Neo Geo Pocket Color è una console per videogiochi portatile a colori a 16 bit prodotta da SNK. È il successore della console portatile monocromatica Neo Geo Pocket di SNK, che ha debuttato nel 1998 in Giappone con la quale il Color è completamente retrocompatibile. Il Neo Geo Pocket Color è stato rilasciato il 16 marzo 1999 in Giappone, il 6 agosto 1999 in Nord America ed il 1° ottobre 1999 in Europa, entrando nei mercati dominati da Nintendo e facendo concorrenza al suo Game Boy Color.
 
-Dopo un buon inizio di vendite sia negli Stati Uniti che in Giappone, con 14 titoli di lancio (un record all'epoca), il successivo scarso supporto al dettaglio negli Stati Uniti, la mancanza di comunicazione con gli sviluppatori di terze parti da parte della dirigenza americana di SNK, la popolarità del franchise Pokémon di Nintendo e l'anticipazione del Game Boy Advance a 32 bit, nonché la forte concorrenza del WonderSwan di Bandai in Giappone, portarono a un calo delle vendite in entrambe le regioni.</systemDescription>
+Dopo un buon inizio di vendite sia negli Stati Uniti che in Giappone, con 14 titoli al lancio (un record all'epoca), il successivo scarso supporto al dettaglio negli Stati Uniti, la mancanza di comunicazione con gli sviluppatori di terze parti da parte della dirigenza americana di SNK, la popolarità del franchise Pokémon di Nintendo e l'anticipazione del Game Boy Advance a 32 bit, nonché la forte concorrenza del WonderSwan di Bandai in Giappone, portarono ad un calo delle vendite in entrambe le regioni.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ După un început bun al vânzărilor atât în SUA, cât și în Japonia, cu 14
 
 Efter en bra försäljningsstart i både USA och Japan med 14 lanseringstitlar (ett rekord på den tiden), ledde det låga stödet från detaljhandeln i USA, SNK:s amerikanska lednings bristande kommunikation med tredjepartsutvecklare, populariteten hos Nintendos Pokémon-serie och väntan på 32-bitars Game Boy Advance, samt stark konkurrens från Bandais WonderSwan i Japan, till en försäljningsnedgång i båda regionerna.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Neo Geo Pocket Color là một hệ máy chơi game cầm tay 16-bit màu do SNK sản xuất. Đây là phiên bản kế thừa của hệ máy cầm tay Neo Geo Pocket đơn sắc của SNK, ra mắt lần đầu tiên vào năm 1998 tại Nhật Bản, với phiên bản Color hoàn toàn tương thích ngược. Neo Geo Pocket Color được phát hành vào ngày 16 tháng 3 năm 1999 tại Nhật Bản, ngày 6 tháng 8 năm 1999 tại Bắc Mỹ và ngày 1 tháng 10 năm 1999 tại châu Âu, thâm nhập vào các thị trường vốn bị Nintendo thống trị, cạnh tranh với Game Boy Color của Nintendo.
+
+Sau một khởi đầu bán hàng tốt ở cả Mỹ và Nhật Bản với 14 tựa game ra mắt (một kỷ lục vào thời điểm đó), sự hỗ trợ bán lẻ thấp sau đó ở Mỹ, sự thiếu liên lạc với các nhà phát triển bên thứ ba từ phía ban quản lý SNK tại Mỹ, sự phổ biến của thương hiệu Pokémon của Nintendo và sự mong đợi đối với Game Boy Advance 32-bit, cùng với sự cạnh tranh mạnh mẽ từ WonderSwan của Bandai tại Nhật Bản, đã dẫn đến sự sụt giảm doanh số tại cả hai khu vực.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

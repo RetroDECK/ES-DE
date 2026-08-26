@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن MSX Turbo R هو الجيل الأخير من أجهزة كمبيوتر MSX التي تم طرحها في الأسواق من قبل علامة تجارية إلكترونية منزلية. وحدها شركة باناسونيك كانت شجاعة بما فيه الكفاية لتضع ثقتها في المعيار مرة أخرى، من خلال إصدار طرازين مختلفين: باناسونيك FS-A1ST وباناسونيك FS-A1GT. تم إنتاج أجهزة كمبيوتر MSX Turbo R حتى عام 1994.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'MSX Turbo R è l'ultima generazione di computer MSX immessa sul mercato da un marchio di elettronica familiare. Solo Panasonic ebbe il coraggio di puntare ancora una volta sullo standard, rilasciando due modelli diversi: il Panasonic FS-A1ST e il Panasonic FS-A1GT. I computer MSX Turbo R furono prodotti fino al 1994.</systemDescription>
+            <systemDescription>L'MSX Turbo R è l'ultima generazione di computer MSX immessa sul mercato da un marchio di elettronica familiare. Solo Panasonic ebbe il coraggio di puntare ancora una volta sullo standard, rilasciando due modelli diversi (esclusivamente in Giappone): il Panasonic FS-A1ST ed il Panasonic FS-A1GT. I computer MSX Turbo R furono prodotti fino al 1994.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>MSX Turbo R är den sista generationen MSX-datorer som släpptes på marknaden av ett välkänt elektronikmärke. Det var bara Panasonic som var modig nog att satsa på standarden igen, genom att släppa två olika modeller: Panasonic FS-A1ST och Panasonic FS-A1GT. MSX Turbo R-datorer tillverkades fram till 1994.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>MSX Turbo R là thế hệ máy tính MSX cuối cùng được một thương hiệu điện tử gia dụng đưa ra thị trường. Chỉ có Panasonic là đủ dũng cảm để một lần nữa đặt niềm tin vào tiêu chuẩn này, bằng cách ra mắt hai mẫu máy khác nhau: Panasonic FS-A1ST và Panasonic FS-A1GT. Máy tính MSX Turbo R được sản xuất cho đến năm 1994.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

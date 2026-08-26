@@ -13,6 +13,8 @@ set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 
 if(WIN32)
+    # To prevent a warning regarding MSVC not being an assembler.
+    set(CMAKE_POLICY_DEFAULT_CMP194 OLD)
     # On Windows the build type needs to match the main binary.
     if(CMAKE_BUILD_TYPE MATCHES Profiling)
         set(CMAKE_BUILD_TYPE Release)
@@ -31,6 +33,13 @@ if(WIN32)
     set(BUILD_SHARED_LIBS ON)
 else()
     set(BUILD_SHARED_LIBS OFF)
+endif()
+
+add_subdirectory(qrcodegen EXCLUDE_FROM_ALL)
+
+if(ANDROID)
+    set_target_properties(qrcodegen PROPERTIES ARCHIVE_OUTPUT_DIRECTORY
+                          ${PROJECT_SOURCE_DIR}/android_${ANDROID_ABI})
 endif()
 
 add_subdirectory(lunasvg EXCLUDE_FROM_ALL)

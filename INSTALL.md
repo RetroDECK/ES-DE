@@ -18,15 +18,15 @@ Any code editor can be used, but [VSCode](https://code.visualstudio.com) is reco
 
 There are some dependencies that need to be fulfilled in order to build ES-DE. These are detailed per operating system below.
 
-**Debian/Ubuntu**
+### Debian/Ubuntu
 
-All of the required packages can be installed with apt-get:
+All of the required packages can be installed with apt:
 
 ```
-sudo apt-get install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libbluetooth-dev libgl1-mesa-dev libpoppler-cpp-dev
+sudo apt install build-essential clang-format git cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libbluetooth-dev libgl1-mesa-dev libpoppler-cpp-dev
 ```
 
-**Fedora**
+### Fedora
 
 On Fedora you first need to install the RPM Fusion repository:
 
@@ -41,7 +41,13 @@ Then you can use dnf to install all the required packages:
 sudo dnf install gcc-c++ clang-tools-extra cmake gettext harfbuzz-devel libicu-devel libasan rpm-build SDL2-devel ffmpeg-devel libavcodec-devel libavfilter-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel bluez-libs-devel mesa-libGL-devel poppler-cpp-devel
 ```
 
-**Arch/Manjaro**
+Sometimes FFmpeg refuses to install, and in this case you may need to run the following as well:
+```
+sudo dnf remove ffmpeg-free
+sudo dnf install --allowerasing ffmpeg-devel
+```
+
+### Arch/Manjaro
 
 Use pacman to install all the required packages:
 
@@ -49,27 +55,79 @@ Use pacman to install all the required packages:
 sudo pacman -S gcc clang make cmake gettext harfbuzz icu pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
 ```
 
-**Raspberry Pi OS**
+### Raspberry Pi OS
 
-All of the required packages can be installed with apt-get:
+All of the required packages can be installed with apt:
 ```
-sudo apt-get install clang-format cmake gettext libharfbuzz-dev libicu-dev libraspberrypi-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libbluetooth-dev libpoppler-cpp-dev
+sudo apt install clang-format cmake gettext libharfbuzz-dev libicu-dev libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libbluetooth-dev libpoppler-cpp-dev
 ```
-
-For a 64-bit build it's very important that you include libraspberrypi-dev because if this package is not installed then the file /usr/include/bcm_host.h is not present on the filesystem. This leads to CMake not detecting that it's indeed a Raspberry Pi and it will attempt to make a regular Linux build instead.
-
-To build with CEC support you also need to install these packages:
-```
-sudo apt-get install libcec-dev libp8-platform-dev
-```
-
-The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
 
 Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. By default a display server (Xorg or Wayland) is also required but by using the DEINIT_ON_LAUNCH build option as explained later in this document KMS/direct framebuffer access can be used.
 
-Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by default.
+If you want to use the default OpenGL ES 3.0 driver then you need to build with the GLES option:
+```
+cmake -DGLES=on .
+make -j8
+```
 
-**FreeBSD**
+Alternatively you can skip this and run ES-DE by explicitly telling the driver to use regular desktop OpenGL 3.3:
+```
+MESA_GL_VERSION_OVERRIDE=3.3 ./es-de
+```
+
+Yet another alternative would be to use the Zink driver on top of Vulkan, although that could lead to slightly worse performance:
+```
+MESA_GL_VERSION_OVERRIDE=3.3 MESA_LOADER_DRIVER_OVERRIDE=zink ./es-de
+```
+
+Note that you'll probably need a 64-bit operating system to build and run ES-DE as there has been no testing done on 32-bit operating systems.
+
+### Waveshare VisionFive2 RISC-V SBC
+
+This is a very specific device but it was tested with ES-DE as the first RISC-V processor build. For desktop computers RISC-V is still not viable due to the processors being so weak, but over time this will hopefully improve, and long term it's very possible that this ISA will be a fine platform for emulation and retrogaming.
+
+This board has been tested with Debian and it's the exact same build procedure as for Debian and Ubuntu on x86 or ARM, including the exact same dependencies.
+
+The build process should be working correctly, although you need to build with the GLES 3.0 renderer, like so:
+```
+cmake -DGLES=on .
+make -j4
+```
+
+At the time of writing there is a shader compiler bug in the GPU driver for the IMG BXE-4-32 MC1 that breaks the shader compilation, and this prevents ES-DE from starting. This is a simple fix, just modify the following code in `resources/shaders/glsl/core.glsl`:
+```
+    // Discard any pixels outside the clipping region.
+    if (0x0u != (shaderFlags & 0x8u)) {
+        if (position.x < clipRegion.x)
+            discard;
+        else if (position.y < clipRegion.y)
+            discard;
+        else if (position.x > clipRegion.z)
+            discard;
+        else if (position.y > clipRegion.w)
+            discard;
+    }
+```
+To the following:
+
+```    // Discard any pixels outside the clipping region.
+    if (0x0u != (shaderFlags & 0x8u)) {
+        if (position.x < clipRegion.x)
+            discard;
+        if (position.y < clipRegion.y)
+            discard;
+        if (position.x > clipRegion.z)
+            discard;
+        if (position.y > clipRegion.w)
+            discard;
+    }
+```
+
+Performance in ES-DE is poor but tolerable, at 1920x1080 you may get between 20 and 45 FPS, but it's likely that actually running games will result in abysmal performance, likely due to the slow processor.
+
+If you're using RetroArch you also need to add a core find rule entry for the RISC-V library path to `resources/systems/linux/es_find_rules.xml`
+
+### FreeBSD
 
 Use pkg to install the dependencies:
 ```
@@ -78,7 +136,7 @@ pkg install llvm-devel git pkgconf cmake gettext harfbuzz icu sdl2 ffmpeg freeim
 
 Clang/LLVM and curl should already be included in the base OS installation.
 
-**Cloning and compiling ES-DE**
+### Cloning and compiling ES-DE
 
 To clone the source repository, run the following:
 ```
@@ -226,14 +284,6 @@ cmake -DVIDEO_HW_DECODING=on .
 make -j8
 ```
 
-To build ES-DE with CEC support, enable the corresponding option, for example:
-
-```
-cmake -DCEC=on .
-make -j8
-```
-You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
-
 To build with the GLES 3.0 renderer, run the following:
 ```
 cmake -DGLES=on .
@@ -254,7 +304,7 @@ It's important to understand that this is not only the directory used by the ins
 
 On Linux, if you're not building a package and instead intend to install using `make install` it's recommended to set the installation prefix to /usr/local instead of /usr.
 
-**Compilers**
+### Compilers
 
 Both Clang/LLVM and GCC work fine for building ES-DE, and on Ubuntu it's easy to switch between the two using `update-alternatives`:
 
@@ -275,7 +325,7 @@ update-alternatives: using /usr/bin/clang++ to provide /usr/bin/c++ (c++) in man
 
 Following this, just re-run cmake and make and the binary should be built by Clang instead.
 
-**Installing**
+### Installing
 
 Installing the software requires root permissions, the following command will install all the required application files:
 
@@ -321,7 +371,7 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the installation path, or in the path of the ES-DE executable.
 
-**Creating .deb and .rpm packages**
+### Creating .deb and .rpm packages
 
 Creation of Debian .deb packages is enabled by default, simply run `cpack` to generate the package:
 
@@ -387,7 +437,7 @@ And of course, you can also install the package:
 sudo dnf install ./es-de_3.0.0-x64.rpm
 ```
 
-**Creating an AppImage**
+### Creating an AppImage
 
 The process to create a Linux AppImage is completely automated. You simply run the AppImage creation script, which has to be executed from the root of the repository:
 
@@ -397,12 +447,17 @@ tools/create_AppImage.sh
 
 This script has only been tested on Ubuntu 20.04 LTS and 22.04 LTS. It's generally recommended to go for an older operating system when building the AppImage to achieve compatibility with a larger number of distributions. To build it you need the PipeWire development package installed. The name differs between releases, but for 22.04 LTS it's named _libpipewire-0.3-dev_.
 
-To build the Steam Deck-specific AppImage, run the following:
+To build an AppImage for the ARM64/AArch64 architecture, run the following:
+```
+tools/create_AppImage_AArch64.sh
+```
+
+And to build the Steam Deck-specific AppImage, run the following:
 ```
 tools/create_AppImage_SteamDeck.sh
 ```
 
-This is similar to the regular AppImage but changes some settings like the VRAM limit.
+This is similar to the regular x86 and aarch64 AppImages but changes some settings like the VRAM limit.
 
 Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script.
 
@@ -412,7 +467,7 @@ It's recommended to run R1/beta5 as the nightly Haiku builds can be quite unstab
 
 If running Haiku in KVM/Qemu, make sure to use SATA storage intead of VirtIO storage as you may otherwise experience stability issues and filesystem corruption.
 
-**Local build**
+### Local build
 
 Use pkgman to install the required dependencies:
 ```
@@ -432,7 +487,7 @@ make -j8
 
 Change the -j flag to whatever amount of parallel threads you want to use for the compilation.
 
-**HaikuPorts package build**
+### HaikuPorts package build
 
 Run the following to build the .hpkg package:
 
@@ -456,7 +511,7 @@ cp ~/haikuports/packages/es_de-3.1.1-1-x86_64.hpkg /boot/system/packages
 
 ES-DE for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main problem is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
 
-**Setting up the build tools**
+### Setting up the build tools
 
 Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
 
@@ -470,7 +525,7 @@ If running on an M1 Mac, you also need to add the following to your `~/.zshrc` s
 export PATH=/opt/homebrew/bin:$PATH
 ```
 
-**Package installation with Homebrew**
+### Package installation with Homebrew
 
 Install the required tools:
 
@@ -478,14 +533,14 @@ Install the required tools:
 brew install clang-format cmake pkg-config meson nasm yasm
 ```
 
-**Developer mode**
+### Developer mode
 
 Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
 ```
 sudo /usr/sbin/DevToolsSecurity --enable
 ```
 
-**Cloning and compiling**
+### Cloning and compiling
 
 To clone the source repository, run the following:
 
@@ -574,7 +629,7 @@ export ASAN_OPTIONS=detect_container_overflow=0
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
-**Cross-compiling for x86_64**
+### Cross-compiling for x86_64
 
 To cross-compile for x86_64 using an ARM processor you only need to change two things.
 
@@ -587,7 +642,7 @@ cmake -DCMAKE_OSX_ARCHITECTURES=x86_64 .
 
 Following this you can just build and package the application in the same way as a native ARM build.
 
-**Code signing**
+### Code signing
 
 A detailed explanation of macOS code signing is beyond the scope of this document, but the CMake option MACOS_CODESIGN_IDENTITY is used to specify the code signing certificate identity, for example:
 ```
@@ -601,7 +656,7 @@ security unlock-keychain
 
 This is not required if cpack is run from a terminal window started via the desktop interface as the keychain is unlocked as part of the desktop login.
 
-**Installing**
+### Installing
 
 As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. This is almost completely automated by the build scripts.
 
@@ -660,7 +715,7 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
-**Creating a .dmg installer**
+### Creating a .dmg installer
 
 Simply run `cpack` to build a .dmg disk image/installer:
 
@@ -681,17 +736,20 @@ Only the Microsoft Visual C++ (MSVC) compiler is supported on Windows. Although 
 Install Git for Windows: \
 https://gitforwindows.org
 
+You also need 7-Zip installed and the 7z.exe binary location added to your Path environment variable: \
+https://www.7-zip.org
+
 Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
 https://visualstudio.microsoft.com/downloads
 
 During installation, choose the Desktop development with C++ workload with the following options:
 
 ```
-MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+MSVC Build Tools for x64/x86 (Latest)
 Just-In-Time debugger
 C++ CMake tools for Windows
 C++ AddressSanitizer
-Windows 10 SDK (10.0.20348.0)
+Windows 11 SDK (10.0.26100)
 ```
 
 The Windows SDK version is important, it has to be this precise version or some dependencies may not build correctly.
@@ -708,7 +766,7 @@ The way the MSVC environment works is that a specific developer shell is provide
 
 It's important to choose the x64-specific shell and not the x86 variant, as ES-DE will only compile as a 64-bit application.
 
-**Other preparations**
+### Additional preparations
 
 In order to get clang-format onto the system you need to download and install Clang/LLVM: \
 https://releases.llvm.org
@@ -725,7 +783,7 @@ It's strongly recommended to set line breaks to Unix-style (line feed only) dire
 
 The instructions below assume all build steps for MSVC are done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
 
-**Cloning and setting up dependencies**
+### Cloning and setting up dependencies
 
 To clone the source repository, run the following:
 
@@ -754,7 +812,7 @@ The setup scripts will download and launch an installer for OpenSSL for Windows 
 
 Following these preparations, ES-DE should be ready to be compiled.
 
-**Building ES-DE**
+### Building ES-DE
 
 It's assumed that [Jom](https://wiki.qt.io/Jom) is used, but if instead using nmake then just remove _JOM_ from the -G flag argument and remove the -j flag as nmake does not support building in parallel.
 
@@ -767,7 +825,7 @@ jom -j8
 
 Or for a debug build:
 ```
-cmake –G "NMake Makefiles JOM” .
+cmake -G "NMake Makefiles JOM" .
 jom -j8
 ```
 
@@ -785,11 +843,11 @@ ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC com
 
 There are a number of compiler warnings for the bundled rlottie library. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
 
-**TLS/SSL certificates**
+### TLS/SSL certificates
 
 On Windows the certificates supplied with the operating system will not be utilized, instead TLS/SSL certificates bundled with ES-DE will be used.
 
-**Running with OpenGL software rendering**
+### Running with OpenGL software rendering
 
 If you are running Windows in a virtualized environment such as QEMU-KVM that does not support HW accelerated OpenGL, you can install the Mesa3D for Windows library, which can be downloaded at https://fdossena.com/?p=mesa/index.frag
 
@@ -797,7 +855,7 @@ You simply extract the opengl32.dll file into the ES-DE directory and this will 
 
 Obviously this library is only intended for development and will not be shipped with ES-DE.
 
-**Creating an NSIS installer**
+### Creating an NSIS installer
 
 To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
 
@@ -941,7 +999,9 @@ Of course you would like to get the code formatted according to the clang-format
 
 ## CA certificates and MAME ROM information
 
-**CA certificates**
+These files are regularly updated as releases for ES-DE are made.
+
+### CA certificates
 
 There are some files shipped with ES-DE that need to be pulled from external resources, the first one being the CA certificate bundle to get TLS/SSL support working on Windows.
 
@@ -955,7 +1015,7 @@ After downloading the file, rename it from `cacert.pem` to `curl-ca-bundle.crt` 
 emulationstation-de/resources/certificates/curl-ca-bundle.crt
 ```
 
-**MAME ROM info**
+### MAME ROM info
 
 ES-DE automatically identifies and excludes MAME BIOS and device files, as well as translating the short MAME ROM names to their full game names. This is done using information from the MAME driver file shipped with the official MAME distribution. The file needs to be converted to an internal format used by ES-DE as the original file is huge and most of the information is not required.
 
@@ -1821,6 +1881,8 @@ https://developer.android.com/reference/android/content/Intent
 
 `%EXTRAARRAY_` - Defines an array of comma-separated string values following the key name. Only literal strings and special variables are supported, so this can't be used in combination with any ROM variables. As commas are used as separator characters, you'll need to escape any comma signs that you want to include in the actual value. For example %EXTRAARRAY_Parameters%=pone,p\\,two,pthree will pass the extra named _Parameters_ with the three separate array entries _pone_, _p,two_ and _pthree_. It's also possible to use the `%BASENAME%`, `%GAMEDIRRAW%`, `%ROMPATHRAW%`, `%ROMRAW%` and `%ROMRAWWIN%` variables inside an `%EXTRAARRAY_` variable definition. This will expand to the basename of the game file, the directory of the game file, the ROM directory, the path to the game file with standard forward slashes as directory separators, and the path to the game file with Windows backslashes as directory separators, respectively.
 
+_Note that multiple forward slashes are automatically replaced with single forward slashes for the %EXTRA% and %EXTRARRAY% values, if you want to pass multiple forward slashes you will need to escape them such as_ `\/\/`
+
 `%EXTRAINTEGER_` - Sets an extra with an integer value.
 
 `%EXTRABOOL_` - Sets an extra with a boolean value, i.e. true/1 or false/0.
@@ -2350,30 +2412,34 @@ There are numerous locations throughout ES-DE where custom scripts can be execut
 
 The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then attempt to execute all these files (regardless of their file extensions, except on Windows where only .bat files can be used). If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Linux and Android and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
 
+Note that on Android there are some limitations for what can be done in scripts due to the security model of the operating system, for example you're not able to run the _am_ command from a script as the Android app sandboxing prevents that.
+
 On Windows PowerShell scripts can't be executed directly but they can be run via .bat wrapper script where you explicitly call powershell.exe with the -command flag. Just be aware that by default the execution of PowerShell scripts is disabled on Windows. Further details about PowerShell is beyond the scope of this document.
 
 The working directory set when launching scripts differs between operating systems due to the way that the script execution works on different platforms, so it's best to not rely on this and instead set explicit paths in all your scripts. This way any child script executions or file output etc. will behave consistently.
 
 There are up to four parameters that will be passed to these scripts, as detailed below:
 
-| Event                    | Parameters*                                        | Description                                                                                       |
-| :----------------------- | :------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| startup                  |                                                    | Application startup                                                                               |
-| quit                     |                                                    | Application quit/shutdown                                                                         |
-| reboot                   |                                                    | System reboot (quit event triggered as well)                                                      |
-| poweroff                 |                                                    | System power off (quit event triggered as well)                                                   |
-| suspend                  |                                                    | System suspend (on platforms that support suspending)                                             |
-| config-changed           |                                                    | On saving application settings or controller configuration                                        |
-| settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)                           |
-| controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well)                       |
-| theme-changed            | New theme name, old theme name                     | When manually changing themes in the UI Settings menu                                             |
-| game-start               | ROM path, game name, system name, system full name | On game launch                                                                                    |
-| game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)                               |
-| screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                                         |
-| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ended via cancellation, jump to game or start/launch of game                          |
-| screensaver-game-select  | ROM path, game name, system name, system full name | Screensaver selected a new random game                                                            |
-| game-select              | ROM path, game name, system name, system full name | On browsing games in the gamelist view, requires enabling of the _Browsing custom events_ setting |
-| system-select            | System name, system full name, system     ROM path | On browsing systems in the system view, requires enabling of the _Browsing custom events_ setting |
+| Event                    | Parameters*                                                                             | Description                                                                                       |
+| :----------------------- | :-------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| startup                  |                                                                                         | Application startup                                                                               |
+| quit                     |                                                                                         | Application quit/shutdown                                                                         |
+| reboot                   |                                                                                         | System reboot (quit event triggered as well)                                                      |
+| poweroff                 |                                                                                         | System power off (quit event triggered as well)                                                   |
+| suspend                  |                                                                                         | System suspend (on platforms that support suspending)                                             |
+| config-changed           |                                                                                         | On saving application settings or controller configuration                                        |
+| settings-changed         |                                                                                         | On saving application settings (config-changed event triggered as well)                           |
+| controls-changed         |                                                                                         | On saving controller configuration (config-changed event triggered as well)                       |
+| theme-changed            | New theme name, old theme name                                                          | When manually changing themes in the UI Settings menu                                             |
+| game-start               | ROM path, game name, system name, system full name                                      | On game launch                                                                                    |
+| game-end                 | ROM path, game name, system name, system full name                                      | On game end (or on application wakeup if running in the background)                               |
+| screensaver-start        | _timer_ or _manual_                                                                     | Screensaver started via timer or manually                                                         |
+| screensaver-end          | _cancel_ or _game-jump_ or _game-start_                                                 | Screensaver ended via cancellation, jump to game or start/launch of game                          |
+| screensaver-game-select  | ROM path, game name, system name, system full name                                      | Screensaver selected a new random game                                                            |
+| scraper-start            | Scraper service, _automatic_ or _interactive_, number of systems, total number of games | On starting the multi-scraper in automatic or interactive mode                                    |
+| scraper-end              | Number of scraped games, number of skipped games, _finished_ or _stopped_               | On ending the multi-scraper (scraping finished or manually stopped by the user)                   |
+| game-select              | ROM path, game name, system name, system full name                                      | On browsing games in the gamelist view, requires enabling of the _Browsing custom events_ setting |
+| system-select            | System name, system full name, system     ROM path                                      | On browsing systems in the system view, requires enabling of the _Browsing custom events_ setting |
 
 ***)** Parameters in _italics_ are literal strings.
 
@@ -2450,19 +2516,17 @@ First create the game start script, let's name it `set_resolution_1080p.sh` with
 
 ```
 #!/bin/sh
-xrandr -s 1920x1080
+kscreen-doctor output.HDMI-A-1.mode.1920x1080@60
 ```
 
 Then create the end script, which we'll name `set_resolution_4K.sh`:
 
 ```
 #!/bin/sh
-xrandr -s 3840x2160
-sleep 0.3
-xdotool search --class es-de windowactivate
+kscreen-doctor output.HDMI-A-1.mode.3840x2160@60
 ```
 
-The last two lines are optional, they're used to set the focus back to ES-DE in case you're running attention-seeking applications such as Kodi which may steal focus after resolution changes. You may need to adjust the sleep time to get this to work reliably though, as the timing may differ between different computers and graphics drivers.
+This is just an example and you will likely need to change the device name from HDMI-A-1 and perhaps also the refresh rate, depending on your setup.
 
 After creating the two scripts, you should have something like this on the filesystem:
 

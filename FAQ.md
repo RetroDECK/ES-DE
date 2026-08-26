@@ -131,7 +131,7 @@ These files are not loaded by default, only files placed in ES-DE/gamelists/ are
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes you could for example use [Skyscraper](https://github.com/Gemba/skyscraper), [Skraper](https://www.skraper.net) or [ARRM](http://www.jujuvincebros.fr/wiki/arrm/doku.php?id=arrm_relooked_en:start-en).
+Yes you could for example use [Skyscraper](https://github.com/Gemba/skyscraper), [Skraper](https://www.skraper.net), [ARRM](http://www.jujuvincebros.fr/wiki/arrm/doku.php?id=arrm_relooked_en:start-en) or [Gamelist Manager](https://github.com/RobG66/Gamelist-Manager).
 
 There is a video on the official ES-DE YouTube channel on how to use Skraper with ES-DE:\
 https://www.youtube.com/watch?v=23LLH96P7PE

@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>ColecoVision هو جهاز ألعاب فيديو منزلي من الجيل الثاني (1976-1992) تم تطويره وتوزيعه من قبل شركة Coleco Industries. تم إصداره في أغسطس 1982 في أمريكا الشمالية بسعر 175 دولار أمريكي. تم إصدار وحدة التحكم لاحقًا في أوروبا (1983). قدمت ColecoVision تجربة أقرب إلى ألعاب الأركيد من منافسيها في ذلك الوقت. تم إيقاف وحدة التحكم في منتصف عام 1985.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>ColecoVision هو جهاز ألعاب فيديو منزلي من الجيل الثاني (1976-1992) تم تطويره وتوزيعه من قبل شركة Coleco Industries. تم إصداره في أغسطس 1982 في أمريكا الشمالية بسعر 175 دولار أمريكي. تم إصدار كونسول لاحقًا في أوروبا (1983). قدمت ColecoVision تجربة أقرب إلى ألعاب الأركيد من منافسيها في ذلك الوقت. تم إيقاف كونسول في منتصف عام 1985.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il ColecoVision è una console per videogiochi domestici di seconda generazione (1976-1992) sviluppata e distribuita da Coleco Industries. È stata rilasciata nell'agosto 1982 in Nord America a un prezzo al dettaglio di 175 dollari. La console è stata successivamente rilasciata in Europa (1983). Il ColecoVision offriva un'esperienza più vicina ai giochi arcade rispetto ai suoi concorrenti dell'epoca. La console fu dismessa a metà del 1985.</systemDescription>
+            <systemDescription>La ColecoVision è una console per videogiochi domestici di seconda generazione (1976-1992) sviluppata e distribuita da Coleco Industries. È stata rilasciata nell'agosto 1982 in Nord America ad un prezzo al dettaglio di 175 dollari. La console è stata successivamente rilasciata in Europa (1983). La ColecoVision offriva un'esperienza più vicina ai giochi arcade rispetto ai suoi concorrenti dell'epoca. La console fu dismessa a metà del 1985.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>ColecoVision är en andra generationens (1976-1992) hemkonsol för videospel som utvecklades och distribuerades av Coleco Industries. Den släpptes i augusti 1982 i Nordamerika till ett detaljhandelspris av 175 dollar. Konsolen släpptes senare i Europa (1983). ColecoVision erbjöd en närmare upplevelse av arkadspel än sina konkurrenter vid den tiden. Konsolen slutade tillverkas i mitten av 1985.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>ColecoVision là hệ máy chơi game gia đình thế hệ thứ hai (1976–1992) do Coleco Industries phát triển và phân phối. Hệ máy này được ra mắt vào tháng 8 năm 1982 tại Bắc Mỹ với giá bán lẻ 175 đô la. Sau đó, hệ máy này cũng được phát hành tại châu Âu (1983). ColecoVision mang lại trải nghiệm gần gũi với các trò chơi arcade hơn so với các đối thủ cạnh tranh cùng thời. Hệ máy này ngừng sản xuất vào giữa năm 1985.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

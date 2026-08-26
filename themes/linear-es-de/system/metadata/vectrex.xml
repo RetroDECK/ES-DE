@@ -22,8 +22,8 @@ The Vectrex, in contrast to other video-game systems available at the time, feat
         <variables>
             <systemDescription>جهاز Vectrex هو جهاز ألعاب فيديو منزلي قائم على شاشة عرض متجهة - الجهاز الوحيد الذي تم تصميمه وإصداره للسوق المنزلي، وقد طورته شركة Smith Engineering. تم إصداره لأول مرة لسوق أمريكا الشمالية في نوفمبر 1982 ثم أوروبا واليابان في عام 1983. تم تصنيعه في الأصل من قبل شركة جنرال للإلكترونيات الاستهلاكية العامة، ثم تم ترخيصه لاحقًا لشركة ميلتون برادلي بعد استحواذها على الشركة. أصدرت بانداي النظام في اليابان.
 
-تميز Vectrex، على عكس أنظمة ألعاب الفيديو الأخرى المتوفرة في ذلك الوقت، بشاشة CRT أحادية اللون مدمجة ولم يكن هناك حاجة إلى توصيله بجهاز تلفزيون حيث كان مزوداً بشاشة عرض مدمجة خاصة به. تم تركيب لوحة تحكم سلكية قابلة للفصل في القاعدة السفلية لوحدة التحكم، ويمكن طيها في القاعدة السفلية لوحدة التحكم. تضمنت الألعاب تراكبات صفائح ملونة شفافة يمكن وضعها فوق الشاشة أحادية اللون. تم إنتاج عدد من الأجهزة الطرفية، مثل زوج من النظارات ثلاثية الأبعاد المعروفة باسم "3D Imager" و"قلم ضوئي" يسمح للاعب بالرسم مباشرة على الشاشة. كانت هناك لعبة مدمجة، "ماين ستورم"، يمكن لعبها دون إدخال خرطوشة.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+تميز Vectrex، على عكس أنظمة ألعاب الفيديو الأخرى المتوفرة في ذلك الوقت، بشاشة CRT أحادية اللون مدمجة ولم يكن هناك حاجة إلى توصيله بجهاز تلفزيون حيث كان مزوداً بشاشة عرض مدمجة خاصة به. تم تركيب لوحة تحكم سلكية قابلة للفصل في القاعدة السفلية لكونسول، ويمكن طيها في القاعدة السفلية لكونسول. تضمنت الألعاب تراكبات صفائح ملونة شفافة يمكن وضعها فوق الشاشة أحادية اللون. تم إنتاج عدد من الأجهزة الطرفية، مثل زوج من النظارات ثلاثية الأبعاد المعروفة باسم "3D Imager" و"قلم ضوئي" يسمح للاعب بالرسم مباشرة على الشاشة. كانت هناك لعبة مدمجة، "ماين ستورم"، يمكن لعبها دون إدخال خرطوشة.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,7 +76,7 @@ The Vectrex, in contrast to other video-game systems available at the time, feat
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Vectrex è una console per videogiochi domestica basata su display vettoriali, l'unica mai progettata e rilasciata per il mercato domestico, sviluppata da Smith Engineering. È stata commercializzata per la prima volta in Nord America nel novembre 1982 e poi in Europa e Giappone nel 1983. Originariamente prodotta da General Consumer Electronics, fu poi data in licenza a Milton Bradley dopo l'acquisizione della società. Bandai distribuì il sistema in Giappone.
+            <systemDescription>Il Vectrex è una console per videogiochi domestica basata su display vettoriali, l'unica mai progettata e rilasciata per il mercato domestico, sviluppata da Smith Engineering. È stata commercializzata per la prima volta in Nord America nel novembre 1982 e poi in Europa ed in Giappone nel 1983. Originariamente prodotta da General Consumer Electronics, fu poi data in licenza a Milton Bradley dopo l'acquisizione della società. Bandai distribuì il sistema in Giappone.
 
 Il Vectrex, a differenza di altri sistemi di videogiochi disponibili all'epoca, era dotato di un monitor CRT monocromatico integrato e non aveva bisogno di essere collegato a un televisore, in quanto forniva il proprio display incorporato. Un pad di controllo a filo staccabile era montato e poteva essere ripiegato sulla base inferiore della console. I giochi includevano fogli traslucidi a colori che potevano essere posizionati sopra lo schermo monocromatico. Furono prodotte diverse periferiche, come un paio di occhiali 3D noti come "3D Imager" e una "light-pen" che permetteva al giocatore di disegnare direttamente sullo schermo. Un gioco integrato, Mine Storm, era giocabile senza inserire una cartuccia.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
@@ -160,6 +160,14 @@ The Vectrex, in contrast to other video-game systems available at the time, feat
 
 Vectrex hade, i motsats till andra videospel som fanns tillgängliga vid den tiden, en integrerad monokrom CRT-monitor och behövde inte anslutas till en TV-apparat eftersom den hade sin egen inbyggda skärm. En löstagbar kabelansluten styrplatta var monterad på, och kunde fällas in i, konsolens nedre del. Spelen innehöll genomskinliga färgark som kunde placeras över den monokroma skärmen. Ett antal kringutrustningsprodukter tillverkades, t.ex. ett par 3D-glasögon som kallades "3D Imager" och en "light-pen" som gjorde det möjligt för spelaren att rita direkt på skärmen. Ett inbyggt spel, Mine Storm, kunde spelas utan att sätta in en kassett.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Vectrex là một hệ máy chơi game gia đình sử dụng màn hình vectơ – hệ máy duy nhất từng được thiết kế và phát hành dành cho thị trường gia đình, do Smith Engineering phát triển. Hệ máy này lần đầu tiên được ra mắt tại thị trường Bắc Mỹ vào tháng 11 năm 1982, sau đó là tại châu Âu và Nhật Bản vào năm 1983. Ban đầu được sản xuất bởi General Consumer Electronics, sau đó quyền sản xuất được chuyển nhượng cho Milton Bradley sau khi công ty này mua lại General Consumer Electronics. Bandai là đơn vị phát hành hệ máy này tại Nhật Bản.
+
+Khác với các hệ thống trò chơi điện tử khác có mặt trên thị trường lúc bấy giờ, Vectrex được trang bị màn hình CRT đơn sắc tích hợp và không cần kết nối với tivi vì đã có màn hình hiển thị riêng. Một bộ điều khiển có dây có thể tháo rời được gắn vào và có thể gập vào phần đế dưới của máy chơi game. Các trò chơi đi kèm với các tấm phủ màu trong suốt có thể đặt lên màn hình đơn sắc. Một số thiết bị ngoại vi đã được sản xuất, chẳng hạn như một cặp kính 3D được gọi là "3D Imager" và một "bút ánh sáng" cho phép người chơi vẽ trực tiếp trên màn hình. Một trò chơi tích hợp sẵn, Mine Storm, có thể chơi được mà không cần lắp thẻ game.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

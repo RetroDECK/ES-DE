@@ -271,20 +271,14 @@ bool PDFViewer::getDocumentInfo()
 
     CloseHandle(childStdoutWrite);
 
-    std::array<char, 512> buffer {};
+    std::array<char, 4096> buffer {};
     DWORD dwRead;
-    bool readValue {true};
 
-    while (readValue) {
-        readValue = ReadFile(childStdoutRead, &buffer[0], 512, &dwRead, nullptr);
-        if (readValue) {
-            for (int i {0}; i < 512; ++i) {
-                if (buffer[i] == '\0')
-                    break;
-                commandOutput.append(1, buffer[i]);
-            }
-            buffer.fill('\0');
-        }
+    while (ReadFile(childStdoutRead, buffer.data(), static_cast<DWORD>(buffer.size()), &dwRead,
+                    nullptr)) {
+        if (dwRead == 0)
+            break;
+        commandOutput.append(buffer.data(), dwRead);
     }
 
     CloseHandle(childStdoutRead);
@@ -307,7 +301,7 @@ bool PDFViewer::getDocumentInfo()
         return false;
 #else
     FILE* commandPipe;
-    std::array<char, 512> buffer {};
+    std::array<char, 4096> buffer {};
 
     std::string command {Utils::FileSystem::getEscapedPath(mESConvertPath)};
     command.append(" -fileinfo ").append(Utils::FileSystem::getEscapedPath(mManualPath));
@@ -317,14 +311,8 @@ bool PDFViewer::getDocumentInfo()
         return false;
     }
 
-    while (fread(buffer.data(), 1, 512, commandPipe)) {
-        for (int i {0}; i < 512; ++i) {
-            if (buffer[i] == '\0')
-                break;
-            commandOutput.append(1, buffer[i]);
-        }
-        buffer.fill('\0');
-    }
+    while (size_t bytesRead {fread(buffer.data(), 1, buffer.size(), commandPipe)})
+        commandOutput.append(buffer.data(), bytesRead);
 
     if (pclose(commandPipe) != 0)
         return false;
@@ -349,10 +337,12 @@ bool PDFViewer::getDocumentInfo()
 void PDFViewer::convertPage(int pageNum)
 {
     assert(pageNum <= static_cast<int>(mPages.size()));
+    auto& page = mPages[pageNum];
+
     const auto conversionStartTime {std::chrono::system_clock::now()};
     mConversionTime = 0;
 
-    if (mPages[pageNum].imageData.empty()) {
+    if (page.imageData.empty()) {
 #if defined(_WIN64)
         std::wstring command {
             Utils::String::stringToWideString(Utils::FileSystem::getEscapedPath(mESConvertPath))};
@@ -362,9 +352,9 @@ void PDFViewer::convertPage(int pageNum)
             .append(L" ")
             .append(std::to_wstring(pageNum))
             .append(L" ")
-            .append(std::to_wstring(static_cast<int>(mPages[pageNum].width)))
+            .append(std::to_wstring(static_cast<int>(page.width)))
             .append(L" ")
-            .append(std::to_wstring(static_cast<int>(mPages[pageNum].height)));
+            .append(std::to_wstring(static_cast<int>(page.height)));
 #else
         std::string command {Utils::FileSystem::getEscapedPath(mESConvertPath)};
         command.append(" -convert ")
@@ -372,9 +362,9 @@ void PDFViewer::convertPage(int pageNum)
             .append(" ")
             .append(std::to_string(pageNum))
             .append(" ")
-            .append(std::to_string(static_cast<int>(mPages[pageNum].width)))
+            .append(std::to_string(static_cast<int>(page.width)))
             .append(" ")
-            .append(std::to_string(static_cast<int>(mPages[pageNum].height)));
+            .append(std::to_string(static_cast<int>(page.height)));
 #endif
 
 #if (DEBUG_PDF_CONVERSION)
@@ -426,36 +416,32 @@ void PDFViewer::convertPage(int pageNum)
         }
 
         // Close process and thread handles.
-        CloseHandle(pi.hProcess);
-        CloseHandle(pi.hThread);
         CloseHandle(childStdoutWrite);
 
-        std::array<char, 512> buffer {};
+        std::array<char, 4096> buffer {};
         DWORD dwRead;
-        bool readValue {true};
 
-        while (readValue) {
-            readValue = ReadFile(childStdoutRead, &buffer[0], 512, &dwRead, nullptr);
-            if (readValue) {
-                mPages[pageNum].imageData.insert(mPages[pageNum].imageData.end(),
-                                                 std::make_move_iterator(buffer.begin()),
-                                                 std::make_move_iterator(buffer.end()));
-            }
+        while (ReadFile(childStdoutRead, buffer.data(), static_cast<DWORD>(buffer.size()), &dwRead,
+                        nullptr)) {
+            if (dwRead == 0)
+                break;
+            page.imageData.insert(page.imageData.end(), buffer.begin(), buffer.begin() + dwRead);
         }
 
         CloseHandle(childStdoutRead);
         WaitForSingleObject(pi.hThread, INFINITE);
         WaitForSingleObject(pi.hProcess, INFINITE);
+
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+
 #elif (__ANDROID__) || defined(__IOS__)
-        ConvertPDF::processFile(mManualPath, "-convert", pageNum,
-                                static_cast<int>(mPages[pageNum].width),
-                                static_cast<int>(mPages[pageNum].height), imageData);
-        mPages[pageNum].imageData.insert(mPages[pageNum].imageData.end(),
-                                         std::make_move_iterator(imageData.begin()),
-                                         std::make_move_iterator(imageData.end()));
+        ConvertPDF::processFile(mManualPath, "-convert", pageNum, static_cast<int>(page.width),
+                                static_cast<int>(page.height), imageData);
+        page.imageData.assign(imageData.begin(), imageData.end());
 #else
         FILE* commandPipe;
-        std::array<char, 512> buffer {};
+        std::array<char, 4096> buffer {};
         int returnValue;
 
         if (!(commandPipe = reinterpret_cast<FILE*>(popen(command.c_str(), "r")))) {
@@ -463,26 +449,23 @@ void PDFViewer::convertPage(int pageNum)
             return;
         }
 
-        while (fread(buffer.data(), 1, 512, commandPipe)) {
-            mPages[pageNum].imageData.insert(mPages[pageNum].imageData.end(),
-                                             std::make_move_iterator(buffer.begin()),
-                                             std::make_move_iterator(buffer.end()));
-        }
+        int bytesRead {0};
+        while ((bytesRead = fread(buffer.data(), 1, buffer.size(), commandPipe)) > 0)
+            page.imageData.insert(page.imageData.end(), buffer.begin(), buffer.begin() + bytesRead);
 
         returnValue = pclose(commandPipe);
 #endif
-        const size_t imageDataSize {mPages[pageNum].imageData.size()};
+        const size_t imageDataSize {page.imageData.size()};
 #if defined(_WIN64)
-        if (!processReturnValue || (static_cast<int>(imageDataSize) <
-                                    mPages[pageNum].width * mPages[pageNum].height * 4)) {
+        if (!processReturnValue ||
+            (static_cast<int>(imageDataSize) < page.width * page.height * 4)) {
 #elif defined(__ANDROID__) || defined(__IOS__)
-        if (static_cast<int>(imageDataSize) < mPages[pageNum].width * mPages[pageNum].height * 4) {
+        if (static_cast<int>(imageDataSize) < page.width * page.height * 4) {
 #else
-        if (returnValue != 0 || (static_cast<int>(imageDataSize) <
-                                 mPages[pageNum].width * mPages[pageNum].height * 4)) {
+        if (returnValue != 0 || (static_cast<int>(imageDataSize) < page.width * page.height * 4)) {
 #endif
             LOG(LogError) << "Error reading PDF file";
-            mPages[pageNum].imageData.clear();
+            page.imageData.clear();
             return;
         }
     }
@@ -511,17 +494,15 @@ void PDFViewer::convertPage(int pageNum)
     }
 
     float sizeReduction {0.0f};
-    if (mPages[pageNum].height / mScaleFactor > mRenderer->getScreenHeight() - mFrameHeight)
+    if (page.height / mScaleFactor > mRenderer->getScreenHeight() - mFrameHeight)
         sizeReduction =
-            (mPages[pageNum].height / mScaleFactor) - (mRenderer->getScreenHeight() - mFrameHeight);
+            (page.height / mScaleFactor) - (mRenderer->getScreenHeight() - mFrameHeight);
 
-    mPageImage->setMaxSize(
-        glm::vec2 {(mPages[pageNum].width / mScaleFactor) * mZoom,
-                   ((mPages[pageNum].height / mScaleFactor) * mZoom) - sizeReduction});
+    mPageImage->setMaxSize(glm::vec2 {(page.width / mScaleFactor) * mZoom,
+                                      ((page.height / mScaleFactor) * mZoom) - sizeReduction});
 
-    mPageImage->setRawImage(reinterpret_cast<const unsigned char*>(&mPages[pageNum].imageData[0]),
-                            static_cast<size_t>(mPages[pageNum].width),
-                            static_cast<size_t>(mPages[pageNum].height));
+    mPageImage->setRawImage(reinterpret_cast<const unsigned char*>(page.imageData.data()),
+                            static_cast<size_t>(page.width), static_cast<size_t>(page.height));
 
     mPanAmount = std::min(mRenderer->getScreenWidth(), mRenderer->getScreenHeight()) * 0.1f;
 
@@ -529,7 +510,7 @@ void PDFViewer::convertPage(int pageNum)
                                            std::chrono::system_clock::now() - conversionStartTime)
                                            .count());
 #if (DEBUG_PDF_CONVERSION)
-    LOG(LogDebug) << "ABGR32 data stream size: " << mPages[pageNum].imageData.size();
+    LOG(LogDebug) << "ABGR32 data stream size: " << page.imageData.size();
 #endif
 }
 

@@ -16,10 +16,10 @@
         <fullname>Coleco Adam</fullname>
         <path>%ROMPATH%/adam</path>
         <extension>.1dd .1DD .bin .BIN .col .COL .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .ddp .DDP .dfi .DFI .dsk .DSK .hfe .HFE .imd .IMD .mfi .MFI .mfm .MFM .rom .ROM .td0 .TD0 .wav .WAV .7z .7Z .zip .ZIP</extension>
-        <command label="MAME4droid Current [Diskette] (Standalone)">%EMULATOR_MAME4DROID-CURRENT %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -flop1 '%ROMRAW%'" %DATA%=adam</command>
+        <command label="MAME4droid Current [Diskette] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -flop1 '%ROMRAW%'" %DATA%=adam</command>
         <command label="MAME4droid Current [Tape] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -cass1 '%ROMRAW%'" %DATA%=adam</command>
         <command label="MAME4droid Current [Cartridge] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' -cart1 '%ROMRAW%'" %DATA%=adam</command>
-        <command label="MAME4droid Current [Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam'" %DATA%=%ROMPROVIDER%</command>
+        <command label="MAME4droid Current [Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/adam' %BASENAME%" %DATA%=adam</command>
         <command label="ColEm (Standalone)">%EMULATOR_COLEM% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>adam</platform>
         <theme>adam</theme>
@@ -116,6 +116,7 @@
         <fullname>Apple II</fullname>
         <path>%ROMPATH%/apple2</path>
         <extension>.do .DO .dsk .DSK .nib .NIB .po .PO .7z .7Z .zip .ZIP</extension>
+        <command label="AppleWin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/applewin_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/apple2' -gameio joy -flop1 '%ROMRAW%'" %DATA%=apple2e</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
@@ -126,6 +127,7 @@
         <path>%ROMPATH%/apple2gs</path>
         <extension>.2mg .2MG .7z .7Z .zip .ZIP</extension>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/apple2gs' -gameio joy -flop3 '%ROMRAW%'" %DATA%=apple2gs</command>
+        <command label="MAME4droid Current [Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/apple2gs' -gameio joy %BASENAME%" %DATA%=apple2gs</command>
         <platform>apple2gs</platform>
         <theme>apple2gs</theme>
     </system>
@@ -139,6 +141,7 @@
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="HBMAME">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/hbmame_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/arcade'" %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="NEO.emu (Standalone)">%EMULATOR_NEO-EMU% %DATA%=%ROMSAF%</command>
@@ -201,6 +204,7 @@
         <command label="Stella">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/stella_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/stella2014_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Stella 2023">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/stella2023_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Tia">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/tia_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="2600.emu (Standalone)">%EMULATOR_2600-EMU% %DATA%=%ROMPROVIDER%</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>
@@ -249,8 +253,8 @@
         <name>atarijaguarcd</name>
         <fullname>Atari Jaguar CD</fullname>
         <path>%ROMPATH%/atarijaguarcd</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.abs .ABS .bin .BIN .cdi .CDI .cof .COF .cue .CUE .j64 .J64 .jag .JAG .prg .PRG .rom .ROM</extension>
+        <command label="Virtual Jaguar">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/virtualjaguar_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>atarijaguarcd</platform>
         <theme>atarijaguarcd</theme>
     </system>
@@ -654,10 +658,10 @@
         <extension>.1dd .1DD .cqi .CQI .cqm .CQM .d77 .D77 .d88 .D88 .dfi .DFI .dsk .DSK .hfe .HFE .imd .IMD .mfi .MFI .mfm .MFM .t77 .T77 .td0 .TD0 .wav .WAV .7z .7Z .zip .ZIP</extension>
         <command label="MAME4droid Current [FM-7 Diskette] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7' -flop1 '%ROMRAW%'" %DATA%=fm7</command>
         <command label="MAME4droid Current [FM-7 Tape] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7' -autoboot_delay '5' -autoboot_command 'load\n\n\nrun\n' -cass1 '%ROMRAW%'" %DATA%=fm7</command>
-        <command label="MAME4droid Current [FM-7 Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7'" %DATA%=%ROMPROVIDER%</command>
+        <command label="MAME4droid Current [FM-7 Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7' %BASENAME%" %DATA%=fm7</command>
         <command label="MAME4droid Current [FM77AV Diskette] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7' -flop1 '%ROMRAW%'" %DATA%=fm77av</command>
         <command label="MAME4droid Current [FM77AV Tape] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7' -autoboot_delay '5' -autoboot_command 'load\n\n\nrun\n' -cass1 '%ROMRAW%'" %DATA%=fm77av</command>
-        <command label="MAME4droid Current [FM77AV Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7'" %DATA%=%ROMPROVIDER%</command>
+        <command label="MAME4droid Current [FM77AV Software list] (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/fm7' %BASENAME%" %DATA%=fm77av</command>
         <platform>fm7</platform>
         <theme>fm7</theme>
     </system>
@@ -734,6 +738,7 @@
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DoubleCherryGB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/DoubleCherryGB_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="IroGB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/irogb_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mesen-s_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/bsnes_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -777,6 +782,7 @@
         <command label="Gearboy">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/gearboy_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="TGB Dual">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/tgbdual_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DoubleCherryGB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/DoubleCherryGB_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="IroGB">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/irogb_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mesen-s_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/bsnes_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mgba_libretro_android.so %EXTRA_ROM%=%ROM%</command>
@@ -938,6 +944,7 @@
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mame2003_plus_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2003">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mame2003_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mame2000_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="HBMAME">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/hbmame_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/mame'" %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="NEO.emu (Standalone)">%EMULATOR_NEO-EMU% %DATA%=%ROMSAF%</command>
@@ -1238,7 +1245,7 @@
         <name>nds</name>
         <fullname>Nintendo DS</fullname>
         <path>%ROMPATH%/nds</path>
-        <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
+        <extension>.app .APP .bin .BIN .dsi .DSI .ids .IDS .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="melonDS DS">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/melondsds_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/melonds_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ACTION%=me.magnum.melonds.LAUNCH_ROM %EXTRA_uri%=%ROMSAF%</command>
@@ -1261,6 +1268,7 @@
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/fbneo_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Geolith">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/geolith_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="NEO.emu (Standalone)">%EMULATOR_NEO-EMU% %DATA%=%ROMSAF%</command>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/mamearcade_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/neogeo'" %DATA%=%ROMPROVIDER%</command>
         <command label="MAME4droid (Standalone)">%EMULATOR_MAME4DROID% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <platform>neogeo</platform>
@@ -1480,7 +1488,7 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%/ports</path>
-        <extension>.idtech .IDTECH .exe .EXE .game .GAME .phd .PHD .psx .PSX</extension>
+        <extension>.idtech .IDTECH .exe .EXE .game .GAME .phd .PHD .port .psx .PSX</extension>
         <command label="ECWolf (Wolfenstein 3D)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/ecwolf_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="CannonBall (OutRun)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/cannonball_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Craft (Minecraft)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/craft_libretro_android.so</command>
@@ -1489,6 +1497,7 @@
         <command label="drs (Cave Story)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/doukutsu_rs_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="OpenLara (Tomb Raider)">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/openlara_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="Super Bros War">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/superbroswar_libretro_android.so %EXTRA_ROM%=%ROM%</command>
+        <command label="Starboard (Standalone)">%EMULATOR_STARBOARD% %EXTRA_port_file%=%ROM%</command>
         <command label="idTech4A++ (Standalone)">%EMULATOR_IDTECH4A++% %ACTIVITY_CLEAR_TASK% %EXTRA_game%=%INJECT%=%ROM% %EXTRA_command%=%INJECT%=%BASENAME%.commands</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
@@ -1498,8 +1507,12 @@
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
         <extension>.bin .BIN .chd .CHD .ciso .CISO .cso .CSO .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG</extension>
-        <command label="AetherSX2 (Standalone)">%EMULATOR_AETHERSX2% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.MAIN %EXTRA_bootPath%=%ROMSAF%</command>
+        <command label="NetherSX2 (Standalone)">%EMULATOR_NETHERSX2% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.MAIN %EXTRA_bootPath%=%ROMSAF%</command>
+        <command label="NetherSX2-Turnip (Standalone)">%EMULATOR_NETHERSX2-TURNIP% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.MAIN %EXTRA_bootPath%=%ROMSAF%</command>
+        <command label="NetherSX2-Turnip Classic (Standalone)">%EMULATOR_NETHERSX2-TURNIP-CLASSIC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.MAIN %EXTRA_bootPath%=%ROMSAF%</command>
+        <command label="AetherSX2 (Standalone)">%EMULATOR_NETHERSX2% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %ACTION%=android.intent.action.MAIN %EXTRA_bootPath%=%ROMSAF%</command>
         <command label="ARMSX2 (Standalone)">%EMULATOR_ARMSX2% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
+        <command label="EmuCoreX (Standalone)">%EMULATOR_EMUCOREX% %ACTIVITY_CLEAR_TASK% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <command label="Play! (Standalone)">%EMULATOR_PLAY!% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>ps2</platform>
         <theme>ps2</theme>
@@ -1512,6 +1525,7 @@
         <command label="aPS3e Game Serial (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/aps3e/config/dev_hdd0/game/%INJECT%=%BASENAME%.ps3</command>
         <command label="aPS3e Directory (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%ROM%</command>
         <command label="aPS3e ISO (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_iso_uri%=%ROMSAF%</command>
+        <command label="ARMSX3 (Standalone)">%EMULATOR_ARMSX3% %EXTRA_path%=%ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>
@@ -1540,6 +1554,7 @@
         <path>%ROMPATH%/psvita</path>
         <extension>.psvita</extension>
         <command label="Vita3K (Standalone)">%EMULATOR_VITA3K% %EXTRAARRAY_AppStartParameters%=-r,%INJECT%=%BASENAME%.psvita</command>
+        <command label="EmuCoreV (Standalone)">%EMULATOR_EMUCOREV% %EXTRAARRAY_AppStartParameters%=-r,%INJECT%=%BASENAME%.psvita</command>
         <platform>psvita</platform>
         <theme>psvita</theme>
     </system>
@@ -1553,6 +1568,7 @@
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/pcsx_rearmed_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="SwanStation">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/swanstation_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRABOOL_resumeState%=false %EXTRA_bootPath%=%ROMSAF%</command>
+        <command label="ARMSX1 (Standalone)">%EMULATOR_ARMSX1% %DATA%=%ROMSAF%</command>
         <command label="ePSXe (Standalone)">%EMULATOR_EPSXE% %ACTION%=android.intent.action.MAIN %EXTRA_com.epsxe.ePSXe.isoName%=%ROM%</command>
         <command label="FPseNG (Standalone)">%EMULATOR_FPSE-NG% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
         <command label="FPse (Standalone)">%EMULATOR_FPSE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMPROVIDER%</command>
@@ -1996,7 +2012,7 @@
         <name>vic20</name>
         <fullname>Commodore VIC-20</fullname>
         <path>%ROMPATH%/vic20</path>
-        <extension>.bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .lnx .LNX .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .t64 .T64 .tap .TAP .vfl .VFL .vsf .VSF .x64 .X64 .x6z .X6Z .7z .7Z .zip .ZIP</extension>
+        <extension>.a0 .A0 .b0 .B0 .bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .lnx .LNX .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .rom .ROM .t64 .T64 .tap .TAP .vfl .VFL .vsf .VSF .x64 .X64 .x6z .X6Z .7z .7Z .zip .ZIP</extension>
         <command label="VICE xvic">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/vice_xvic_libretro_android.so %EXTRA_ROM%=%ROM%</command>
         <platform>vic20</platform>
         <theme>vic20</theme>
@@ -2045,6 +2061,7 @@
         <path>%ROMPATH%/vsmile</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="MAME4droid Current (Standalone)">%EMULATOR_MAME4DROID-CURRENT% %ACTION%=android.intent.action.VIEW %EXTRA_cli_params%="-rompath '%GAMEDIRRAW%;%ROMPATHRAW%/vsmile' -cart '%ROMRAW%'" %DATA%=vsmile</command>
+        <command label="D.Smile (Standalone)">%EMULATOR_DSMILE% %ACTION%=android.intent.action.VIEW %DATA%=%ROMSAF%</command>
         <platform>vsmile</platform>
         <theme>vsmile</theme>
     </system>
@@ -2082,13 +2099,14 @@
         <name>windows</name>
         <fullname>Microsoft Windows</fullname>
         <path>%ROMPATH%/windows</path>
-        <extension>.desktop .epic .gog .pcgame .steam</extension>
+        <extension>.amazon .desktop .epic .gog .pcgame .steam</extension>
         <command label="Winlator Cmod (Standalone)">%EMULATOR_WINLATOR-CMOD% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <command label="Winlator Cmod Glibc (Standalone)">%EMULATOR_WINLATOR-GLIBC% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <command label="Winlator Cmod PRoot (Standalone)">%EMULATOR_WINLATOR-PROOT% %ACTIVITY_CLEAR_TASK% %ACTIVITY_CLEAR_TOP% %EXTRA_shortcut_path%=%ROM%</command>
         <command label="GameNative Steam (Standalone)">%EMULATOR_GAMENATIVE% %ACTION%=app.gamenative.LAUNCH_GAME %EXTRA_game_source%=STEAM %EXTRAINTEGER_app_id%=%INJECT%=%ROM%</command>
         <command label="GameNative Epic (Standalone)">%EMULATOR_GAMENATIVE% %ACTION%=app.gamenative.LAUNCH_GAME %EXTRA_game_source%=EPIC %EXTRAINTEGER_app_id%=%INJECT%=%ROM%</command>
         <command label="GameNative GOG (Standalone)">%EMULATOR_GAMENATIVE% %ACTION%=app.gamenative.LAUNCH_GAME %EXTRA_game_source%=GOG %EXTRAINTEGER_app_id%=%INJECT%=%ROM%</command>
+        <command label="GameNative Amazon (Standalone)">%EMULATOR_GAMENATIVE% %ACTION%=app.gamenative.LAUNCH_GAME %EXTRA_game_source%=AMAZON %EXTRAINTEGER_app_id%=%INJECT%=%ROM%</command>
         <command label="GameNative Custom Game (Standalone)">%EMULATOR_GAMENATIVE% %ACTION%=app.gamenative.LAUNCH_GAME %EXTRA_game_source%=CUSTOM_GAME %EXTRAINTEGER_app_id%=%INJECT%=%ROM%</command>
         <command label="GameHub Lite (Standalone)">%EMULATOR_GAMEHUB-LITE% %ACTION%=gamehub.lite.LAUNCH_GAME %EXTRABOOL_autoStartGame%=true %EXTRA_steamAppId%=%INJECT%=%ROM%</command>
         <command label="GameHub Lite Local (Standalone)">%EMULATOR_GAMEHUB-LITE% %ACTION%=gamehub.lite.LAUNCH_GAME %EXTRABOOL_autoStartGame%=true %EXTRA_localGameId%=%INJECT%=%ROM%</command>
@@ -2170,6 +2188,7 @@
         <path>%ROMPATH%/xbox360</path>
         <extension>. .iso .ISO .xex .XEX .zar .ZAR</extension>
         <command label="aX360e (Standalone)">%EMULATOR_AX360E% %ACTION%=aenu.intent.action.AX360E %EXTRA_game_uri%=%ROMSAF%</command>
+        <command label="XenDroid (Standalone)">%EMULATOR_XENDROID% %DATA%=%ROMSAF%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
     </system>

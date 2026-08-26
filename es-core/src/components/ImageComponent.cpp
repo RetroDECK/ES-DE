@@ -20,6 +20,7 @@
 ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     : mRenderer {Renderer::getInstance()}
     , mTargetSize {0.0f, 0.0f}
+    , mScaleFactor {1.0f}
     , mFlipX {false}
     , mFlipY {false}
     , mTargetIsMax {false}
@@ -101,7 +102,7 @@ void ImageComponent::setImage(const std::string& path, bool tile)
                     TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
                                          mMipmapping, static_cast<size_t>(mSize.x),
                                          static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
-                mTexture->rasterizeAt(mSize.x, mSize.y);
+                mTexture->rasterizeAt(mSize.x * mScaleFactor, mSize.y * mScaleFactor);
                 if (mTargetIsCrop)
                     coverFitCrop();
                 onSizeChanged();
@@ -555,6 +556,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setCroppedSize(imageCropSize * scale);
         }
     }
+
+    if ((properties & ThemeFlags::SIZE) && elem->has("scaleFactor"))
+        mScaleFactor = glm::clamp(elem->get<float>("scaleFactor"), 0.1f, 1.0f);
 
     if (properties & ThemeFlags::POSITION && elem->has("stationary")) {
         const std::string& stationary {elem->get<std::string>("stationary")};

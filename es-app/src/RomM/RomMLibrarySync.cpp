@@ -1,0 +1,529 @@
+//  SPDX-License-Identifier: MIT
+//
+//  ES-DE Frontend
+//  RomMLibrarySync.cpp
+//
+
+#include "RomM/RomMLibrarySync.h"
+
+#include "FileData.h"
+#include "FileFilterIndex.h"
+#include "Log.h"
+#include "RomM/RomMCache.h"
+#include "RomM/RomMLocalFavorites.h"
+#include "RomM/RomMRemoteMediaLoader.h"
+#include "RomM/RomMUtils.h"
+#include "Settings.h"
+#include "SystemData.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
+#include "utils/TimeUtil.h"
+#include "views/GamelistView.h"
+#include "views/ViewController.h"
+
+#include <cstdlib>
+#include <unordered_map>
+#include <unordered_set>
+
+namespace
+{
+    // Filesystem-illegal characters across the platforms ES-DE supports (Windows is the most
+    // restrictive of them), replaced with underscores so RomM's freeform game titles are always
+    // safe to use verbatim as local file names.
+    std::string sanitizeForFileName(const std::string& input)
+    {
+        static const std::string illegal {"\\/:*?\"<>|"};
+        std::string result;
+        result.reserve(input.size());
+        for (char c : input)
+            result += (illegal.find(c) != std::string::npos) ? '_' : c;
+        result = Utils::String::trim(result);
+        // Trailing dots/spaces are also illegal in a Windows file name.
+        while (!result.empty() && (result.back() == '.' || result.back() == ' '))
+            result.pop_back();
+        return result;
+    }
+
+    // Builds a region/revision/language tag from RomM's own parsed rom metadata (never guessed
+    // from the filename), e.g. "(USA) (Rev 1)". Returns an empty string if none of these fields
+    // are populated for this rom.
+    std::string buildVariantTag(const RomMApiClient::Rom& rom)
+    {
+        std::string tag;
+        if (!rom.regions.empty()) {
+            std::string joined;
+            for (const auto& region : rom.regions)
+                joined += (joined.empty() ? "" : ", ") + region;
+            tag += "(" + joined + ")";
+        }
+        if (!rom.revision.empty())
+            tag += (tag.empty() ? "" : " ") + std::string("(Rev ") + rom.revision + ")";
+        if (!rom.languages.empty()) {
+            std::string joined;
+            for (const auto& language : rom.languages)
+                joined += (joined.empty() ? "" : ",") + language;
+            tag += (tag.empty() ? "" : " ") + std::string("(") + joined + ")";
+        }
+        return tag;
+    }
+
+    // Roms sharing the same title within a single sync batch would otherwise show up as
+    // identically-named gamelist entries and collide once downloaded to the same directory. For
+    // any such collision, appends a tag built from RomM's own region/revision/language metadata;
+    // if that's empty for a colliding rom, falls back to a running counter so the name is still
+    // guaranteed unique.
+    std::unordered_map<int, std::string> buildDisplayNames(
+        const std::vector<RomMApiClient::Rom>& roms)
+    {
+        std::unordered_map<std::string, int> nameCounts;
+        for (const auto& rom : roms)
+            ++nameCounts[Utils::String::toLower(rom.name)];
+
+        std::unordered_map<int, std::string> displayNames;
+        std::unordered_map<std::string, int> disambiguatorSeen;
+        for (const auto& rom : roms) {
+            if (nameCounts[Utils::String::toLower(rom.name)] <= 1) {
+                displayNames[rom.id] = rom.name;
+                continue;
+            }
+            const std::string tag {buildVariantTag(rom)};
+            std::string candidate {tag.empty() ? rom.name : rom.name + " " + tag};
+            const std::string candidateKey {Utils::String::toLower(candidate)};
+            int& seen {disambiguatorSeen[candidateKey]};
+            if (seen > 0)
+                candidate += " (" + std::to_string(seen + 1) + ")";
+            ++seen;
+            displayNames[rom.id] = candidate;
+        }
+        return displayNames;
+    }
+
+    // Resolves and records rom's cover source URL with RomMRemoteMediaLoader, so the gamelist
+    // view can lazily fetch the actual image bytes once the user browses to this rom - see
+    // RomMRemoteMediaLoader.h. No network I/O happens here; the URL is derived purely from
+    // fields already present in rom (parsed at sync time by RomMApiClient::parseRom()).
+    void registerRemoteMedia(const RomMApiClient::Rom& rom, const std::string& serverURL)
+    {
+        std::string coverFormat;
+        const std::string coverUrl {RomMApiClient::resolveCoverUrl(serverURL, rom, coverFormat)};
+        RomMRemoteMediaLoader::getInstance().setCoverSource(rom.id, coverUrl, coverFormat);
+    }
+} // namespace
+
+void RomMLibrarySync::reregisterRemoteMedia(int rommId)
+{
+    RomMCache::CachedRom cachedRom;
+    if (!RomMCache::getInstance().findCachedRom(rommId, cachedRom))
+        return;
+
+    registerRemoteMedia(RomMCache::toApiRom(cachedRom), RomMUtils::getServerUrl());
+}
+
+std::string RomMLibrarySync::computeDisplayName(int rommId)
+{
+    const int platformId {RomMCache::getInstance().findPlatformIdForRom(rommId)};
+    if (platformId < 0)
+        return "";
+
+    std::vector<RomMApiClient::Rom> roms;
+    for (const auto& cachedRom : RomMCache::getInstance().getRoms(platformId))
+        roms.emplace_back(RomMCache::toApiRom(cachedRom));
+
+    const std::unordered_map<int, std::string> displayNames {buildDisplayNames(roms)};
+    const auto it {displayNames.find(rommId)};
+    return it == displayNames.cend() ? "" : it->second;
+}
+
+RomMLibrarySync::RomMLibrarySync(bool forceFullResync)
+    : mDoneSyncing {false}
+    , mSystemsAdded {0}
+    , mSystemsRemoved {0}
+    , mForceFullResync {forceFullResync}
+    , mCurrentSystem {nullptr}
+    , mCurrentSystemProcessed {0}
+    , mCurrentSystemTotal {0}
+{
+}
+
+RomMLibrarySync::~RomMLibrarySync()
+{
+    if (mSyncThread) {
+        mSyncThread->join();
+        mSyncThread.reset();
+    }
+}
+
+void RomMLibrarySync::start()
+{
+    mSyncThread = std::make_unique<std::thread>(&RomMLibrarySync::fetchInBackground, this);
+}
+
+namespace
+{
+    // Resolved sequentially before any worker thread is spawned, so the RomMCache reads below
+    // need no synchronization.
+    struct SyncTask {
+        SystemData* system;
+        int platformId;
+        std::string storedCursor;
+        std::vector<RomMCache::CachedRom> previousRoms;
+        std::vector<RomMCache::CachedRom> mergeBaseRoms;
+    };
+
+    struct TaskResult {
+        SystemData* system {nullptr};
+        int platformId {-1};
+        std::vector<RomMApiClient::Rom> finalRoms;
+        std::vector<RomMCache::CachedRom> newCachedRoms;
+        std::string cursorToStore;
+        int addedCount {0};
+        int removedCount {0};
+    };
+
+    // Bounded so as not to open more simultaneous connections than a modest, self-hosted RomM
+    // server can comfortably handle (HttpReq requests all share one curl multi-handle, so several
+    // in flight at once is otherwise free - see HttpReq::pollCurl()).
+    constexpr size_t kMaxConcurrentPlatformFetches {4};
+} // namespace
+
+void RomMLibrarySync::fetchInBackground()
+{
+    const std::string serverURL {Settings::getInstance()->getString("RomMServerURL")};
+    const std::string token {Settings::getInstance()->getString("RomMToken")};
+
+    RomMApiClient platformClient {serverURL, token};
+    const std::vector<RomMApiClient::Platform> rommPlatforms {platformClient.fetchPlatforms()};
+
+    RomMApiClient::User currentUser;
+    if (platformClient.fetchCurrentUser(currentUser))
+        mFetchedUsername = currentUser.username;
+
+    // Enforces a one-to-one match: multiple active systems can alias to the same RomM platform
+    // (e.g. both "genesis" and "megadrive" match RomM's single "genesis-slash-megadrive"), and
+    // without this, each would independently fetch and count the same platform's roms, doubling
+    // both the reported total and the actual synced content. First system encountered wins,
+    // matching SystemData::loadConfig()'s own claim order (both iterate sSystemVector).
+    std::unordered_set<int> claimedPlatformIds;
+
+    std::vector<SyncTask> tasks;
+    for (auto system : SystemData::sSystemVector) {
+        if (system->hasPlatformId(PlatformIds::PLATFORM_IGNORE) || system->isCollection())
+            continue;
+
+        const RomMApiClient::Platform* matchedPlatform {nullptr};
+        for (const auto& platform : rommPlatforms) {
+            if (claimedPlatformIds.find(platform.id) != claimedPlatformIds.cend())
+                continue;
+            for (const auto& id : system->getPlatformIds()) {
+                if (RomMUtils::platformNameMatches(PlatformIds::getPlatformName(id), platform.slug,
+                                                   platform.fsSlug)) {
+                    matchedPlatform = &platform;
+                    break;
+                }
+            }
+            if (matchedPlatform != nullptr)
+                break;
+        }
+        if (matchedPlatform == nullptr)
+            continue;
+        claimedPlatformIds.insert(matchedPlatform->id);
+
+        SyncTask task;
+        task.system = system;
+        task.platformId = matchedPlatform->id;
+        // The actual last-known cache, regardless of forceFullResync - used below both as the
+        // failure-fallback (so a failed forced resync can't wipe a platform's remote list) and
+        // to compute genuinely-new/genuinely-removed counts against the server's real state,
+        // rather than against the in-memory FileData tree (which is always empty at this point
+        // in every run, forced or not, since remote entries are never persisted - diffing
+        // against that would misreport every rom as "added" on every single sync).
+        task.previousRoms = RomMCache::getInstance().getRoms(task.platformId);
+        task.storedCursor =
+            mForceFullResync ? std::string() : RomMCache::getInstance().getCursor(task.platformId);
+        // What to merge a successful fetch against - empty for a forced full resync, so stale
+        // entries not present in the fresh authoritative fetch are naturally dropped.
+        task.mergeBaseRoms =
+            mForceFullResync ? std::vector<RomMCache::CachedRom>() : task.previousRoms;
+        tasks.emplace_back(std::move(task));
+    }
+
+    std::vector<TaskResult> taskResults(tasks.size());
+
+    // Worker thread: network I/O and Rom-vector bookkeeping only, no RomMCache/FileData access.
+    auto fetchOne = [this, &serverURL, &token](const SyncTask& task, TaskResult& result) {
+        result.system = task.system;
+        result.platformId = task.platformId;
+
+        // Captured before fetchRoms() (which may page across multiple requests) begins, and
+        // used as the NEXT sync's updated_after cursor rather than the max updated_at seen in
+        // this run's results - so a rom updated mid-fetch still gets picked up next time
+        // instead of being permanently skipped.
+        const std::string newCursor {RomMUtils::formatTimestampUtc(Utils::Time::now())};
+
+        int systemProcessed {0};
+        RomMApiClient client {serverURL, token};
+        std::vector<RomMApiClient::Rom> fetched {
+            client.fetchRoms(task.platformId, task.storedCursor,
+                             [this, &systemProcessed, &task](int romsFetched, int total) {
+                                 systemProcessed += romsFetched;
+                                 mCurrentSystem = task.system;
+                                 mCurrentSystemProcessed = systemProcessed;
+                                 mCurrentSystemTotal = total;
+                             })};
+        const bool fetchFailed {fetched.empty() && !client.lastError().empty()};
+
+        result.cursorToStore = task.storedCursor;
+
+        if (fetchFailed) {
+            if (task.previousRoms.empty()) {
+                // No prior cache at all (first-ever sync for this platform, forced or not) and
+                // it failed outright - nothing to fall back to, matches the pre-caching
+                // behavior (empty result).
+                LOG(LogWarning) << "RomM sync: Initial full fetch failed for system \""
+                                << task.system->getName() << "\": " << client.lastError();
+            }
+            else {
+                // A delta (or forced full-resync) fetch failed but a prior cache exists -
+                // reuse it as-is rather than telling applyResults() every previously known
+                // remote rom just vanished from the server. The cursor is NOT advanced, so
+                // nothing is silently skipped by a future updated_after filter.
+                LOG(LogWarning) << "RomM sync: Fetch failed for system \"" << task.system->getName()
+                                << "\", reusing cached rom list (" << task.previousRoms.size()
+                                << " roms) as-is: " << client.lastError();
+                for (const auto& cachedRom : task.previousRoms)
+                    result.finalRoms.push_back(RomMCache::toApiRom(cachedRom));
+                result.newCachedRoms = task.previousRoms;
+            }
+        }
+        else {
+            // mergeBaseRoms overlaid by this fetch (the platform's full list on a first/forced
+            // sync, or a delta since storedCursor otherwise); fetched entries win on id
+            // collision. This only adds/updates - a server-side deletion stays cached until a
+            // forced full resync, where mergeBaseRoms is empty and the merge collapses to
+            // exactly "fetched", reconciling deletions.
+            std::unordered_map<int, RomMApiClient::Rom> merged;
+            for (const auto& cachedRom : task.mergeBaseRoms)
+                merged[cachedRom.id] = RomMCache::toApiRom(cachedRom);
+            for (auto& rom : fetched)
+                merged[rom.id] = rom;
+
+            for (auto& [romId, rom] : merged)
+                result.finalRoms.push_back(std::move(rom));
+            for (const auto& rom : result.finalRoms)
+                result.newCachedRoms.push_back(RomMCache::fromApiRom(rom));
+            result.cursorToStore = newCursor; // This fetch fully succeeded - safe to advance.
+        }
+
+        // Genuinely-new/genuinely-removed counts, against the real previous cache rather than
+        // the (always momentarily empty) in-memory FileData tree - see the comment on
+        // task.previousRoms above.
+        std::unordered_set<int> previousIds;
+        for (const auto& rom : task.previousRoms)
+            previousIds.insert(rom.id);
+        std::unordered_set<int> finalIds;
+        for (const auto& rom : result.finalRoms)
+            finalIds.insert(rom.id);
+        for (int romId : finalIds) {
+            if (previousIds.find(romId) == previousIds.cend())
+                ++result.addedCount;
+        }
+        for (int romId : previousIds) {
+            if (finalIds.find(romId) == finalIds.cend())
+                ++result.removedCount;
+        }
+    };
+
+    for (size_t batchStart {0}; batchStart < tasks.size();
+         batchStart += kMaxConcurrentPlatformFetches) {
+        const size_t batchEnd {std::min(tasks.size(), batchStart + kMaxConcurrentPlatformFetches)};
+        std::vector<std::thread> workers;
+        for (size_t i {batchStart}; i < batchEnd; ++i)
+            workers.emplace_back(fetchOne, std::cref(tasks[i]), std::ref(taskResults[i]));
+        for (auto& worker : workers)
+            worker.join();
+    }
+
+    // Every worker has joined, so touching RomMCache (not thread-safe) here is safe.
+    for (auto& result : taskResults) {
+        RomMCache::getInstance().setPlatform(result.platformId, result.cursorToStore,
+                                             result.newCachedRoms);
+        mSystemsAdded += result.addedCount;
+        mSystemsRemoved += result.removedCount;
+
+        SystemSyncResult syncResult;
+        syncResult.system = result.system;
+        syncResult.roms = std::move(result.finalRoms);
+        mResults.emplace_back(std::move(syncResult));
+    }
+
+    RomMCache::getInstance().flush();
+
+    mCurrentSystem = nullptr;
+    mCurrentSystemProcessed = 0;
+    mCurrentSystemTotal = 0;
+
+    mDoneSyncing = true;
+}
+
+void RomMLibrarySync::applyResults()
+{
+    if (!mFetchedUsername.empty()) {
+        Settings::getInstance()->setString("RomMUsername", mFetchedUsername);
+        Settings::getInstance()->saveFile();
+    }
+
+    // Used below to resolve each rom's cover source URL for RomMRemoteMediaLoader - read fresh
+    // here (main thread) rather than threading it through from fetchInBackground(), since it's
+    // a plain settings read with no threading concerns of its own. Normalized (trailing slash
+    // stripped) to match RomMApiClient's own normalization, since resolveCoverUrl() just
+    // concatenates this directly with a leading-slash path.
+    const std::string serverURL {RomMUtils::getServerUrl()};
+
+    for (auto& result : mResults) {
+        SystemData* system {result.system};
+        FileData* rootFolder {system->getRootFolder()};
+        FileFilterIndex* fileIndex {system->getIndex()};
+
+        const std::unordered_map<int, std::string> displayNames {buildDisplayNames(result.roms)};
+
+        // Index already-known RomM entries (remote or downloaded) by RomM rom id rather than by
+        // file name - the local file name a still-remote entry uses can change between syncs as
+        // the batch's title collisions change (a newly-added sibling rom can introduce a
+        // collision that wasn't there before), so an id-based lookup is the only one that stays
+        // correct regardless.
+        std::unordered_map<int, FileData*> byRommId;
+        for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
+            const int id {atoi(file->metadata.get("rommid").c_str())};
+            if (id != 0)
+                byRommId[id] = file;
+        }
+
+        std::unordered_set<int> seenRomIds;
+        bool addedAny {false};
+
+        for (const auto& rom : result.roms) {
+            if (rom.fsName.empty())
+                continue;
+            seenRomIds.insert(rom.id);
+
+            const std::string& displayName {displayNames.at(rom.id)};
+            // RomM's list endpoint only reliably reports has_multiple_files, not the files
+            // array itself (only hydrated on the single-rom detail endpoint GuiRomMDownload
+            // re-fetches from at download time), so detection here relies on the flag alone.
+            const bool isMultiDisc {rom.hasMultipleFiles};
+            // Represented as a directory named "<title>.m3u" - ES-DE's existing convention for
+            // multi-disc games (SystemData::populateFolder()): a directory whose name matches a
+            // configured extension is treated as a single GAME entry, and
+            // FileData::launchGame() looks inside it for a file with that exact name (the
+            // downloaded disc files plus a synthesized .m3u playlist).
+            std::string extension {isMultiDisc ? ".m3u" :
+                                                 Utils::FileSystem::getExtension(rom.fsName)};
+            // getExtension() returns "." for "no extension" - never emit a bare trailing dot.
+            if (extension == ".")
+                extension = ".m3u";
+            const std::string baseName {isMultiDisc ? displayName :
+                                                      Utils::FileSystem::getStem(rom.fsName)};
+            const std::string localFileName {sanitizeForFileName(baseName) + extension};
+            const std::string desiredPath {system->getStartPath() + "/" + localFileName};
+
+            std::string carriedOverLastPlayed;
+            auto it {byRommId.find(rom.id)};
+            if (it != byRommId.cend()) {
+                FileData* existing {it->second};
+                if (existing->metadata.get("rommremote") != "true") {
+                    // Already downloaded - leave the real local file untouched, other than a
+                    // last-played merge, which is always safe since it only moves forward.
+                    RomMUtils::mergeLastPlayed(existing, rom.lastPlayed);
+                    continue;
+                }
+                if (existing->getPath() == desiredPath) {
+                    // Still remote and already at the right synthetic path - just refresh.
+                    existing->metadata.set("name", displayName);
+                    if (!rom.summary.empty())
+                        existing->metadata.set("desc", rom.summary);
+                    RomMUtils::applyRomMData(existing, rom);
+                    registerRemoteMedia(rom, serverURL);
+                    continue;
+                }
+                // The computed name changed since the last sync (e.g. a newly-added sibling rom
+                // introduced a title collision) - a FileData's path can't be mutated in place,
+                // so drop the stale synthetic entry and recreate it below with the new path.
+                // Its last-played time would otherwise be lost, so carry it forward.
+                carriedOverLastPlayed = existing->metadata.get("lastplayed");
+                ViewController::getInstance()->getGamelistView(system)->remove(existing, false);
+            }
+
+            const std::string desiredFileName {Utils::FileSystem::getFileName(desiredPath)};
+            const auto& childrenByFilename = rootFolder->getChildrenByFilename();
+
+            // Requiring the existing entry's directory-ness to match isMultiDisc means a bare
+            // file can never be linked against a multi-file rom even if has_multiple_files
+            // under-reports it (see the comment above) - GuiRomMDownload always wraps a
+            // multi-file rom's discs in a "<title>.m3u" directory, never a bare file.
+            const std::string linkCandidateName {isMultiDisc ? desiredFileName :
+                                                               sanitizeForFileName(rom.fsName)};
+            const auto filenameIt {childrenByFilename.find(linkCandidateName)};
+            if (filenameIt != childrenByFilename.cend() &&
+                Utils::FileSystem::isDirectory(filenameIt->second->getPath()) == isMultiDisc) {
+                FileData* existingLocal {filenameIt->second};
+                if (!existingLocal->metadata.get("rommid").empty()) {
+                    LOG(LogWarning)
+                        << "RomM sync: Skipping rom \"" << displayName << "\" for system \""
+                        << system->getName() << "\" as the name \"" << linkCandidateName
+                        << "\" is already linked to a different RomM rom";
+                    continue;
+                }
+                existingLocal->metadata.set("rommid", std::to_string(rom.id));
+                RomMUtils::mergeLastPlayed(existingLocal, rom.lastPlayed);
+                continue;
+            }
+
+            if (childrenByFilename.find(desiredFileName) != childrenByFilename.cend()) {
+                LOG(LogWarning) << "RomM sync: Skipping rom \"" << displayName << "\" for system \""
+                                << system->getName() << "\" as the filename \"" << desiredFileName
+                                << "\" is already in use";
+                continue;
+            }
+
+            FileData* newGame {new FileData(GAME, desiredPath, system->getSystemEnvData(), system)};
+            newGame->metadata.set("name", displayName);
+            if (!rom.summary.empty())
+                newGame->metadata.set("desc", rom.summary);
+            newGame->metadata.set("rommremote", "true");
+            newGame->metadata.set("rommid", std::to_string(rom.id));
+            if (!carriedOverLastPlayed.empty())
+                newGame->metadata.set("lastplayed", carriedOverLastPlayed);
+            RomMUtils::applyRomMData(newGame, rom);
+            registerRemoteMedia(rom, serverURL);
+            rootFolder->addChild(newGame);
+            fileIndex->addToIndex(newGame);
+            addedAny = true;
+        }
+
+        // Remove remote entries that no longer exist in result.roms. Note this is purely about
+        // reconstructing the in-memory FileData tree (which starts empty every run, since
+        // remote entries are never persisted) to match result.roms - it does NOT feed
+        // mSystemsAdded/mSystemsRemoved, which are computed once in fetchInBackground() against
+        // the actual previous cache instead, since every rom here would otherwise misreport as
+        // "added"/"removed" on every single run regardless of whether anything really changed.
+        std::vector<FileData*> toRemove;
+        for (FileData* file : rootFolder->getFilesRecursive(GAME)) {
+            if (file->metadata.get("rommremote") == "true" &&
+                seenRomIds.find(atoi(file->metadata.get("rommid").c_str())) == seenRomIds.cend())
+                toRemove.push_back(file);
+        }
+        for (FileData* file : toRemove) {
+            // Gone from RomM entirely - drop any lingering local-only favorite intent for it too.
+            RomMLocalFavorites::getInstance().setFavorite(
+                atoi(file->metadata.get("rommid").c_str()), false);
+            RomMRemoteMediaLoader::getInstance().forget(atoi(file->metadata.get("rommid").c_str()));
+            ViewController::getInstance()->getGamelistView(system)->remove(file, false);
+        }
+
+        if (addedAny || !toRemove.empty()) {
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                             Settings::getInstance()->getBool("FavoritesFirst"));
+            ViewController::getInstance()->onFileChanged(rootFolder, true);
+        }
+    }
+}

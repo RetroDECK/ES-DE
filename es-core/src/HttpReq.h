@@ -13,6 +13,8 @@
 #include <curl/curl.h>
 
 #include <atomic>
+#include <cstdint>
+#include <fstream>
 #include <map>
 #include <mutex>
 #include <queue>
@@ -22,7 +24,20 @@
 class HttpReq
 {
 public:
-    HttpReq(const std::string& url, bool scraperRequest);
+    // If bearerToken is non-empty, the request authenticates using an "Authorization: Bearer"
+    // header.
+    // If downloadFilePath is non-empty, the response body is streamed directly to that file
+    // instead of being buffered in memory, which is required for large downloads.
+    // If postJsonBody is non-empty, the request is a POST with that body (otherwise GET).
+    // If failOnHttpError is false, CURLOPT_FAILONERROR is left unset so the response body is
+    // still delivered on an HTTP >= 400 status (status() reports REQ_SUCCESS regardless;
+    // getHttpStatusCode() must be checked instead).
+    HttpReq(const std::string& url,
+            bool scraperRequest,
+            const std::string& downloadFilePath = "",
+            const std::string& bearerToken = "",
+            const std::string& postJsonBody = "",
+            bool failOnHttpError = true);
     ~HttpReq();
 
     enum Status {
@@ -42,9 +57,14 @@ public:
     Status status() { return mStatus; }
 
     std::string getErrorMsg() { return mErrorMsg; }
+    // Returns the full response body. Not valid if constructed with a downloadFilePath. Valid
+    // for REQ_SUCCESS and REQ_BAD_STATUS_CODE (the latter can still carry a useful body).
     std::string getContent() const;
-    long getTotalBytes() { return mTotalBytes; }
-    long getDownloadedBytes() { return mDownloadedBytes; }
+    int64_t getTotalBytes() { return mTotalBytes; }
+    int64_t getDownloadedBytes() { return mDownloadedBytes; }
+    // The HTTP response status code, e.g. 200 or 401. Only meaningful once the request has
+    // left the REQ_IN_PROGRESS state.
+    long getHttpStatusCode() { return mHttpStatusCode; }
 
     static std::string urlEncode(const std::string& s);
 
@@ -109,10 +129,14 @@ private:
     static inline std::mutex sRequestMutex;
 
     std::stringstream mContent;
+    std::ofstream mOutputFile;
+    bool mStreamToFile;
+    struct curl_slist* mHeaderList;
     std::string mErrorMsg;
     static inline std::atomic<bool> sStopPoll = false;
-    std::atomic<long> mTotalBytes;
-    std::atomic<long> mDownloadedBytes;
+    std::atomic<int64_t> mTotalBytes;
+    std::atomic<int64_t> mDownloadedBytes;
+    std::atomic<long> mHttpStatusCode;
     bool mScraperRequest;
 };
 

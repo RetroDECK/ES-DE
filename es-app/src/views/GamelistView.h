@@ -113,13 +113,20 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    void updateView(const CursorState& state);
+    void updateView(const CursorState& state, bool forceRefresh = false);
     void setGameImage(FileData* file, GuiComponent* comp);
 
     Renderer* mRenderer;
     bool mStaticVideoAudio;
     bool mTriggerEvent;
     bool mTriggeredEventFastScroll;
+
+    // RomM rom id of the not-yet-downloaded entry currently selected, whose cover fetch
+    // (RomMRemoteMediaLoader) hasn't resolved yet - -1 when nothing is pending. Checked
+    // from update() each frame so that a fetch completing after the cursor has already stopped
+    // can still trigger a re-population of the displayed image, without duplicating any of
+    // updateView()'s existing population logic.
+    int mPendingRomMMediaId {-1};
 
     std::shared_ptr<ThemeData> mTheme;
     std::vector<GuiComponent*> mThemeExtras;

@@ -22,6 +22,10 @@
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
 #include "MameNames.h"
+#include "RomM/RomMCache.h"
+#include "RomM/RomMLibrarySync.h"
+#include "RomM/RomMLocalFavorites.h"
+#include "RomM/RomMUtils.h"
 #include "Sound.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -31,6 +35,8 @@
 #include "views/ViewController.h"
 
 #include <SDL2/SDL.h>
+
+#include <cstdlib>
 
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     : mMenu {_("GAMELIST OPTIONS")}
@@ -224,7 +230,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     }
     else {
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
-            !(mSystem->isCollection() && file->getType() == FOLDER)) {
+            !(mSystem->isCollection() && file->getType() == FOLDER) && !file->getRomMRemote()) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>(_("EDIT THIS GAME'S METADATA"),
                                                            Font::get(FONT_SIZE_MEDIUM),
@@ -414,7 +420,37 @@ void GuiGamelistOptions::openMetaDataEd()
     std::function<void()> clearGameBtnFunc;
     std::function<void()> deleteGameBtnFunc;
 
-    clearGameBtnFunc = [this, file] {
+    // For a RomM-tracked game, keep rommid/rommremote untouched - they identify the RomM link
+    // and its download state, and clearing them would break future syncs.
+    auto resetMetadataFunc = [file] {
+        const std::vector<MetaDataDecl>& mdd {file->metadata.getMDD()};
+        const bool isRomMGame {file->metadata.get("rommid") != ""};
+        for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
+            if (isRomMGame) {
+                if (it->key == "rommid" || it->key == "rommremote")
+                    continue;
+            }
+            if (it->key == "name") {
+                if (file->isArcadeGame()) {
+                    // If it's a MAME or Neo Geo game, expand the game name accordingly.
+                    file->metadata.set(it->key,
+                                       MameNames::getInstance().getCleanName(file->getCleanName()));
+                }
+                else {
+                    file->metadata.set(it->key, file->getDisplayName());
+                }
+                continue;
+            }
+            file->metadata.set(it->key, it->defaultValue);
+        }
+
+        // For the special case where a directory has a supported file extension and is
+        // therefore interpreted as a file, don't include the extension in the metadata name.
+        if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath()))
+            file->metadata.set("name", Utils::FileSystem::getStem(file->metadata.get("name")));
+    };
+
+    clearGameBtnFunc = [this, file, resetMetadataFunc] {
 #if defined(_WIN64)
         if (file->getType() == FOLDER) {
             LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the folder \""
@@ -445,27 +481,28 @@ void GuiGamelistOptions::openMetaDataEd()
         }
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
 
-        // Manually reset all the metadata values, set the name to the actual file/folder name.
-        const std::vector<MetaDataDecl>& mdd {file->metadata.getMDD()};
-        for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
-            if (it->key == "name") {
-                if (file->isArcadeGame()) {
-                    // If it's a MAME or Neo Geo game, expand the game name accordingly.
-                    file->metadata.set(it->key,
-                                       MameNames::getInstance().getCleanName(file->getCleanName()));
-                }
-                else {
-                    file->metadata.set(it->key, file->getDisplayName());
-                }
-                continue;
-            }
-            file->metadata.set(it->key, it->defaultValue);
-        }
+        const bool isRomMGame {file->metadata.get("rommid") != ""};
+        const bool wasFavorite {isRomMGame && file->metadata.get("favorite") == "true"};
 
-        // For the special case where a directory has a supported file extension and is therefore
-        // interpreted as a file, don't include the extension in the metadata name.
-        if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath()))
-            file->metadata.set("name", Utils::FileSystem::getStem(file->metadata.get("name")));
+        resetMetadataFunc();
+
+        if (isRomMGame) {
+            RomMCache::CachedRom cachedRom;
+            if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
+                                                       cachedRom)) {
+                const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
+                const std::string displayName {RomMLibrarySync::computeDisplayName(rom.id)};
+                if (!displayName.empty())
+                    file->metadata.set("name", displayName);
+                if (!rom.summary.empty())
+                    file->metadata.set("desc", rom.summary);
+                RomMUtils::applyRomMData(file, rom);
+            }
+
+            // applyRomMData() derives favorite from RomMLocalFavorites, which is only kept in
+            // sync for remote (not yet downloaded) entries - restore the pre-clear value instead.
+            file->metadata.set("favorite", wasFavorite ? "true" : "false");
+        }
 
         // Update all collections where the game is present.
         if (file->getType() == GAME)
@@ -486,7 +523,72 @@ void GuiGamelistOptions::openMetaDataEd()
         file->setDeletionFlag(false);
     };
 
-    deleteGameBtnFunc = [this, file] {
+    deleteGameBtnFunc = [this, file, resetMetadataFunc] {
+        if (file->metadata.get("rommid") != "") {
+#if defined(_WIN64)
+            LOG(LogInfo) << "Deleting downloaded RomM game file \""
+                         << Utils::String::replace(file->getFullPath(), "/", "\\")
+#else
+            LOG(LogInfo) << "Deleting downloaded RomM game file \"" << file->getFullPath()
+#endif
+                         << "\" and all its media files, reverting the entry to not downloaded";
+            ViewController::getInstance()
+                ->getGamelistView(file->getSystem())
+                .get()
+                ->removeMedia(file);
+
+            // Multi-disc RomM downloads are ".m3u" wrapper directories, not plain files.
+            if (Utils::FileSystem::isDirectory(file->getPath()))
+                Utils::FileSystem::removeDirectory(file->getPath(), true);
+            else
+                Utils::FileSystem::removeFile(file->getPath());
+
+            const bool wasFavorite {file->metadata.get("favorite") == "true"};
+
+            resetMetadataFunc();
+
+            file->setDeletionFlag(true);
+            file->getSystem()->writeMetaData();
+            file->setDeletionFlag(false);
+
+            file->metadata.set("rommremote", "true");
+            if (wasFavorite) {
+                RomMLocalFavorites::getInstance().setFavorite(
+                    atoi(file->metadata.get("rommid").c_str()), true);
+                file->metadata.set("favorite", "true");
+            }
+
+            // resetMetadataFunc() just wiped desc/genre/rating/hidden/completed/lastplayed/etc.
+            // back to their generic defaults - refill them from RomMCache so the entry
+            // immediately looks like the remote placeholder it's reverting to, rather than
+            // sitting blank/reset until the next sync re-applies them.
+            RomMCache::CachedRom cachedRom;
+            if (RomMCache::getInstance().findCachedRom(atoi(file->metadata.get("rommid").c_str()),
+                                                       cachedRom)) {
+                const RomMApiClient::Rom rom {RomMCache::toApiRom(cachedRom)};
+                const std::string displayName {RomMLibrarySync::computeDisplayName(rom.id)};
+                if (!displayName.empty())
+                    file->metadata.set("name", displayName);
+                if (!rom.summary.empty())
+                    file->metadata.set("desc", rom.summary);
+                RomMUtils::applyRomMData(file, rom);
+            }
+
+            RomMLibrarySync::reregisterRemoteMedia(atoi(file->metadata.get("rommid").c_str()));
+            file->getSystem()->onMetaDataSavePoint();
+
+            // The game just moved into the "not yet downloaded" bucket, so its position among
+            // its siblings needs to be recomputed - onFileChanged() alone just redisplays the
+            // existing child order.
+            FileData* rootFolder {file->getSystem()->getRootFolder()};
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                             Settings::getInstance()->getBool("FavoritesFirst"));
+
+            mWindow->invalidateCachedBackground();
+            ViewController::getInstance()->onFileChanged(file, true);
+            return;
+        }
+
 #if defined(_WIN64)
         LOG(LogInfo) << "Deleting game file \""
                      << Utils::String::replace(file->getFullPath(), "/", "\\")

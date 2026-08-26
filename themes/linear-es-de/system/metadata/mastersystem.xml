@@ -23,7 +23,7 @@ The original Master System models use both cartridges and a credit card-sized fo
             <systemDescription>نظام سيجا ماستر سيستم هو الجيل الثالث من الجيل الثالث من أجهزة ألعاب الفيديو المنزلية ذات 8 بت التي صنعتها شركة سيجا. كان في الأصل نسخة تصدير معاد تشكيلها من سيجا مارك الثالث، وهو التكرار الثالث لسلسلة وحدات التحكم SG-1000، التي تم إصدارها في اليابان عام 1985، وتميزت بقدرات رسومية محسنة عن سابقاتها. تم إطلاق نظام Master System في أمريكا الشمالية في عام 1986، ثم في أوروبا في عام 1987، والبرازيل في عام 1989. كما تم إطلاق نسخة يابانية من نظام Master System في عام 1987، والتي تميزت ببعض التحسينات مقارنة بطرازات التصدير (وبالوكالة طراز Mark III الأصلي): شريحة صوت FM مدمجة، ومفتاح تشغيل سريع، ومنفذ مخصص للنظارات ثلاثية الأبعاد. تم إصدار Master System II، وهو طراز أرخص، في عام 1990 في أمريكا الشمالية وأوروبا.
 
 تستخدم موديلات Master System الأصلية كلاً من الخراطيش وصيغة بحجم بطاقة الائتمان المعروفة باسم بطاقات Sega Cards. وتشمل ملحقات وحدات التحكم مسدس ضوئي ونظارات ثلاثية الأبعاد تعمل مع مجموعة من الألعاب المصممة خصيصاً. أما جهاز Master System II الذي أعيد تصميمه لاحقاً فقد أزال فتحة البطاقة، مما جعله نظاماً يقتصر على الخراطيش فقط وغير متوافق مع النظارات ثلاثية الأبعاد.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,9 +76,9 @@ Originalni modeli glavnog sustava koriste i patrone i format veličine kreditne 
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Sega Master System è una console per videogiochi domestici a 8 bit di terza generazione prodotta da Sega. Originariamente era una versione da esportazione rimaneggiata del Sega Mark III, la terza iterazione della serie di console SG-1000, uscita in Giappone nel 1985 e dotata di capacità grafiche migliorate rispetto ai suoi predecessori. Il Master System fu lanciato in Nord America nel 1986, seguito dall'Europa nel 1987 e dal Brasile nel 1989. Nel 1987 fu lanciata anche una versione giapponese del Master System, che presentava alcuni miglioramenti rispetto ai modelli per l'esportazione (e per procura al Mark III originale): un chip audio FM integrato, un interruttore a fuoco rapido e una porta dedicata per gli occhiali 3D. Il Master System II, un modello più economico, fu lanciato nel 1990 in Nord America e in Europa.
+            <systemDescription>Il Sega Master System è una console per videogiochi ad 8 bit di terza generazione prodotta da Sega. Originariamente era una versione da esportazione rimaneggiata del Sega Mark III, la terza iterazione della serie di console SG-1000, uscita in Giappone nel 1985 e dotata di capacità grafiche migliorate rispetto ai suoi predecessori. Il Master System fu lanciato in Nord America nel 1986, seguito dall'Europa nel 1987 e dal Brasile nel 1989. Nel 1987 fu lanciata anche una versione giapponese del Master System, che presentava alcuni miglioramenti rispetto ai modelli per l'esportazione (e per procura al Mark III originale): un chip audio FM integrato, un interruttore a fuoco rapido ed una porta dedicata per gli occhiali 3D. Il Master System II, un modello più economico, fu lanciato nel 1990 in Nord America e in Europa.
 
-I modelli originali di Master System utilizzano sia cartucce che un formato di carta di credito noto come Sega Card. Gli accessori per le console includono una pistola luminosa e occhiali 3D che funzionano con una serie di giochi appositamente progettati. La successiva riprogettazione del Master System II ha eliminato lo slot per le schede, trasformandolo in un sistema esclusivamente a cartucce ed è incompatibile con gli occhiali 3D.</systemDescription>
+I modelli originali di Master System utilizzano sia cartucce, sia un formato di tipo "cards" noto come Sega Card. Gli accessori per le console includono una pistola luminosa ed occhiali 3D che funzionano con una serie di giochi appositamente progettati. La successiva riprogettazione del Master System (il Sega Master System II) ha eliminato lo slot per le schede, trasformandolo in un sistema esclusivamente a cartucce ed è incompatibile con gli occhiali 3D.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ Modelele originale Master System folosesc atât cartușe, cât și un format de 
 
 De ursprungliga Master System-modellerna använder både kassetter och ett format i kreditkortsstorlek som kallas Sega Cards. Bland tillbehören till konsolerna finns en ljuspistol och 3D-glasögon som fungerar med en rad specialdesignade spel. I den senare Master System II-modellen togs kortplatsen bort, vilket gjorde konsolen till ett system som enbart använde kassetter och som inte är kompatibelt med 3D-glasögonen.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Sega Master System là hệ máy chơi game gia đình 8-bit thế hệ thứ ba do Sega sản xuất. Ban đầu, đây là phiên bản xuất khẩu được cải tiến từ Sega Mark III, thế hệ thứ ba của dòng máy chơi game SG-1000, được ra mắt tại Nhật Bản vào năm 1985 và sở hữu khả năng đồ họa được nâng cấp so với các phiên bản tiền nhiệm. Master System ra mắt tại Bắc Mỹ vào năm 1986, tiếp theo là châu Âu vào năm 1987 và Brazil vào năm 1989. Phiên bản Master System dành cho thị trường Nhật Bản cũng được ra mắt vào năm 1987, với một số cải tiến so với các mẫu xuất khẩu (và gián tiếp so với Mark III gốc): chip âm thanh FM tích hợp, công tắc bắn nhanh và cổng kết nối dành riêng cho kính 3D. Master System II, một mẫu máy rẻ hơn, được phát hành vào năm 1990 tại Bắc Mỹ và châu Âu.
+
+Các mẫu Master System ban đầu sử dụng cả băng game và định dạng có kích thước bằng thẻ tín dụng được gọi là Sega Cards. Các phụ kiện cho máy chơi game này bao gồm súng bắn ánh sáng và kính 3D hoạt động với một loạt các trò chơi được thiết kế đặc biệt. Thiết kế lại Master System II sau này đã loại bỏ khe cắm thẻ, biến nó thành một hệ thống chỉ sử dụng băng game và không tương thích với kính 3D.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

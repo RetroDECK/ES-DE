@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز أتاري 5200 سوبر سيستم، المعروف باسم أتاري 5200، هو الجيل الثاني (1976-1992) من أجهزة ألعاب الفيديو التي طورتها ووزعتها شركة أتاري. وقد تم إصداره في نوفمبر 1982 في أمريكا الشمالية بسعر تجزئة 269 دولارًا أمريكيًا. لم يتم إصداره خارج أمريكا الشمالية. كانت الأجهزة الداخلية لجهاز 5200 متطابقة تقريباً مع أجهزة أتاري 8 بت، إلا أنه كان مزوداً بوحدة تحكم مبتكرة تتميز بعصا تحكم غير متمركزة بزاوية 360 درجة مع لوحة مفاتيح رقمية وأزرار بدء وإيقاف مؤقت وإعادة ضبط. تم إيقاف وحدة التحكم في 21 مايو 1984.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemDescription>جهاز أتاري 5200 سوبر سيستم، المعروف باسم أتاري 5200، هو الجيل الثاني (1976-1992) من أجهزة ألعاب الفيديو التي طورتها ووزعتها شركة أتاري. وقد تم إصداره في نوفمبر 1982 في أمريكا الشمالية بسعر تجزئة 269 دولارًا أمريكيًا. لم يتم إصداره خارج أمريكا الشمالية. كانت الأجهزة الداخلية لجهاز 5200 متطابقة تقريباً مع أجهزة أتاري 8 بت، إلا أنه كان مزوداً بوحدة تحكم مبتكرة تتميز بعصا تحكم غير متمركزة بزاوية 360 درجة مع لوحة مفاتيح رقمية وأزرار بدء وإيقاف مؤقت وإعادة ضبط. تم إيقاف كونسول في 21 مايو 1984.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'Atari 5200 SuperSystem, comunemente noto come Atari 5200, è una console per videogiochi di seconda generazione (1976-1992) sviluppata e distribuita da Atari, Inc. È stata rilasciata nel novembre 1982 in Nord America a un prezzo al dettaglio di 269 dollari. Non è stata distribuita al di fuori del Nord America. L'hardware interno del 5200 era quasi identico a quello dei computer a 8 bit di Atari, ma era dotato di un innovativo controller con joystick non centrato a 360 gradi, tastierino numerico, pulsanti di avvio, pausa e reset. La console fu dismessa il 21 maggio 1984.</systemDescription>
+            <systemDescription>L'Atari 5200 SuperSystem, comunemente noto come Atari 5200, è una console per videogiochi di seconda generazione (1976-1992) sviluppata e distribuita da Atari, Inc. È stata rilasciata nel novembre 1982 in Nord America ad un prezzo al dettaglio di 269 dollari. Non è stata distribuita al di fuori del Nord America. L'hardware interno del 5200 era quasi identico a quello dei computer a 8 bit di Atari, ma era dotato di un innovativo controller con joystick non centrato a 360 gradi, tastierino numerico, pulsanti di avvio, pausa e reset. La console fu dismessa il 21 maggio 1984.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Atari 5200 SuperSystem, allmänt känd som Atari 5200, är en andra generationens (1976-1992) videospelskonsol som utvecklades och distribuerades av Atari, Inc. Den släpptes i november 1982 i Nordamerika till ett detaljhandelspris av 269 dollar. Den släpptes inte utanför Nordamerika. Den interna hårdvaran i 5200 var nästan identisk med Ataris 8-bitarsdatorer, men den hade en innovativ handkontroll med en 360-graders icke-centrerad joystick med numeriskt tangentbord, start-, paus- och återställningsknappar. Konsolen slutade säljas den 21 maj 1984.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Atari 5200 SuperSystem, thường được gọi tắt là Atari 5200, là một hệ máy chơi game thế hệ thứ hai (1976–1992) do Atari, Inc. phát triển và phân phối. Hệ máy này được ra mắt vào tháng 11 năm 1982 tại Bắc Mỹ với giá bán lẻ là 269 đô la. Sản phẩm này không được phát hành ngoài khu vực Bắc Mỹ. Phần cứng bên trong của 5200 gần như giống hệt với các máy tính 8-bit của Atari, tuy nhiên nó đi kèm với một bộ điều khiển sáng tạo có cần điều khiển 360 độ không tự động về vị trí trung tâm, cùng với bàn phím số, nút Start, Pause và Reset. Hệ máy này đã ngừng sản xuất vào ngày 21 tháng 5 năm 1984.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

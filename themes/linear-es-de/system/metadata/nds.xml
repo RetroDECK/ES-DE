@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Nintendo DS, o semplicemente DS, è una console portatile a doppio schermo a 32 bit sviluppata e pubblicata da Nintendo. Il dispositivo è stato messo in vendita in Nord America il 21 novembre 2004. Il DS, abbreviazione di "Developers' System" o "Dual Screen", ha introdotto nuove caratteristiche distintive nei giochi portatili: due schermi LCD che lavorano in tandem (quello inferiore è dotato di touchscreen), un microfono integrato e il supporto per la connettività wireless. Entrambi gli schermi sono racchiusi in un design a conchiglia simile a quello del Game Boy Advance SP. Il Nintendo DS offre inoltre la possibilità a più console DS di interagire direttamente tra loro tramite Wi-Fi a breve distanza, senza la necessità di collegarsi a una rete wireless esistente. In alternativa, possono interagire online utilizzando il servizio Nintendo Wi-Fi Connection, ora chiuso.</systemDescription>
+            <systemDescription>Il Nintendo DS, o semplicemente DS, è una console portatile a doppio schermo a 32 bit sviluppata e pubblicata da Nintendo. Il dispositivo è stato messo in vendita in Nord America il 21 novembre 2004. Il DS, abbreviazione di "Developers' System" o "Dual Screen", ha introdotto nuove caratteristiche distintive nelle console portatili: due schermi LCD che lavorano in tandem (quello inferiore è dotato di touchscreen), un microfono integrato ed il supporto per la connettività wireless. Entrambi gli schermi sono racchiusi in un design a conchiglia simile a quello del Game Boy Advance SP. Il Nintendo DS offre inoltre la possibilità a di poter far interagire direttamente tra loro, tramite Wi-Fi a breve distanza, più console DS, senza la necessità di collegarsi ad una rete wireless esistente. In alternativa, potevano interagire online utilizzando il servizio Nintendo Wi-Fi Connection, ad oggi non più in esercizio.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Nintendo DS, eller helt enkelt DS, är en 32-bitars handhållen spelkonsol med dubbla skärmar som utvecklats och släppts av Nintendo. Enheten började säljas i Nordamerika den 21 november 2004. DS, en förkortning för "Developers' System" eller "Dual Screen", introducerade nya funktioner för handhållna spel: två LCD-skärmar som arbetar tillsammans (den nedre har en pekskärm), en inbyggd mikrofon och stöd för trådlös anslutning. Båda skärmarna är inrymda i en clamshell-design som liknar Game Boy Advance SP. Nintendo DS har också möjlighet för flera DS-konsoler att direkt interagera med varandra via Wi-Fi inom en kort räckvidd utan att behöva ansluta till ett befintligt trådlöst nätverk. Alternativt kunde de interagera online med hjälp av den numera nedlagda tjänsten Nintendo Wi-Fi Connection.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Nintendo DS, hay đơn giản là DS, là một hệ máy chơi game cầm tay 32-bit hai màn hình do Nintendo phát triển và phát hành. Thiết bị này chính thức được bán ra tại Bắc Mỹ vào ngày 21 tháng 11 năm 2004. DS, viết tắt của "Developers' System" (Hệ thống dành cho nhà phát triển) hoặc "Dual Screen" (Màn hình kép), đã mang đến những tính năng mới độc đáo cho trò chơi cầm tay: hai màn hình LCD hoạt động song song (màn hình dưới có tính năng cảm ứng), micrô tích hợp và hỗ trợ kết nối không dây. Cả hai màn hình đều được bao bọc trong thiết kế dạng vỏ sò tương tự như Game Boy Advance SP. Nintendo DS cũng có khả năng cho phép nhiều máy DS tương tác trực tiếp với nhau qua Wi-Fi trong phạm vi ngắn mà không cần kết nối với mạng không dây hiện có. Ngoài ra, chúng có thể tương tác trực tuyến thông qua dịch vụ Nintendo Wi-Fi Connection (hiện đã ngừng hoạt động).</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

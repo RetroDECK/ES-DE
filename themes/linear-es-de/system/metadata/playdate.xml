@@ -18,7 +18,7 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>Playdate هو جهاز ألعاب فيديو محمول باليد طورته شركة بانيك. بالإضافة إلى الأزرار ولوحة الاتجاه، يحتوي الجهاز على ذراع ميكانيكي على جانبه. تم الإعلان عن وحدة التحكم لأول مرة في 22 مايو 2019 على غلاف مجلة Edge، وتم إصدارها في 18 أبريل 2022. يشير الاسم إلى جدول الإصدار الأسبوعي للألعاب.</systemDescription>
+            <systemDescription>Playdate هو جهاز ألعاب فيديو محمول باليد طورته شركة بانيك. بالإضافة إلى الأزرار ولوحة الاتجاه، يحتوي الجهاز على ذراع ميكانيكي على جانبه. تم الإعلان عن كونسول لأول مرة في 22 مايو 2019 على غلاف مجلة Edge، وتم إصدارها في 18 أبريل 2022. يشير الاسم إلى جدول الإصدار الأسبوعي للألعاب.</systemDescription>
             <systemHardwareType>محمول</systemHardwareType>
         </variables>
     </language>
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Playdate è una console portatile per videogiochi sviluppata da Panic. Oltre ai pulsanti e al pad direzionale, il dispositivo è dotato di una manovella meccanica sul lato. La console è stata annunciata per la prima volta il 22 maggio 2019 sulla copertina della rivista Edge ed è stata rilasciata il 18 aprile 2022. Il nome fa riferimento alla programmazione settimanale dei giochi.</systemDescription>
+            <systemDescription>Playdate è una console portatile per videogiochi sviluppata da Panic. Oltre ai pulsanti ed al pad multi-direzionale, il dispositivo è dotato di una manovella meccanica sul lato. La console è stata annunciata per la prima volta il 22 maggio 2019 sulla copertina della rivista Edge ed è stata rilasciata il 18 aprile 2022. Il nome fa riferimento alla programmazione settimanale dei giochi.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Playdate är en handhållen videospelskonsol som utvecklats av Panic. Förutom knappar och en styrplatta har enheten en mekanisk vev på sidan. Konsolen presenterades för första gången den 22 maj 2019 på omslaget till tidningen Edge och släpptes den 18 april 2022. Namnet refererar till dess veckovisa utgivningsschema för spel.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Playdate là một máy chơi game cầm tay do Panic phát triển. Ngoài các nút bấm và cần điều hướng, thiết bị này còn có một tay quay cơ học ở bên hông. Máy chơi game này lần đầu tiên được công bố vào ngày 22 tháng 5 năm 2019 trên trang bìa tạp chí Edge, và chính thức ra mắt vào ngày 18 tháng 4 năm 2022. Tên gọi của sản phẩm ám chỉ lịch phát hành trò chơi hàng tuần của nó.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

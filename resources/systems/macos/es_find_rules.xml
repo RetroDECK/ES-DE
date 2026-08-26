@@ -51,6 +51,12 @@
             <entry>/Applications/ares.app/Contents/MacOS/ares</entry>
         </rule>
     </emulator>
+    <emulator name="ARMSX2">
+        <!-- Sony PlayStation 2 emulator ARMSX2 -->
+        <rule type="staticpath">
+            <entry>/Applications/ARMSX2.app/Contents/MacOS/ARMSX2</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="staticpath">
@@ -301,6 +307,12 @@
             <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
         </rule>
     </emulator>
+    <emulator name="PCSX2X6">
+        <!-- Namco System 246 and 256 emulator PCSX2x6 -->
+        <rule type="staticpath">
+            <entry>/Applications/PCSX2x6.app/Contents/MacOS/PCSX2</entry>
+        </rule>
+    </emulator>
     <emulator name="PICO-8">
         <!-- PICO-8 Fantasy Console (game engine) -->
         <rule type="staticpath">
@@ -440,6 +452,12 @@
         <rule type="staticpath">
             <entry>/opt/homebrew/bin/supermodel</entry>
             <entry>/usr/local/bin/supermodel</entry>
+        </rule>
+    </emulator>
+    <emulator name="SUPERZSNES">
+        <!-- Super Nintendo/Super Famicom emulator SUPER ZSNES -->
+        <rule type="staticpath">
+            <entry>/Applications/SUPERZSNES.app/Contents/MacOS/SUPERZSNES</entry>
         </rule>
     </emulator>
     <emulator name="TIC-80">

@@ -9,6 +9,7 @@
     <language>en_GB</language>
     <language>bs_BA</language>
     <language>ca_ES</language>
+    <language>cs_CZ</language>
     <language>de_DE</language>
     <language>es_ES</language>
     <language>fr_FR</language>
@@ -42,6 +43,7 @@
         <label language="en_GB">Dark</label>
         <label language="bs_BA">Tamna</label>
         <label language="ca_ES">Fosc</label>
+        <label language="cs_CZ">Tmavé</label>
         <label language="de_DE">Dunkel</label>
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
@@ -68,6 +70,7 @@
         <label language="en_GB">Light</label>
         <label language="bs_BA">Svjetla</label>
         <label language="ca_ES">Clar</label>
+        <label language="cs_CZ">Světlé</label>
         <label language="de_DE">Hell</label>
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
@@ -94,6 +97,7 @@
         <label language="en_GB">Slide</label>
         <label language="bs_BA">Klizivo</label>
         <label language="ca_ES">Lliscar</label>
+        <label language="cs_CZ">Snímkové</label>
         <label language="de_DE">Gleiten</label>
         <label language="es_ES">Deslizante</label>
         <label language="fr_FR">Glissement</label>
@@ -125,6 +129,7 @@
         <label language="en_GB">Instant</label>
         <label language="bs_BA">Instantno</label>
         <label language="ca_ES">Instantani</label>
+        <label language="cs_CZ">Okamžité</label>
         <label language="de_DE">Sofort</label>
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
@@ -158,6 +163,7 @@
         <label language="en_GB">Fade</label>
         <label language="bs_BA">Blijed</label>
         <label language="ca_ES">Desaparèixer</label>
+        <label language="cs_CZ">Prolínání</label>
         <label language="de_DE">Überblendung</label>
         <label language="es_ES">Fundido</label>
         <label language="fr_FR">Fondu</label>
@@ -197,6 +203,7 @@
         <label language="en_GB">Textlist with videos</label>
         <label language="bs_BA">Tekstlista s videima</label>
         <label language="ca_ES">Llistat amb vídeos</label>
+        <label language="cs_CZ">Seznam s videi</label>
         <label language="de_DE">Liste mit videos</label>
         <label language="es_ES">Lista con videos</label>
         <label language="fr_FR">Liste avec vidéos</label>
@@ -229,6 +236,7 @@
         <label language="en_GB">Textlist without videos</label>
         <label language="bs_BA">Tekstlista bez videa</label>
         <label language="ca_ES">Llistat sense vídeos</label>
+        <label language="cs_CZ">Seznam bez videa</label>
         <label language="de_DE">Liste ohne videos</label>
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>

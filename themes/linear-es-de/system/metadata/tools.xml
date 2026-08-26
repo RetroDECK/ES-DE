@@ -14,7 +14,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>برامج ونصوص برمجية وأدوات مساعدة لإدارة إعداداتك.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -55,7 +55,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Programmi, script e utility per gestire la vostra configurazione.</systemDescription>
+            <systemDescription>Programmi, script e strumenti per gestire il tuo set-up.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>
@@ -117,6 +117,12 @@
         <variables>
             <systemDescription>Program, skript och verktyg för att hantera din installation.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Các chương trình, tập lệnh và tiện ích để quản lý hệ thống của bạn.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

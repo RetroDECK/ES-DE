@@ -20,10 +20,10 @@ Developed in response to a downturn in arcades in 1982, the SG-1000 was created 
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز SG-1000 هو جهاز ألعاب فيديو منزلي من إنتاج شركة سيجا وتم إصداره في اليابان وأستراليا ونيوزيلندا ومناطق أخرى. وكان أول دخول لشركة Sega في مجال أجهزة ألعاب الفيديو المنزلية. طُرح SG-1000 في عام 1983، وتم إصداره في نفس اليوم الذي أصدرت فيه شركة نينتندو كمبيوتر العائلة في اليابان. تم إصدار SG-1000 في عدة أشكال، بما في ذلك الكمبيوتر SC-3000 والكمبيوتر SG-1000 II المعاد تصميمه الذي تم إصداره في عام 1984. وصدر التكرار الثالث لوحدة التحكم، وهو Sega Mark III، في عام 1985. وقد تم تزويده بمعالج عرض فيديو مخصص عن التكرارات السابقة وكان بمثابة الأساس لنظام Master System في عام 1986، وهو أول وحدة تحكم تصدرها Sega عالميًا.
+            <systemDescription>جهاز SG-1000 هو جهاز ألعاب فيديو منزلي من إنتاج شركة سيجا وتم إصداره في اليابان وأستراليا ونيوزيلندا ومناطق أخرى. وكان أول دخول لشركة Sega في مجال أجهزة ألعاب الفيديو المنزلية. طُرح SG-1000 في عام 1983، وتم إصداره في نفس اليوم الذي أصدرت فيه شركة نينتندو كمبيوتر العائلة في اليابان. تم إصدار SG-1000 في عدة أشكال، بما في ذلك الكمبيوتر SC-3000 والكمبيوتر SG-1000 II المعاد تصميمه الذي تم إصداره في عام 1984. وصدر التكرار الثالث لكونسول، وهو Sega Mark III، في عام 1985. وقد تم تزويده بمعالج عرض فيديو مخصص عن التكرارات السابقة وكان بمثابة الأساس لنظام Master System في عام 1986، وهو أول وحدة تحكم تصدرها Sega عالميًا.
 
 وقد تم تطوير SG-1000 استجابةً للكساد الذي شهدته صالات الألعاب في عام 1982، وتم ابتكار SG-1000 بناءً على نصيحة هاياو ناكاياما، رئيس شركة Sega Enterprises, Ltd. وبعد فترة وجيزة من الإصدار، بيعت شركة Sega Enterprises إلى شركة CSK، وأعقب ذلك إصدار SG-1000 II. يدعم كل من خط SC-3000 وخط SG-1000 مكتبة تضم 76 لعبة خرطوشة ROM و29 لعبة Sega My Card، وجميعها متوافقة تمامًا مع Mark III والنسخة اليابانية من النظام الرئيسي.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,7 +76,7 @@ Developed in response to a downturn in arcades in 1982, the SG-1000 was created 
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'SG-1000 è una console per videogiochi domestica prodotta da Sega e distribuita in Giappone, Australia, Nuova Zelanda e altre regioni. È stato il primo ingresso di Sega nel settore dei videogiochi domestici. Introdotto nel 1983, l'SG-1000 uscì lo stesso giorno in cui Nintendo rilasciò il Family Computer in Giappone. L'SG-1000 è stato distribuito in diverse forme, tra cui il computer SC-3000 e l'SG-1000 II ridisegnato nel 1984. Una terza iterazione della console, la Sega Mark III, fu rilasciata nel 1985. Questa console, dotata di un processore video personalizzato rispetto alle versioni precedenti, servì da base per il Master System del 1986, la prima console di Sega distribuita a livello internazionale.
+            <systemDescription>L'SG-1000 è una console per videogiochi prodotta da Sega e distribuita in Giappone, Australia, Nuova Zelanda ed altre regioni. È stato il primo ingresso di Sega nel settore dei videogiochi domestici. Introdotta nel 1983, l'SG-1000 uscì lo stesso giorno in cui Nintendo rilasciò il Family Computer (Famicom) in Giappone. L'SG-1000 è stato distribuito in diverse forme, tra cui il computer SC-3000 e l'SG-1000 II ridisegnato nel 1984. Una terza iterazione della console, la Sega Mark III, fu rilasciata nel 1985. Questa console, dotata di un processore video personalizzato rispetto alle versioni precedenti, servì da base per il Master System del 1986, la prima console di Sega distribuita a livello internazionale.
 
 Sviluppato in risposta alla flessione delle sale giochi nel 1982, l'SG-1000 fu creato su consiglio di Hayao Nakayama, presidente di Sega Enterprises, Ltd. Poco dopo l'uscita, Sega Enterprises fu venduta a CSK Corporation, cui seguì l'uscita dell'SG-1000 II. La linea SC-3000 e la linea SG-1000 supportano entrambe una libreria di 76 giochi per cartucce ROM e 29 giochi Sega My Card, tutti pienamente compatibili con il Mark III e la versione giapponese del Master System.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
@@ -160,6 +160,14 @@ Developed in response to a downturn in arcades in 1982, the SG-1000 was created 
 
 SG-1000 utvecklades som svar på en nedgång i arkadhallarna 1982 och skapades på inrådan av Hayao Nakayama, VD för Sega Enterprises, Ltd. Strax efter lanseringen såldes Sega Enterprises till CSK Corporation, vilket följdes av lanseringen av SG-1000 II. Både SC-3000 och SG-1000-serien har ett bibliotek med 76 ROM-kassettspel och 29 Sega My Card-spel, som alla är fullt kompatibla med Mark III och den japanska versionen av Master System.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>SG-1000 là một hệ máy chơi game gia đình do Sega sản xuất và phát hành tại Nhật Bản, Úc, New Zealand cùng các khu vực khác. Đây là sản phẩm đầu tiên của Sega trong lĩnh vực phần cứng chơi game gia đình. Ra mắt vào năm 1983, SG-1000 được phát hành cùng ngày với việc Nintendo ra mắt hệ máy Family Computer tại Nhật Bản. SG-1000 được phát hành dưới nhiều dạng, bao gồm máy tính SC-3000 và phiên bản thiết kế lại SG-1000 II ra mắt vào năm 1984. Phiên bản thứ ba của hệ máy này, Sega Mark III, được phát hành vào năm 1985. Nó trang bị bộ xử lý hiển thị video tùy chỉnh so với các phiên bản trước và trở thành nền tảng cho hệ máy Master System ra mắt vào năm 1986, hệ máy đầu tiên của Sega được phát hành trên phạm vi quốc tế.
+
+Được phát triển để ứng phó với sự suy thoái của các phòng game vào năm 1982, SG-1000 được tạo ra theo lời khuyên của Hayao Nakayama, Chủ tịch Sega Enterprises, Ltd. Ngay sau khi ra mắt, Sega Enterprises đã được bán cho CSK Corporation, và sau đó là việc ra mắt SG-1000 II. Cả SC-3000 và dòng SG-1000 đều hỗ trợ thư viện gồm 76 trò chơi trên thẻ ROM và 29 trò chơi Sega My Card, tất cả đều hoàn toàn tương thích với Mark III và phiên bản Master System của Nhật Bản.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

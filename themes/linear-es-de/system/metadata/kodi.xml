@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Kodi هو تطبيق برمجيات مشغل وسائط مجاني ومفتوح المصدر طورته مؤسسة XBMC، وهي اتحاد تكنولوجي غير ربحي. يتوفر Kodi للعديد من أنظمة التشغيل ومنصات الأجهزة، مع واجهة مستخدم برمجية ذات 10 أقدام للاستخدام مع أجهزة التلفاز وأجهزة التحكم عن بعد.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Kodi è un'applicazione software per lettori multimediali gratuita e open-source sviluppata dalla XBMC Foundation, un consorzio tecnologico senza scopo di lucro. Kodi è disponibile per diversi sistemi operativi e piattaforme hardware, con un'interfaccia utente software a 10 piedi da utilizzare con televisori e telecomandi.</systemDescription>
+            <systemDescription>Kodi è un'applicazione software per lettori multimediali gratuita ed open-source sviluppata dalla XBMC Foundation, un consorzio tecnologico senza scopo di lucro. Kodi è disponibile per diversi sistemi operativi e piattaforme hardware, con un'interfaccia utente software "10-foot" da utilizzare con televisori e telecomandi.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Kodi är en mediaspelare med fri och öppen källkod som utvecklats av XBMC Foundation, ett icke vinstdrivande teknikkonsortium. Kodi finns tillgänglig för flera operativsystem och hårdvaruplattformar, med ett 10-fots användargränssnitt för användning med TV-apparater och fjärrkontroller.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Kodi là một ứng dụng phần mềm trình phát đa phương tiện miễn phí và mã nguồn mở do XBMC Foundation, một tổ chức công nghệ phi lợi nhuận, phát triển. Kodi tương thích với nhiều hệ điều hành và nền tảng phần cứng, đồng thời được trang bị giao diện người dùng 10-foot dành riêng cho tivi và điều khiển từ xa.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

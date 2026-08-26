@@ -35,6 +35,9 @@
 #include <array>
 #include <fcntl.h>
 
+#define MAX_RUNNING_COMMANDS 8
+inline static std::atomic<int> sRunningCommands {0};
+
 namespace Utils
 {
     namespace Platform
@@ -93,38 +96,75 @@ namespace Utils
 #endif
         }
 
-        int runSystemCommand(const std::string& cmd_utf8)
+        int runSystemCommand(const std::string& cmdUtf8, bool blocking)
         {
 #if defined(_WIN64) || defined(__IOS__)
             return 0;
 #else
-            return system(cmd_utf8.c_str());
+            if (!blocking) {
+                // We need to keep track of how many scripts we have executed so in case a script
+                // hangs forever we just don't keep forking processes indefinitely which will
+                // completely exhaust the system eventually. The approach is very simple, just
+                // refuse to launch any scripts above MAX_RUNNING_COMMANDS and then leave it to
+                // the user to figure out why their scripts are hanging.
+                if (sRunningCommands >= MAX_RUNNING_COMMANDS) {
+                    LOG(LogWarning)
+                        << "runSystemCommand: Maximum running commands of " << MAX_RUNNING_COMMANDS
+                        << " reached, skipping execution of: " << cmdUtf8;
+                    return -1;
+                }
+
+                try {
+                    std::thread([cmdUtf8]() {
+                        ++sRunningCommands;
+                        system(cmdUtf8.c_str());
+                        --sRunningCommands;
+                    }).detach();
+                }
+                catch (...) {
+                    return -1;
+                }
+
+                return 0;
+            }
+            else {
+                return system(cmdUtf8.c_str());
+            }
 #endif
         }
 
-        int runSystemCommand(const std::wstring& cmd_utf16)
+        int runSystemCommand(const std::wstring& cmdUtf16, bool blocking)
         {
 #if defined(_WIN64)
-            STARTUPINFOW si {};
-            PROCESS_INFORMATION pi;
+            if (!blocking && sRunningCommands >= MAX_RUNNING_COMMANDS) {
+                LOG(LogWarning) << "runSystemCommand: Maximum running commands of "
+                                << MAX_RUNNING_COMMANDS << " reached, skipping execution of: "
+                                << Utils::String::replace(
+                                       Utils::String::wideStringToString(cmdUtf16), "/", "\\");
+                return -1;
+            }
 
-            si.cb = sizeof(si);
+            auto createProcessFunc = [](std::wstring cmdUtf16) {
+                STARTUPINFOW si {};
+                PROCESS_INFORMATION pi {};
 
-            // Always hide the console window.
-            si.dwFlags = STARTF_USESHOWWINDOW;
-            si.wShowWindow = SW_HIDE;
+                si.cb = sizeof(si);
 
-            bool processReturnValue {true};
-            DWORD errorCode {0};
+                // Always hide the console window.
+                si.dwFlags = STARTF_USESHOWWINDOW;
+                si.wShowWindow = SW_HIDE;
 
-            std::wstring startDirectoryTemp {Utils::String::stringToWideString(
-                Utils::FileSystem::getAppDataDirectory() + "/scripts/")};
-            wchar_t* startDirectory {&startDirectoryTemp[0]};
+                bool processReturnValue {true};
+                DWORD errorCode {0};
 
-            // clang-format off
+                std::wstring startDirectoryTemp {Utils::String::stringToWideString(
+                    Utils::FileSystem::getAppDataDirectory() + "/scripts/")};
+                wchar_t* startDirectory {&startDirectoryTemp[0]};
+
+                // clang-format off
             processReturnValue = CreateProcessW(
                 nullptr,                         // No application name (use command line).
-                const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
+                const_cast<wchar_t*>(cmdUtf16.c_str()), // Command line.
                 nullptr,                         // Process attributes.
                 nullptr,                         // Thread attributes.
                 FALSE,                           // Handles inheritance.
@@ -133,38 +173,62 @@ namespace Utils
                 startDirectory,                  // Starting directory.
                 &si,                             // Pointer to the STARTUPINFOW structure.
                 &pi);                            // Pointer to the PROCESS_INFORMATION structure.
-            // clang-format on
+                // clang-format on
 
-            // We always wait forever for the script to finish its execution.
-            WaitForSingleObject(pi.hProcess, INFINITE);
+                // We always wait forever for the script to finish its execution.
+                WaitForSingleObject(pi.hProcess, INFINITE);
 
-            // If the return value is false, then something failed.
-            if (!processReturnValue) {
-                LPWSTR pBuffer {nullptr};
+                // If the return value is false, then something failed.
+                if (!processReturnValue) {
+                    LPWSTR pBuffer {nullptr};
 
-                FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, nullptr,
-                               GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                               reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
+                    FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER,
+                                   nullptr, GetLastError(),
+                                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                                   reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
 
-                errorCode = GetLastError();
+                    errorCode = GetLastError();
+
+                    if (pBuffer)
+                        LocalFree(pBuffer);
+                }
+                else {
+                    // Close process and thread handles.
+                    CloseHandle(pi.hProcess);
+                    CloseHandle(pi.hThread);
+                }
+
+                return errorCode;
+            };
+
+            if (!blocking) {
+                try {
+                    std::thread([createProcessFunc, cmdUtf16]() {
+                        ++sRunningCommands;
+                        createProcessFunc(cmdUtf16);
+                        --sRunningCommands;
+                    }).detach();
+                }
+                catch (...) {
+                    return -1;
+                }
+
+                return 0;
             }
-
-            // Close process and thread handles.
-            CloseHandle(pi.hProcess);
-            CloseHandle(pi.hThread);
-
-            return errorCode;
+            else {
+                return createProcessFunc(cmdUtf16);
+            }
 #else
             return 0;
 #endif
         }
 
-        int launchGameUnix(const std::string& cmd_utf8,
+        int launchGameUnix(const std::string& cmdUtf8,
                            const std::string& startDirectory,
                            bool runInBackground)
         {
 #if defined(__unix__) || defined(__APPLE__) || defined(__HAIKU__)
-            std::string command = std::string(cmd_utf8) + " 2>&1 &";
+            std::string command {std::string(cmdUtf8) + " 2>&1 &"};
 
             // Launching games while keeping ES-DE running in the background is very crude as for
             // instance no output from the command is captured and no real error handling is
@@ -265,14 +329,14 @@ namespace Utils
 #endif
         }
 
-        int launchGameWindows(const std::wstring& cmd_utf16,
+        int launchGameWindows(const std::wstring& cmdUtf16,
                               const std::wstring& startDirectory,
                               bool runInBackground,
                               bool hideWindow)
         {
 #if defined(_WIN64)
             STARTUPINFOW si {};
-            PROCESS_INFORMATION pi;
+            PROCESS_INFORMATION pi {};
 
             si.cb = sizeof(si);
             if (hideWindow) {
@@ -290,7 +354,7 @@ namespace Utils
             // clang-format off
             processReturnValue = CreateProcessW(
                 nullptr,                         // No application name (use command line).
-                const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
+                const_cast<wchar_t*>(cmdUtf16.c_str()), // Command line.
                 nullptr,                         // Process attributes.
                 nullptr,                         // Thread attributes.
                 FALSE,                           // Handles inheritance.
@@ -344,8 +408,11 @@ namespace Utils
                                reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
 
                 errorCode = GetLastError();
-
                 std::string errorMessage {Utils::String::wideStringToString(pBuffer)};
+
+                if (pBuffer)
+                    LocalFree(pBuffer);
+
                 // Remove trailing newline from the error message.
                 if (errorMessage.size()) {
                     if (errorMessage.back() == '\n')
@@ -359,10 +426,11 @@ namespace Utils
                 LOG(LogError) << "launchGameWindows - system error code " << errorCode << ": "
                               << errorMessage;
             }
-
-            // Close process and thread handles.
-            CloseHandle(pi.hProcess);
-            CloseHandle(pi.hThread);
+            else {
+                // Close process and thread handles.
+                CloseHandle(pi.hProcess);
+                CloseHandle(pi.hThread);
+            }
 
             return errorCode;
 

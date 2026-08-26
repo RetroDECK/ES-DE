@@ -120,6 +120,14 @@ const bool FileData::getHidden()
         return false;
 }
 
+const bool FileData::getRomMRemote()
+{
+    if (metadata.get("rommremote") == "true")
+        return true;
+    else
+        return false;
+}
+
 const bool FileData::getCountAsGame()
 {
     if (metadata.get("nogamecount") == "true")
@@ -203,10 +211,12 @@ const std::string FileData::getPlayTimeString(const std::string& playTimeSeconds
     int playTimeValue {0};
 
     try {
-        playTimeValue = std::stoi(playTimeSeconds);
+        if (playTimeSeconds != "") {
+            playTimeValue = std::stoi(playTimeSeconds);
 
-        if (playTimeValue < 0)
-            playTimeValue = 0;
+            if (playTimeValue < 0)
+                playTimeValue = 0;
+        }
     }
     catch (...) {
         playTimeValue = 0;
@@ -534,17 +544,20 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
 
 std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
                                                          bool excludeRecursively,
-                                                         bool respectExclusions) const
+                                                         bool respectExclusions,
+                                                         bool excludeRomMRemote) const
 {
     std::vector<FileData*> out;
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
+        const bool isRomMRemote {excludeRomMRemote && (*it)->metadata.get("rommremote") == "true"};
+
         if (includeFolders && (*it)->getType() == FOLDER) {
-            if (!(respectExclusions && (*it)->getExcludeFromScraper()))
+            if (!(respectExclusions && (*it)->getExcludeFromScraper()) && !isRomMRemote)
                 out.emplace_back(*it);
         }
         else if ((*it)->getType() == GAME) {
-            if (!(respectExclusions && (*it)->getExcludeFromScraper()))
+            if (!(respectExclusions && (*it)->getExcludeFromScraper()) && !isRomMRemote)
                 out.emplace_back(*it);
         }
 
@@ -555,7 +568,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
 
         if ((*it)->getChildren().size() > 0) {
             std::vector<FileData*> subChildren {(*it)->getScrapeFilesRecursive(
-                includeFolders, excludeRecursively, respectExclusions)};
+                includeFolders, excludeRecursively, respectExclusions, excludeRomMRemote)};
             out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
         }
     }
@@ -616,10 +629,12 @@ void FileData::sort(ComparisonFunction& comparator,
     mOnlyFolders = true;
     mHasFolders = false;
     bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
+    bool downloadedFirst {Settings::getInstance()->getBool("RomMDownloadedFirst")};
     bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
     bool isKidMode {UIModeController::getInstance()->isUIModeKid()};
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
+    std::vector<FileData*> mChildrenRemote;
 
     if (mSystem->isGroupedCustomCollection())
         gameCount = {0, 0};
@@ -658,10 +673,14 @@ void FileData::sort(ComparisonFunction& comparator,
         return;
     }
 
-    if (foldersOnTop) {
+    if (foldersOnTop || downloadedFirst) {
         for (unsigned int i {0}; i < mChildren.size(); ++i) {
-            if (mChildren[i]->getType() == FOLDER) {
+            if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
                 mChildrenFolders.emplace_back(mChildren[i]);
+            }
+            else if (downloadedFirst && mChildren[i]->getRomMRemote()) {
+                mChildrenRemote.emplace_back(mChildren[i]);
+                mOnlyFolders = false;
             }
             else {
                 mChildrenOthers.emplace_back(mChildren[i]);
@@ -677,17 +696,22 @@ void FileData::sort(ComparisonFunction& comparator,
                              getSortTypeFromString("name, ascending").comparisonFunction);
             std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
                              getSortTypeFromString("name, ascending").comparisonFunction);
+            std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(),
+                             getSortTypeFromString("name, ascending").comparisonFunction);
         }
 
         if (foldersOnTop)
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
 
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
+        std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(), comparator);
 
         mChildren.erase(mChildren.begin(), mChildren.end());
-        mChildren.reserve(mChildrenFolders.size() + mChildrenOthers.size());
+        mChildren.reserve(mChildrenFolders.size() + mChildrenOthers.size() +
+                          mChildrenRemote.size());
         mChildren.insert(mChildren.end(), mChildrenFolders.begin(), mChildrenFolders.end());
         mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
+        mChildren.insert(mChildren.end(), mChildrenRemote.begin(), mChildrenRemote.end());
     }
     else {
         // If the requested sorting is not by name, then sort in ascending name order as a first
@@ -730,12 +754,15 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     mOnlyFolders = true;
     mHasFolders = false;
     bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
+    bool downloadedFirst {Settings::getInstance()->getBool("RomMDownloadedFirst")};
     bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
     bool isKidMode {UIModeController::getInstance()->isUIModeKid()};
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
+    std::vector<FileData*> mChildrenFavoritesRemote;
+    std::vector<FileData*> mChildrenRemote;
 
     if (mSystem->isGroupedCustomCollection())
         gameCount = {0, 0};
@@ -783,10 +810,16 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                 mChildrenFavoritesFolders.emplace_back(mChildren[i]);
         }
         else if (mChildren[i]->getFavorite()) {
-            mChildrenFavorites.emplace_back(mChildren[i]);
+            if (mChildren[i]->getRomMRemote())
+                mChildrenFavoritesRemote.emplace_back(mChildren[i]);
+            else
+                mChildrenFavorites.emplace_back(mChildren[i]);
         }
         else {
-            mChildrenOthers.emplace_back(mChildren[i]);
+            if (mChildren[i]->getRomMRemote())
+                mChildrenRemote.emplace_back(mChildren[i]);
+            else
+                mChildrenOthers.emplace_back(mChildren[i]);
         }
 
         if (mChildren[i]->getType() != FOLDER)
@@ -811,6 +844,16 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                          getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
+    if (!downloadedFirst) {
+        mChildrenFavorites.insert(mChildrenFavorites.end(), mChildrenFavoritesRemote.begin(),
+                                  mChildrenFavoritesRemote.end());
+        mChildrenFavoritesRemote.erase(mChildrenFavoritesRemote.begin(),
+                                       mChildrenFavoritesRemote.end());
+        mChildrenOthers.insert(mChildrenOthers.end(), mChildrenRemote.begin(),
+                               mChildrenRemote.end());
+        mChildrenRemote.erase(mChildrenRemote.begin(), mChildrenRemote.end());
+    }
+
     // If the requested sorting is not by name, then sort in ascending name order as a first
     // step, in order to get a correct secondary sorting.
     if (getSortTypeFromString("name, ascending").comparisonFunction != comparator &&
@@ -823,6 +866,10 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
                          getSortTypeFromString("name, ascending").comparisonFunction);
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
                          getSortTypeFromString("name, ascending").comparisonFunction);
+        std::stable_sort(mChildrenFavoritesRemote.begin(), mChildrenFavoritesRemote.end(),
+                         getSortTypeFromString("name, ascending").comparisonFunction);
+        std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(),
+                         getSortTypeFromString("name, ascending").comparisonFunction);
     }
 
     // Sort favorite games and the other games separately.
@@ -833,6 +880,8 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     }
     std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(), comparator);
     std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
+    std::stable_sort(mChildrenFavoritesRemote.begin(), mChildrenFavoritesRemote.end(), comparator);
+    std::stable_sort(mChildrenRemote.begin(), mChildrenRemote.end(), comparator);
 
     // Iterate through any child favorite folders.
     for (auto it = mChildrenFavoritesFolders.cbegin(); // Line break.
@@ -860,12 +909,16 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     // Combine the individually sorted favorite games and other games vectors.
     mChildren.erase(mChildren.begin(), mChildren.end());
     mChildren.reserve(mChildrenFavoritesFolders.size() + mChildrenFolders.size() +
-                      mChildrenFavorites.size() + mChildrenOthers.size());
+                      mChildrenFavorites.size() + mChildrenOthers.size() +
+                      mChildrenFavoritesRemote.size() + mChildrenRemote.size());
     mChildren.insert(mChildren.end(), mChildrenFavoritesFolders.begin(),
                      mChildrenFavoritesFolders.end());
     mChildren.insert(mChildren.end(), mChildrenFolders.begin(), mChildrenFolders.end());
     mChildren.insert(mChildren.end(), mChildrenFavorites.begin(), mChildrenFavorites.end());
     mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
+    mChildren.insert(mChildren.end(), mChildrenFavoritesRemote.begin(),
+                     mChildrenFavoritesRemote.end());
+    mChildren.insert(mChildren.end(), mChildrenRemote.begin(), mChildrenRemote.end());
 }
 
 void FileData::sort(const SortType& type, bool mFavoritesOnTop)
@@ -961,6 +1014,9 @@ void FileData::launchGame()
     SystemData* gameSystem {nullptr};
     std::string command;
     std::string alternativeEmulator;
+#if defined(__ANDROID__)
+    bool launchOnOtherScreen {false};
+#endif
 
     if (mSystem->isCollection())
         gameSystem = SystemData::getSystemByName(mSystemName);
@@ -1011,6 +1067,41 @@ void FileData::launchGame()
             LOG(LogDebug) << "FileData::launchGame(): Using default emulator";
         }
     }
+
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+        launchOnOtherScreen = gameSystem->getLaunchOnOtherScreen();
+        std::string screenValue {metadata.get("screen")};
+
+        if (screenValue != "" && screenValue != "other" && screenValue != "primary")
+            screenValue = "";
+
+        if (screenValue == "") {
+            if (launchOnOtherScreen) {
+                LOG(LogDebug)
+                    << "FileData::launchGame(): Launching game on other screen as configured "
+                       "for system \""
+                    << gameSystem->getName() << "\"";
+            }
+            else {
+                LOG(LogDebug)
+                    << "FileData::launchGame(): Launching game on primary screen as configured "
+                       "for system \""
+                    << gameSystem->getName() << "\"";
+            }
+        }
+        else if (screenValue == "other") {
+            LOG(LogDebug) << "FileData::launchGame(): Launching on other screen as configured "
+                             "for the specific game";
+            launchOnOtherScreen = true;
+        }
+        else if (screenValue == "primary") {
+            LOG(LogDebug) << "FileData::launchGame(): Launching on primary screen as configured "
+                             "for the specific game";
+            launchOnOtherScreen = false;
+        }
+    }
+#endif
 
     if (command.empty())
         command = mEnvData->mLaunchCommands.front().first;
@@ -1833,7 +1924,6 @@ void FileData::launchGame()
     if (isShortcut) {
         // Note that the following is not an attempt to implement the entire FreeDesktop standard
         // for .desktop files, for example argument parsing is not really usable in this context.
-        // There's essentially only enough functionality here to be able to run games and emulators.
         if (Utils::FileSystem::exists(Utils::String::replace(romPath, "\\", "")) &&
             !Utils::FileSystem::isDirectory(Utils::String::replace(romPath, "\\", ""))) {
             LOG(LogInfo) << "Parsing desktop file \"" << Utils::String::replace(romPath, "\\", "")
@@ -1850,8 +1940,27 @@ void FileData::launchGame()
                 line = Utils::String::trim(line);
                 if (line.substr(0, 2) == "#!")
                     continue;
-                if (line.find("[Desktop Entry]") != std::string::npos)
+                if (line.find("[Desktop Entry]") != std::string::npos) {
                     validFile = true;
+                    continue;
+                }
+                if (line.substr(0, 5) == "Path=" && startDirectory == "") {
+                    // We only parse the Path key if the %STARTDIR% variable has not been set in
+                    // es_systems.xml.
+                    const std::string startDirectoryTemp {
+                        Utils::FileSystem::expandHomePath(line.substr(5, line.size() - 5))};
+                    if (startDirectoryTemp.empty())
+                        continue;
+                    if (!Utils::FileSystem::isDirectory(startDirectoryTemp)) {
+                        LOG(LogWarning) << "Path key set to nonexistent directory \""
+                                        << startDirectoryTemp << "\"";
+                    }
+                    else {
+                        LOG(LogDebug) << "FileData::launchGame(): Setting start directory to \""
+                                      << startDirectoryTemp << "\" as defined by the Path key";
+                        startDirectory = Utils::FileSystem::getEscapedPath(startDirectoryTemp);
+                    }
+                }
                 if (line.substr(0, 5) == "Exec=") {
                     romPath = {line.substr(5, line.size() - 5)};
                     const std::string regexString {"[^%]%"};
@@ -1871,7 +1980,6 @@ void FileData::launchGame()
                     romPath = Utils::String::trim(romPath);
                     command = Utils::String::replace(command, emulator.first, "");
                     execEntry = true;
-                    break;
                 }
             }
             desktopFileStream.close();
@@ -2184,8 +2292,7 @@ void FileData::launchGame()
     returnValue = Utils::Platform::Android::launchGame(
         androidPackage, androidActivity, androidAction, androidCategory, androidMimeType,
         androidData, mEnvData->mStartPath, romRaw, androidExtrasString, androidExtrasStringArray,
-        androidExtrasInteger, androidExtrasBool, androidActivityFlags,
-        Settings::getInstance()->getBool("LaunchOnOtherScreen"));
+        androidExtrasInteger, androidExtrasBool, androidActivityFlags, launchOnOtherScreen);
 #else
 
 #if defined(DEINIT_ON_LAUNCH)

@@ -219,6 +219,7 @@
                 <customBadgeIcon badge="controller">./assets/badges/badge-controller.svg</customBadgeIcon>
                 <customBadgeIcon badge="altemulator">./assets/badges/badge-altemulator.svg</customBadgeIcon>
                 <customBadgeIcon badge="manual">./assets/badges/badge-manual.svg</customBadgeIcon>
+                <customBadgeIcon badge="romm">./assets/badges/badge-romm.svg</customBadgeIcon>
                 <folderLinkPos>0.57 0.60</folderLinkPos>
                 <folderLinkSize>0.48 0.5</folderLinkSize>
                 <badgeIconColor>${primaryColor}</badgeIconColor>
@@ -603,7 +604,7 @@
                 <horizontalAlignment>right</horizontalAlignment>
                 <direction>column</direction>
                 <lines>1</lines>
-                <itemsPerLine>9</itemsPerLine>
+                <itemsPerLine>10</itemsPerLine>
                 <itemMargin>0.005 0.005</itemMargin>
             </badges>
             <gamelistinfo name="gamelistInfo">
@@ -664,7 +665,7 @@
                 <horizontalAlignment>right</horizontalAlignment>
                 <direction>column</direction>
                 <lines>1</lines>
-                <itemsPerLine>9</itemsPerLine>
+                <itemsPerLine>10</itemsPerLine>
                 <itemMargin>0.005 0.005</itemMargin>
             </badges>
             <gamelistinfo name="gamelistInfo">
@@ -856,7 +857,7 @@
                 <horizontalAlignment>center</horizontalAlignment>
                 <direction>row</direction>
                 <lines>1</lines>
-                <itemsPerLine>9</itemsPerLine>
+                <itemsPerLine>10</itemsPerLine>
                 <itemMargin>0.005 0.005</itemMargin>
             </badges>
         </view>

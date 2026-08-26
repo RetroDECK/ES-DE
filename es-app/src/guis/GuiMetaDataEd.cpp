@@ -67,6 +67,18 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     if (mControllerBadges.size() > 1)
         mControllerBadges.pop_back();
 
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+        if (mScraperParams.system->getLaunchOnOtherScreen())
+            mScreenEntries.emplace_back(std::make_pair("", _("System default (Other)").c_str()));
+        else
+            mScreenEntries.emplace_back(std::make_pair("", _("System default (Primary)").c_str()));
+
+        mScreenEntries.emplace_back(std::make_pair("other", _("Always on other").c_str()));
+        mScreenEntries.emplace_back(std::make_pair("primary", _("Always on primary").c_str()));
+    }
+#endif
+
     addChild(&mBackground);
     addChild(&mGrid);
 
@@ -119,6 +131,13 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
     // Populate list.
     for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
+#if defined(__ANDROID__)
+        if (it->type == MD_SCREEN && !Settings::getInstance()->getBool("LaunchOnOtherScreen"))
+            continue;
+#else
+        if (it->type == MD_SCREEN)
+            continue;
+#endif
         std::shared_ptr<GuiComponent> ed;
         std::string currentKey {it->key};
         std::string originalValue {mMetaData->get(it->key)};
@@ -427,6 +446,78 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 }
                 break;
             }
+            case MD_SCREEN: {
+                ed =
+                    std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                    mMenuColorPrimary, ALIGN_RIGHT);
+                ed->setSize(0.0f, ed->getFont()->getHeight());
+                row.addElement(ed, true);
+
+                auto spacer = std::make_shared<GuiComponent>();
+                spacer->setSize(mRenderer->getScreenWidth() * 0.005f, 0.0f);
+                row.addElement(spacer, false);
+
+                auto bracket = std::make_shared<ImageComponent>();
+                bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setImage(":/graphics/arrow.svg");
+                bracket->setColorShift(mMenuColorPrimary);
+                row.addElement(bracket, false);
+
+                const std::string title {_p("metadata", it->displayPrompt.c_str())};
+
+                // OK callback (apply new value to ed).
+                auto updateVal = [this, ed, originalValue](const std::string& newVal) {
+                    ed->setValue(newVal);
+                    if (newVal == getScreenValue(originalValue, true)) {
+                        ed->setColor(mMenuColorPrimary);
+                    }
+                    else {
+                        ed->setColor(mMenuColorBlue);
+                    }
+                };
+
+                row.makeAcceptInputHandler([this, title, ed, updateVal] {
+                    GuiSettings* s {new GuiSettings(title)};
+
+                    for (auto entry : mScreenEntries) {
+                        std::string selectedLabel {ed->getValue()};
+                        std::string label;
+                        ComponentListRow row;
+
+                        std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
+                            label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
+                        labelText->setSelectable(true);
+                        labelText->setValue(entry.second);
+
+                        label = entry.second;
+
+                        row.addElement(labelText, true);
+
+                        row.makeAcceptInputHandler([s, updateVal, entry] {
+                            updateVal(entry.second);
+                            delete s;
+                        });
+
+                        // Select the row that corresponds to the selected label.
+                        if (selectedLabel == label)
+                            s->addRow(row, true);
+                        else
+                            s->addRow(row, false);
+                    }
+
+                    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+                    const float maxWidthModifier {
+                        glm::clamp(0.64f * aspectValue, 0.42f,
+                                   (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.92f))};
+                    const float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
+
+                    s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
+                    s->setMenuPosition(
+                        glm::vec3 {(s->getSize().x - maxWidth) / 2.0f, mPosition.y, mPosition.z});
+                    mWindow->pushGui(s);
+                });
+                break;
+            }
             case MD_FOLDER_LINK: {
                 ed =
                     std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
@@ -656,6 +747,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             else
                 ed->setValue(ViewController::EXCLAMATION_CHAR + " " + mMetaData->get(it->key));
         }
+        else if (it->type == MD_SCREEN) {
+            ed->setValue(getScreenValue(originalValue, true));
+        }
         else {
             if ((currentKey == "developer" || currentKey == "publisher" || currentKey == "genre" ||
                  currentKey == "players") &&
@@ -733,22 +827,32 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
         // For the special case where a directory has a supported file extension and is therefore
         // interpreted as a file, don't add the delete button. If it's however a symlink then add
-        // the delete button as we should be able to remove such files.
+        // the delete button as we should be able to remove such files. Also allow it for a
+        // RomM-tracked directory, since ES-DE downloaded it and controls its contents.
+        const bool isRomMGame {scraperParams.game->metadata.get("rommid") != ""};
 #if defined(__ANDROID__)
-        if (mDeleteGameFunc && !Utils::FileSystem::isDirectory(scraperParams.game->getPath())) {
+        if (mDeleteGameFunc &&
+            (isRomMGame || !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
 #else
-        if (mDeleteGameFunc && (Utils::FileSystem::isSymlink(scraperParams.game->getPath()) ||
-                                !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
+        if (mDeleteGameFunc &&
+            (isRomMGame || Utils::FileSystem::isSymlink(scraperParams.game->getPath()) ||
+             !Utils::FileSystem::isDirectory(scraperParams.game->getPath()))) {
 #endif
             auto deleteFilesAndSelf = [&] {
                 mDeleteGameFunc();
                 delete this;
             };
-            auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
+            auto deleteGameBtnFunc = [this, deleteFilesAndSelf, isRomMGame] {
+                // A RomM game isn't fully removed - only its file and media go away - so the
+                // generic wording below would be misleading here.
                 mWindow->pushGui(
-                    new GuiMsgBox(_("THIS WILL DELETE THE GAME "
-                                    "FILE, ANY MEDIA FILES AND "
-                                    "THE GAMELIST.XML ENTRY\nARE YOU SURE?"),
+                    new GuiMsgBox(isRomMGame ? _("THIS WILL DELETE THE DOWNLOADED "
+                                                 "GAME FILE AND ANY MEDIA FILES, BUT "
+                                                 "THE GAME WILL REMAIN IN YOUR LIST "
+                                                 "AS NOT DOWNLOADED\nARE YOU SURE?") :
+                                               _("THIS WILL DELETE THE GAME "
+                                                 "FILE, ANY MEDIA FILES AND "
+                                                 "THE GAMELIST.XML ENTRY\nARE YOU SURE?"),
                                   _("YES"), deleteFilesAndSelf, _("NO"), nullptr, "", nullptr, "",
                                   nullptr, nullptr, false, true,
                                   (mRenderer->getIsVerticalOrientation() ?
@@ -836,6 +940,13 @@ void GuiMetaDataEd::save()
             continue;
         }
 
+#if defined(__ANDROID__)
+        if (key == "screen" && Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+            const std::string value {mEditors.at(i)->getValue()};
+            mMetaData->set(key, getScreenValue(value, false));
+            continue;
+        }
+#endif
         if (!showHiddenGames && key == "hidden" &&
             mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
@@ -1024,6 +1135,12 @@ void GuiMetaDataEd::close()
                 continue;
         }
 
+#if defined(__ANDROID__)
+        if (key == "screen" && Settings::getInstance()->getBool("LaunchOnOtherScreen") &&
+            getScreenValue(mMetaDataValue, true) == mEditorsValue)
+            continue;
+#endif
+
         if (mMetaDataValue != mEditorsValue) {
             metadataUpdated = true;
             break;
@@ -1063,6 +1180,23 @@ void GuiMetaDataEd::close()
             save();
         closeFunc();
     }
+}
+
+std::string GuiMetaDataEd::getScreenValue(const std::string& lookup, const bool displayNameLookup)
+{
+    auto it = std::find_if(
+        mScreenEntries.begin(), mScreenEntries.end(),
+        [&lookup, &displayNameLookup](const std::pair<std::string, std::string>& entry) {
+            if (displayNameLookup)
+                return entry.first == lookup;
+            else
+                return entry.second == lookup;
+        });
+
+    if (it != mScreenEntries.end())
+        return (displayNameLookup ? it->second : it->first);
+    else
+        return "";
 }
 
 bool GuiMetaDataEd::input(InputConfig* config, Input input)

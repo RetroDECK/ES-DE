@@ -57,6 +57,7 @@ struct ScraperSearchResult {
         , thumbnailDownloadStatus {NOT_STARTED}
         , mediaFilesDownloadStatus {NOT_STARTED}
         , savedNewMedia {false}
+        , videoRequest {false}
     {
     }
 
@@ -102,6 +103,9 @@ struct ScraperSearchResult {
 
     // Indicates whether any new media files were downloaded and saved.
     bool savedNewMedia;
+
+    // Set for TheGamesDB if it's a video request.
+    bool videoRequest;
 };
 
 // A scraper search gathers results from (potentially multiple) ScraperRequests.

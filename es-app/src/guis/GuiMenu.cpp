@@ -18,6 +18,10 @@
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
+#include "GamelistFileParser.h"
+#include "Log.h"
+#include "RomM/RomMLibrarySync.h"
+#include "RomM/RomMUtils.h"
 #include "Scripting.h"
 #include "SystemData.h"
 #include "UIModeController.h"
@@ -32,6 +36,7 @@
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOrphanedDataCleanup.h"
+#include "guis/GuiRomMLogin.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiSystemStatusOptions.h"
@@ -71,6 +76,9 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry(_("ES-DE CONFIGURATIONS"), mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
 #else // not RetroDECK
+
+    if (isFullUI)
+        addEntry(_("ROMM INTEGRATION"), mMenuColorPrimary, true, [this] { openRomMOptions(); });
 
     if (isFullUI)
         addEntry(_("UI SETTINGS"), mMenuColorPrimary, true, [this] { openUIOptions(); });
@@ -131,6 +139,155 @@ void GuiMenu::openScraperOptions()
 {
     // Open the scraper menu.
     mWindow->pushGui(new GuiScraperMenu(_("SCRAPER")));
+}
+
+void GuiMenu::openRomMOptions()
+{
+    auto s = new GuiSettings(_("ROMM INTEGRATION"));
+
+    ComponentListRow loginRow;
+    loginRow.addElement(std::make_shared<TextComponent>(
+                            _("LOGIN SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                        true);
+    loginRow.addElement(mMenu.makeArrow(), false);
+    loginRow.makeAcceptInputHandler([this] { openRomMLoginOptions(); });
+    s->addRow(loginRow);
+
+    auto rommDownloadedFirst = std::make_shared<SwitchComponent>();
+    rommDownloadedFirst->setState(Settings::getInstance()->getBool("RomMDownloadedFirst"));
+    s->addWithLabel(_("SORT DOWNLOADED GAMES ABOVE NON-DOWNLOADED"), rommDownloadedFirst);
+    s->addSaveFunc([rommDownloadedFirst, s] {
+        if (rommDownloadedFirst->getState() !=
+            Settings::getInstance()->getBool("RomMDownloadedFirst")) {
+            Settings::getInstance()->setBool("RomMDownloadedFirst",
+                                             rommDownloadedFirst->getState());
+            s->setNeedsSaving();
+            s->setNeedsSorting();
+            s->setNeedsSortingCollections();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    auto rommShowRemoteMedia = std::make_shared<SwitchComponent>();
+    rommShowRemoteMedia->setState(Settings::getInstance()->getBool("RomMShowRemoteMedia"));
+    s->addWithLabel(_("SHOW COVER IMAGES WHILE BROWSING"), rommShowRemoteMedia);
+    s->addSaveFunc([rommShowRemoteMedia, s] {
+        if (rommShowRemoteMedia->getState() !=
+            Settings::getInstance()->getBool("RomMShowRemoteMedia")) {
+            Settings::getInstance()->setBool("RomMShowRemoteMedia",
+                                             rommShowRemoteMedia->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    ComponentListRow scrapeRow;
+    scrapeRow.addElement(std::make_shared<TextComponent>(
+                             _("SCRAPE SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                         true);
+    scrapeRow.addElement(mMenu.makeArrow(), false);
+    scrapeRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMScrapeOptions, this));
+    s->addRow(scrapeRow);
+
+    ComponentListRow syncRow;
+    syncRow.addElement(std::make_shared<TextComponent>(
+                           _("SYNC SETTINGS"), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                       true);
+    syncRow.addElement(mMenu.makeArrow(), false);
+    syncRow.makeAcceptInputHandler(std::bind(&GuiMenu::openRomMSyncOptions, this));
+    s->addRow(syncRow);
+
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openRomMLoginOptions()
+{
+    // close(true) deletes this GuiMenu - don't touch `this`/mWindow after it.
+    GuiRomMLogin::push(
+        mWindow, mMenuColorPrimary, mMenuColorRed,
+        [this](const std::string&) {
+            GuiMenu::close(true);
+            ViewController::getInstance()->runRomMSyncWithSplashScreen();
+        },
+        [this] {
+            GuiMenu::close(true);
+            ViewController::getInstance()->rescanROMDirectory();
+        });
+}
+
+void GuiMenu::openRomMScrapeOptions()
+{
+    auto s = new GuiSettings(_("SCRAPE SETTINGS"));
+
+    auto rommScrapeDownloadedOnly = std::make_shared<SwitchComponent>();
+    rommScrapeDownloadedOnly->setState(
+        Settings::getInstance()->getBool("RomMScrapeDownloadedOnly"));
+    s->addWithLabel(_("ONLY SCRAPE DOWNLOADED GAMES"), rommScrapeDownloadedOnly);
+    s->addSaveFunc([rommScrapeDownloadedOnly, s] {
+        if (rommScrapeDownloadedOnly->getState() !=
+            Settings::getInstance()->getBool("RomMScrapeDownloadedOnly")) {
+            Settings::getInstance()->setBool("RomMScrapeDownloadedOnly",
+                                             rommScrapeDownloadedOnly->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    auto rommAvoidScrapingNames = std::make_shared<SwitchComponent>();
+    rommAvoidScrapingNames->setState(Settings::getInstance()->getBool("RomMAvoidScrapingNames"));
+    s->addWithLabel(_("AVOID SCRAPING NAMES"), rommAvoidScrapingNames);
+    s->addSaveFunc([rommAvoidScrapingNames, s] {
+        if (rommAvoidScrapingNames->getState() !=
+            Settings::getInstance()->getBool("RomMAvoidScrapingNames")) {
+            Settings::getInstance()->setBool("RomMAvoidScrapingNames",
+                                             rommAvoidScrapingNames->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openRomMSyncOptions()
+{
+    auto s = new GuiSettings(_("SYNC SETTINGS"));
+
+    if (!RomMUtils::isLoggedIn()) {
+        ComponentListRow messageRow;
+        messageRow.addElement(std::make_shared<TextComponent>(
+                                  _("YOU NEED TO LOG IN TO ACCESS THESE SETTINGS"),
+                                  Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_CENTER),
+                              false);
+        s->addRow(messageRow);
+        mWindow->pushGui(s);
+        return;
+    }
+
+    auto rommSyncOnStartup = std::make_shared<SwitchComponent>();
+    rommSyncOnStartup->setState(Settings::getInstance()->getBool("RomMSyncOnStartup"));
+    s->addWithLabel(_("SYNC ON STARTUP"), rommSyncOnStartup);
+    s->addSaveFunc([rommSyncOnStartup, s] {
+        if (rommSyncOnStartup->getState() !=
+            Settings::getInstance()->getBool("RomMSyncOnStartup")) {
+            Settings::getInstance()->setBool("RomMSyncOnStartup", rommSyncOnStartup->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // The regular (fast, cache-based) sync can only ever add/update roms - it has no way to
+    // detect one that's been deleted from RomM. This is therefore the only way a removed game
+    // stops showing up locally as available to download, in addition to being a way to force a
+    // complete rebuild if the local cache is ever suspected to have drifted.
+    ComponentListRow fullResyncRow;
+    fullResyncRow.addElement(std::make_shared<TextComponent>(_("FORCE FULL RESYNC"),
+                                                             Font::get(FONT_SIZE_MEDIUM),
+                                                             mMenuColorPrimary),
+                             true);
+    fullResyncRow.makeAcceptInputHandler([this] {
+        GuiMenu::close(true);
+        ViewController::getInstance()->runRomMSyncWithSplashScreen(true);
+    });
+    s->addRow(fullResyncRow);
+
+    mWindow->pushGui(s);
 }
 
 void GuiMenu::openUIOptions()
@@ -589,6 +746,7 @@ void GuiMenu::openUIOptions()
                              selectedApplicationLanguage == "en_GB");
     applicationLanguage->add("BOSANSKI", "bs_BA", selectedApplicationLanguage == "bs_BA");
     applicationLanguage->add("CATALÀ", "ca_ES", selectedApplicationLanguage == "ca_ES");
+    applicationLanguage->add("ČEŠTINA", "cs_CZ", selectedApplicationLanguage == "cs_CZ");
     applicationLanguage->add("DEUTSCH", "de_DE", selectedApplicationLanguage == "de_DE");
     applicationLanguage->add("ESPAÑOL (ESPAÑA)", "es_ES", selectedApplicationLanguage == "es_ES");
     applicationLanguage->add("FRANÇAIS", "fr_FR", selectedApplicationLanguage == "fr_FR");
@@ -1669,6 +1827,19 @@ void GuiMenu::openOtherOptions()
         std::bind([this] { mWindow->pushGui(new GuiAlternativeEmulators); }));
     s->addRow(alternativeEmulatorsRow);
 
+#if defined(__ANDROID__)
+    // Launch on other screen.
+    ComponentListRow screenLaunchingRow;
+    screenLaunchingRow.elements.clear();
+    screenLaunchingRow.addElement(std::make_shared<TextComponent>(_("LAUNCH ON OTHER SCREEN"),
+                                                                  Font::get(FONT_SIZE_MEDIUM),
+                                                                  mMenuColorPrimary),
+                                  true);
+    screenLaunchingRow.addElement(mMenu.makeArrow(), false);
+    screenLaunchingRow.makeAcceptInputHandler(std::bind(&GuiMenu::openScreenLaunchOptions, this));
+    s->addRow(screenLaunchingRow);
+#endif
+
 #if !defined(__IOS__)
     // Game media directory.
     ComponentListRow rowMediaDir;
@@ -2021,21 +2192,6 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-#if defined(__ANDROID__)
-    // Launch games on the other screen.
-    auto launchOnOtherScreen = std::make_shared<SwitchComponent>();
-    launchOnOtherScreen->setState(Settings::getInstance()->getBool("LaunchOnOtherScreen"));
-    s->addWithLabel(_("LAUNCH GAMES ON THE OTHER SCREEN"), launchOnOtherScreen);
-    s->addSaveFunc([launchOnOtherScreen, s] {
-        if (launchOnOtherScreen->getState() !=
-            Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
-            Settings::getInstance()->setBool("LaunchOnOtherScreen",
-                                             launchOnOtherScreen->getState());
-            s->setNeedsSaving();
-        }
-    });
-#endif
-
 #if !defined(__IOS__)
     // Custom event scripts, fired using Scripting::fireEvent().
     auto customEventScripts = std::make_shared<SwitchComponent>();
@@ -2069,6 +2225,32 @@ void GuiMenu::openOtherOptions()
         customEventScriptsBrowsing->setOpacity(DISABLED_OPACITY);
         customEventScriptsBrowsing->getParent()
             ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    // Whether to run browsing custom event scripts as non-blocking.
+    auto customEventScriptsBrowsingNonBlocking = std::make_shared<SwitchComponent>();
+    customEventScriptsBrowsingNonBlocking->setState(
+        Settings::getInstance()->getBool("CustomEventScriptsBrowsingNonBlocking"));
+    s->addWithLabel(_("RUN BROWSING EVENTS AS NON-BLOCKING"),
+                    customEventScriptsBrowsingNonBlocking);
+    s->addSaveFunc([customEventScriptsBrowsingNonBlocking, s] {
+        if (customEventScriptsBrowsingNonBlocking->getState() !=
+            Settings::getInstance()->getBool("CustomEventScriptsBrowsingNonBlocking")) {
+            Settings::getInstance()->setBool("CustomEventScriptsBrowsingNonBlocking",
+                                             customEventScriptsBrowsingNonBlocking->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // If custom event scripts or browsing custom event scripts are disabled, then gray out this
+    // option.
+    if (!Settings::getInstance()->getBool("CustomEventScripts") ||
+        !Settings::getInstance()->getBool("CustomEventScriptsBrowsing")) {
+        customEventScriptsBrowsingNonBlocking->setEnabled(false);
+        customEventScriptsBrowsingNonBlocking->setOpacity(DISABLED_OPACITY);
+        customEventScriptsBrowsingNonBlocking->getParent()
+            ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
     }
 #endif
@@ -2240,12 +2422,19 @@ void GuiMenu::openOtherOptions()
 #endif
 
 #if !defined(__IOS__)
-    auto browsingEventsToggleFunc = [customEventScriptsBrowsing]() {
+    auto browsingEventsToggleFunc = [customEventScriptsBrowsing,
+                                     customEventScriptsBrowsingNonBlocking]() {
         if (customEventScriptsBrowsing->getEnabled()) {
             customEventScriptsBrowsing->setEnabled(false);
             customEventScriptsBrowsing->setOpacity(DISABLED_OPACITY);
             customEventScriptsBrowsing->getParent()
                 ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            customEventScriptsBrowsingNonBlocking->setEnabled(false);
+            customEventScriptsBrowsingNonBlocking->setOpacity(DISABLED_OPACITY);
+            customEventScriptsBrowsingNonBlocking->getParent()
+                ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
         else {
@@ -2254,10 +2443,36 @@ void GuiMenu::openOtherOptions()
             customEventScriptsBrowsing->getParent()
                 ->getChild(customEventScriptsBrowsing->getChildIndex() - 1)
                 ->setOpacity(1.0f);
+
+            if (customEventScriptsBrowsing->getState()) {
+                customEventScriptsBrowsingNonBlocking->setEnabled(true);
+                customEventScriptsBrowsingNonBlocking->setOpacity(1.0f);
+                customEventScriptsBrowsingNonBlocking->getParent()
+                    ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+                    ->setOpacity(1.0f);
+            }
+        }
+    };
+
+    auto browsingEventsNonBlockingToggleFunc = [customEventScriptsBrowsingNonBlocking]() {
+        if (customEventScriptsBrowsingNonBlocking->getEnabled()) {
+            customEventScriptsBrowsingNonBlocking->setEnabled(false);
+            customEventScriptsBrowsingNonBlocking->setOpacity(DISABLED_OPACITY);
+            customEventScriptsBrowsingNonBlocking->getParent()
+                ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            customEventScriptsBrowsingNonBlocking->setEnabled(true);
+            customEventScriptsBrowsingNonBlocking->setOpacity(1.0f);
+            customEventScriptsBrowsingNonBlocking->getParent()
+                ->getChild(customEventScriptsBrowsingNonBlocking->getChildIndex() - 1)
+                ->setOpacity(1.0f);
         }
     };
 
     customEventScripts->setCallback(browsingEventsToggleFunc);
+    customEventScriptsBrowsing->setCallback(browsingEventsNonBlockingToggleFunc);
 #endif
 
     s->setSize(mSize);
@@ -2375,7 +2590,10 @@ void GuiMenu::openUtilities()
                     for (auto system : SystemData::sSystemVector)
                         system->writeMetaData();
                 }
-                ViewController::getInstance()->rescanROMDirectory();
+                if (RomMUtils::isLoggedIn())
+                    ViewController::getInstance()->runRomMSyncWithSplashScreen(false, true);
+                else
+                    ViewController::getInstance()->rescanROMDirectory();
             },
             _("CANCEL"), nullptr, "", nullptr, "", nullptr, nullptr, false, true,
             (mRenderer->getIsVerticalOrientation() ?
@@ -2565,6 +2783,91 @@ void GuiMenu::openMediaViewerOptions()
 void GuiMenu::openScreensaverOptions()
 {
     mWindow->pushGui(new GuiScreensaverOptions(_p("short", "SCREENSAVER SETTINGS")));
+}
+
+void GuiMenu::openScreenLaunchOptions()
+{
+#if defined(__ANDROID__)
+    auto s = new GuiSettings(_("LAUNCH ON OTHER SCREEN"));
+
+    Window* window {mWindow};
+    ComponentListRow row;
+
+    // Launch games on the other screen.
+    auto launchOnOtherScreen = std::make_shared<SwitchComponent>();
+    launchOnOtherScreen->setState(Settings::getInstance()->getBool("LaunchOnOtherScreen"));
+    s->addWithLabel(_("ENABLE LAUNCH ON OTHER SCREEN"), launchOnOtherScreen);
+    s->addSaveFunc([launchOnOtherScreen, s] {
+        if (launchOnOtherScreen->getState() !=
+            Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+            Settings::getInstance()->setBool("LaunchOnOtherScreen",
+                                             launchOnOtherScreen->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    std::vector<SystemData*> sortedSystems {SystemData::sSystemVector};
+
+    // Sort systems by short name.
+    std::sort(std::begin(sortedSystems), std::end(sortedSystems), [](SystemData* a, SystemData* b) {
+        return Utils::String::toUpper(a->getName()) < Utils::String::toUpper(b->getName());
+    });
+
+    std::vector<std::shared_ptr<SwitchComponent>> systemEntries;
+
+    for (auto it = sortedSystems.cbegin(); it != sortedSystems.cend(); ++it) {
+        if ((*it)->isCollection())
+            continue;
+
+        auto systemEntry = std::make_shared<SwitchComponent>();
+        systemEntry->setState((*it)->getLaunchOnOtherScreen());
+        systemEntries.emplace_back(systemEntry);
+        SystemData* system {(*it)};
+
+        s->addWithLabel((*it)->getName(), systemEntry);
+        s->addSaveFunc([systemEntry, system] {
+            if (systemEntry->getState() != system->getLaunchOnOtherScreen()) {
+                system->setLaunchOnOtherScreen(systemEntry->getState());
+                GamelistFileParser::updateGamelist(system, false, true);
+            }
+        });
+
+        if (!Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+            systemEntry->setEnabled(false);
+            systemEntry->setOpacity(DISABLED_OPACITY);
+            systemEntry->getParent()
+                ->getChild(systemEntry->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    }
+
+    auto launchOnOtherScreenWeak = std::weak_ptr<SwitchComponent>(launchOnOtherScreen);
+
+    auto launchOnOtherScreenCallback = [launchOnOtherScreenWeak, systemEntries]() {
+        auto lock = launchOnOtherScreenWeak.lock();
+        const bool otherScreen {lock->getState()};
+        for (auto it = systemEntries.begin(); it != systemEntries.end(); ++it) {
+            if (otherScreen) {
+                (*it)->setEnabled(true);
+                (*it)->setOpacity(1.0f);
+                (*it)->getParent()->getChild((*it)->getChildIndex() - 1)->setOpacity(1.0f);
+            }
+            else {
+                (*it)->setEnabled(false);
+                (*it)->setOpacity(DISABLED_OPACITY);
+                (*it)
+                    ->getParent()
+                    ->getChild((*it)->getChildIndex() - 1)
+                    ->setOpacity(DISABLED_OPACITY);
+            }
+        }
+    };
+
+    launchOnOtherScreen->setCallback(launchOnOtherScreenCallback);
+
+    s->setSize(mSize);
+    window->pushGui(s);
+#endif
 }
 
 void GuiMenu::openCollectionSystemOptions()

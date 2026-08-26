@@ -281,6 +281,7 @@ public:
     virtual const bool getInvertInMenus() const { return true; }
 
     virtual void setImage(const std::string& path, bool tile = false) {}
+    virtual void setImage(const char* data, size_t length, bool tile = false) {}
 
     // These functions are used to enable and disable options in menus, i.e. switches and similar.
     virtual bool getEnabled() { return mEnabled; }

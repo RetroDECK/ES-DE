@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>نظام الحاسوب الصغير TRS-80 (TRS-80، الذي أعيدت تسميته لاحقاً بالطراز الأول لتمييزه عن الأجهزة التي خلفته) هو حاسوب مكتبي صغير تم إطلاقه في عام 1977 وبيعه من قبل شركة Tandy Corporation من خلال متاجر راديو شاك. الاسم هو اختصار لاسم Tandy Radio Shack، Z80 [معالج دقيق]. وهو أحد أوائل الحواسيب المنزلية التي تم إنتاجها على نطاق واسع وتسويقها على نطاق واسع.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il TRS-80 Micro Computer System (TRS-80, poi rinominato Model I per distinguerlo dai suoi successori) è un microcomputer da tavolo lanciato nel 1977 e venduto da Tandy Corporation attraverso i suoi negozi Radio Shack. Il nome è un'abbreviazione di Tandy Radio Shack, Z80 [microprocessore]. È uno dei primi home computer prodotti e commercializzati in serie.</systemDescription>
+            <systemDescription>Il TRS-80 Micro Computer System (TRS-80, poi rinominato Model I per distinguerlo dai suoi successori) è un microcomputer lanciato nel 1977 e venduto da Tandy Corporation, attraverso i suoi negozi Radio Shack. Il nome è un'abbreviazione di Tandy Radio Shack, Z80 [microprocessore]. È uno dei primi home computer prodotti e commercializzati in serie.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>TRS-80 Micro Computer System (TRS-80, senare omdöpt till Model I för att skilja den från efterföljare) är en stationär mikrodator som lanserades 1977 och såldes av Tandy Corporation genom deras Radio Shack-butiker. Namnet är en förkortning av Tandy Radio Shack, Z80 [mikroprocessor]. Det är en av de tidigaste massproducerade och massmarknadsförda hemdatorerna.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống máy tính vi mô TRS-80 (TRS-80, sau này được đổi tên thành Model I để phân biệt với các mẫu máy kế thừa) là một máy tính vi mô để bàn ra mắt vào năm 1977 và được Tandy Corporation phân phối thông qua hệ thống cửa hàng Radio Shack. Tên gọi này là viết tắt của Tandy Radio Shack và Z80 [bộ vi xử lý]. Đây là một trong những máy tính gia đình đầu tiên được sản xuất hàng loạt và phân phối rộng rãi trên thị trường.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

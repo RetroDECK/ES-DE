@@ -211,19 +211,19 @@ This device incorrectly reports two screens as being present even when just one 
 
 ### AYN Odin 3
 
-With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
-
-### AYN Thor
-
-The Android task switcher can't be used when setting ES-DE (or other frontends) as the home app.
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Odin Settings->Advanced Settings->Force SeLinux_.
 
 ### Logitech G Cloud
 
 This device will by default kill any process that is not currently focused, so if starting a game the OS will kill ES-DE so that it has to start up every time you return from a game. To fix this disable _Settings->Labs->Process protection_.
 
+### Mangmi Air X
+
+There is an issue with this device where starting ES-DE once will permanently slow down the entire device so that all emulators and such run a lot slower than normal. The only way to resolve this is apparently to reboot the device. This bug was introduced with the 1.1.6 firmware update and there is no known solution other than waiting for the hardware manufacturer to make a new firmware release which fixes the problem, or to install GammaOS instead.
+
 ### Retroid Pocket G2
 
-With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the setting _Handheld Settings->Advanced->Is it force start selinux_.
+With its default configuration the theme downloader in ES-DE is unusable, to resolve this enable the Android operating system setting _Handheld Settings->Advanced->Is it force start selinux_.
 
 ### Samsung devices
 
@@ -232,6 +232,9 @@ There seems to be a firmware bug on at least some Samsung devices that may make 
 ## Emulator installation and setup
 
 Below are specific instructions and considerations for all supported emulators.
+
+As an alternative to manually downloading and installing emulators it's recommended to use Obtanium, which simplifies the process. You can find it here: \
+https://github.com/ImranR98/Obtainium
 
 ### RetroArch
 
@@ -243,14 +246,6 @@ https://f-droid.org/en/packages/com.retroarch
 
 Be aware that you need to manually install every core you want to use from inside the RetroArch user interface, and you also need to install all necessary BIOS files. The Android release of RetroArch is pretty unforgiving and will usually just present a black screen on game launch if the core file or the BIOS file is missing, and it will hang there until Android realizes the app is not responding and displays a popup where you can choose to kill the process.
 
-### AetherSX2 / NetherSX2
-
-Although the emulator entry is named AetherSX2 the recommended release of this emulator is actually the NetherSX2 patched version as the AetherSX2 release on the Google Play store doesn't work correctly and probably can't be used with ES-DE at all. You'll need to search for this APK online, the filename you'll want is `15210-v1.5-4248-noads.apk`
-
-If you prefer to apply the NetherSX2 patch yourself (i.e. build the APK) then you can find all relevant information here:
-
-https://github.com/Trixarian/NetherSX2-patch
-
 ### aPS3e
 
 This emulator can be installed from the Play store or downloaded from their GitHub site. There's both a Premium (paid) version and a free version available on the Play store.
@@ -259,11 +254,23 @@ https://play.google.com/store/apps/details?id=aenu.aps3e \
 https://play.google.com/store/apps/details?id=aenu.aps3e.premium \
 https://github.com/aenu1/aps3e/releases
 
+### ARMSX1
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/ARMSX2/ARMSX1/releases
+
 ### ARMSX2
 
 This emulator can be downloaded from their GitHub site.
 
 https://github.com/ARMSX2/ARMSX2/releases
+
+### ARMSX3
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/ARMSX2/ARMSX3/releases
 
 ### aX360e
 
@@ -333,11 +340,27 @@ This emulator can be downloaded directly from their website.
 
 http://amigan.1emu.net/releases
 
+### D.Smile
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/derik-dot-digital/D.Smile/releases
+
 ### DuckStation
 
 The Play store version of this emulator is getting frequent updates and is therefore recommended.
 
 https://play.google.com/store/apps/details?id=com.github.stenzek.duckstation
+
+### Eden
+
+This emulator can be downloaded from their GitLab site.
+
+https://git.eden-emu.dev/eden-emu/eden/releases
+
+There are also nightly builds available.
+
+https://git.eden-emu.dev/eden-ci/nightly/releases
 
 ### EKA2L1
 
@@ -346,15 +369,17 @@ This emulator can be installed from the Play store or it can be downloaded from 
 https://play.google.com/store/apps/details?id=com.github.eka2l1 \
 https://github.com/EKA2L1/EKA2L1/releases
 
-### Eden
+### EmuCoreV
 
-This emulator can be downloaded from their GitLab site.
+This emulator can be downloaded from their GitHub site.
 
-https://git.eden-emu.dev/eden-emu/eden/releases
+https://github.com/sashkinbro/EmuCoreV/releases
 
-There are also nightly builds on their GitHub CI site.
+### EmuCoreX
 
-https://github.com/Eden-CI/Nightly/releases
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/sashkinbro/EmuCoreX/releases
 
 ### ePSXe
 
@@ -466,9 +491,9 @@ https://github.com/woesss/JL-Mod/releases
 
 ### Kenji-NX
 
-This emulator can be downloaded from their GitHub site.
+This emulator can be downloaded from their Forgejo site.
 
-https://github.com/Kenji-NX/Android-Releases/releases
+https://git.ryujinx.app/projects/Kenji-NX/releases
 
 ### Lime3DS
 
@@ -546,6 +571,16 @@ https://play.google.com/store/apps/details?id=com.fastemulator.gbc
 This emulator can be downloaded from their GitHub site.
 
 https://github.com/proninyaroslav/nesoid/releases
+
+### NetherSX2 (AetherSX2)
+
+Although this emulator is named NetherSX2 it's actually a patched version of AetherSX2 (which hasn't been updated in years and which probably can't be used with ES-DE at all). You'll need to search for the APK online, the filename you want is `15210-v1.5-4248-noads.apk`
+
+If you prefer to apply the NetherSX2 patch yourself (i.e. to build the APK) then you can find all relevant information here:
+
+https://github.com/Trixarian/NetherSX2-patch
+
+There is also support in ES-DE for the Turnip and Turnip Classic builds of NetherSX2.
 
 ### NooDS
 
@@ -654,6 +689,12 @@ Although this emulator supports both the Sinclar ZX Spectrum and MGT SAM Coupé 
 https://play.google.com/store/apps/details?id=com.fms.speccy \
 https://play.google.com/store/apps/details?id=com.fms.speccy.deluxe
 
+### Starboard
+
+This PortMaster compatibility layer can be downloaded from their GitHub site.
+
+https://github.com/get-starboard/starboard/releases
+
 ### SUPER3
 
 There are unofficial builds available for SUPER3 on the following GitHub site.
@@ -706,6 +747,12 @@ This emulator can be installed from the Play store (as a paid app) or downloaded
 
 https://play.google.com/store/apps/details?id=com.izzy2lost.x1box \
 https://github.com/izzy2lost/xemu/releases
+
+### XenDroid
+
+This emulator can be downloaded from their GitHub site.
+
+https://github.com/rfandango/XenDroid/releases
 
 ### Yaba Sanshiro 2
 
@@ -773,6 +820,8 @@ This is clearly not a complete list of Android devices, but rather those we know
 | LG           | V60 ThinQ               | 13              | Yes       | None                |                            |
 | Logitech     | G Cloud                 | 11              | Yes       | None                |                            |
 | Magicx       | Zero 40                 | 10              | Yes       | None                |                            |
+| Mangmi       | Air X                   | 14              | Yes       | 1.1.6 firmware is buggy | See _Known problems on specific devices_ for more info |
+| Mangmi       | Air X                   | GammaOS Next    | Yes       | None                |                            |
 | Meta         | Quest 3                 | 12 ?            | Yes       | None                |                            |
 | Microsoft    | Surface Duo 2           | 12              | Unclear   | Unclear             | Conflicting reports of whether this device works or not |
 | Motorola     | Moto G60                | 12              | Yes       | None                |                            |
@@ -875,19 +924,19 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
 | androidapps           | Android Apps                                   | _Native apps_                     |                                   | No           | Use the built-in game importer       |
 | androidgames          | Android Games                                  | _Native apps_                     |                                   | No           | Use the built-in game importer       |
-| apple2                | Apple II                                       | MAME4droid Current **(Standalone)**  |                                   | Yes          | See the specific _Apple II_ section in the user guide |
-| apple2gs              | Apple IIGS                                     | MAME4droid Current **(Standalone)**  |                                   | Yes          | See the specific _Apple IIGS_ section in the user guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>DICE | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| apple2                | Apple II                                       | AppleWin                          | MAME4droid Current **(Standalone)** | Yes for MAME4droid | See the specific _Apple II_ section in the user guide |
+| apple2gs              | Apple IIGS                                     | MAME4droid Current **(Standalone)**  | MAME4droid Current [Software list] **(Standalone)** | Yes          | See the specific _Apple IIGS_ section in the user guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>DICE | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
 | arcadia               | Emerson Arcadia 2001                           | AmiArcadia                        | DroidArcadia **(Standalone**),<br>MAME4droid Current **(Standalone)**  | No           | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | MAME4droid Current [Model A440/1] **(Standalone)** | MAME4droid Current [Model A3000] **(Standalone)**,<br>MAME4droid Current [Model A310] **(Standalone)**,<br>MAME4droid Current [Model A540] **(Standalone)** | Yes          |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           | Ardens                            | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
-| atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>Stella 2023,<br>2600.emu **(Standalone)** | No           | Single archive or ROM file           |
+| atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>Stella 2023,<br>Tia,<br>2600.emu **(Standalone)** | No           | Single archive or ROM file           |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800                          | Yes          | Single archive or ROM file           |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         | MAME4droid Current **(Standalone)**  | Yes          | Single archive or ROM file           |
 | atari800              | Atari 800                                      | Atari800                          |                                   | Yes          |                                      |
 | atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    | IrataJaguar **(Standalone)**,<br>MAME4droid Current **(Standalone)** | Yes for MAME4droid Current | Single archive or ROM file           |
-| atarijaguarcd         | Atari Jaguar CD                                | _Placeholder_                     |                                   |              |                                      |
+| atarijaguarcd         | Atari Jaguar CD                                | Virtual Jaguar                    |                                   | No           | See the specific _Atari Jaguar and Atari Jaguar CD_ section in the user guide |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx,<br>Gearlynx,<br>Holani,<br>Lynx.emu **(Standalone)** | Yes for Gearlynx | Single archive or ROM file           |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            |                                   | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          |                                   | Yes          |                                      |
@@ -928,9 +977,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gameandwatch          | Nintendo Game and Watch                        | Multi (MESS)                      | MAME4droid Current Local Artwork **(Standalone)**,<br>MAME4droid Current **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Pizza Boy SC **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>SkyEmu,<br>SkyEmu **(Standalone)**,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Linkboy **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>IroGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>SkyEmu,<br>SkyEmu **(Standalone)**,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Linkboy **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP,<br>NooDS,<br>NooDS **(Standalone)**,<br>SkyEmu,<br>SkyEmu **(Standalone)**,<br>GBA.emu **(Standalone)**,<br>My Boy! **(Standalone)**,<br>Linkboy **(Standalone)**,<br>Pizza Boy GBA **(Standalone)** | No          | Single archive or ROM file |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>SkyEmu,<br>SkyEmu **(Standalone)**,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Linkboy **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>DoubleCherryGB,<br>IroGB,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>VBA-M,<br>SkyEmu,<br>SkyEmu **(Standalone)**,<br>GBC.emu **(Standalone)**,<br>My OldBoy! **(Standalone**),<br>Linkboy **(Standalone)**,<br>Pizza Boy GBC **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ClownMDEmu,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
@@ -944,7 +993,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | _Placeholder_                     |                                   |              |                                      |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | MAME4droid Current Mac SE Bootable **(Standalone)** | MAME4droid Current Mac SE Boot Disk **(Standalone)**,<br>MAME4droid Current Mac Plus Bootable **(Standalone)**,<br>MAME4droid Current Mac Plus Boot Disk **(Standalone)**,<br>Mini vMac | Yes          | See the specific _Apple Macintosh_ section in the user guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>DICE | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)**,<br>NEO.emu **(Standalone)**,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>DICE | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   |              |                                      |
 | mark3                 | Sega Mark III                                  | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>MD.emu **(Standalone)**,<br>Pizza Boy SC **(Standalone)**,<br>MasterGear **(Standalone)** | No           | Single archive or ROM file |
@@ -970,7 +1019,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64,<br> _Native port_ | No           | Single archive or ROM file, for recompilations see the specific _Nintendo 64 Recompilations_ section in the user guide |
 | n64dd                 | Nintendo 64DD                                  | Mupen64Plus-Next                  | M64Plus FZ **(Standalone)**,<br>Mupen64Plus AE **(Standalone)**,<br>ParaLLEl N64 | Yes          |                                      |
 | nds                   | Nintendo DS                                    | melonDS DS                        | melonDS,<br>melonDS **(Standalone)**,<br>melonDS Nightly **(Standalone)**,<br>DeSmuME,<br>DeSmuME 2015,<br>NooDS,<br>NooDS **(Standalone)**,<br>DraStic **(Standalone)**,<br>SkyEmu,<br>SkyEmu **(Standalone)** | No           | Single archive or ROM file |
-| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
+| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | Geolith,<br>NEO.emu **(Standalone)**,<br>MAME - Current,<br>MAME4droid Current **(Standalone)**,<br>MAME4droid **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | MAME4droid Current **(Standalone)**  | Yes          | .chd (NeoCD and MAME4droid Current only) or .cue file |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | MAME4droid Current **(Standalone)**  | Yes          | .chd (NeoCD and MAME4droid Current only) or .cue file |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>FCEUmm,<br>QuickNES,<br>NES.emu **(Standalone)**,<br>iNES **(Standalone)**,<br>Nesoid **(Standalone)** | No           | Single archive or ROM file           |
@@ -991,13 +1040,13 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | Fake-08,<br>Retro8,<br>Infinity **(Standalone)** | No           | See the specific _PICO-8_ section in the User guide |
 | plus4                 | Commodore Plus/4                               | VICE xplus4                       |                                   | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
-| ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Craft (Minecraft),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War,,<br>idTech4A++ **(Standalone)** | Yes for ECWolf |                                      |
-| ps2                   | Sony PlayStation 2                             | AetherSX2 **(Standalone)**        | ARMSX2 **(Standalone)**,<br>Play! **(Standalone)**            | Yes for AetherSX2 and ARMSX2 |                                      |
-| ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
+| ports                 | Ports                                          | ECWolf (Wolfenstein 3D)           | CannonBall (OutRun),<br>Craft (Minecraft),<br>Mr.Boom (Bomberman),<br>NXEngine (Cave Story),<br>drs (Cave Story),<br>OpenLara (Tomb Raider),<br>Super Bros War,<br>Starboard **(Standalone)**,<br>idTech4A++ **(Standalone)** | Yes for ECWolf |                                      |
+| ps2                   | Sony PlayStation 2                             | NetherSX2 **(Standalone)**        | NetherSX2-Turnip **(Standalone)**,<br>NetherSX2-Turnip Classic **(Standalone)**,<br>AetherSX2 **(Standalone)**,<br>ARMSX2 **(Standalone)**,<br>EmuCoreX **(Standalone)**,<br>Play! **(Standalone)**            | Yes except for Play! |                                      |
+| ps3                   | Sony PlayStation 3                             | aPS3e Game Serial **(Standalone)** | aPS3e Directory **(Standalone)**,<br>aPS3e ISO **(Standalone)**,<br>ARMSX3 **(Standalone)** | Yes          | See the specific _Sony PlayStation 3_ section in the user guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file               |
-| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           |                                   | Yes          | See the specific _Sony PlayStation Vita_ section in the User guide |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>ePSXe **(Standalone)**,<br>FPseNG **(Standalone)**,<br>FPse **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)**           | EmuCoreV **(Standalone)**         | Yes          | See the specific _Sony PlayStation Vita_ section in the User guide |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>ARMSX1 **(Standalone)**,<br>ePSXe **(Standalone)**,<br>FPseNG **(Standalone)**,<br>FPse **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | pv1000                | Casio PV-1000                                  | MAME4droid Current **(Standalone)**  |                                   | No           | Single archive or ROM file           |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero],<br>idTech4A++ **(Standalone)** | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | Speccy **(Standalone)**           |                                   | No           | Single archive or ROM file           |
@@ -1041,11 +1090,11 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vircon32              | Vircon32 Virtual Console                       | Vircon32                          |                                   | No           | Single archive or ROM file           |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Virtual Virtual Boy **(Standalone)** | No           | Single archive or ROM file           |
 | vpinball              | Visual Pinball                                 | Visual Pinball **(Standalone)**   |                                   | No           | See the specific _Visual Pinball_ section in the user guide |
-| vsmile                | VTech V.Smile                                  | MAME4droid Current **(Standalone)**  |                                   | Yes          | Single archive or ROM file           |
+| vsmile                | VTech V.Smile                                  | MAME4droid Current **(Standalone)** | D.Smile **(Standalone)**          | Yes for MAME4droid Current | Single archive or ROM file
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>Dolphin MMJR **(Standalone)**,<br>Dolphin MMJR2 **(Standalone)** | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section in the user guide |
-| windows               | Microsoft Windows                              | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)**,<br>GameNative Steam **(Standalone)**,<br>GameNative Epic **(Standalone)**,<br>GameNative GOG **(Standalone)**,<br>GameNative Custom Game **(Standalone)**,<br>GameHub Lite **(Standalone)**,<br>GameHub Lite Local **(Standalone)** | No           | For general Windows games see the _Winlator_ section elsewhere in this document and for Steam games see the specific _Steam_ section in the user guide |
+| windows               | Microsoft Windows                              | Winlator Cmod **(Standalone)**    | Winlator Cmod Glibc **(Standalone)**,<br>Winlator Cmod PRoot **(Standalone)**,<br>GameNative Steam **(Standalone)**,<br>GameNative Epic **(Standalone)**,<br>GameNative GOG **(Standalone)**,<br>GameNative Amazon **(Standalone)**,<br>GameNative Custom Game **(Standalone)**,<br>GameHub Lite **(Standalone)**,<br>GameHub Lite Local **(Standalone)** | No           | For general Windows games see the _Winlator_ section elsewhere in this document and for Steam games see the specific _Steam_ section in the user guide |
 | windows3x             | Microsoft Windows 3.x                          | DOSBox-Pure                       |                                   | No           |                                      |
 | windows9x             | Microsoft Windows 9x                           | DOSBox-Pure                       |                                   | No           |                                      |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Swan.emu **(Standalone)**         | No           | Single archive or ROM file           |
@@ -1053,7 +1102,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x1                    | Sharp X1                                       | X Millennium                      | MAME4droid Current [Diskette] **(Standalone)**,<br>MAME4droid Current [Tape] **(Standalone)** | Yes for MAME4droid Current | Single archive or diskette/tape file |
 | x68000                | Sharp X68000                                   | PX68k                             | MAME4droid Current **(Standalone)**  | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | X1 BOX **(Standalone)**           | hakuX **(Standalone)**            | Yes          | Single .iso or .xiso file            |
-| xbox360               | Microsoft Xbox 360                             | aX360e **(Standalone)**           |                                   | No           | See the specific _Microsoft Xbox 360_ section in the user guide |
+| xbox360               | Microsoft Xbox 360                             | aX360e **(Standalone)**           | XenDroid **(Standalone)**         | No           | See the specific _Microsoft Xbox 360_ section in the user guide |
 | xboxone               | Microsoft Xbox One                             | _Placeholder_                     |                                   |              |                                      |
 | zmachine              | Infocom Z-machine                              | MojoZork                          |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   | No           |                                      |

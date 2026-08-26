@@ -182,7 +182,15 @@ namespace GamelistFileParser
             return;
         }
 
-        const pugi::xml_node& alternativeEmulator {doc.child("alternativeEmulator")};
+        // The long term plan is to move the alternativeEmulator element so it becomes a child to
+        // the gameList root element in order to become fully XML standards compliant. This code
+        // will allow ES-DE to read the alternativeEmulator element in either location during a
+        // transition period, so when a future ES-DE release saves it to the new location there
+        // is forward compatibility in place also for older releases.
+        const pugi::xml_node& alternativeEmulator {doc.child("alternativeEmulator") != nullptr ?
+                                                       doc.child("alternativeEmulator") :
+                                                       root.child("alternativeEmulator")};
+
         if (alternativeEmulator) {
             const std::string& label {alternativeEmulator.child("label").text().get()};
             if (label != "") {
@@ -206,6 +214,18 @@ namespace GamelistFileParser
                                     << label << "\"";
                 }
             }
+        }
+
+        const pugi::xml_node& launchOnOtherScreen {root.child("launchOnOtherScreen")};
+
+        if (launchOnOtherScreen) {
+#if defined(__ANDROID__)
+            const std::string value {Utils::String::toLower(launchOnOtherScreen.text().get())};
+            if (value == "false")
+                system->setLaunchOnOtherScreen(false);
+            else
+                system->setLaunchOnOtherScreen(true);
+#endif
         }
 
         const std::string& relativeTo {system->getStartPath()};
@@ -355,7 +375,9 @@ namespace GamelistFileParser
         }
     }
 
-    void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
+    void updateGamelist(SystemData* system,
+                        bool updateAlternativeEmulator,
+                        const bool updateScreenLaunch)
     {
         // We do this by reading the XML again, adding changes and then writing them back,
         // because there might be information missing in our systemdata which we would otherwise
@@ -369,6 +391,7 @@ namespace GamelistFileParser
         pugi::xml_node root;
         const std::string& xmlReadPath {system->getGamelistPath(false)};
         bool hasAlternativeEmulatorTag {false};
+        bool hasLaunchOnOtherScreenTag {false};
 
         if (Utils::FileSystem::exists(xmlReadPath) &&
             Utils::FileSystem::getFileSize(xmlReadPath) != 0) {
@@ -394,7 +417,15 @@ namespace GamelistFileParser
                 return;
             }
             if (updateAlternativeEmulator) {
-                pugi::xml_node alternativeEmulator {doc.child("alternativeEmulator")};
+                // The long term plan is to move the alternativeEmulator element so it becomes a
+                // child to the gameList root element in order to become fully XML standards
+                // compliant. This code will allow ES-DE to read the alternativeEmulator element
+                // in either location during a transition period, so when a future ES-DE release
+                // saves it to the new location there is forward compatibility in place also for
+                // older releases.
+                pugi::xml_node alternativeEmulator {doc.child("alternativeEmulator") != nullptr ?
+                                                        doc.child("alternativeEmulator") :
+                                                        root.child("alternativeEmulator")};
 
                 if (alternativeEmulator)
                     hasAlternativeEmulatorTag = true;
@@ -419,7 +450,26 @@ namespace GamelistFileParser
                     }
                 }
                 else if (alternativeEmulator) {
-                    doc.remove_child("alternativeEmulator");
+                    alternativeEmulator.parent().remove_child(alternativeEmulator);
+                }
+            }
+            if (updateScreenLaunch) {
+                pugi::xml_node launchOnOtherScreen {root.child("launchOnOtherScreen")};
+
+                if (!system->getLaunchOnOtherScreen()) {
+                    if (launchOnOtherScreen) {
+                        launchOnOtherScreen.parent().remove_child(launchOnOtherScreen);
+                        LOG(LogWarning) << "GamelistFileParser::updateGamelist(): Removed an extra "
+                                           "launchOnOtherScreen tag for system \""
+                                        << system->getName() << "\"";
+                    }
+
+                    root.prepend_child("launchOnOtherScreen").text().set("false");
+                    launchOnOtherScreen = root.child("launchOnOtherScreen");
+                }
+                else if (launchOnOtherScreen) {
+                    hasLaunchOnOtherScreenTag = true;
+                    launchOnOtherScreen.parent().remove_child(launchOnOtherScreen);
                 }
             }
         }
@@ -431,6 +481,9 @@ namespace GamelistFileParser
             }
             // Set up an empty gamelist to append to.
             root = doc.append_child("gameList");
+
+            if (updateScreenLaunch && !system->getLaunchOnOtherScreen())
+                root.prepend_child("launchOnOtherScreen").text().set("false");
         }
 
         // Now we have all the information from the XML file, so iterate
@@ -448,6 +501,13 @@ namespace GamelistFileParser
 
                 // Do not touch if it wasn't changed and is not flagged for deletion.
                 if (!(*fit)->metadata.wasChanged() && !(*fit)->getDeletionFlag())
+                    continue;
+
+                // RomM entries not yet downloaded are rebuilt fresh from the server on every
+                // sync, so they must never be persisted to gamelist.xml with a <path> that
+                // doesn't exist on disk. Once downloaded, "rommremote" is cleared and the
+                // entry is written normally on the next pass.
+                if ((*fit)->metadata.get("rommremote") == "true")
                     continue;
 
                 // Check if the file already exists in the XML file.
@@ -484,7 +544,7 @@ namespace GamelistFileParser
             }
 
             // Now write the file.
-            if (numUpdated > 0 || updateAlternativeEmulator) {
+            if (numUpdated > 0 || updateAlternativeEmulator || updateScreenLaunch) {
                 // Make sure the folders leading up to this path exist (or the write will fail).
                 const std::string& xmlWritePath {system->getGamelistPath(true)};
                 Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
@@ -502,6 +562,18 @@ namespace GamelistFileParser
                                          "Added/updated the alternativeEmulator tag for system \""
                                       << system->getName() << "\" to \""
                                       << system->getAlternativeEmulator() << "\"";
+                    }
+                }
+                if (updateScreenLaunch) {
+                    if (hasLaunchOnOtherScreenTag && system->getLaunchOnOtherScreen()) {
+                        LOG(LogDebug) << "GamelistFileParser::updateGamelist(): Removed the "
+                                         "launchOnOtherScreen tag for system \""
+                                      << system->getName() << "\"";
+                    }
+                    else if (!system->getLaunchOnOtherScreen()) {
+                        LOG(LogDebug) << "GamelistFileParser::updateGamelist(): "
+                                         "Added the launchOnOtherScreen tag for system \""
+                                      << system->getName() << "\"";
                     }
                 }
                 if (numUpdated > 0) {

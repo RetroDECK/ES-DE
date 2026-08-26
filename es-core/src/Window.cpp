@@ -130,6 +130,27 @@ bool Window::init(bool resized)
     mBackgroundOverlayOpacity = 0.0f;
     mProgressBarRectangles.clear();
 
+    // The user can customize the progress bar color in es_settings.xml.
+#if defined(RETRODECK)
+    unsigned int progressBarColor {0xC858E6FF};
+#else
+    unsigned int progressBarColor {0x79010FFF};
+#endif
+    const std::string progressBarColorSetting {
+        Utils::String::trim(Settings::getInstance()->getString("SplashScreenProgressBarColor"))};
+
+    if (progressBarColorSetting != "") {
+        const size_t length {progressBarColorSetting.size()};
+        if (length == 6 || length == 8) {
+            std::stringstream ss;
+            ss << progressBarColorSetting;
+            ss >> std::hex >> progressBarColor;
+
+            if (length == 6)
+                progressBarColor = (progressBarColor << 8) | 0xFF;
+        }
+    }
+
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
     if (mDefaultFonts.empty()) {
         mDefaultFonts.push_back(Font::get(FONT_SIZE_SMALL));
@@ -180,11 +201,7 @@ bool Window::init(bool resized)
     progressBarRect.barHeight -= borderThickness * 2.0f;
     progressBarRect.barPosX += borderThickness;
     progressBarRect.barPosY += borderThickness;
-    #if defined(RETRODECK)
-        progressBarRect.color = 0xC858E6FF;
-    #else
-        progressBarRect.color = 0x79010FFF;
-    #endif
+    progressBarRect.color = progressBarColor;
     mProgressBarRectangles.emplace_back(progressBarRect);
 
     mBackgroundOverlay->setResize(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
@@ -776,6 +793,8 @@ void Window::updateSplashScreenText()
         _("Copying resources..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     mSplashTextDirCreation = std::make_unique<TextComponent>(
         _("Creating system directories..."), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mSplashTextSyncing = std::make_unique<TextComponent>(_("Syncing RomM library..."),
+                                                         Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mSplashTextPositions.x =
         (mRenderer->getScreenWidth() - mSplashTextScanning->getSize().x) / 2.0f;
@@ -827,6 +846,9 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
     else if (state == SplashScreenState::DIR_CREATION) {
         textPosX = (mRenderer->getScreenWidth() - mSplashTextDirCreation->getSize().x) / 2.0f;
     }
+    else if (state == SplashScreenState::SYNCING) {
+        textPosX = (mRenderer->getScreenWidth() - mSplashTextSyncing->getSize().x) / 2.0f;
+    }
 
     trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
 
@@ -840,6 +862,8 @@ void Window::renderSplashScreen(SplashScreenState state, float progress)
         mSplashTextResourceCopy->render(trans);
     else if (state == SplashScreenState::DIR_CREATION)
         mSplashTextDirCreation->render(trans);
+    else if (state == SplashScreenState::SYNCING)
+        mSplashTextSyncing->render(trans);
 
     mRenderer->swapBuffers();
 }
