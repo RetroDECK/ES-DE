@@ -75,10 +75,10 @@ GuiMenu::GuiMenu()
 
     if (isFullUI)
         addEntry(_("ES-DE CONFIGURATIONS"), mMenuColorPrimary, true, [this] { openESDEConfiguration(); });
-#else // not RetroDECK
 
     if (isFullUI)
         addEntry(_("ROMM INTEGRATION"), mMenuColorPrimary, true, [this] { openRomMOptions(); });
+#else // not RetroDECK
 
     if (isFullUI)
         addEntry(_("UI SETTINGS"), mMenuColorPrimary, true, [this] { openUIOptions(); });
