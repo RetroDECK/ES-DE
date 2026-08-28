@@ -1,4 +1,4 @@
-# ES-DE Frontend – RetroDECK Custom Build
+# ES-DE Frontend – RetroDECK Custom Build with tiny light tweaks
 
 **Official ES-DE website:** https://es-de.org
 
@@ -14,7 +14,7 @@ Upstream ES-DE development is performed by the ES-DE team. RetroDECK regularly u
 
 ---
 
-## RetroDECK-Specific Build Changes
+## RetroDECK-Specific Changes
 
 | Area | RetroDECK Custom Build |
 |---|---|
