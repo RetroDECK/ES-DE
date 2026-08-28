@@ -44,7 +44,7 @@ https://github.com/RetroDECK/RetroDECK/issues
 
 ## Acknowledgements
 
-RetroDECK maintains a positive and cooperative relationship with the upstream ES-DE project and is grateful to the ES-DE team for its continued collaboration and support for so many years, including providing and maintaining the `RETRODECK` custom build option from the very beginning. The ongoing development of ES-DE provides the foundation of many features used by RetroDECK and as main front-end.
+RetroDECK maintains a positive and cooperative relationship with the upstream ES-DE project and is grateful to the ES-DE team for its continued collaboration and support for so many years, including providing and maintaining the `RETRODECK` custom build option from the very beginning. The ongoing development of ES-DE provides the foundation of many features used by RetroDECK as the main front-end.
 
 ---
 
