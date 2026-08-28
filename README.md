@@ -20,7 +20,7 @@ Upstream ES-DE development is performed by the ES-DE team. RetroDECK regularly u
 |---|---|
 | **Flatpak compatibility** | Adjusts filesystem paths, permissions and runtime dependencies for the Flatpak sandbox. |
 | **Menu structure** | Adjusts menu entries to expose RetroDECK-specific features, such as the *RetroDECK Configurator*. |
-| **Application updater** | The upstream build system disables the application updater when `RETRODECK` or `FLATPAK_BUILD` is enabled. |
+| **Application updater** | The build system disables the application updater when `RETRODECK` is enabled. |
 
 ---
 
