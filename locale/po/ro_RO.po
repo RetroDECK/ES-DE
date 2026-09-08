@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-12 21:31+0300\n"
+"PO-Revision-Date: 2026-09-04 22:25+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Eroare rețea (stare:"
@@ -1116,7 +1116,7 @@ msgid "PROCEED"
 msgstr "CONTINUĂ"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "LANSEAZĂ PE ECRANUL SECUNDAR"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "DOSAR FIȘIERE MEDIA JOC"
@@ -1219,10 +1219,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "UPSCALE RATĂ DE CADRE LA 60 FPS"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "INTEROGHEAZĂ NUCLEELE RETROARCH INSTALATE (EXPERIMENTAL)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "FOLOSEȘTE RETROARCH ÎN MODUL SAF (NERECOMANDAT)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ACTIVEAZĂ EMULATOARE ALTERNATIVE PER JOC"
@@ -1240,7 +1240,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "EVENIMENTE PERSONALIZATE LA NAVIGARE"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "RULEAZĂ EVENIMENTELE DE NAVIGARE CA NON-BLOCANTE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "AFIȘEAZĂ DOAR JOCURILE DIN FIȘIERELE GAMELIST.XML"
@@ -1342,7 +1342,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "SETĂRI ECONOMIZOR ECRAN"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "ACTIVEAZĂ LANSAREA PE ECRANUL SECUNDAR"
 
 msgid "choose"
 msgstr "alege"
@@ -1351,16 +1351,16 @@ msgid "close menu"
 msgstr "închide meniul"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Implicit sistem (secundar)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Implicit sistem (primar)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Mereu pe secundar"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Mereu pe primar"
 
 msgid "EDIT METADATA"
 msgstr "EDITEAZĂ METADATELE"
@@ -2540,11 +2540,11 @@ msgstr "SELECTEAZĂ EMULATOR ALTERNATIV"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "LANSEAZĂ PE ECRANUL"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "LANSEAZĂ PE ECRANUL"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
