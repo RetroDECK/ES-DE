@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-13 20:58+0200\n"
+"PO-Revision-Date: 2026-09-08 20:53+0200\n"
 "Last-Translator: wakeboxer <ljhmd0825@gmail.com>\n"
 "Language-Team: 한국어 <info@es-de.org>\n"
 "Language: ko_KR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "네트워크 오류 (상태:"
@@ -1092,7 +1092,7 @@ msgid "PROCEED"
 msgstr "진행하기"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "다른 화면에서 실행"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "게임 미디어 디렉터리"
@@ -1195,10 +1195,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "60FPS까지 비디오 프레임 레이트 업스케일링"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "설치된 RetroArch 코어 조회 (실험적 기능)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "SAF 모드에서 RetroArch 사용 (권장하지 않음)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "게임별 대체 에뮬레이터 사용 가능"
@@ -1216,7 +1216,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "커스텀 이벤트 탐색"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "브라우징 이벤트를 비차단(논블로킹) 방식으로 실행"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "GAMELIST.XML 파일에 있는 게임만 보이기"
@@ -1317,7 +1317,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "화면보호기 설정"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "다른 화면에서 실행 활성화"
 
 msgid "choose"
 msgstr "이동"
@@ -1326,16 +1326,16 @@ msgid "close menu"
 msgstr "메뉴 닫기"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "시스템 기본값(기타)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "시스템 기본값(첫 번째)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "항상 다른 화면에"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "항상 첫 번째 화면에 표시"
 
 msgid "EDIT METADATA"
 msgstr "메타데이터 편집"
@@ -2486,11 +2486,11 @@ msgstr "대체 에뮬레이터 선택"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "화면에서 실행"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "어떤 화면에서 실행할까요"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
