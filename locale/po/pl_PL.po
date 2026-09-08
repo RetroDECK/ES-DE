@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-19 19:49+0200\n"
+"PO-Revision-Date: 2026-09-07 21:33+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Polski <info@es-de.org>\n"
 "Language: pl_PL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "Network error (status:"
 msgstr "Błąd sieci (status:"
@@ -1120,7 +1120,7 @@ msgid "PROCEED"
 msgstr "KONTYNUUJ"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "URUCHOM NA DRUGIM EKRANIE"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "KATALOG MULTIMEDIÓW GIER"
@@ -1223,10 +1223,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "ZWIĘKSZ LICZBĘ KLATEK DO 60 KL/S"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "WYSZUKAJ ZAINSTALOWANE MODUŁY RETROARCH (EKSPERYMENTALNE)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "UŻYJ RETROARCH W TRYBIE SAF (NIEZALECANE)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "WŁĄCZ ALTERNATYWNE EMULATORY DLA DANEJ GRY"
@@ -1244,7 +1244,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "PRZEGLĄDANIE ZDARZEŃ WŁASNYCH"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "URUCHOM ZDARZENIA PRZEGLĄDANIA JAKO NIEBLOKUJĄCE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "POKAŻ TYLKO GRY Z PLIKÓW GAMELIST.XML"
@@ -1346,7 +1346,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "USTAWIENIA WYGASZACZA"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "WŁĄCZ URUCHAMIANIE NA DRUGIM EKRANIE"
 
 msgid "choose"
 msgstr "przejdź"
@@ -1355,16 +1355,16 @@ msgid "close menu"
 msgstr "zamknij menu"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Ustawienie domyślne (drugim)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Ustawienie domyślne (głównym)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Zawsze na drugim"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Zawsze na głównym"
 
 msgid "EDIT METADATA"
 msgstr "EDYTUJ META DANE"
@@ -2546,11 +2546,11 @@ msgstr "WYBIERZ EMULATOR ALTERNATYWNY"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "URUCHOM NA EKRANIE"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "NA KTÓRYM EKRANIE"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
