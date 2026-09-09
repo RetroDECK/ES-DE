@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-06-25 04:03+0800\n"
+"PO-Revision-Date: 2026-09-09 19:23+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
 "Language: ja_JP\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "ネットワークエラー（ステータス："
@@ -1112,7 +1112,7 @@ msgid "PROCEED"
 msgstr "進む"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "他の画面で起動"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "ゲームメディアディレクトリ"
@@ -1215,10 +1215,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "ビデオのフレームレートを60 FPSに引き上げる"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "インストール済みのRetroArchコアを照会（試験的）"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "RetroArchをSAFモードで使用（非推奨）"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ゲームごとに代替エミュレータを有効に"
@@ -1236,7 +1236,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "カスタムイベントを閲覧"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "ブラウジングイベントをノンブロッキングで実行"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "GAMELIST.XML ファイルにあるゲームのみを表示"
@@ -1339,7 +1339,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "スクリーンセーバー設定"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "他の画面での起動を有効に"
 
 msgid "choose"
 msgstr "選ぶ"
@@ -1348,16 +1348,16 @@ msgid "close menu"
 msgstr "メニューを閉じる"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "システムデフォルト（その他）"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "システムデフォルト（プライマリ）"
 
 msgid "Always on other"
-msgstr ""
+msgstr "常に他で表示"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "常にプライマリで表示"
 
 msgid "EDIT METADATA"
 msgstr "メタデータを編集する"
@@ -2536,11 +2536,11 @@ msgstr "代替エミュレーターを選んでください"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "スクリーンで起動"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "どのスクリーンで起動するか"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
