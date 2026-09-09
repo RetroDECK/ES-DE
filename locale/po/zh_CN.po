@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-13 02:17+0800\n"
+"PO-Revision-Date: 2026-09-09 19:24+0800\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 简体中文 <info@es-de.org>\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "网络错误（状态："
@@ -1084,7 +1084,7 @@ msgid "PROCEED"
 msgstr "继续"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "在其他屏幕上启动"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "游戏媒体目录"
@@ -1187,10 +1187,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "将视频帧率提升至 60 FPS"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "查询已安装的RETROARCH核心（实验性质）"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "在存储访问框架模式上使用RETROARCH（不受推荐）"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "为每个游戏启用备用模拟器"
@@ -1208,7 +1208,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "浏览自定义事件"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "以非阻塞方式运行浏览事件"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "仅显示 gamelist.xml 文件中的游戏"
@@ -1306,7 +1306,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "屏保设置"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "启用在其他屏幕上启动"
 
 msgid "choose"
 msgstr "选择"
@@ -1315,16 +1315,16 @@ msgid "close menu"
 msgstr "关闭菜单"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "系统默认（其他）"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "系统默认（首选）"
 
 msgid "Always on other"
-msgstr ""
+msgstr "总是在其他"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "总是在首选"
 
 msgid "EDIT METADATA"
 msgstr "编辑元数据"
@@ -2459,11 +2459,11 @@ msgstr "请选择备用模拟器"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "在屏幕上启动"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "在哪个屏幕上启动"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
