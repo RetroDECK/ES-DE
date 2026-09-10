@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-15 09:29+0200\n"
+"PO-Revision-Date: 2026-09-04 12:33+0200\n"
 "Last-Translator: SecularSteve <info@es-de.org>\n"
 "Language-Team: Bosnian (Bosnia & Herzegovina) <info@es-de.org>\n"
 "Language: bs_BA\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Greška mreže (status:"
@@ -1120,7 +1120,7 @@ msgid "PROCEED"
 msgstr "NASTAVI"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "POKRENI NA DRUGOM EKRANU"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "IMENIK MEDIJA ZA IGRE"
@@ -1223,10 +1223,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "POVEĆAJTE BRZINU SLIČNOG VIDEO KADROVA NA 60 FPS"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "UPIT INSTALIRANIH RETROARCH JEZGRIH (ISPITIVO)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "KORISTITE RETROARCH U SAF MODU (NE PREPORUČUJE SE)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "OMOGUĆITE ALTERNATIVNE EMULATORE PO IGRI"
@@ -1244,7 +1244,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "PREGLED PRILAGOĐENIH DOGAĐAJA"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "POKRENITE PREGLEDAVANJE DOGAĐAJA KAO NEBLOKIRAJUĆE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "PRIKAŽI SAMO IGRE IZ DATOTEKE GAMELIST.XML"
@@ -1346,7 +1346,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "POSTAVKE ČUVARA EKRANA"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "OMOGUĆITE POKRETANJE NA DRUGOM EKRANU"
 
 msgid "choose"
 msgstr "odabrati"
@@ -1355,16 +1355,16 @@ msgid "close menu"
 msgstr "zatvori meni"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Sistemska zadana vrijednost (Ostalo)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Sistemska zadana vrijednost (Primarna)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Uvijek na drugom"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Uvijek na primarnom"
 
 msgid "EDIT METADATA"
 msgstr "UREDI METAPODATEKE"
@@ -2544,11 +2544,11 @@ msgstr "ODABERITE ALTERNATIVNI EMULATOR"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "POKRENI NA EKRANU"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "POKRENI NA KOJEM EKRANU"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
