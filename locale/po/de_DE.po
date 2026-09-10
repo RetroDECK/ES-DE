@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-22 10:14+0200\n"
+"PO-Revision-Date: 2026-09-04 12:23+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Deutsch <info@es-de.org>\n"
 "Language: de_DE\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Netzwerkfehler (Status:"
@@ -1118,7 +1118,7 @@ msgid "PROCEED"
 msgstr "FORTFAHREN"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "AUF EINEM ANDEREN BILDSCHIRM STARTEN"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "SPIELE-MEDIEN-VERZEICHNIS"
@@ -1221,10 +1221,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "VIDEO-FRAMERATE AUF 60FPS HOCHSKALIEREN"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "ABFRAGE DER INSTALLIERTEN RETROARCH-KERNEL (EXPERIMENTELL)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "RETROARCH IM DER SAF MODUS VERWENDEN (NICHT EMPFOHLEN)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ALTERNATIVE EMULATOREN PRO SPIEL AKTIVIEREN"
@@ -1242,7 +1242,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "BENUTZERDEFINIERTE EVENTS DURCSUCHEN"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "SURF-EVENTS ALS NICHT-BLOCKIEREND AUSFÜHREN"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "NUR SPIELE AUS DER GAMELIST.XML-DATEI ANZEIGEN"
@@ -1344,7 +1344,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "BILDSCHIRMSCHONER EINSTELLUNGEN"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "START AUF EINEM ANDEREN BILDSCHIRM AKTIVIEREN"
 
 msgid "choose"
 msgstr "wählen"
@@ -1353,16 +1353,16 @@ msgid "close menu"
 msgstr "Menü schließen"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Systemstandard (Sonstiges)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Systemstandard (Primär)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Immer auf Andere"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Immer auf Primär"
 
 msgid "EDIT METADATA"
 msgstr "METADATEN ÄNDERN"
@@ -2553,11 +2553,11 @@ msgstr "ALTERNATIVEN EMULATOR AUSWÄHLEN"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "AUF DEM BILDSCHIRM STARTEN"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "AUF WELCHEM BILDSCHIRM STARTEN"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
