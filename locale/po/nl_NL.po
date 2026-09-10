@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-15 09:33+0200\n"
+"PO-Revision-Date: 2026-09-04 12:21+0200\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
 "Language: nl_NL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Netwerkfout (status:"
@@ -1111,7 +1111,7 @@ msgid "PROCEED"
 msgstr "DOORGAAN"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "OP EEN ANDER SCHERM STARTEN"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "GAME MEDIA GIDS"
@@ -1214,10 +1214,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "UPSCALE VIDEOFRAME-SNELHEID NAAR 60 FPS"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "ZOEK NAAR GEÏNSTALLEERDE RETROARCH-KERNEN (EXPERIMENTEEL)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "GEBRUIK RETROARCH IN DE SAF MODUS (NIET AANBEVOLEN)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ALTERNATIEVE EMULATORS PER SPEL INSCHAKELEN"
@@ -1235,7 +1235,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "BLADEREN DOOR AANGEPASTE EVENEMENTEN"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "SURFEVENEMENTEN ALS NIET-BLOKKEREND UITVOEREN"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ALLEEN GAMES UIT GAMELIST.XML-BESTANDEN TONEN"
@@ -1337,7 +1337,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "SCREENSAVER-INSTELLINGEN"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "START OP EEN ANDER SCHERM INSCHAKELEN"
 
 msgid "choose"
 msgstr "kiezen"
@@ -1346,16 +1346,16 @@ msgid "close menu"
 msgstr "menu sluiten"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Systeemstandaard (Overig)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Systeemstandaard (Primair)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Altijd op de andere"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Altijd op primair"
 
 msgid "EDIT METADATA"
 msgstr "METADATA BEWERKEN"
@@ -2534,11 +2534,11 @@ msgstr "SELECTEER ALTERNATIEVE EMULATOR"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "OP HET SCHERM STARTEN"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "OP WELK SCHERM STARTEN"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
