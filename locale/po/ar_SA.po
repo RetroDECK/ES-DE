@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-09-17 14:34+0300\n"
+"PO-Revision-Date: 2026-09-05 18:04+0300\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Arabic (Classical Arabic) <info@es-de.org>\n"
 "Language: ar_SA\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 "
 "&& n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "خطأ في الشبكة (الحالة:"
@@ -169,61 +169,61 @@ msgstr[5] "%i ساعة"
 
 #, c-format
 msgid "ERROR: MISSING PRE-COMMAND FIND RULES CONFIGURATION FOR '%s'"
-msgstr "خطأ: تكوين قواعد البحث المسبق مفقود لـ '%s'"
+msgstr "خطأ تكوين قواعد البحث المسبق مفقود لـ '%s'"
 
 msgid "ERROR: COULDN'T FIND PRE-COMMAND, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "خطأ: لم يتم العثور على الأمر المسبق، هل تم تثبيته بشكل صحيح؟"
+msgstr "خطأ لم يتم العثور على الأمر المسبق، هل تم تثبيته بشكل صحيح؟"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND PRE-COMMAND '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "خطأ: تعذر العثور على الأمر المسبق '%s'، هل تم تثبيته بشكل صحيح؟"
+msgstr "خطأ تعذر العثور على الأمر المسبق '%s'، هل تم تثبيته بشكل صحيح؟"
 
 #, c-format
 msgid "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '%s'"
-msgstr "خطأ: تكوين قواعد البحث عن المحاكي مفقود '%s'"
+msgstr "خطأ تكوين قواعد البحث عن المحاكي مفقود '%s'"
 
 msgid "ERROR: COULDN'T FIND APP, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "خطأ: لم يتم العثور على التطبيق، هل تم تثبيته بشكل صحيح؟"
+msgstr "خطأ لم يتم العثور على التطبيق، هل تم تثبيته بشكل صحيح؟"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND APP '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "خطأ: تعذر العثور على التطبيق '%s'، هل تم تثبيته بشكل صحيح؟"
+msgstr "خطأ تعذر العثور على التطبيق '%s'، هل تم تثبيته بشكل صحيح؟"
 
 msgid "ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "خطأ: لم يتم العثور على المحاكي، هل تم تثبيته بشكل صحيح؟"
+msgstr "خطأ لم يتم العثور على المحاكي، هل تم تثبيته بشكل صحيح؟"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR '%s', HAS IT BEEN PROPERLY INSTALLED?"
-msgstr "خطأ: تعذر العثور على المحاكي '%s'، هل تم تثبيته بشكل صحيح؟"
+msgstr "خطأ تعذر العثور على المحاكي '%s'، هل تم تثبيته بشكل صحيح؟"
 
 #, c-format
 msgid "ERROR: COULDN'T FIND EMULATOR CORE FILE '%s'"
-msgstr "خطأ: تعذر العثور على ملف نواة المحاكي '%s'"
+msgstr "خطأ تعذر العثور على ملف نواة المحاكي '%s'"
 
 msgid "ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE"
-msgstr "خطأ: إدخال غير صالح في ملف تكوين النظام"
+msgstr "خطأ إدخال غير صالح في ملف تكوين النظام"
 
 #, c-format
 msgid "ERROR: MISSING CORE CONFIGURATION FOR '%s'"
-msgstr "خطأ: تكوين أساسي مفقود لـ '%s'"
+msgstr "خطأ تكوين أساسي مفقود لـ '%s'"
 
 #, c-format
 msgid "ERROR: INVALID %s VARIABLE ENTRY"
-msgstr "خطأ: إدخال متغير %s غير صالح"
+msgstr "خطأ إدخال متغير %s غير صالح"
 
 #, c-format
 msgid ""
 "ERROR: DIRECTORY DEFINED BY %s COULD NOT BE CREATED, PERMISSION PROBLEMS?"
-msgstr "خطأ: لا يمكن إنشاء الدليل المحدد بواسطة %s، مشاكل الأذونات؟"
+msgstr "خطأ لا يمكن إنشاء الدليل المحدد بواسطة %s، مشاكل الأذونات؟"
 
 msgid "ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "خطأ: ملف التطبيق أو الاسم المستعار غير موجود أو غير قابل للقراءة"
+msgstr "خطأ ملف التطبيق أو الاسم المستعار غير موجود أو غير قابل للقراءة"
 
 msgid "ERROR: DESKTOP FILE IS INVALID OR UNREADABLE"
-msgstr "خطأ: ملف سطح المكتب غير صالح أو غير قابل للقراءة"
+msgstr "خطأ ملف سطح المكتب غير صالح أو غير قابل للقراءة"
 
 msgid "ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE"
-msgstr "خطأ: ملف سطح المكتب غير موجود أو غير قابل للقراءة"
+msgstr "خطأ ملف سطح المكتب غير موجود أو غير قابل للقراءة"
 
 #, c-format
 msgid "ERROR LAUNCHING GAME '%s' (ERROR CODE %i)"
@@ -437,26 +437,26 @@ msgid "Downloaded file does not match expected MD5 checksum"
 msgstr "الملف الذي تم تنزيله لا يتطابق مع مجموع الاختبار MD5 المتوقع"
 
 msgid "Error: Couldn't delete temporary package file, permission problems?"
-msgstr "خطأ: لا يمكن حذف ملف الحزمة المؤقت، مشاكل الأذونات؟"
+msgstr "خطأ لا يمكن حذف ملف الحزمة المؤقت، مشاكل الأذونات؟"
 
 msgid "Error: Couldn't write package file, permission problems?"
-msgstr "خطأ: لا يمكن كتابة ملف الحزمة، مشاكل الأذونات?"
+msgstr "خطأ لا يمكن كتابة ملف الحزمة، مشاكل الأذونات?"
 
 msgid "Error: Couldn't set permissions on AppImage file"
-msgstr "خطأ: لا يمكن تعيين أذونات على ملف AppImage"
+msgstr "خطأ لا يمكن تعيين أذونات على ملف AppImage"
 
 #, c-format
 msgid "Downloaded %s"
 msgstr "تنزيل %s"
 
 msgid "Error: Couldn't open AppImage update file for reading"
-msgstr "خطأ: تعذر فتح ملف تحديث AppImage للقراءة"
+msgstr "خطأ تعذر فتح ملف تحديث AppImage للقراءة"
 
 msgid "Error: Downloaded file does not match expected MD5 checksum"
-msgstr "خطأ: الملف الذي تم تنزيله لا يتطابق مع مجموع الاختبار MD5 المتوقع"
+msgstr "خطأ الملف الذي تم تنزيله لا يتطابق مع مجموع الاختبار MD5 المتوقع"
 
 msgid "Error: Couldn't rename running AppImage file, permission problems?"
-msgstr "خطأ: تعذر إعادة تسمية ملف AppImage قيد التشغيل، مشاكل الأذونات؟"
+msgstr "خطأ تعذر إعادة تسمية ملف AppImage قيد التشغيل، مشاكل الأذونات؟"
 
 msgid "Error: Couldn't replace running AppImage file, permission problems?"
 msgstr "تعذر استبدال ملف AppImage قيد التشغيل، هل تواجه مشاكل في الأذونات؟"
@@ -781,7 +781,7 @@ msgid "UTILITIES"
 msgstr "الفحص"
 
 msgid "QUIT ES-DE"
-msgstr "إغلاق ES-DE"
+msgstr "ES-DE إغلاق"
 
 msgid "THEME"
 msgstr "الثيمة"
@@ -1078,7 +1078,7 @@ msgid "TOUCH OVERLAY FADE-OUT TIME"
 msgstr "وقت تلاشي طبقة اللمس"
 
 msgid "ENABLE TOUCH OVERLAY"
-msgstr "تمكين لمسة تراكب"
+msgstr "تمكين طبقة اللمس"
 
 msgid ""
 "DON'T DISABLE THE TOUCH OVERLAY UNLESS YOU ARE USING A CONTROLLER OR YOU "
@@ -1087,10 +1087,10 @@ msgid ""
 "OR YOU COULD CLEAR THE ES-DE STORAGE IN THE ANDROID APP SETTINGS TO FORCE "
 "THE CONFIGURATOR TO RUN ON NEXT STARTUP"
 msgstr ""
-"لا تُعطّل خاصية اللمس إلا إذا كنت تستخدم وحدة تحكم وإلا ستُمنع من الوصول إلى "
-"التطبيق إذا حدث ذالك ستحتاج إلى توصيل وحدة تحكم أو لوحة مفاتيح مؤقتًا لتفعيل "
-"هذا الإعداد مجددًا، أو يمكنك مسح مساحة تخزين ES-DE في إعدادات تطبيق أندرويد "
-"لإجبار المُهيئ على التشغيل عند بدء التشغيل التالي"
+"لا تُعطّل خاصية طبقة اللمس إلا إذا كنت تستخدم وحدة تحكم وإلا ستُمنع من الوصول "
+"إلى التطبيق إذا حدث ذالك ستحتاج إلى توصيل وحدة تحكم أو لوحة مفاتيح مؤقتًا "
+"لتفعيل هذا الإعداد مجددًا، أو يمكنك مسح مساحة تخزين ES-DE في إعدادات تطبيق "
+"أندرويد لإجبار المُهيئ على التشغيل عند بدء التشغيل التالي"
 
 msgid "ONLY ACCEPT INPUT FROM FIRST CONTROLLER"
 msgstr "قبول الإدخال من وحدة التحكم الأولى فقط"
@@ -1119,7 +1119,7 @@ msgid "PROCEED"
 msgstr "متابعة"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "تشغيل على شاشة أخرى"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "مسار وسائط الألعاب"
@@ -1222,10 +1222,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "إطارًا في الثانية 60 رفع معدل إطارات الفيديو إلى"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "(تجريبي) المثبتة RetroArch استعلام عن نوى"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "(غير مستحسن) SAF في وضع RETROARCH استخدم"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "تمكين المحاكيات البديلة لكل لعبة"
@@ -1243,7 +1243,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "تصفح الأحداث المخصصة"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "تشغيل أحداث التصفح كأحداث غير مانعة"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "gamelist.xml عرض الألعاب فقط من ملفات"
@@ -1261,10 +1261,10 @@ msgid "DEBUG MODE"
 msgstr "وضع التصحيح"
 
 msgid "DISPLAY GPU STATISTICS OVERLAY"
-msgstr "عرض تراكب إحصائيات وحدة معالجة الرسومات"
+msgstr "عرض إحصائيات  كرت الشاشة"
 
 msgid "ENABLE MENU IN KID MODE"
-msgstr "تمكين القائمة في وضع الأطفال"
+msgstr "تفعيل القائمة في وضع الأطفال"
 
 msgid "SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)"
 msgstr "(إيقاف وإعادة تشغيل الإدخالات) إظهر قائمة الخروج"
@@ -1344,25 +1344,25 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "إعدادات شاشة التوقف"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "تفعيل التشغيل على شاشة أخرى"
 
 msgid "choose"
-msgstr "اختيار"
+msgstr "اختار"
 
 msgid "close menu"
 msgstr "إغلاق القائمة"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "الإعدادات الافتراضية للنظام (أخرى)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "الإعدادات الافتراضية للنظام (الأساسي)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "دائماً على الآخر"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "دائماً على الأساسي"
 
 msgid "EDIT METADATA"
 msgstr "تحرير البيانات الوصفية"
@@ -1466,7 +1466,7 @@ msgid "Processing:"
 msgstr "معالجة:"
 
 msgid "Last error message:"
-msgstr "آخر رسالة الخطأ:"
+msgstr "آخر رسالة الخطأ"
 
 msgid "start processing"
 msgstr "بدء المعالجة"
@@ -1537,7 +1537,7 @@ msgid "LAST PROCESSED SYSTEM:"
 msgstr "آخر نظام تمت معالجته:"
 
 msgid "LAST ERROR MESSAGE:"
-msgstr "آخر رسالة الخطأ:"
+msgstr "آخر رسالة الخطأ"
 
 msgid "MEDIA"
 msgstr "وسائط"
@@ -1842,7 +1842,7 @@ msgstr ""
 "تحديد نظام واحد على الأقل لتوليد الصور"
 
 msgid "REGION"
-msgstr "منطقة"
+msgstr "المنطقة"
 
 msgid "EUROPE"
 msgstr "أوروبا"
@@ -2304,7 +2304,7 @@ msgid "CREATED BY"
 msgstr "تم إنشاؤه بواسطة"
 
 msgid "ERROR:"
-msgstr "خطأ:"
+msgstr "خطأ"
 
 msgid "COULDN'T DOWNLOAD THEMES LIST"
 msgstr "تعذر تنزيل قائمة الثيمات"
@@ -2537,11 +2537,11 @@ msgstr "حدد المحاكي البديل"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "تشغيل على الشاشة"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "تشغيل على أي شاشة"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
@@ -2621,7 +2621,7 @@ msgid "Couldn't save resized image, permission problems or is the disk full?"
 msgstr "لا يمكن حفظ الصورة المُقيّنة أو مشاكل الإذن أم أن القرص ممتلئ؟"
 
 msgid "ScreenScraper error:"
-msgstr "خطأ شاشات الشاشة:"
+msgstr "خطأ ScreenScraper:"
 
 msgid "ScreenScraper: Wrong username or password"
 msgstr "شاشات الشاشة: اسم مستخدم أو كلمة مرور خاطئ"
@@ -2749,9 +2749,9 @@ msgid ""
 "YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
-"تعذر تحليل ملف تهيئة النظام. إذا كان لديك ملف es_systems.xml  مُخصَّص, فمن "
-"المُرجَّح وجود خطأ في بناء جملة XML. إذا  لم يكن لديك ملف أنظمة مُخصَّص، فهذا يعني "
-"أن تثبيت ES-DE معطل يُرجى مراجعة ملف سجل التطبيق es_log.txt لمزيد من المعلومات"
+"تعذر تحليل ملف تهيئة النظام إذا كان لديك ملف es_systems.xml مُخصَّص، فمن المُرجَّح "
+"وجود خطأ في بناء جملة XML إذا لم يكن لديك ملف أنظمة مُخصَّص، فهذا يعني أن تثبيت "
+"ES-DE معطل يُرجى مراجعة ملف سجل التطبيق es_log.txt لمزيد من المعلومات"
 
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
@@ -3215,4 +3215,4 @@ msgid "Creating system directories..."
 msgstr "...إنشاء أدلة النظام"
 
 msgid "ERROR: COULDN'T RENDER PDF FILE"
-msgstr "خطأ: لا يمكن تقديم ملف pdf"
+msgstr "خطأ لا يمكن تقديم ملف pdf"
