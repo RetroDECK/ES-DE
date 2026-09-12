@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2025-10-19 17:38+0400\n"
+"PO-Revision-Date: 2026-09-12 20:05+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
 "Language: ru_RU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Ошибка сети (статус:"
@@ -1112,7 +1112,7 @@ msgid "PROCEED"
 msgstr "ПРОДОЛЖИТЬ"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "ЗАПУСТИТЬ НА ДРУГОМ ЭКРАНЕ"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "КАТАЛОГ ИГРОВЫХ МЕДИА"
@@ -1215,10 +1215,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "УВЕЛИЧЕНИЕ ЧАСТОТЫ КАДРОВ ВИДЕО ДО 60 FPS"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "ПРОВЕРКА УСТАНОВЛЕННЫХ ЯДЕР RETROARCH (ЭКСПЕР.)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "ИСПОЛЬЗУЙТЕ RETROARCH В РЕЖИМЕ SAF (НЕ РЕКОМЕНДУЕТСЯ)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "РАЗРЕШИТЬ АЛЬТ. ЭМУЛЯТОРЫ ДЛЯ КАЖДОЙ ИГРЫ"
@@ -1236,7 +1236,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "ПОЛЬЗ. СОБЫТИЯ ПРИ НАВИГАЦИИ"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "ЗАПУСКАТЬ СОБЫТИЯ ПРОСМОТРА В НЕБЛОКИРУЮЩЕМ РЕЖИМЕ"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ПОКАЗЫВАТЬ ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
@@ -1338,7 +1338,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "НАСТРОЙКИ ЗАСТАВКИ"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "ВКЛЮЧИТЬ ЗАПУСК НА ДРУГОМ ЭКРАНЕ"
 
 msgid "choose"
 msgstr "выбор"
@@ -1347,16 +1347,16 @@ msgid "close menu"
 msgstr "закр. меню"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Настройки по умолчанию системы (Прочее)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Настройки по умолчанию системы (Первичный)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Всегда на другом"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Всегда на первичный"
 
 msgid "EDIT METADATA"
 msgstr "ИЗМЕНИТЬ МЕТАДАННЫЕ"
@@ -2534,11 +2534,11 @@ msgstr "ВЫБЕРИТЕ АЛЬТ. ЭМУЛЯТОРЫ"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "ЗАПУСТИТЬ НА ЭКРАНЕ"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "ЗАПУСТИТЬ НА КАКОМ ЭКРАНЕ"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
