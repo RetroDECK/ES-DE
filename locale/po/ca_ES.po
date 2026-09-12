@@ -1339,10 +1339,10 @@ msgid "close menu"
 msgstr "tancar menú"
 
 msgid "System default (Other)"
-msgstr "Predefinit del sistema (altres)"
+msgstr "Predefinit del sistema (Altres)"
 
 msgid "System default (Primary)"
-msgstr "Predefinit del sistema (primari)"
+msgstr "Predefinit del sistema (Primari)"
 
 msgid "Always on other"
 msgstr "Sempre en una altra pantalla"
