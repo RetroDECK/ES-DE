@@ -1339,16 +1339,16 @@ msgid "close menu"
 msgstr "tancar menú"
 
 msgid "System default (Other)"
-msgstr "PREDEFINIT DEL SISTEMA (ALTRES)"
+msgstr "Predefinit del sistema (altres)"
 
 msgid "System default (Primary)"
-msgstr "PREDEFINIT DEL SISTEMA (PRIMARI)"
+msgstr "Predefinit del sistema (primari)"
 
 msgid "Always on other"
-msgstr "SEMPRE EN UNA ALTRA PANTALLA"
+msgstr "Sempre en una altra pantalla"
 
 msgid "Always on primary"
-msgstr "SEMPRE A LA PANTALLA PRINCIPAL"
+msgstr "Sempre a la pantalla principal"
 
 msgid "EDIT METADATA"
 msgstr "EDITAR METADADES"
