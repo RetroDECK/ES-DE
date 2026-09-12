@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
 "POT-Creation-Date: 2026-09-01 14:56+0200\n"
-"PO-Revision-Date: 2026-04-11 11:00+0200\n"
+"PO-Revision-Date: 2026-09-12 19:35+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Čeština <info@es-de.org>\n"
 "Language: cs_CZ\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Chyba sítě (stav:"
@@ -1103,7 +1103,7 @@ msgid "PROCEED"
 msgstr "POKRAČOVAT"
 
 msgid "LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "SPUSTIT NA JINÉ OBRAZOVCE"
 
 msgid "GAME MEDIA DIRECTORY"
 msgstr "ADRESÁŘ HERNÍCH MÉDIÍ"
@@ -1206,10 +1206,10 @@ msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "ZVÝŠIT SNÍMKOVOU FREKVENCI VIDEA NA 60 FPS"
 
 msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
-msgstr ""
+msgstr "DOTAZ NA NAINSTALOVANÁ JÁDRA RETROARCH (EXP.)"
 
 msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
-msgstr ""
+msgstr "POUŽIJTE RETROARCH V REŽIMU SAF (NEDOPORUČUJE SE)"
 
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "POVOLIT ALTERNATIVNÍ EMULÁTORY PRO JEDNOTLIVÉ HRY"
@@ -1227,7 +1227,7 @@ msgid "BROWSING CUSTOM EVENTS"
 msgstr "PROCHÁZENÍ VLASTNÍCH UDÁLOSTÍ"
 
 msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
-msgstr ""
+msgstr "SPOUŠTĚT UDÁLOSTI PROHLÍŽENÍ JAKO NEBLOKUJÍCÍ"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ZOBRAZIT POUZE HRY ZE SOUBORŮ GAMELIST.XML"
@@ -1329,7 +1329,7 @@ msgid "SCREENSAVER SETTINGS"
 msgstr "NASTAVENÍ SPOŘIČE OBRAZOVKY"
 
 msgid "ENABLE LAUNCH ON OTHER SCREEN"
-msgstr ""
+msgstr "POVOLIT SPUŠTĚNÍ NA JINÉ OBRAZOVCE"
 
 msgid "choose"
 msgstr "vybrat"
@@ -1338,16 +1338,16 @@ msgid "close menu"
 msgstr "zavřít nabídku"
 
 msgid "System default (Other)"
-msgstr ""
+msgstr "Výchozí nastavení systému (Ostatní)"
 
 msgid "System default (Primary)"
-msgstr ""
+msgstr "Výchozí nastavení systému (Primární)"
 
 msgid "Always on other"
-msgstr ""
+msgstr "Vždy na druhé straně"
 
 msgid "Always on primary"
-msgstr ""
+msgstr "Vždy na primárním"
 
 msgid "EDIT METADATA"
 msgstr "UPRAVIT METADATA"
@@ -2512,11 +2512,11 @@ msgstr "VYBERTE ALTERNATIVNÍ EMULÁTOR"
 
 msgctxt "metadata"
 msgid "LAUNCH ON SCREEN"
-msgstr ""
+msgstr "SPUSTIT NA OBRAZOVCE"
 
 msgctxt "metadata"
 msgid "LAUNCH ON WHICH SCREEN"
-msgstr ""
+msgstr "SPUŠTĚNÍ NA KTERÉM OBRAZOVCE"
 
 msgctxt "metadata"
 msgid "FOLDER LINK"
