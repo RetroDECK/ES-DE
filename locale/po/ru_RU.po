@@ -1347,10 +1347,10 @@ msgid "close menu"
 msgstr "закр. меню"
 
 msgid "System default (Other)"
-msgstr "Настройки по умолчанию системы (Прочее)"
+msgstr "По умолчанию (Другой)"
 
 msgid "System default (Primary)"
-msgstr "Настройки по умолчанию системы (Первичный)"
+msgstr "По умолчанию (Основной)"
 
 msgid "Always on other"
 msgstr "Всегда на другом"
