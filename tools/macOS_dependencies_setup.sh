@@ -24,7 +24,7 @@ mkdir local_install
 echo
 echo "Setting up libiconv"
 rm -rf libiconv*
-curl -LO https://ftpmirror.gnu.org/libiconv/libiconv-1.19.tar.gz
+curl -LO https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.19.tar.gz
 tar xvzf libiconv-1.19.tar.gz
 
 if [ ! -d libiconv-1.19 ]; then
@@ -38,7 +38,7 @@ rm libiconv-1.19.tar.gz
 echo
 echo "Setting up gettext"
 rm -rf gettext*
-curl -LO https://ftpmirror.gnu.org/gettext/gettext-1.0.tar.gz
+curl -LO https://ftp.gnu.org/pub/gnu/gettext/gettext-1.0.tar.gz
 tar xvzf gettext-1.0.tar.gz
 
 if [ ! -d gettext-1.0 ]; then
