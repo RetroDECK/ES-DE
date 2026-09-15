@@ -71,7 +71,7 @@ LottieAnimComponent::~LottieAnimComponent()
 {
     // This is required as rlottie could otherwise crash on application shutdown.
     if (mFuture.valid())
-        mFuture.get();
+        static_cast<void>(mFuture.get());
 
     mTotalFrameCache -= mCacheSize;
 }
@@ -80,7 +80,7 @@ void LottieAnimComponent::setAnimation(const std::string& path)
 {
     if (mAnimation != nullptr) {
         if (mFuture.valid())
-            mFuture.get();
+            static_cast<void>(mFuture.get());
         mSurface.reset();
         mAnimation.reset();
         mPictureRGBA.clear();
@@ -246,7 +246,7 @@ void LottieAnimComponent::resetComponent()
 
     if (mAnimation != nullptr) {
         if (mFuture.valid())
-            mFuture.get();
+            static_cast<void>(mFuture.get());
         mFuture = mAnimation->render(mFrameNum, *mSurface, false);
         mLastRenderedFrame = static_cast<int>(mFrameNum);
     }
@@ -525,7 +525,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
 
         if (mFuture.valid()) {
             if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
-                mFuture.get();
+                static_cast<void>(mFuture.get());
                 // Cache frame if caching is enabled and we're not exceeding either the per-file
                 // max cache size or the total cache size. Note that this is completely unrelated
                 // to the texture caching used for images.
