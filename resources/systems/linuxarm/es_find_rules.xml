@@ -114,6 +114,17 @@
             <entry>~/.local/share/flatpak/exports/bin/com.richwhitehouse.BigPEmu</entry>
         </rule>
     </emulator>
+    <emulator name="BLASTEM">
+        <!-- Sega Mega Drive/Genesis emulator BlastEm -->
+        <rule type="systempath">
+            <entry>blastem</entry>
+            <entry>com.retrodev.blastem</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.retrodev.blastem</entry>
+        </rule>
+    </emulator>
     <emulator name="BSNES">
         <!-- Super Nintendo/Super Famicom emulator bsnes -->
         <rule type="systempath">

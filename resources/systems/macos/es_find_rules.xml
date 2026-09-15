@@ -76,6 +76,13 @@
             <entry>/Applications/BasiliskII.app/Contents/MacOS/BasiliskII</entry>
         </rule>
     </emulator>
+    <emulator name="BLASTEM">
+        <!-- Sega Mega Drive/Genesis emulator BlastEm -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/blastem</entry>
+            <entry>/usr/local/bin/blastem</entry>
+        </rule>
+    </emulator>
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
         <rule type="staticpath">
