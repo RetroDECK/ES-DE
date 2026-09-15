@@ -30,8 +30,10 @@
 * Added the MesenCE RetroArch core as an alternative emulator for the supergrafx, tg16, tg-cd, wonderswan and wonderswancolor systems
 * Added the Hatari 2014 RetroArch core as an alternative emulator for the atarist system
 * Added the RustyNES RetroArch core as an alternative emulator for the famicom, fds and nes systems
-* Added the BlastEm RetroArch core as an alternative emulator for the gamegear, mark3, mastersystem, megacd and megacdjp systems
+* Added the BlastEm RetroArch core as an alternative emulator for the colecovision, gamegear, mark3, mastersystem, megacd and megacdjp systems
 * Added the BlastEm RetroArch core as an alternative emulator for the sega32x, sega32xjp, sega32xna, segacd and sg-1000 systems
+* Added BlastEm standalone as an alternative emulator for the colecovision, gamegear, mark3, mastersystem, megacd and megacdjp systems on Linux, macOS and Windows
+* Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp, sega32xna, segacd and sg-1000 systems on Linux, macOS and Windows
 * Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
 * Added the Tia RetroArch core as an alternative emulator for the atari2600 system
 * Added the Geolith RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems
@@ -43,7 +45,6 @@
 * Added Hypseus [Singe ZLUA] standalone as an alternative emulator for the daphne and laserdisc systems on Linux, macOS and Windows
 * Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
 * Added Play! Arcade standalone as an alternative emulator for the arcade and mame systems on Linux, macOS and Windows
-* Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp and sega32xna systems on Linux and Windows
 * Added GroovyMAME standalone as an alternative emulator for the arcade and mame systems on Linux and Windows
 * Added veesem standalone as an alternative emulator for the vsmile system on Linux and Windows
 * Added the Virtual Jaguar RetroArch core as the default emulator for the atarijaguarcd system on Linux and Windows
@@ -82,6 +83,7 @@
 * (Android) Added the .amazon file extension to the windows system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Android) Added find rule entries for the Ludashi fork of Winlator to Winlator Cmod
+* (Linux ARM) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
 * (Linux ARM) Added Play! standalone as an alternative emulator for the ps2 system
 * (Linux ARM) Added Play! Arcade standalone and Play! Disc standalone as alternative emulators for the consolearcade system
 * (Linux ARM) Removed all RetroArch cores that are not built by the RetroArch project
@@ -100,6 +102,7 @@
 * (macOS) Added the LRPS2 RetroArch core as an alternative emulator for the ps2 system
 * (macOS) Added the Citra and Citra 2018 RetroArch cores as alternative emulators for the n3ds system
 * (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
+* (macOS) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
 * (Windows) Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
 * (Windows) Added an additional find rule entry for PCSX2
 * (Windows) Added "Shortcut or script" as an alternative emulator for the xbox system
