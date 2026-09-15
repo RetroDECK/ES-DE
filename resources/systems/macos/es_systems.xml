@@ -417,6 +417,7 @@
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="Gearcoleco">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearcoleco_libretro.dylib %ROM%</command>
         <command label="JollyCV">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/jollycv_libretro.dylib %ROM%</command>
+        <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.dylib %ROM%</command>
         <command label="BlastEm (Standalone)">%EMULATOR_BLASTEM% %ROM%</command>
         <command label="openMSX (Standalone)">%EMULATOR_OPENMSX% -machine ColecoVision_SGM %INJECT%=%BASENAME%.commands -cart %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "ColecoVision" %ROM%</command>
