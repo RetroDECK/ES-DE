@@ -3071,7 +3071,7 @@ On Android there are three ways to add PS3 games to ES-DE, by adding game serial
 
 On desktop operating systems there are four ways to add PS3 games to ES-DE, by using shortcuts, by adding game serial files, by adding game directories directly to the `~/ROMs/ps3` folder and interpreting these as files, and by adding ISO files to the `~/ROMs/ps3` folder. Shortcuts is generally the way to go as they're easier to setup. Launching as directories also doesn't work for HDD/pkg games unless you symlink from the internal RPCS3 directory structure. So another benefit with shortcuts and game serials is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game. The drawback to using shortcuts is that they're not portable, if you change the location of RPCS3 or your games, you need to manually update the shortcut files as well.
 
-Be aware that if you want to have games installed using the directory method, then you will need to change to the alternative emulator _aPS3e Directory (Standalone)_ on Android and _RPCS3 Directory (Standalone)_ on desktop operating systems, or you won't be able to launch these games. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis. The ARMSX3 and EmuCoreC emulators on Android will auto-detect whether the game is in a directory or is an ISO file, so just selecting _ARMSX3 (Standalone)_ or _EmuCoreC (Standalone)_ should work for both cases.
+Be aware that if you want to have games installed using the directory method, then you will need to change to the alternative emulator _aPS3e Directory (Standalone)_, _ARMSX3 Directory or ISO (Standalone)_ or _EmuCoreC Directory or ISO (Standalone)_ on Android and _RPCS3 Directory (Standalone)_ on desktop operating systems, or you won't be able to launch these games. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
 
 If using the Flatpak release of RPCS3 on Linux and your games are stored on an external device (such as a memory card), then you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
@@ -3107,19 +3107,19 @@ Regardless of how you've installed RPCS3, make sure to always test the shortcuts
 
 **Game serial files**
 
-_Note that at the time of writing, this installation method does not seem to be possible with the ARMSX3 and EmuCoreC emulators on Android._
+_Note that at the time of writing, this installation method does not seem to be possible with the EmuCoreC emulator on Android._
 
-First install your games inside aPS3e or RPCS3, then create an empty file in `~/ROMs/ps3` and name it as the game name followed by the .ps3 file extension, such as the following:
+First install your games inside aPS3e, ARMSX3 or RPCS3, then create an empty file in `~/ROMs/ps3` and name it as the game name followed by the .ps3 file extension, such as the following:
 ```
 ~/ROMs/ps3/Braid.ps3
 ```
 
-Then add the game serial to this file. This ID can be found inside aPS3e by long clicking on the game and then selecting _Show Game Info_ and it can be found in the RPCS3 GUI in the _Serial_ column. For example the game _Braid_ has a serial that is NPUB30133. So simply add the string NPUB30133 to the `Braid.ps3` file using a text editor or similar and the setup for this game is complete.
+Then add the game serial to this file. This ID can be found inside aPS3e by long clicking on the game and selecting _Show Game Info_, or in ARMSX3 by simply long clicking on the game, or in the RPCS3 GUI in the _Serial_ column. For example the game _Braid_ has a serial that is NPUB30133. So simply add the string NPUB30133 to the `Braid.ps3` file using a text editor or similar and the setup for this game is complete.
 
 To simplify the setup described above there is a convenient archive of .ps3 files available that covers most of the game library for this console. It can be downloaded from here:\
 https://raw.githubusercontent.com/Jetup13/Retroid-Pocket-4-Pro-Wiki/main/Files/ps3serials.zip
 
-Be aware that you need to change to the alternative emulator entry _RPCS3 Game Serial (Standalone)_ for this to work on desktop operating systems. On Android _aPS3e Game Serial (Standalone)_ is the default emulator for the ps3 system.
+Be aware that you need to change to the alternative emulator entry _RPCS3 Game Serial (Standalone)_ for this to work on desktop operating systems. On Android _aPS3e Game Serial (Standalone)_ is the default emulator for the ps3 system, or you can select _ARMSX3 Game Serial (Standalone)_ instead if you prefer to use this emulator.
 
 **Directories**
 
@@ -3132,11 +3132,11 @@ Here's an example of what a game entry could look like:
 
 On desktop operating systems it's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension. But if you want to locate your games outside the `~/ROMs/ps3` directory anyway, then it's probably easier to just use shortcuts.
 
-When using this setup method you need to use the alternative emulator _aPS3e Directory (Standalone)_ or _RPCS3 Directory (Standalone)_ or game launching will not work. The ARMSX3 and EmuCoreC emulators on Android will auto-detect whether the game is in a directory, so just selecting _ARMSX3 (Standalone)_ or _EmuCoreC (Standalone)_ should work.
+When using this setup method you need to select the alternative emulator _aPS3e Directory (Standalone)_, _ARMSX3 Directory or ISO (Standalone)_, _EmuCoreC Directory or ISO (Standalone)_ on Android or _RPCS3 Directory (Standalone)_ on desktop operating systems. Otherwise game launching will not work.
 
 **ISO files**
 
-On Android you can run ISO files directly using aPS3e, ARMSX3 and EmuCoreC, you simply add the files to the _ps3_ directory and use the _aPS3e ISO (Standalone)_ alternative emulator entry to run the file. The ARMSX3 and EmuCoreC emulators will auto-detect whether the game is an ISO file, so just selecting _ARMSX3 (Standalone)_ or _EmuCoreC (Standalone)_ should work.
+On Android you can run ISO files directly using aPS3e, ARMSX3 and EmuCoreC, you simply add the files to the _ps3_ directory and select the _aPS3e ISO (Standalone)_, _ARMSX3 Directory or ISO (Standalone)_ or _EmuCoreC Directory or ISO (Standalone)_ alternative emulator entry to run the file.
 
 Likewise on desktop operating systems you can run ISO files using RPCS3 by selecting the _RPCS3 ISO (Standalone)_ alternative emulator entry.
 
@@ -4793,6 +4793,10 @@ A statistics counter that tracks how many times you have played the game. You no
 
 A statistics counter that tracks how many seconds you have played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
+**Launch on screen** _(Android only, and files only)_
+
+If the option _Enable launch on other screen_ has been enabled, there will be an entry shown where you can override on which screen to launch the game, instead of just accepting the system-wide configuration setup via the _Launch on the other screen_ interface in the _Other settings_ menu. The default value will either be _System default (Other)_ or _System default (Primary)_ depending on the system-wide configuration. The other two options are _Always on other_ and _Always on primary_.
+
 **Controller**
 
 This entry provides a selection of controller icons that are built into ES-DE (although the theme can override the actual graphics files). The selected icon will be displayed as a badge if the theme supports badges. The gamelist can also be filtered based on the controllers, but apart from this the functionality is cosmetic and will not affect the actual emulators.
@@ -4800,10 +4804,6 @@ This entry provides a selection of controller icons that are built into ES-DE (a
 **Alternative emulator** _(files only)_
 
 If the option _Enable alternative emulators per game_ has been enabled, there will be an entry shown where you can select between alternative emulators for the specific game. There is a similar _Alternative emulators_ entry under the _Other settings_ menu, but that will apply the selection to the entire game system. If you select an alternative for a specific game using the metadata editor, that will take precedence and override any system-wide emulator selection (the currently selected system-wide emulator will be clearly marked in the selection screen). The alternative emulators need to be defined in the es_systems.xml file, and if there are no alternatives available for the current system, this row in the metadata editor will be grayed out. If you select an alternative emulator and later remove its corresponding entry from the es_systems.xml file, an error notice will be shown on this row. In this case you have the option to remove the invalid entry. But even if there is an invalid entry, games will still launch using the default emulator while logging a warning message to the es_log.txt file. Apart from this, the emulator selection should hopefully be self-explanatory.
-
-**Launch on screen** _(Android only, and files only)_
-
-If the option _Enable launch on other screen_ has been enabled, there will be an entry shown where you can override on which screen to launch the game, instead of just accepting the system-wide configuration setup via the _Launch on the other screen_ interface in the _Other settings_ menu. The default value will either be _System default (Other)_ or _System default (Primary)_ depending on the system-wide configuration. The other two options are _Always on other_ and _Always on primary_.
 
 **Folder link** _(folders only)_
 
