@@ -406,6 +406,8 @@
         <command label="aPS3e Game Serial (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/aps3e/config/dev_hdd0/game/%INJECT%=%BASENAME%.ps3</command>
         <command label="aPS3e Directory (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%ROM%</command>
         <command label="aPS3e ISO (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_iso_uri%=%ROMSAF%</command>
+        <command label="ARMSX3 Game Serial (Standalone)">%EMULATOR_ARMSX3% %ACTION%=android.intent.action.VIEW %EXTRA_title_id%=%INJECT%=%BASENAME%.ps3</command>
+        <command label="ARMSX3 Directory or ISO (Standalone)">%EMULATOR_ARMSX3% %EXTRA_path%=%ROM%</command>
         <command label="Dolphin">%EMULATOR_RETROARCH% %EXTRA_CONFIGFILE%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/retroarch.cfg %EXTRA_LIBRETRO%=%INTERNALDATA%/%ANDROIDPACKAGE%/cores/dolphin_libretro_android.so %EXTRA_ROM%=%ROMSAF%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% %ACTION%=android.intent.action.MAIN %CATEGORY%=android.intent.category.LEANBACK_LAUNCHER %EXTRA_AutoStartFile%=%ROMSAF%</command>
         <platform>arcade</platform>
@@ -1569,7 +1571,8 @@
         <command label="aPS3e Game Serial (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%EXTERNALDATA%/Android/data/%ANDROIDPACKAGE%/files/aps3e/config/dev_hdd0/game/%INJECT%=%BASENAME%.ps3</command>
         <command label="aPS3e Directory (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_game_dir%=%ROM%</command>
         <command label="aPS3e ISO (Standalone)">%EMULATOR_APS3E% %ACTION%=aenu.intent.action.APS3E %EXTRA_iso_uri%=%ROMSAF%</command>
-        <command label="ARMSX3 (Standalone)">%EMULATOR_ARMSX3% %EXTRA_path%=%ROM%</command>
+        <command label="ARMSX3 Game Serial (Standalone)">%EMULATOR_ARMSX3% %ACTION%=android.intent.action.VIEW %EXTRA_title_id%=%INJECT%=%BASENAME%.ps3</command>
+        <command label="ARMSX3 Directory or ISO (Standalone)">%EMULATOR_ARMSX3% %EXTRA_path%=%ROM%</command>
         <command label="EmuCoreC (Standalone)">%EMULATOR_EMUCOREC% %EXTRA_gamePath%=%ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
