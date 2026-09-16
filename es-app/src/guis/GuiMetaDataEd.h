@@ -72,6 +72,7 @@ private:
     std::function<void()> mDeleteGameFunc;
 
     bool mIsCustomCollection;
+    bool mHasScreenEntry;
     bool mMediaFilesUpdated;
     bool mSavedMediaAndAborted;
     bool mInvalidEmulatorEntry;

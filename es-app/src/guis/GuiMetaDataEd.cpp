@@ -53,6 +53,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     , mClearGameFunc {clearGameFunc}
     , mDeleteGameFunc {deleteGameFunc}
     , mIsCustomCollection {false}
+    , mHasScreenEntry {false}
     , mMediaFilesUpdated {false}
     , mSavedMediaAndAborted {false}
     , mInvalidEmulatorEntry {false}
@@ -69,6 +70,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
 #if defined(__ANDROID__)
     if (Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+        mHasScreenEntry = true;
         if (mScraperParams.system->getLaunchOnOtherScreen())
             mScreenEntries.emplace_back(std::make_pair("", _("System default (Other)").c_str()));
         else
@@ -131,22 +133,21 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
     // Populate list.
     for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
-#if defined(__ANDROID__)
-        if (it->type == MD_SCREEN && !Settings::getInstance()->getBool("LaunchOnOtherScreen"))
-            continue;
-#else
-        if (it->type == MD_SCREEN)
-            continue;
-#endif
-        std::shared_ptr<GuiComponent> ed;
         std::string currentKey {it->key};
-        std::string originalValue {mMetaData->get(it->key)};
-        std::string gamePath;
 
         // Only display the custom collections sortname entry if we're editing the game
         // from within a custom collection.
         if (currentKey == "collectionsortname" && !mIsCustomCollection)
             continue;
+
+        // Likewise only display the screen entry if the option to launch games on the other
+        // screen has been enabled.
+        if (currentKey == "screen" && !mHasScreenEntry)
+            continue;
+
+        std::shared_ptr<GuiComponent> ed;
+        std::string originalValue {mMetaData->get(it->key)};
+        std::string gamePath;
 
         // Don't add statistics.
         if (it->isStatistic)
@@ -908,9 +909,15 @@ void GuiMetaDataEd::save()
     for (unsigned int i {0}; i < mEditors.size(); ++i) {
         // The offset is needed to make the editor and metadata fields match up if we're
         // skipping the custom collections sortname field (which we do if not editing the
-        // game from within a custom collection gamelist).
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+        // game from within a custom collection gamelist), or if there's no screen entry
+        // for launching games on the other screen.
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+
+            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         if (mMetaDataDecl.at(i + offset).isStatistic)
             continue;
@@ -930,13 +937,12 @@ void GuiMetaDataEd::save()
             continue;
         }
 
-#if defined(__ANDROID__)
-        if (key == "screen" && Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+        if (key == "screen" && mHasScreenEntry) {
             const std::string value {mEditors.at(i)->getValue()};
             mMetaData->set(key, getScreenValue(value, false));
             continue;
         }
-#endif
+
         if (!showHiddenGames && key == "hidden" &&
             mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
@@ -1052,14 +1058,22 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
     // the values previously saved for the game.
-    for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+    for (unsigned int i {0}; i < mEditors.size(); ++i) {
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+
+            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
+        const std::string value {key == "controller" ?
+                                     BadgeComponent::getShortName(mEditors[i]->getValue()) :
+                                     mEditors[i]->getValue()};
 
-        if (metadata->get(key) != mEditors[i]->getValue())
-            metadata->set(key, mEditors[i]->getValue());
+        if (metadata->get(key) != value)
+            metadata->set(key, value);
     }
 
     GuiScraperSearch::saveMetadata(result, *metadata, mScraperParams.game);
@@ -1068,8 +1082,13 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 
     // Update the list with the scraped metadata values.
     for (unsigned int i {0}; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+
+            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
 
@@ -1099,9 +1118,14 @@ void GuiMetaDataEd::close()
     bool metadataUpdated {false};
     int offset {0};
 
-    for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+    for (unsigned int i {0}; i < mEditors.size(); ++i) {
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+
+            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
 
@@ -1125,11 +1149,9 @@ void GuiMetaDataEd::close()
                 continue;
         }
 
-#if defined(__ANDROID__)
-        if (key == "screen" && Settings::getInstance()->getBool("LaunchOnOtherScreen") &&
+        if (key == "screen" && mHasScreenEntry &&
             getScreenValue(mMetaDataValue, true) == mEditorsValue)
             continue;
-#endif
 
         if (mMetaDataValue != mEditorsValue) {
             metadataUpdated = true;
