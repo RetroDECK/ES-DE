@@ -43,7 +43,7 @@ namespace
     {"playcount",          MD_INT,              "0",               false,     "TIMES PLAYED",                "ENTER NUMBER OF TIMES PLAYED",     false},
     {"playtime",           MD_INT,              "0",               false,     "PLAY TIME",                   "ENTER PLAY TIME",                  false},
     {"screen",             MD_SCREEN,           "",                false,     "LAUNCH ON SCREEN",            "LAUNCH ON WHICH SCREEN",           false},
-    {"controller",         MD_CONTROLLER,       "",                false,     "CONTROLLER",                  "SELECT CONTROLLER",                true},
+    {"controller",         MD_CONTROLLER,       "",                false,     "CONTROLLER",                  "SELECT CONTROLLER",                false},
     {"altemulator",        MD_ALT_EMULATOR,     "",                false,     "ALTERNATIVE EMULATOR",        "SELECT ALTERNATIVE EMULATOR",      false},
     {"lastplayed",         MD_TIME,             "0",               true,      "LAST PLAYED",                 "ENTER LAST PLAYED DATE",           false}
     };
@@ -65,7 +65,7 @@ namespace
     {"broken",        MD_BOOL,             "false",           false,     "BROKEN/NOT WORKING",            "ENTER BROKEN OFF/ON",              false},
     {"nomultiscrape", MD_BOOL,             "false",           false,     "EXCLUDE FROM MULTI-SCRAPER",    "ENTER NO MULTI-SCRAPE OFF/ON",     false},
     {"hidemetadata",  MD_BOOL,             "false",           false,     "HIDE METADATA FIELDS",          "ENTER HIDE METADATA OFF/ON",       false},
-    {"controller",    MD_CONTROLLER,       "",                false,     "CONTROLLER",                    "SELECT CONTROLLER",                true},
+    {"controller",    MD_CONTROLLER,       "",                false,     "CONTROLLER",                    "SELECT CONTROLLER",                false},
     {"folderlink",    MD_FOLDER_LINK,      "",                false,     "FOLDER LINK",                   "SELECT FOLDER LINK",               false},
     {"lastplayed",    MD_TIME,             "0",               true,      "LAST PLAYED",                   "ENTER LAST PLAYED DATE",           false}
     };
