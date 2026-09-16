@@ -42,9 +42,9 @@ namespace
     {"hidemetadata",       MD_BOOL,             "false",           false,     "HIDE METADATA FIELDS",        "ENTER HIDE METADATA OFF/ON",       false},
     {"playcount",          MD_INT,              "0",               false,     "TIMES PLAYED",                "ENTER NUMBER OF TIMES PLAYED",     false},
     {"playtime",           MD_INT,              "0",               false,     "PLAY TIME",                   "ENTER PLAY TIME",                  false},
+    {"screen",             MD_SCREEN,           "",                false,     "LAUNCH ON SCREEN",            "LAUNCH ON WHICH SCREEN",           false},
     {"controller",         MD_CONTROLLER,       "",                false,     "CONTROLLER",                  "SELECT CONTROLLER",                true},
     {"altemulator",        MD_ALT_EMULATOR,     "",                false,     "ALTERNATIVE EMULATOR",        "SELECT ALTERNATIVE EMULATOR",      false},
-    {"screen",             MD_SCREEN,           "",                false,     "LAUNCH ON SCREEN",            "LAUNCH ON WHICH SCREEN",           false},
     {"lastplayed",         MD_TIME,             "0",               true,      "LAST PLAYED",                 "ENTER LAST PLAYED DATE",           false}
     };
 
