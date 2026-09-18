@@ -914,8 +914,7 @@ void GuiMetaDataEd::save()
         if (mMetaDataDecl.size() > i + offset) {
             if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
                 offset += 1;
-
-            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
                 offset += 1;
         }
 
@@ -1062,8 +1061,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
         if (mMetaDataDecl.size() > i + offset) {
             if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
                 offset += 1;
-
-            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
                 offset += 1;
         }
 
@@ -1085,8 +1083,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
         if (mMetaDataDecl.size() > i + offset) {
             if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
                 offset += 1;
-
-            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
                 offset += 1;
         }
 
@@ -1122,8 +1119,7 @@ void GuiMetaDataEd::close()
         if (mMetaDataDecl.size() > i + offset) {
             if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
                 offset += 1;
-
-            if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
                 offset += 1;
         }
 
