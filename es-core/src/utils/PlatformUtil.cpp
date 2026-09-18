@@ -117,7 +117,7 @@ namespace Utils
                 try {
                     std::thread([cmdUtf8]() {
                         ++sRunningCommands;
-                        system(cmdUtf8.c_str());
+                        static_cast<void>(system(cmdUtf8.c_str()));
                         --sRunningCommands;
                     }).detach();
                 }
