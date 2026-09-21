@@ -1318,7 +1318,7 @@
         </rule>
     </emulator>
     <emulator name="SM2-EMU">
-        <!-- Sega Model 2 Emulator sm2-emu -->
+        <!-- Sega Model 2 emulator sm2-emu -->
         <rule type="systempath">
             <entry>sm2-emu</entry>
         </rule>
