@@ -627,7 +627,6 @@
             <entry>com.winlator.vanilla/com.winlator.cmod.XServerDisplayActivity</entry>
             <entry>com.ludashi.benchmark/com.winlator.cmod.XServerDisplayActivity</entry>
             <entry>com.tencent.ig/com.winlator.cmod.XServerDisplayActivity</entry>
-            <entry>com.miHoYo.GenshinImpact/com.winlator.cmod.XServerDisplayActivity</entry>
         </rule>
     </emulator>
     <emulator name="WINLATOR-GLIBC">
