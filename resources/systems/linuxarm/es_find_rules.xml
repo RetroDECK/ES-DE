@@ -600,6 +600,23 @@
             <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
         </rule>
     </emulator>
+    <emulator name="SM2-EMU">
+        <!-- Sega Model 2 Emulator sm2-emu -->
+        <rule type="systempath">
+            <entry>sm2-emu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/AppImages/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/.local/share/applications/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/.local/bin/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/bin/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/Applications/sm2-emu/bin/sm2-emu</entry>
+            <entry>~/.local/share/applications/sm2-emu/bin/sm2-emu</entry>
+            <entry>~/.local/bin/sm2-emu/bin/sm2-emu</entry>
+            <entry>~/bin/sm2-emu/bin/sm2-emu</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">
