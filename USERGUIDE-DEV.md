@@ -834,6 +834,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | _Multiple_           | jgenesis            | jgenesis-cli*.AppImage         | Official             |
 | _Multiple_           | MAME                | MAME*.AppImage                 | pkgforge-dev         |
 | _Multiple_           | Mesen               | Mesen*.AppImage                | Official             |
+| arcade/mame/model2   | sm2-emu             | sm2-emu-x86_64*.AppImage       | Official             |
 | arcade/mame/pcarcade | Lindbergh Loader    | lindbergh-loader*.AppImage     | Official             |
 | arcade/mame/pcarcade | Linux Loader        | linuxloader*.AppImage          | Official             |
 | dreamcast            | Flycast             | flycast-x86*.AppImage          | Official             |
@@ -883,6 +884,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | :------------------- | :------------------ | :----------------------------- | :------------------- |
 | _Multiple_           | ares                | ares*.AppImage                 | pkgforge-dev         |
 | _Multiple_           | MAME                | MAME*.AppImage                 | pkgforge-dev         |
+| arcade/mame/model2   | sm2-emu             | sm2-emu-aarch64*.AppImage      | Official             |
 | gba                  | mGBA                | mGBA*.AppImage                 | Official             |
 | gc                   | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
 | model3               | Supermodel          | Supermodel*.AppImage           | pkgforge-dev         |
@@ -978,6 +980,7 @@ The following manually downloaded emulators are supported when using the bundled
 | apple2                                        | LinApple              | linapple/linapple                            |
 | apple2gs                                      | KEGS                  | kegs/xkegs                                   |
 | arcade/consolearcade/mame/saturn/saturnjp/stv | Kronos                | kronos/kronos                                |
+| arcade/mame/model2                            | sm2-emu               | sm2-emu/bin/sm2-emu                          |
 | arcade/mame/model3                            | Supermodel            | Supermodel/supermodel                        |
 | arcade/mame/pcarcade                          | Lindbergh Loader      | lindbergh/lindbergh                          |
 | arcade/mame/pcarcade                          | Linux Loader          | linuxloader/linuxloader                      |
@@ -1034,6 +1037,7 @@ The following manually downloaded emulators are supported when using the bundled
 | amiga/amiga1200/amiga600/amigacd32/cdtv       | Amiberry              | amiberry/amiberry                            |
 | amiga/amiga1200/amiga600/amigacd32/cdtv       | FS-UAE (Launcher)     | FS-UAE-Launcher/Linux/x86-64/fs-uae-launcher |
 | amstradcpc                                    | CPCemu                | cpcemu/cpcemu                                |
+| arcade/mame/model2                            | sm2-emu               | sm2-emu/bin/sm2-emu                          |
 | atarijaguar/atarijaguarcd                     | BigPEmu               | bigpemu/bigpemu                              |
 | dos/pc/windows3x/windows9x                    | DOSBox Pure Unleashed | DOSBoxPure/DOSBoxPure                        |
 | flash                                         | Ruffle                | ruffle/ruffle                                |
@@ -1569,7 +1573,7 @@ Likewise if using AdvanceMAME you need to define the ROM directory in the advmam
 
 **Sega Model 2**
 
-These games can be emulated using MAME or Model 2 Emulator.
+These games can be emulated using MAME (RetroArch core or standalone), MAME4droid Current, sm2-emu or Model 2 Emulator depending on your operating system.
 
 If emulating Sega Model 2 games using _Model 2 Emulator_ (natively on Windows or using Wine or Proton on Linux), then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs.
 
@@ -1600,8 +1604,6 @@ https://github.com/mozilla/fxc2/blob/master/dll/d3dcompiler_47_32.dll
 Just make sure to rename it so it ends up as `~/Applications/m2emulator/d3dcompiler_47.dll` and you should be good to go.
 
 It seems as if Proton generally provides better performance for this emulator than plain Wine, so it's probably a good idea to use the former.
-
-On macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, just make sure to use a recent ROM set for maximum compatibility.
 
 **Sega Model 3**
 
@@ -5004,7 +5006,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | androidgames          | Android Games                                  | _Placeholder_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | AppleWin                          | LinApple **(Standalone)** [L],<br>Mariani **(Standalone)** [M],<br>AppleWin **(Standalone)** [W],<br>Mednafen **(Standalone)**,<br>MAME - Current,<br>MAME **(Standalone)**,<br>izapple2 **(Standalone)** [LW] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME - Current                    | MAME - Current [Software list],<br>MAME **(Standalone)**,<br>MAME [Software list] **(Standalone)**,<br>KEGS **(Standalone)** | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME **(Standalone)**,<br>GroovyMAME **(Standalone)** [LW],<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [LW],<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [LW],<br>DICE,<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel,<br>Supermodel **(Standalone)**,<br>Supermodel Dojo **(Standalone)** [W],<br>Lindbergh Loader **(Standalone)** [L],<br>Linux Loader **(Standalone)** [LW],<br>PCSX2x6 **(Standalone)**,<br>Play! Arcade **(Standalone)**,<br>MFME **(Standalone)** [LW],<br> _Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME **(Standalone)**,<br>GroovyMAME **(Standalone)** [LW],<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [LW],<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [LW],<br>DICE,<br>sm2-emu **(Standalone)** [L],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel,<br>Supermodel **(Standalone)**,<br>Supermodel Dojo **(Standalone)** [W],<br>Lindbergh Loader **(Standalone)** [L],<br>Linux Loader **(Standalone)** [LW],<br>PCSX2x6 **(Standalone)**,<br>Play! Arcade **(Standalone)**,<br>MFME **(Standalone)** [LW],<br> _Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | arcadia               | Emerson Arcadia 2001                           | AmiArcadia                        | MAME - Current,<br>MAME **(Standalone)**,<br>WinArcadia **(Standalone)** [W] | No           | Single archive or ROM file           |
 | archimedes            | Acorn Archimedes                               | MAME [Model A440/1] **(Standalone)** | MAME [Model A3000] **(Standalone)**,<br>MAME [Model A310] **(Standalone)**,<br>MAME [Model A540] **(Standalone)** | Yes          |                                      |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           | Ardens                            | No           | Single archive or .hex file          |
@@ -5071,7 +5073,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | Lutris **(Standalone)** [L]       |                                   | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | MAME Mac SE Bootable **(Standalone)** | MAME Mac SE Boot Disk **(Standalone)**,<br>MAME Mac Plus Bootable **(Standalone)**,<br>MAME Mac Plus Boot Disk **(Standalone)**,<br>Basilisk II **(Standalone)**,<br>SheepShaver **(Standalone)**,<br>Mini vMac | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME **(Standalone)**,<br>GroovyMAME **(Standalone)** [LW],<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [LW],<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [LW],<br>DICE,<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel,<br>Supermodel **(Standalone)**,<br>Supermodel Dojo **(Standalone)** [W],<br>Lindbergh Loader **(Standalone)** [L],<br>Linux Loader **(Standalone)** [LW],<br>PCSX2x6 **(Standalone)**,<br>Play! Arcade **(Standalone)**,<br>MFME **(Standalone)** [LW],<br> _Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2003,<br>MAME 2000,<br>HBMAME,<br>MAME **(Standalone)**,<br>GroovyMAME **(Standalone)** [LW],<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [LW],<br>FB Alpha 2012,<br>Geolith,<br>Flycast,<br>Flycast **(Standalone)**,<br>Flycast Dojo **(Standalone)**,<br>Kronos [LW],<br>DICE,<br>sm2-emu **(Standalone)** [L],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel,<br>Supermodel **(Standalone)**,<br>Supermodel Dojo **(Standalone)** [W],<br>Lindbergh Loader **(Standalone)** [L],<br>Linux Loader **(Standalone)** [LW],<br>PCSX2x6 **(Standalone)**,<br>Play! Arcade **(Standalone)**,<br>MFME **(Standalone)** [LW],<br> _Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | AdvanceMAME **(Standalone)** [LW] |                                   | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mark3                 | Sega Mark III                                  | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)**,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>MesenCE,<br>ares **(Standalone)**,<br>jgenesis **(Standalone)** [LW],<br>Emulicious **(Standalone)** [LW] | No           | Single archive or ROM file |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)**,<br>Mednafen **(Standalone)**,<br>Mesen **(Standalone)** [LW],<br>MesenCE,<br>ares **(Standalone)**,<br>jgenesis **(Standalone)** [LW],<br>Emulicious **(Standalone)** [LW] | No           | Single archive or ROM file |
@@ -5081,7 +5083,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megadrivejp           | Sega Mega Drive [Japan]                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)**,<br>ClownMDEmu,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>jgenesis **(Standalone)** [LW] | No           | Single archive or ROM file |
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          | MAME - Current,<br>MAME **(Standalone)** | No           | Single archive or ROM file |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
-| model2                | Sega Model 2                                   | MAME - Current                    | MAME **(Standalone)**,<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Model 2 Emulator **(Wine)** [L],<br>Model 2 Emulator **(Proton)** [L] | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| model2                | Sega Model 2                                   | MAME - Current                    | MAME **(Standalone)**,<br>sm2-emu **(Standalone)** [L],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Model 2 Emulator **(Wine)** [L],<br>Model 2 Emulator **(Proton)** [L] | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | model3                | Sega Model 3                                   | Supermodel                        | Supermodel **(Standalone)**,<br>Supermodel Dojo **(Standalone)** [W],<br>MAME - Current,<br>MAME **(Standalone)** | No           | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
 | msx                   | MSX                                            | blueMSX                           | fMSX,<br>openMSX **(Standalone)**,<br>openMSX No Machine **(Standalone)**,<br>ares **(Standalone)**,<br>Emulicious **(Standalone)** [LW] | Yes          |                                      |

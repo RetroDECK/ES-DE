@@ -58,7 +58,7 @@
 * (Android) Added support for the Atari Jaguar CD (atarijaguarcd) system using the Virtual Jaguar RetroArch core
 * (Android) Added the LRPS2 RetroArch core as an alternative emulator for the ps2 system
 * (Android) Added NetherSX2, NetherSX2-Turnip and NetherSX2-Turnip Classic standalone as alternative emulators for the ps2 system
-* (Android) Added find rule entries for the new package names for ARMSX2 Refresh (Play store and GitHub)
+* (Android) Added find rule entries for the new package names for ARMSX2 Refresh (Play store and GitHub releases)
 * (Android) Added ARMSX1 standalone as an alternative emulator for the psx system
 * (Android) Added ARMSX3 Game Serial and ARMSX3 Directory or ISO standalone as alternative emulators for the consolearcade and ps3 systems
 * (Android) Added EmuCoreC Directory or ISO standalone as an alternative emulator for the consolearcade and ps3 systems
@@ -90,6 +90,7 @@
 * (Linux ARM) Addeed the .arcadedef file extension to the arcade and mame systems
 * (Linux) Added the FS-UAE RetroArch core as an alternative emulator for the amiga, amiga1200 and amiga600 systems
 * (Linux) Added Missingno standalone as an alternative emulator for the atari2600, gb and gbc systems
+* (Linux) Added sm2-emu standalone as an alternative emulator for the arcade, mame and model2 systems
 * (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
 * (Linux) Added support for parsing the Path key in .desktop shortcut files
 * (Linux) Added ~/AppImages/ as an additional search path for all AppImages
