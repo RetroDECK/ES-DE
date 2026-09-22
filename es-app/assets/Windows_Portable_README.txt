@@ -45,6 +45,7 @@ Emulators\3dSen\3dSen.exe
 Emulators\a7800\a7800.exe
 Emulators\AceDL\AceDL.exe
 Emulators\AdvanceMAME\advmame.exe
+Emulators\ArcadeDuck\ArcadeDuck.exe
 Emulators\Altirra\Altirra64.exe
 Emulators\Altirra\Altirra.exe
 Emulators\amiberry\Amiberry.exe

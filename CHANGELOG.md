@@ -104,6 +104,7 @@
 * (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (macOS) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
 * (Windows) Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
+* (Windows) Added ArcadeDuck standalone as an alternative emulator for the arcade, consolearcade and mame systems
 * (Windows) Added an additional find rule entry for PCSX2
 * (Windows) Added "Shortcut or script" as an alternative emulator for the xbox system
 * (Windows) Added the .lnk file extension to the xbox system
@@ -142,6 +143,7 @@
 * Some specific theme configuration for the system status indicators could lead to a crash on battery charge status changes
 * (Android) The MAME4droid Current [Diskette] and MAME4droid Current [Software list] emulator entries for the adam system didn't work correctly
 * (Android) The MAME4droid Current [FM-7 Software list] and MAME4droid Current [FM77AV Software list] emulator entries for the fm7 system didn't work correctly
+* (macOS) Worked around an operating system bug where some server responses like 404 errors could lead to incorrectly reported network errors
 * (macOS) The Stella 2023 RetroArch core could not be used as the es_systems.xml entry was invalid
 
 ## Version 3.4.1 / 3.4.1-58
