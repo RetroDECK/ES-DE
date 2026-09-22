@@ -68,6 +68,7 @@
         <!-- Sony PlayStation 4 emulator BachataS4 -->
         <rule type="androidpackage">
             <entry>com.bachatas4.android/.DirectLaunchActivity</entry>
+            <entry>com.bachatas4.android.github/com.bachatas4.android.DirectLaunchActivity</entry>
         </rule>
     </emulator>
     <emulator name="C64-EMU">
