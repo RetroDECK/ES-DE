@@ -295,8 +295,9 @@ https://github.com/AzaharPlus/AzaharPlus/releases
 
 ### BachataS4
 
-This emulator can be downloaded from their GitHub site.
+This emulator can be installed from the Play store as a paid app or downloaded from their GitHub site.
 
+https://play.google.com/store/apps/details?id=com.bachatas4.android \
 https://github.com/JICA98/Bachata-S4/releases
 
 ### Cemu

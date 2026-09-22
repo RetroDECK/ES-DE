@@ -1851,8 +1851,6 @@ It's also possible to add per-game command line parameters that will be passed t
 
 ### Console Arcade Systems
 
-Note that on Android some of the arcade boards mentioned below are not supported as there are simply no suitable emulators available. Additionally not all emulators listed below are available for all desktop operating systems.
-
 The _consolearcade_ system is intended for the various arcade boards that were based on home console platforms. For many of the older systems MAME can be used for emulation, but some of the more modern systems require the use of other emulators, which is precisely what is provided by this system.
 
 The following arcade boards have been considered:
@@ -1862,23 +1860,23 @@ The following arcade boards have been considered:
 | Atari CoJag                         | Atari Jaguar                | MAME                        |
 | Capcom Sony ZN-1/ZN-2               | Sony PlayStation            | MAME, ArcadeDuck            |
 | Konami M2                           | 3DO Interactive Multiplayer | MAME                        |
-| Konami System 573/GQ/GV/Twinkle     | Sony PlayStation            | MAME, ArcadeDuck            |
 | Namco System 10/11/12               | Sony PlayStation            | MAME, ArcadeDuck            |
 | Namco System 147                    | Sony PlayStation 2          | Play!                       |
 | Namco System 246/256                | Sony PlayStation 2          | PCSX2x6, Play!              |
-| Namco System 357/359/369            | Sony Playstation 3          | RPCS3 or aPS3e              |
+| Namco System 357/359/369            | Sony Playstation 3          | RPCS3, aPS3e                |
+| Konami System 573/GQ/GV/Twinkle     | Sony PlayStation            | MAME, ArcadeDuck            |
 | Namco-Sega-Nintendo Triforce        | Nintendo GameCube           | Dolphin, Triforce (Dolphin) |
 | Nintendo VS. System/PlayChoice-10   | Nintendo Famicom/NES        | MAME                        |
 | Sammy Corporation Atomiswave        | Sega Dreamcast              | Flycast, Flycast Dojo       |
 | Sega Chihiro                        | Microsoft Xbox              | xemu, Cxbx-Reloaded, MAME   |
-| Sega Naomi/Naomi 2/SP               | Sega Dreamcast              | Flycast                     |
 | Sega Mega Play/Mega-Tech/C-2        | Sega Mega Drive/Genesis     | MAME                        |
+| Sega Naomi/Naomi 2/SP               | Sega Dreamcast              | Flycast                     |
 | Sega Shooting Zone/System E         | Sega Master System          | MAME                        |
 | Sega Titan Video Game System (ST-V) | Sega Saturn                 | Kronos, Mednafen, MAME      |
 | SETA Aleck 64                       | Nintendo 64                 | MAME                        |
 | Taito FX-1A/FX-1B/G-NET             | Sony PlayStation            | MAME, ArcadeDuck            |
 
-Note that not all emulators are supported on all operating systems that ES-DE runs on, see the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) section for more details.
+Note that not all emulators are supported on all operating systems that ES-DE runs on, see the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems), [Linux on AArch64 supported game systems](LINUX-AARCH64-DEV.md#supported-game-systems) and [Android supported game systems](ANDROID-DEV.md#supported-game-systems) sections for more details.
 
 You can also read more about the console arcade boards here:\
 http://system16.com/base.php
