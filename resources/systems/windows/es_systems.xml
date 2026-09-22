@@ -182,6 +182,7 @@
         <command label="PCSX2x6 (Standalone)">%EMULATOR_PCSX2X6% -batch %ROM%</command>
         <command label="Play! Arcade (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_PLAY!% --fullscreen --arcade %GAMEDIR%\%BASENAME%</command>
         <command label="MFME (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_MFME% %ROM%</command>
+        <command label="ArcadeDuck (Standalone)">%EMULATOR_ARCADEDUCK% %ROM%</command>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>arcade</platform>
         <theme>arcade</theme>
@@ -469,6 +470,7 @@
         <command label="Triforce (Standalone)">%EMULATOR_TRIFORCE% -b -e %ROM%</command>
         <command label="xemu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_XEMU% -dvd_path %ROM%</command>
         <command label="Cxbx-Reloaded (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_CXBX-RELOADED% %ROM%</command>
+        <command label="ArcadeDuck (Standalone)">%EMULATOR_ARCADEDUCK% %ROM%</command>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>arcade</platform>
         <theme>consolearcade</theme>
@@ -1099,6 +1101,7 @@
         <command label="PCSX2x6 (Standalone)">%EMULATOR_PCSX2X6% -batch %ROM%</command>
         <command label="Play! Arcade (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_PLAY!% --fullscreen --arcade %GAMEDIR%\%BASENAME%</command>
         <command label="MFME (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_MFME% %ROM%</command>
+        <command label="ArcadeDuck (Standalone)">%EMULATOR_ARCADEDUCK% %ROM%</command>
         <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>arcade</platform>
         <theme>mame</theme>

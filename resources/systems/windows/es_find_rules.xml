@@ -82,6 +82,16 @@
             <entry>%ESPATH%\..\Emulators\AdvanceMAME\advmame.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ARCADEDUCK">
+        <!-- Arcade emulator ArcadeDuck (PlayStation hardware) -->
+        <rule type="systempath">
+            <entry>ArcadeDuck.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ArcadeDuck\ArcadeDuck.exe</entry>
+            <entry>%ESPATH%\..\Emulators\ArcadeDuck\ArcadeDuck.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ALTIRRA">
         <!-- Atari 8-bit computer emulator Altirra -->
         <rule type="systempath">
