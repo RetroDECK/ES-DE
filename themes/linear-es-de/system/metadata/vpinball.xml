@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>Visual Pinball هو محرك ألعاب فيديو مجاني ومصدر متاح لطاولات لعبة الكرة والدبابيس والألعاب المشابهة مثل ماكينات الباتشينكو. يتضمن محرر طاولات بالإضافة إلى المحاكي نفسه، ويعمل على مايكروسوفت ويندوز. يمكن استخدامه مع Visual PinMAME، وهو محاكي لصور ROM من ماكينات الكرة والدبابيس الحقيقية.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemDescription>Visual Pinball هو محرك ألعاب فيديو مجاني ومصدر متاح لطاولات لعبة الكرة والدبابيس والألعاب المشابهة مثل ماكينات الباتشينكو. يتضمن محرر طاولات بالإضافة إلى محاكى نفسه، ويعمل على مايكروسوفت ويندوز. يمكن استخدامه مع Visual PinMAME، وهو محاكي لصور ROM من ماكينات الكرة والدبابيس الحقيقية.</systemDescription>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Visual Pinball è un motore di videogiochi freeware e disponibile alla fonte per tavoli da flipper e giochi simili, come le macchine da pachinko. Include un editor di tavoli e il simulatore stesso e funziona su Microsoft Windows. Può essere utilizzato con Visual PinMAME, un emulatore di immagini ROM di flipper reali.</systemDescription>
+            <systemDescription>Visual Pinball è un motore e piattaforma di sviluppo, con sorgenti disponibili, per sistemi flipper virtuali e simili, come le macchine "pachinko". Include un editor di tavoli ed il simulatore stesso e funziona su Microsoft Windows. Può essere utilizzato in concomitanza con Visual PinMAME, un emulatore di immagini ROM di flipper reali, per implementare gli schermi DMD dei flipper originali.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Visual Pinball är en freeware och källkodstillgänglig videospelmotor för flipperspel och liknande spel som t.ex. pachinkomaskiner. Den innehåller en tabellredigerare samt själva simulatorn och körs på Microsoft Windows. Den kan användas med Visual PinMAME, en emulator för ROM-bilder från riktiga flipperspel.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Visual Pinball là một công cụ phát triển trò chơi điện tử miễn phí và mã nguồn mở, dành cho các bàn pinball và các trò chơi tương tự như máy pachinko. Phần mềm này bao gồm một trình chỉnh sửa bàn chơi cũng như chính trình mô phỏng, và chạy trên hệ điều hành Microsoft Windows. Nó có thể được sử dụng cùng với Visual PinMAME, một trình giả lập dành cho các tệp ROM từ các máy pinball thực tế.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

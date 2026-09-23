@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>نظام الحواسيب الصغيرة لهيئة الإذاعة البريطانية أو نظام الحواسيب الصغيرة لهيئة الإذاعة البريطانية أو المعروف باسم BBC Micro هو سلسلة من الحواسيب الصغيرة التي صممتها شركة Acorn Computers Ltd. تم إصدار الطرازات الأولى في ديسمبر 1981 في أوروبا مقابل 235 جنيه إسترليني أو 335 جنيه إسترليني، حسب الطراز. كما تم إصدار الحواسيب في أمريكا الشمالية (1983). تم تصميم أجهزة الكمبيوتر مع التركيز على التعليم، وكونها أكثر متانة من العلامات التجارية الأخرى. تم تصنيع أجهزة الكمبيوتر حتى وقت غير محدد في عام 1994.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il British Broadcasting Corporation Microcomputer System, BBC Microcomputer System, o meglio conosciuto come BBC Micro, è una serie di microcomputer progettati da Acorn Computers Ltd. e distribuiti dalla BBC. I primi modelli furono commercializzati in Europa nel dicembre 1981 al prezzo di 235 o 335 sterline, a seconda del modello. I computer furono distribuiti anche in Nord America (1983). I computer sono stati progettati con un'attenzione particolare all'istruzione e alla robustezza rispetto alle altre marche. I computer sono stati prodotti fino a un momento imprecisato del 1994.</systemDescription>
+            <systemDescription>Il British Broadcasting Corporation Microcomputer System (BBC Microcomputer System), meglio conosciuto come BBC Micro, è una serie di microcomputer progettati da Acorn Computers Ltd. e distribuiti dalla BBC. I primi modelli furono commercializzati in Europa nel dicembre 1981 al prezzo di 235 o 335 sterline, a seconda del modello. I computer furono distribuiti anche in Nord America (1983). Queste macchine furono state progettate con un'attenzione particolare all'istruzione ed alla robustezza, rispetto a modelli simili, di altri produttori. I computer vennero prodotti fino ad un momento imprecisato del 1994.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>British Broadcasting Corporation Microcomputer System, BBC Microcomputer System, eller mest känt som BBC Micro, är en serie mikrodatorer som designats av Acorn Computers Ltd. och distribueras av BBC. De första modellerna släpptes i december 1981 i Europa för £235 eller £335, beroende på modell. Datorerna släpptes även i Nordamerika (1983). Datorerna designades med tonvikt på utbildning och för att vara mer robusta än andra märken. Datorerna tillverkades fram till en ospecificerad tidpunkt 1994.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống máy tính cá nhân của Đài Truyền hình Anh (British Broadcasting Corporation Microcomputer System), hay còn được biết đến với tên gọi BBC Micro, là dòng máy tính cá nhân do Acorn Computers Ltd. thiết kế và được BBC phân phối. Các mẫu máy đầu tiên được ra mắt vào tháng 12 năm 1981 tại châu Âu với giá 235 bảng Anh hoặc 335 bảng Anh, tùy thuộc vào từng mẫu. Dòng máy tính này cũng được ra mắt tại Bắc Mỹ vào năm 1983. Các máy tính này được thiết kế với trọng tâm là giáo dục và có độ bền cao hơn so với các thương hiệu khác. Các máy tính này được sản xuất cho đến một thời điểm không xác định vào năm 1994.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

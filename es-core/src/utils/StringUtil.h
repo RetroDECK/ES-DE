@@ -13,7 +13,9 @@
 #include <string>
 #include <vector>
 
+#if defined(__ANDROID__)
 #include "utf8.h"
+#endif
 
 namespace Utils
 {
@@ -30,7 +32,9 @@ namespace Utils
         std::string toLower(const std::string& stringArg);
         std::string toUpper(const std::string& stringArg);
         std::string toCapitalized(const std::string& stringArg);
+#if defined(__ANDROID__)
         std::string filterUtf8(const std::string& stringArg);
+#endif
         std::string trim(const std::string& stringArg);
         std::string replace(const std::string& stringArg,
                             const std::string& from,

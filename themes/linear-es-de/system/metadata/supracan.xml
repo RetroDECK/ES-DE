@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>جهاز Super A'can هو جهاز ألعاب فيديو منزلي تم إصداره حصرياً في تايوان عام 1995 من قبل Funtech/Dunhuang Technology. وهو يعتمد على رقاقة موتورولا 68000، والتي تستخدم أيضاً في سيجا جينيسيس ونيو جيو. تم تأكيد وجود 12 لعبة لهذا النظام.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Super A'can è una console per videogiochi domestica rilasciata esclusivamente a Taiwan nel 1995 da Funtech/Dunhuang Technology. È basata sul microchip Motorola 68000, utilizzato anche nel Sega Genesis e nel Neo Geo. È stata confermata l'esistenza di dodici giochi per il sistema.</systemDescription>
+            <systemDescription>Il Super A'can è una console per videogiochi rilasciata esclusivamente a Taiwan nel 1995 da Funtech/Dunhuang Technology. È basata sul microchip Motorola 68000, utilizzato anche nel Sega Genesis e nel Neo Geo. È stata confermata l'esistenza di dodici giochi per il sistema.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Super A'can är en hemkonsol för videospel som släpptes exklusivt i Taiwan 1995 av Funtech/Dunhuang Technology. Den är baserad på Motorola 68000-mikrochipet, som också används i Sega Genesis och Neo Geo. Tolv spel har bekräftats existera till systemet.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Super A'can là một hệ máy chơi game gia đình được Funtech/Dunhuang Technology phát hành độc quyền tại Đài Loan vào năm 1995. Hệ máy này sử dụng vi mạch Motorola 68000, loại vi mạch cũng được trang bị trên các hệ máy Sega Genesis và Neo Geo. Hiện đã xác nhận có 12 tựa game dành cho hệ máy này.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

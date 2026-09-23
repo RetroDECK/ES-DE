@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن CDTV (وهو اختصار لعبارة "Commodore Dynamic Total Vision"، وهو اختصار لمختصر "تلفزيون القرص المضغوط"، مما يعطيها معنى مزدوجاً) هو عبارة عن منصة وسائط متعددة طورتها شركة كومودور إنترناشيونال وأطلقتها في مارس 1991. وكان الهدف من CDTV أن يكون جهاز وسائط وليس كمبيوتر شخصي.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>CDTV (en akronym för "Commodore Dynamic Total Vision", en förkortning av en akronym för "Compact Disc Television", vilket ger den en dubbel betydelse) är en multimedia-plattform som utvecklats av Commodore International och lanserades i mars 1991. CDTV var avsedd att vara en mediaapparat snarare än en persondator.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>CDTV (viết tắt của "Commodore Dynamic Total Vision", một từ ghép ngược từ viết tắt của "Compact Disc Television", tạo ra ý nghĩa kép) là một nền tảng đa phương tiện do Commodore International phát triển và ra mắt vào tháng 3 năm 1991. CDTV được thiết kế như một thiết bị giải trí đa phương tiện chứ không phải là một máy tính cá nhân.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

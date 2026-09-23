@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>WASM-4 هي وحدة تحكم ألعاب خيالية منخفضة المستوى لبناء ألعاب صغيرة باستخدام WebAssembly. خراطيش الألعاب (ROMs) عبارة عن ملفات .wasm صغيرة ومكتفية ذاتيًا يمكن إنشاؤها باستخدام أي لغة برمجة يتم تجميعها إلى WebAssembly.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>WASM-4 è una console di gioco fantasy di basso livello per la creazione di piccoli giochi con WebAssembly. Le cartucce di gioco (ROM) sono piccoli file .wasm autocontenuti che possono essere costruiti con qualsiasi linguaggio di programmazione che compili WebAssembly.</systemDescription>
+            <systemDescription>WASM-4 è una console di gioco virtuale di basso livello per la creazione di piccoli giochi con WebAssembly. Le cartucce di gioco (ROM) sono piccoli file .wasm autocontenuti che possono essere costruiti con qualsiasi linguaggio di programmazione che compili WebAssembly.</systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>WASM-4 är en lågnivåkonsol för fantasyspel där man kan bygga små spel med WebAssembly. Spelkassetterna (ROM) är små, fristående .wasm-filer som kan byggas med vilket programmeringsspråk som helst som kompilerar till WebAssembly.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>WASM-4 là một nền tảng trò chơi giả tưởng cấp thấp dành cho việc phát triển các trò chơi nhỏ bằng WebAssembly. Các thẻ trò chơi (ROM) là những tệp .wasm nhỏ, độc lập, có thể được phát triển bằng bất kỳ ngôn ngữ lập trình nào có khả năng biên dịch sang WebAssembly.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

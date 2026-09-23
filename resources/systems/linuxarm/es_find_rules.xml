@@ -62,6 +62,8 @@
             <entry>~/.local/share/applications/amiberry/amiberry</entry>
             <entry>~/.local/bin/amiberry/amiberry</entry>
             <entry>~/bin/amiberry/amiberry</entry>
+            <entry>/var/lib/flatpak/exports/bin/com.blitterstudio.amiberry</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.blitterstudio.amiberry</entry>
         </rule>
     </emulator>
     <emulator name="ARES">
@@ -72,6 +74,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/ares*.AppImage</entry>
+            <entry>~/AppImages/ares*.AppImage</entry>
             <entry>~/.local/share/applications/ares*.AppImage</entry>
             <entry>~/.local/bin/ares*.AppImage</entry>
             <entry>~/bin/ares*.AppImage</entry>
@@ -89,6 +92,7 @@
         <!-- Nintendo 3DS emulator Azahar -->
         <rule type="staticpath">
             <entry>~/Applications/Azahar-Enhanced*.AppImage</entry>
+            <entry>~/AppImages/Azahar-Enhanced*.AppImage</entry>
             <entry>~/.local/share/applications/Azahar-Enhanced*.AppImage</entry>
             <entry>~/.local/bin/Azahar-Enhanced*.AppImage</entry>
             <entry>~/bin/Azahar-Enhanced*.AppImage</entry>
@@ -106,6 +110,19 @@
             <entry>~/.local/share/applications/bigpemu/bigpemu</entry>
             <entry>~/.local/bin/bigpemu/bigpemu</entry>
             <entry>~/bin/bigpemu/bigpemu</entry>
+            <entry>/var/lib/flatpak/exports/bin/com.richwhitehouse.BigPEmu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.richwhitehouse.BigPEmu</entry>
+        </rule>
+    </emulator>
+    <emulator name="BLASTEM">
+        <!-- Sega Mega Drive/Genesis emulator BlastEm -->
+        <rule type="systempath">
+            <entry>blastem</entry>
+            <entry>com.retrodev.blastem</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.retrodev.blastem</entry>
         </rule>
     </emulator>
     <emulator name="BSNES">
@@ -139,6 +156,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/desmume*.AppImage</entry>
+            <entry>~/AppImages/desmume*.AppImage</entry>
             <entry>~/.local/share/applications/desmume*.AppImage</entry>
             <entry>~/.local/bin/desmume*.AppImage</entry>
             <entry>~/bin/desmume*.AppImage</entry>
@@ -154,6 +172,11 @@
             <entry>org.DolphinEmu.dolphin-emu</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/AppImages/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/.local/share/applications/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/.local/bin/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
         </rule>
@@ -211,6 +234,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/DuckStation*.AppImage</entry>
+            <entry>~/AppImages/DuckStation*.AppImage</entry>
             <entry>~/.local/share/applications/DuckStation*.AppImage</entry>
             <entry>~/.local/bin/DuckStation*.AppImage</entry>
             <entry>~/bin/DuckStation*.AppImage</entry>
@@ -234,9 +258,19 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Eden*.AppImage</entry>
+            <entry>~/AppImages/Eden*.AppImage</entry>
             <entry>~/.local/share/applications/Eden*.AppImage</entry>
             <entry>~/.local/bin/Eden*.AppImage</entry>
             <entry>~/bin/Eden*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/dev.eden_emu.eden</entry>
+            <entry>~/.local/share/flatpak/exports/bin/dev.eden_emu.eden</entry>
+        </rule>
+    </emulator>
+    <emulator name="EMULICIOUS">
+        <!-- Multi-system emulator Emulicious -->
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.emulicious.Emulicious</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.emulicious.Emulicious</entry>
         </rule>
     </emulator>
     <emulator name="FLYCAST">
@@ -333,6 +367,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/MAME*.AppImage</entry>
+            <entry>~/AppImages/MAME*.AppImage</entry>
             <entry>~/.local/share/applications/MAME*.AppImage</entry>
             <entry>~/.local/bin/MAME*.AppImage</entry>
             <entry>~/bin/MAME*.AppImage</entry>
@@ -359,6 +394,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/melonDS*.AppImage</entry>
+            <entry>~/AppImages/melonDS*.AppImage</entry>
             <entry>~/.local/share/applications/melonDS*.AppImage</entry>
             <entry>~/.local/bin/melonDS*.AppImage</entry>
             <entry>~/bin/melonDS*.AppImage</entry>
@@ -387,11 +423,19 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/mGBA*.AppImage</entry>
+            <entry>~/AppImages/mGBA*.AppImage</entry>
             <entry>~/.local/share/applications/mGBA*.AppImage</entry>
             <entry>~/.local/bin/mGBA*.AppImage</entry>
             <entry>~/bin/mGBA*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/io.mgba.mGBA</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.mgba.mGBA</entry>
+        </rule>
+    </emulator>
+    <emulator name="MISSINGNO">
+        <!-- Nintendo Game Boy, Game Boy Color and Atari 2600 emulator Missingno -->
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.andyofniall.missingno</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.andyofniall.missingno</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
@@ -439,6 +483,16 @@
             <entry>~/bin/pico-8/pico8</entry>
         </rule>
     </emulator>
+    <emulator name="PLAY!">
+        <!-- Sony PlayStation 2 emulator Play! -->
+        <rule type="systempath">
+            <entry>org.purei.Play</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.purei.Play</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.purei.Play</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="systempath">
@@ -450,6 +504,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/PPSSPP*.AppImage</entry>
+            <entry>~/AppImages/PPSSPP*.AppImage</entry>
             <entry>~/.local/share/applications/PPSSPP*.AppImage</entry>
             <entry>~/.local/bin/PPSSPP*.AppImage</entry>
             <entry>~/bin/PPSSPP*.AppImage</entry>
@@ -494,6 +549,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/rpcs3*.AppImage</entry>
+            <entry>~/AppImages/rpcs3*.AppImage</entry>
             <entry>~/.local/share/applications/rpcs3*.AppImage</entry>
             <entry>~/.local/bin/rpcs3*.AppImage</entry>
             <entry>~/bin/rpcs3*.AppImage</entry>
@@ -544,6 +600,23 @@
             <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
         </rule>
     </emulator>
+    <emulator name="SM2-EMU">
+        <!-- Sega Model 2 emulator sm2-emu -->
+        <rule type="systempath">
+            <entry>sm2-emu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/AppImages/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/.local/share/applications/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/.local/bin/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/bin/sm2-emu-aarch64*.AppImage</entry>
+            <entry>~/Applications/sm2-emu/bin/sm2-emu</entry>
+            <entry>~/.local/share/applications/sm2-emu/bin/sm2-emu</entry>
+            <entry>~/.local/bin/sm2-emu/bin/sm2-emu</entry>
+            <entry>~/bin/sm2-emu/bin/sm2-emu</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">
@@ -579,6 +652,11 @@
             <entry>supermodel</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/Supermodel*.AppImage</entry>
+            <entry>~/AppImages/Supermodel*.AppImage</entry>
+            <entry>~/.local/share/applications/Supermodel*.AppImage</entry>
+            <entry>~/.local/bin/Supermodel*.AppImage</entry>
+            <entry>~/bin/Supermodel*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/com.supermodel3.Supermodel</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.supermodel3.Supermodel</entry>
         </rule>
@@ -647,6 +725,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/xemu*.AppImage</entry>
+            <entry>~/AppImages/xemu*.AppImage</entry>
             <entry>~/.local/share/applications/xemu*.AppImage</entry>
             <entry>~/.local/bin/xemu*.AppImage</entry>
             <entry>~/bin/xemu*.AppImage</entry>

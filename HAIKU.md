@@ -14,7 +14,7 @@ Table of contents:
 
 * There is no 3D acceleration as the operating system does not support that
 
-* ES-DE may crash or behave strange when used on Haiku Nightly (i.e. it's due to operating system issues, make sure to run R1/beta5 which should work fine)
+* ES-DE may crash or behave strange when used on Haiku Nightly (i.e. it's due to operating system issues, make sure to run R1/beta6 which should work fine)
 
 ## Emulator problems
 
@@ -189,7 +189,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gamate                | Bit Corporation Gamate                         | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section in the user guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
-| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file     |
+| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file     |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>mGBA,<br>mGBA **(Standalone)**,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA Next,<br>gpSP,<br>Mednafen **(Standalone)** | No                 | Single archive or ROM file |
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>mGBA,<br>mGBA **(Standalone)**,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
@@ -208,9 +208,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | macintosh             | Apple Macintosh                                | MAME Mac SE Bootable **(Standalone)** | MAME Mac SE Boot Disk **(Standalone)**,<br>MAME Mac Plus Bootable **(Standalone)**,<br>MAME Mac Plus Boot Disk **(Standalone)** | Yes          | See the specific _Apple Macintosh_ section in the user guide |
 | mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>Geolith,<br>Flycast,<br> _Script_ | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
 | mame-advmame          | AdvanceMAME                                    | AdvanceMAME **(Standalone)**      |                                   | Depends      | See the specific _Arcade and Neo Geo_ section in the user guide |
-| mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
-| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive | Yes          |                                      |
-| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive | Yes          |                                      |
+| mark3                 | Sega Mark III                                  | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
+| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | Yes          |                                      |
+| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | Yes          |                                      |
 | megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
 | megadrivejp           | Sega Mega Drive [Japan]                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file |
 | megaduck              | Creatronic Mega Duck                           | _Placeholder_                     |                                   |              |                                      |
@@ -232,8 +233,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   | Yes          | Single archive file + .chd file in subdirectory if GD-ROM game |
 | nds                   | Nintendo DS                                    | melonDS                           | melonDS **(Standalone)**,<br>DeSmuME | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)**,<br>Geolith,<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section in the user guide |
-| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
-| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
+| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>Geolith,<br>MAME **(Standalone)** | Yes          | .chd (NeoCD, Geolith and MAME only) or .cue file |
+| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)**,<br>Geolith,<br>MAME **(Standalone)** | Yes          | .chd (NeoCD, Geolith and MAME only) or .cue file |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Mesen                             | Nestopia UE,<br>FCEUmm,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file           |
 | ngage                 | Nokia N-Gage                                   | _Placeholder_                     |                                   |              |                                      |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | Mednafen **(Standalone)**         | No           | Single archive or ROM file           |
@@ -267,12 +268,12 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Yabause,<br>Mednafen **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section in the user guide |
 | scv                   | Epoch Super Cassette Vision                    | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
-| sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file           |
-| sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file           |
-| sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file           |
-| segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive | Yes          |                                      |
+| sega32x               | Sega Mega Drive 32X                            | PicoDrive                         | BlastEm                           | No           | Single archive or ROM file           |
+| sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         | BlastEm                           | No           | Single archive or ROM file           |
+| sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         | BlastEm                           | No           | Single archive or ROM file           |
+| segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | Yes          |                                      |
 | sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | bsnes,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file            |
-| sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX | No           | Single archive or ROM file |
+| sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>BlastEm,<br>blueMSX | No           | Single archive or ROM file |
 | sgb                   | Nintendo Super Game Boy                        | SameBoy                           | mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file |
 | snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x - Current                  | bsnes,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file            |
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x - Current                  | bsnes,<br>Mednafen **(Standalone)** | No           | Single archive or ROM file            |
@@ -299,6 +300,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | vectrex               | GCE Vectrex                                    | vecx                              | MAME **(Standalone)**             | Yes for MAME | Single archive or ROM file           |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   | No           | Single archive or tape, cartridge or diskette image file |
 | videopac              | Philips Videopac G7000                         | O2EM                              | MAME **(Standalone)**             | Yes          | Single archive or ROM file           |
+| vircon32              | Vircon32 Virtual Console                       | _Placeholder_                     |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
 | vpinball              | Visual Pinball                                 | _Placeholder_                     |                                   |              |                                      |
 | vsmile                | VTech V.Smile                                  | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
@@ -314,6 +316,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x68000                | Sharp X68000                                   | MAME **(Standalone)**             |                                   | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | _Placeholder_                     |                                   |              |                                      |
 | xbox360               | Microsoft Xbox 360                             | _Placeholder_                     |                                   |              |                                      |
+| xboxone               | Microsoft Xbox One                             | _Placeholder_                     |                                   |              |                                      |
 | zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   | No           |                                      |
 | zxnext                | Sinclair ZX Spectrum Next                      | ZEsarUX **(Standalone)**          |                                   | No           | In separate folder interpreted as a file |

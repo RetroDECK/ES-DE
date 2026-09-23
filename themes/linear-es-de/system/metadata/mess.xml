@@ -18,8 +18,8 @@
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>النظام الخارق متعدد المحاكي المتعدد (MESS) هو محاكي لمختلف وحدات التحكم وأنظمة الكمبيوتر، يعتمد على نواة MAME. اعتاد أن يكون برنامجاً مستقلاً (تم إيقافه منذ ذلك الحين)، لكنه الآن مدمج في MAME (الذي يتم تطويره بنشاط). يحاكي MESS أنظمة الألعاب المحمولة ووحدات التحكم، ومنصات الكمبيوتر، والآلات الحاسبة. يسعى المشروع إلى الدقة وقابلية النقل، وبالتالي فهو ليس دائمًا أسرع محاكي لأي نظام معين. دقته تجعله مفيدًا أيضًا لتطوير الألعاب المنزلية.</systemDescription>
-            <systemHardwareType>المحاكي</systemHardwareType>
+            <systemDescription>النظام الخارق متعدد محاكى المتعدد (MESS) هو محاكي لمختلف وحدات التحكم وأنظمة الكمبيوتر، يعتمد على نواة MAME. اعتاد أن يكون برنامجاً مستقلاً (تم إيقافه منذ ذلك الحين)، لكنه الآن مدمج في MAME (الذي يتم تطويره بنشاط). يحاكي MESS أنظمة الألعاب المحمولة ووحدات التحكم، ومنصات الكمبيوتر، والآلات الحاسبة. يسعى المشروع إلى الدقة وقابلية النقل، وبالتالي فهو ليس دائمًا أسرع محاكي لأي نظام معين. دقته تجعله مفيدًا أيضًا لتطوير الألعاب المنزلية.</systemDescription>
+            <systemHardwareType>محاكى</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Multi Emulator Super System (MESS) är en emulator för olika konsoler och datorsystem, baserad på MAME-kärnan. Det var tidigare ett fristående program (som sedan dess har upphört), men är nu integrerat i MAME (som utvecklas aktivt). MESS emulerar bärbara och konsolbaserade spelsystem, datorplattformar och miniräknare. Projektet strävar efter noggrannhet och portabilitet och är därför inte alltid den snabbaste emulatorn för ett visst system. Dess noggrannhet gör den också användbar för utveckling av hemmagjorda spel.</systemDescription>
             <systemHardwareType>Emulator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Multi Emulator Super System (MESS) là một trình giả lập dành cho nhiều hệ máy chơi game và hệ thống máy tính khác nhau, dựa trên lõi MAME. Trước đây, nó từng là một chương trình độc lập (hiện đã ngừng phát triển), nhưng hiện nay đã được tích hợp vào MAME (hiện đang được phát triển tích cực). MESS mô phỏng các hệ thống chơi game cầm tay và console, các nền tảng máy tính, và máy tính bỏ túi. Dự án này hướng đến độ chính xác và khả năng tương thích, do đó không phải lúc nào cũng là trình giả lập nhanh nhất cho bất kỳ hệ thống cụ thể nào. Độ chính xác của nó cũng khiến nó trở nên hữu ích cho việc phát triển game tự chế.</systemDescription>
+            <systemHardwareType>Trình giả lập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

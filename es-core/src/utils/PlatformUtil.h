@@ -30,13 +30,13 @@ namespace Utils
         int runSuspendCommand();
 
         // Uses UTF-8 for Unix and UTF-16 for Windows.
-        int runSystemCommand(const std::string& cmd_utf8);
-        int runSystemCommand(const std::wstring& cmd_utf16);
+        int runSystemCommand(const std::string& cmdUtf8, bool blocking);
+        int runSystemCommand(const std::wstring& cmdUtf16, bool blocking);
 
-        int launchGameUnix(const std::string& cmd_utf8,
+        int launchGameUnix(const std::string& cmdUtf8,
                            const std::string& startDirectory,
                            bool runInBackground);
-        int launchGameWindows(const std::wstring& cmd_utf16,
+        int launchGameWindows(const std::wstring& cmdUtf16,
                               const std::wstring& startDirectory,
                               bool runInBackground,
                               bool hideWindow);

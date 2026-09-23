@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>جهاز PalmPilot Personal وجهاز PalmPilot Professional هما الجيل الثاني من أجهزة Palm PDA التي أنتجتها شركة Palm Inc (التي كانت آنذاك شركة تابعة لشركة U.S. Robotics، ثم شركة 3Com). تم إطلاق هذه الأجهزة في 10 مارس 1997</systemDescription>
-            <systemHardwareType>نظام التشغيل</systemHardwareType>
+            <systemHardwareType>نظام تشغيل</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il PalmPilot Personal e il PalmPilot Professional sono la seconda generazione di dispositivi Palm PDA prodotti da Palm Inc (allora filiale di U.S. Robotics, poi 3Com). Questi dispositivi sono stati lanciati il 10 marzo 1997</systemDescription>
+            <systemDescription>Il PalmPilot Personal ed il PalmPilot Professional fanno parte della seconda generazione di dispositivi Palm PDA, prodotti da Palm Inc (allora filiale di U.S. Robotics, poi 3Com). Questi dispositivi sono stati lanciati il 10 marzo 1997</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>PalmPilot Personal och PalmPilot Professional är den andra generationen Palm PDA-enheter som tillverkas av Palm Inc (då ett dotterbolag till U.S. Robotics, senare 3Com). Dessa enheter lanserades den 10 mars 1997.</systemDescription>
             <systemHardwareType>OS</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>PalmPilot Personal và PalmPilot Professional là thế hệ thứ hai của dòng thiết bị PDA Palm do Palm Inc sản xuất (lúc đó là công ty con của U.S. Robotics, sau này là 3Com). Các thiết bị này được ra mắt vào ngày 10 tháng 3 năm 1997</systemDescription>
+            <systemHardwareType>CÁC</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

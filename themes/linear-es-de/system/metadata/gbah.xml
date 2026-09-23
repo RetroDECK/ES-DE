@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Game Boy Advance (abbreviato in GBA) è una console portatile per videogiochi a 32 bit sviluppata, prodotta e commercializzata da Nintendo come successore del Game Boy Color. È stata rilasciata in Giappone il 21 marzo 2001, in Nord America l'11 giugno 2001, in Australia e in Europa il 22 giugno 2001 e nella Cina continentale l'8 giugno 2004 (iQue Player). All'epoca i concorrenti di Nintendo nel mercato delle console portatili erano Neo Geo Pocket Color, WonderSwan, GP32, Tapwave Zodiac e N-Gage. Nonostante gli sforzi dei concorrenti, Nintendo ha mantenuto una quota di mercato maggioritaria con il Game Boy Advance. Al 30 giugno 2010, la serie Game Boy Advance ha venduto 81,51 milioni di unità in tutto il mondo. Il suo successore, il Nintendo DS, è uscito nel novembre 2004 ed è anch'esso compatibile con il software del Game Boy Advance.</systemDescription>
+            <systemDescription>Il Game Boy Advance (abbreviato in GBA) è una console portatile per videogiochi a 32 bit sviluppata, prodotta e commercializzata da Nintendo come successore del Game Boy Color. È stata rilasciata in Giappone il 21 marzo 2001, in Nord America l'11 giugno 2001, in Australia ed Europa il 22 giugno 2001 e nella Cina continentale l'8 giugno 2004 (iQue Player). All'epoca i concorrenti di Nintendo nel mercato delle console portatili erano Neo Geo Pocket Color, WonderSwan, GP32, Tapwave Zodiac ed N-Gage. Nonostante gli sforzi dei concorrenti, Nintendo ha mantenuto una quota di mercato maggioritaria con il Game Boy Advance. Al 30 giugno 2010, la serie Game Boy Advance ha venduto 81,51 milioni di unità in tutto il mondo. Il suo successore, il Nintendo DS, è uscito nel novembre 2004 ed è anch'esso compatibile con il software del Game Boy Advance.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Game Boy Advance (förkortad GBA) är en 32-bitars handhållen videospelskonsol som utvecklats, tillverkats och marknadsförts av Nintendo som efterföljare till Game Boy Color. Den släpptes i Japan den 21 mars 2001, i Nordamerika den 11 juni 2001, i Australien och Europa den 22 juni 2001 och på det kinesiska fastlandet den 8 juni 2004 (iQue Player). Nintendos konkurrenter på den handhållna marknaden var vid den tiden Neo Geo Pocket Color, WonderSwan, GP32, Tapwave Zodiac och N-Gage. Trots konkurrenternas ansträngningar behöll Nintendo en majoritet av marknadsandelarna med Game Boy Advance. Den 30 juni 2010 hade Game Boy Advance-serien sålts i 81,51 miljoner exemplar världen över. Efterföljaren Nintendo DS släpptes i november 2004 och är också kompatibel med Game Boy Advance-mjukvara.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Game Boy Advance (viết tắt là GBA) là một hệ máy chơi game cầm tay 32-bit do Nintendo phát triển, sản xuất và phân phối, được xem là phiên bản kế nhiệm của Game Boy Color. Nó được phát hành tại Nhật Bản vào ngày 21 tháng 3 năm 2001, tại Bắc Mỹ vào ngày 11 tháng 6 năm 2001, tại Úc và châu Âu vào ngày 22 tháng 6 năm 2001, và tại Trung Quốc đại lục vào ngày 8 tháng 6 năm 2004 (iQue Player). Các đối thủ cạnh tranh của Nintendo trên thị trường máy chơi game cầm tay lúc bấy giờ bao gồm Neo Geo Pocket Color, WonderSwan, GP32, Tapwave Zodiac và N-Gage. Mặc dù các đối thủ đã nỗ lực hết sức, Nintendo vẫn duy trì thị phần áp đảo với Game Boy Advance. Tính đến ngày 30 tháng 6 năm 2010, dòng Game Boy Advance đã bán được 81,51 triệu chiếc trên toàn thế giới. Sản phẩm kế thừa của nó, Nintendo DS, được phát hành vào tháng 11 năm 2004 và cũng tương thích với phần mềm Game Boy Advance.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

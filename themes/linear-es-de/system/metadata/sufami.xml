@@ -27,7 +27,7 @@ The two cartridge slots are designed to share data between the games. The cartri
 صُمم هذا الجهاز ليوضع فوق جهاز Super Famicom، ويتميز بفتحتي خرطوشة. الفرضية هي أنه يمكن إنتاج الألعاب بتكلفة ووقت تطوير أقل بكثير، دون الحاجة إلى الاعتماد على نينتندو لإنتاج الخراطيش. وعلى عكس مُحسِّن سطح علاء الدين، تمت الموافقة على هذا الجهاز رسميًا من قبل نينتندو بموجب شرط أن تتولى بانداي تصنيع جميع الأجهزة بنفسها.
 
 تم تصميم فتحتي الخرطوشة لمشاركة البيانات بين الألعاب. الخرطوشة الموضوعة في الفتحة 1 هي اللعبة التي سيتم تشغيلها، بينما توفر الخرطوشة الموجودة في الفتحة 2 بيانات إضافية لاستخدامها في اللعبة الرئيسية. ومن بين الألعاب الثلاثة عشر التي تم إصدارها، يمكن ربط تسع منها ببعضها البعض، ضمن كل سلسلة ألعاب.</systemDescription>
-            <systemHardwareType>محيطي</systemHardwareType>
+            <systemHardwareType>طرفية</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -92,9 +92,9 @@ The two cartridge slots are designed to share data between the games. The cartri
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il SuFami Turbo (スーファミターボ), spesso paragonato all'Aladdin Deck Enhancer, è un accessorio pubblicato da Bandai per la console Super Famicom di Nintendo e uscito nel 1996.
+            <systemDescription>Il SuFami Turbo (スーファミターボ), spesso paragonato all'Aladdin Deck Enhancer, è un accessorio pubblicato da Bandai per la console Super Famicom di Nintendo, uscito nel 1996.
 
-Questo dispositivo è stato progettato per essere posizionato sopra il Super Famicom e dispone di due slot per cartucce. La premessa è che i giochi potevano essere prodotti a costi e tempi di sviluppo molto più bassi, non dovendo dipendere da Nintendo per la produzione delle cartucce. A differenza dell'Aladdin Deck Enhancer, questo dispositivo è stato ufficialmente approvato da Nintendo a condizione che Bandai si occupasse direttamente della produzione dell'hardware.
+Questo dispositivo è stato progettato per essere posizionato sopra al Super Famicom e dispone di due slot per cartucce. La premessa è che i giochi potevano essere prodotti a costi e tempi di sviluppo molto più bassi, non dovendo dipendere da Nintendo per la produzione delle cartucce. A differenza dell'Aladdin Deck Enhancer, questo dispositivo è stato ufficialmente approvato da Nintendo a condizione che Bandai si occupasse direttamente della produzione dell'hardware.
 
 I due slot per le cartucce sono progettati per condividere i dati tra i giochi. La cartuccia inserita nello slot 1 è il gioco che verrà giocato, mentre la cartuccia nello slot 2 fornisce dati aggiuntivi da utilizzare nel gioco principale. Dei tredici giochi rilasciati, nove possono essere collegati tra loro, all'interno di ciascuna serie di giochi.</systemDescription>
             <systemHardwareType>Periferica</systemHardwareType>
@@ -198,6 +198,16 @@ Den här enheten är utformad för att sitta ovanpå Super Famicom och har två 
 
 De två kortplatserna är utformade för att dela data mellan spelen. Kassetten som placeras i fack 1 är det spel som ska spelas, medan kassetten i fack 2 levererar ytterligare data som ska användas i huvudspelet. Av de tretton spel som släppts kan nio av dem länkas samman inom varje spelserie.</systemDescription>
             <systemHardwareType>Tillbehör</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>SuFami Turbo (スーファミターボ), thường được so sánh với Aladdin Deck Enhancer, là một phụ kiện do Bandai phát hành dành cho hệ máy Super Famicom của Nintendo và ra mắt vào năm 1996.
+
+Thiết bị này được thiết kế để lắp đặt phía trên máy Super Famicom và có hai khe cắm băng game. Ý tưởng cơ bản là các trò chơi có thể được sản xuất với chi phí và thời gian phát triển thấp hơn nhiều, không cần phải phụ thuộc vào Nintendo trong việc sản xuất băng game. Khác với Aladdin Deck Enhancer, thiết bị này đã được Nintendo chính thức phê duyệt với điều kiện Bandai tự đảm nhận toàn bộ quá trình sản xuất phần cứng.
+
+Hai khe cắm thẻ game được thiết kế để chia sẻ dữ liệu giữa các trò chơi. Thẻ game đặt ở khe 1 là trò chơi sẽ được chơi, trong khi thẻ game ở khe 2 cung cấp dữ liệu bổ sung để sử dụng trong trò chơi chính. Trong số mười ba trò chơi được phát hành, chín trò có thể kết nối với nhau, trong cùng một series trò chơi.</systemDescription>
+            <systemHardwareType>Thiết bị ngoại vi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

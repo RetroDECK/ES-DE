@@ -27,7 +27,7 @@ The PC had a substantial influence on the personal computer market. The specific
 اعتمد الجهاز على بنية مفتوحة وأجهزة طرفية خارجية. ومع مرور الوقت، زادت بطاقات التوسعة وتكنولوجيا البرامج لدعمها.
 
 كان للكمبيوتر الشخصي تأثير كبير على سوق الحواسيب الشخصية. وأصبحت مواصفات حاسوب IBM الشخصي أحد أشهر معايير تصميم الحواسيب الشخصية في العالم. وكانت المنافسة الكبيرة الوحيدة التي واجهتها من منصة غير متوافقة طوال الثمانينيات من القرن الماضي من خط إنتاج Apple Macintosh. ومعظم الحواسيب الشخصية الحديثة هي أحفاد بعيدة لحاسوب IBM PC.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -96,7 +96,7 @@ PC je imao značajan utjecaj na tržište osobnog računala. Specifikacije IBM r
 
 La macchina era basata su un'architettura aperta e su periferiche di terze parti. Nel corso del tempo, le schede di espansione e la tecnologia software sono aumentate per supportarla.
 
-Il PC ha avuto un'influenza sostanziale sul mercato dei personal computer. Le specifiche del PC IBM sono diventate uno degli standard di progettazione di computer più diffusi al mondo. L'unica concorrenza significativa che ha dovuto affrontare negli anni '80 da parte di una piattaforma non compatibile è stata quella della linea di prodotti Apple Macintosh. La maggior parte dei personal computer moderni sono lontani discendenti del PC IBM.</systemDescription>
+Il PC ha avuto un'influenza sostanziale sul mercato dei personal computer. Le specifiche del PC IBM sono diventate uno degli standard di progettazione di computer più diffusi al mondo. L'unica concorrenza significativa che ha dovuto affrontare negli anni '80, da parte di una piattaforma non compatibile, è stata quella della linea di prodotti Apple Macintosh. La maggior parte dei personal computer moderni sono lontani discendenti del PC IBM.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -198,6 +198,16 @@ Maskinen byggde på öppen arkitektur och kringutrustning från tredje part. Med
 
 PC hade ett betydande inflytande på marknaden för persondatorer. Specifikationerna för IBM PC blev en av de mest populära standarderna för datordesign i världen. Den enda betydande konkurrensen från en icke-kompatibel plattform under hela 1980-talet var från Apple Macintosh produktlinje. De flesta moderna persondatorer är avlägsna ättlingar till IBM PC.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Máy tính cá nhân IBM (model 5150, thường được gọi là IBM PC) là máy vi tính đầu tiên được ra mắt trong dòng sản phẩm IBM PC và là nền tảng cho tiêu chuẩn tương thích IBM PC trên thực tế. Ra mắt vào ngày 12 tháng 8 năm 1981, sản phẩm này được phát triển bởi một nhóm kỹ sư và nhà thiết kế do Don Estridge đứng đầu tại Boca Raton, Florida.
+
+Máy tính này dựa trên kiến trúc mở và các thiết bị ngoại vi của bên thứ ba. Theo thời gian, các thẻ mở rộng và công nghệ phần mềm ngày càng phát triển để hỗ trợ nó.
+
+Máy tính cá nhân này đã có ảnh hưởng đáng kể đến thị trường máy tính cá nhân. Các thông số kỹ thuật của IBM PC đã trở thành một trong những tiêu chuẩn thiết kế máy tính phổ biến nhất trên thế giới. Trong suốt thập niên 1980, đối thủ cạnh tranh đáng kể duy nhất mà nó phải đối mặt từ một nền tảng không tương thích là dòng sản phẩm Apple Macintosh. Phần lớn các máy tính cá nhân hiện đại ngày nay đều là hậu duệ xa xôi của IBM PC.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

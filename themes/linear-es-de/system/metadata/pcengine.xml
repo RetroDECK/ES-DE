@@ -23,7 +23,7 @@ The PC Engine has an 8-bit CPU, a 16-bit video color encoder, and a 16-bit video
             <systemDescription>محرك الكمبيوتر الشخصي هو جهاز ألعاب فيديو منزلي من الجيل الرابع 16 بت من تصميم Hudson Soft وبيعه من قبل شركة NEC للإلكترونيات المنزلية. تم إصداره في اليابان عام 1987 وفي أمريكا الشمالية عام 1989. تم استيراد الطراز الياباني وتوزيعه في فرنسا في عام 1989، وحصلت المملكة المتحدة وإسبانيا على نسخة مبنية على الطراز الأمريكي المعروف ببساطة باسم TurboGrafx. كانت أول وحدة تحكم تم إصدارها في عصر 16 بت، على الرغم من أنها استخدمت وحدة معالجة مركزية معدلة 8 بت. في اليابان، تم إطلاق النظام كمنافس ل Famicom، ولكن تأخر إصداره في الولايات المتحدة يعني أنه انتهى به الأمر إلى منافسة Sega Genesis ثم نظام Super Nintendo Entertainment System.
 
 يحتوي محرك الكمبيوتر الشخصي على وحدة معالجة مركزية 8 بت، ومشفّر ألوان فيديو 16 بت، ووحدة تحكم في عرض الفيديو 16 بت. وحدات معالجة الرسومات قادرة على عرض 482 لوناً في وقت واحد، من أصل 512. بأبعاد تبلغ 14 سم × 14 سم × 3.8 سم فقط (5.5 بوصة × 5.5 بوصة × 1.5 بوصة)، يعد محرك الكمبيوتر الياباني أصغر وحدة تحكم ألعاب منزلية رئيسية تم صنعها على الإطلاق. وقد تم إصدار الألعاب على خراطيش HuCard ولاحقاً على شكل قرص مدمج ضوئي.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,9 +76,9 @@ PC motor ima 8-bitni CPU, 16-bitni videozapis u boji i 16-bitni kontroler za pri
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il PC Engine è una console per videogiochi domestici di quarta generazione a 16 bit progettata da Hudson Soft e venduta da NEC Home Electronics. È stata rilasciata in Giappone nel 1987 e in Nord America nel 1989. Il modello giapponese fu importato e distribuito in Francia nel 1989, mentre il Regno Unito e la Spagna ricevettero una versione basata sul modello americano, nota semplicemente come TurboGrafx. Fu la prima console rilasciata nell'era dei 16 bit, sebbene utilizzasse una CPU modificata a 8 bit. In Giappone, la console fu lanciata come concorrente del Famicom, ma il ritardo nell'uscita negli Stati Uniti fece sì che finisse per competere con il Sega Genesis e successivamente con il Super Nintendo Entertainment System.
+            <systemDescription>Il PC Engine è una console per videogiochi di quarta generazione a 16 bit progettata da Hudson Soft e venduta da NEC Home Electronics. È stata rilasciata in Giappone nel 1987 ed in Nord America nel 1989. Il modello giapponese fu importato e distribuito in Francia nel 1989, mentre il Regno Unito e la Spagna ricevettero una versione basata sul modello americano, nota semplicemente come TurboGrafx. Fu la prima console rilasciata nell'era dei 16 bit, sebbene utilizzasse una CPU modificata ad 8 bit. In Giappone, la console fu lanciata come concorrente del Famicom, ma il ritardo nell'uscita negli Stati Uniti fece sì che finisse per competere con il Sega Genesis e successivamente con il Super Nintendo Entertainment System.
 
-Il PC Engine è dotato di una CPU a 8 bit, un codificatore di colori video a 16 bit e un controller di visualizzazione video a 16 bit. Le GPU sono in grado di visualizzare 482 colori simultaneamente, su 512. Con dimensioni di soli 14 cm × 14 cm × 3,8 cm, il PC Engine giapponese è la più piccola console per videogiochi mai realizzata. I giochi sono stati rilasciati su cartucce HuCard e successivamente sul formato ottico CD-ROM.</systemDescription>
+Il PC Engine è dotato di una CPU ad 8 bit, un encoder di colori video a 16 bit ed un controller di visualizzazione video a 16 bit. Le GPU sono in grado di visualizzare 482 colori simultaneamente, su 512. Con dimensioni di soli 14 cm × 14 cm × 3,8 cm, il PC Engine giapponese è la più piccola console per videogiochi mai realizzata. I giochi sono stati rilasciati su cartucce HuCard e successivamente sul formato ottico CD-ROM.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ PC Engine имеет 8-битный процессор, 16-битный коде
 
 PC Engine har en 8-bitars CPU, en 16-bitars färgkodare för video och en 16-bitars styrenhet för videodisplay. GPU:erna kan visa 482 färger samtidigt, av 512 möjliga. Med sina mått på endast 14 cm × 14 cm × 3,8 cm (5,5 in × 5,5 in × 1,5 in) är den japanska PC Engine den minsta större hemspelskonsolen som någonsin tillverkats. Spelen släpptes på HuCard-kassetter och senare i det optiska formatet CD-ROM.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>PC Engine là một hệ máy chơi game gia đình thế hệ thứ tư 16-bit do Hudson Soft thiết kế và được NEC Home Electronics phân phối. Hệ máy này ra mắt tại Nhật Bản vào năm 1987 và tại Bắc Mỹ vào năm 1989. Phiên bản Nhật Bản đã được nhập khẩu và phân phối tại Pháp vào năm 1989, trong khi Vương quốc Anh và Tây Ban Nha nhận được một phiên bản dựa trên mẫu Mỹ, được gọi đơn giản là TurboGrafx. Đây là hệ máy đầu tiên được ra mắt trong kỷ nguyên 16-bit, mặc dù nó sử dụng một CPU 8-bit đã được sửa đổi. Tại Nhật Bản, hệ thống này được ra mắt như một đối thủ cạnh tranh với Famicom, nhưng việc ra mắt chậm trễ tại Hoa Kỳ khiến nó cuối cùng phải cạnh tranh với Sega Genesis và sau đó là Super Nintendo Entertainment System.
+
+PC Engine có CPU 8-bit, bộ mã hóa màu video 16-bit và bộ điều khiển hiển thị video 16-bit. GPU có khả năng hiển thị 482 màu cùng lúc trong tổng số 512 màu. Với kích thước chỉ 14 cm × 14 cm × 3,8 cm (5,5 inch × 5,5 inch × 1,5 inch), PC Engine của Nhật Bản là hệ máy chơi game gia đình lớn nhỏ nhất từng được sản xuất. Các trò chơi được phát hành trên thẻ HuCard và sau đó là định dạng quang học CD-ROM.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -23,7 +23,7 @@
             <systemDescription>Uzebox عبارة عن وحدة تحكم بالألعاب مفتوحة المصدر ذات 8 بت ذات تصميم قديم ومفتوح المصدر. وهو مبني على متحكم دقيق للأغراض العامة AVR 8 بت من صنع Atmel. وتتمثل خصوصية النظام في أنه يستخدم نواة مدفوعة بالمقاطعة ولا يحتوي على مخزن مؤقت للإطار. يتم تنفيذ وظائف مثل توليد إشارات الفيديو، وتجسيد البلاط ومزج الموسيقى في الوقت الحقيقي من خلال مهمة في الخلفية بحيث يمكن تطوير لعبتك بسهولة في C.
 
    كان الهدف من التصميم هو أن يكون بسيطًا قدر الإمكان مع الحصول على صوت ورسومات جيدة بما يكفي لتنفيذ ألعاب مثيرة للاهتمام. تم التركيز على جعلها سهلة وممتعة في التجميع والبرمجة لأي هاوٍ. يحتوي التصميم النهائي على شريحتين فقط: ATmega644 ومحول AD725 RGB إلى NTSC.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,9 +76,9 @@ L’objectiu de disseny era ser el més senzill possible, però tenir un so i un
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Uzebox è una console di gioco open source retro-minimalista a 8 bit. È basata su un microcontrollore generale a 8 bit AVR di Atmel. La particolarità del sistema è che utilizza un kernel guidato da interrupt e non ha frame buffer. Funzioni come la generazione del segnale video, il rendering dei tile e il mixaggio della musica vengono eseguite in tempo reale da un task in background, in modo che il gioco possa essere facilmente sviluppato in C.
+            <systemDescription>Uzebox è una console di gioco open source retro-minimalista ad 8 bit. È basata su un microcontrollore generale ad 8 bit AVR di Atmel. La particolarità del sistema è che utilizza un kernel guidato da interrupt e non ha frame buffer. Funzioni come la generazione del segnale video, il rendering dei tile ed il mixaggio della musica vengono eseguite in tempo reale da un task in background, in modo che il gioco possa essere facilmente sviluppato in C.
 
-   L'obiettivo del progetto era quello di essere il più semplice possibile, ma con un suono e una grafica sufficientemente buoni per implementare giochi interessanti. L'enfasi è stata posta sul fatto di renderlo facile e divertente da assemblare e programmare per qualsiasi hobbista. Il progetto finale contiene solo due chip: un ATmega644 e un convertitore RGB-NTSC AD725.</systemDescription>
+   L'obiettivo del progetto era quello di essere il più semplice possibile, ma con un suono ed una grafica sufficientemente buoni per implementare giochi interessanti. L'enfasi è stata posta sul fatto di renderlo facile e divertente da assemblare e programmare per qualsiasi hobbista. Il progetto finale contiene solo due chip: un ATmega644 ed un convertitore RGB-NTSC AD725.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ L’objectiu de disseny era ser el més senzill possible, però tenir un so i un
 
    Designmålet var att vara så enkel som möjligt men ändå ha tillräckligt bra ljud och grafik för att kunna implementera intressanta spel. Tonvikten lades på att göra den enkel och rolig att montera och programmera för alla hobbyanvändare. Den slutliga designen innehåller endast två chip: en ATmega644 och en AD725 RGB-till-NTSC-omvandlare.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Uzebox là một máy chơi game mã nguồn mở 8-bit theo phong cách retro tối giản. Thiết bị này dựa trên vi điều khiển đa năng 8-bit AVR do Atmel sản xuất. Điểm đặc biệt của hệ thống là sử dụng nhân điều khiển dựa trên ngắt (interrupt-driven) và không có bộ đệm khung hình (frame buffer). Các chức năng như tạo tín hiệu video, hiển thị ô hình (tile rendering) và trộn âm thanh được thực hiện theo thời gian thực bởi một tác vụ nền, giúp bạn có thể dễ dàng phát triển trò chơi bằng ngôn ngữ C.
+
+   Mục tiêu thiết kế là đơn giản nhất có thể nhưng vẫn đảm bảo chất lượng âm thanh và đồ họa đủ tốt để thực hiện các trò chơi thú vị. Trọng tâm được đặt vào việc làm cho việc lắp ráp và lập trình trở nên dễ dàng và thú vị cho bất kỳ người đam mê nào. Thiết kế cuối cùng chỉ bao gồm hai chip: một ATmega644 và một bộ chuyển đổi RGB sang NTSC AD725.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>تستخدم ألعاب أركيد الليزر ديسك الليزرية فيديو مسجل مسبقاً، إما بالاقتران مع رسوم متحركة متراكبة أو ببساطة كمقاطع فيديو يمكن للاعب التحكم بها. كانت أول لعبة ليزر ديسك رئيسية هي لعبة Astron Belt من Sega، التي تم إصدارها في عام 1983. وتلتها لعبة Dragon's Lair في نفس العام، وهي بلا شك أشهر ألعاب الليزر ديسك. وتبعها عدد من الإصدارات، وحتى يومنا هذا هناك مجتمع يصنع ألعاباً محلية مشابهة، على الرغم من أنها لم تعد تعمل على أقراص الليزر.</systemDescription>
-            <systemHardwareType>المجلد</systemHardwareType>
+            <systemHardwareType>مجلد</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>I giochi arcade LaserDisc utilizzano video preregistrati, in combinazione con sprite sovrapposti o semplicemente come sezioni di video controllabili dal giocatore. Il primo gioco LaserDisc di rilievo fu Astron Belt di Sega, uscito nel 1983. Nello stesso anno fu seguito da Dragon's Lair, che è senza dubbio il gioco LaserDisc più famoso. Seguirono numerose uscite e ancora oggi esiste una comunità che produce giochi homebrew simili, anche se tecnicamente non funzionano più su LaserDisc.</systemDescription>
+            <systemDescription>I giochi arcade LaserDisc utilizzano video preregistrati in combinazione con sprite sovrapposti, o semplicemente come sezioni di video controllabili dal giocatore. Il primo gioco LaserDisc di rilievo fu Astron Belt di Sega, uscito nel 1983. Nello stesso anno fu seguito da Dragon's Lair, che è senza dubbio il gioco LaserDisc più famoso. Seguirono numerose uscite e, ancora oggi, esiste un comunità molto attiva che produce giochi homebrew simili, anche se tecnicamente non funzionano più su LaserDisc.</systemDescription>
             <systemHardwareType>Cartella</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>LaserDisc-arkadspel använder förinspelad video, antingen i kombination med överlagrade sprites eller helt enkelt som delar av video som kan kontrolleras av spelaren. Det första stora LaserDisc-spelet var Segas Astron Belt, som släpptes 1983. Det följdes tätt av Dragon's Lair samma år, som utan tvekan är det mest kända LaserDisc-spelet. Ett antal releaser följde och än idag finns det en community som gör liknande homebrew-spel, även om de tekniskt sett inte längre går att köra på LaserDiscs.</systemDescription>
             <systemHardwareType>Mapp</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Các trò chơi arcade trên đĩa LaserDisc sử dụng video được ghi sẵn, có thể kết hợp với các hình ảnh động (sprites) được chồng lên hoặc đơn giản là các đoạn video mà người chơi có thể điều khiển. Trò chơi LaserDisc lớn đầu tiên là Astron Belt của Sega, ra mắt vào năm 1983. Ngay sau đó là Dragon's Lair cùng năm, đây chắc chắn là trò chơi LaserDisc nổi tiếng nhất. Một số tựa game khác đã ra mắt sau đó và cho đến ngày nay vẫn có một cộng đồng phát triển các trò chơi tự chế tương tự, mặc dù về mặt kỹ thuật, chúng không còn chạy trên đĩa LaserDisc nữa.</systemDescription>
+            <systemHardwareType>Tờ rơi</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

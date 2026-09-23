@@ -34,6 +34,7 @@ enum MetaDataType {
     MD_MULTILINE_STRING,
     MD_CONTROLLER,
     MD_ALT_EMULATOR,
+    MD_SCREEN,
     MD_FOLDER_LINK,
     MD_PATH,
     MD_RATING,

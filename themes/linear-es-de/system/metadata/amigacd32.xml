@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن جهاز Amiga CD32، الذي يحمل اسم "CD32" واسمه الرمزي "Spellbound"، هو أول جهاز ألعاب فيديو منزلي 32 بت تم إصداره في أوروبا الغربية وأستراليا وكندا والبرازيل. تم الإعلان عنها لأول مرة في متحف العلوم في لندن في 16 يوليو 1993، وتم إصدارها في سبتمبر من نفس العام. يستخدم CD32 وسائط الأقراص المدمجة CD-ROM، وتم تطويره من قبل Commodore، مبتكر كمبيوتر Commodore Amiga. وقد استند إلى مجموعة شرائح هندسة الرسومات المتقدمة من Commodore، وهو ذو مواصفات مشابهة لحاسوب Amiga 1200. وباستخدام أجهزة طرف ثالث، يمكن ترقية CD32 بلوحة مفاتيح ومحرك أقراص مرنة وقرص صلب وذاكرة وصول عشوائي وماوسة، مما يجعله مكافئاً لحاسوب Amiga 1200 الشخصي. كما تم إصدار وحدة فك ضغط MPEG للأجهزة لتشغيل قرص الفيديو المضغوط. في فترة عيد الميلاد التي أعقبت إطلاقه، استحوذ CD32 على 38% من إجمالي مبيعات محركات الأقراص المضغوطة في المملكة المتحدة، متجاوزًا مبيعات القرص المضغوط؛ ولكن سرعان ما طغت عليه وحدات تحكم الألعاب القائمة على الأقراص المضغوطة من شركات أخرى، وتم إيقافه مع إفلاس Commodore.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,9 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'Amiga CD32, con lo stile "CD32" e il nome in codice "Spellbound", è la prima console per videogiochi domestica a 32 bit rilasciata in Europa occidentale, Australia, Canada e Brasile. Fu annunciata per la prima volta al Museo della Scienza di Londra il 16 luglio 1993 e fu messa in commercio nel settembre dello stesso anno. Il CD32 utilizza supporti CD-ROM ed è stato sviluppato da Commodore, creatore del computer Commodore Amiga. È basato sul chipset Advanced Graphics Architecture di Commodore e presenta specifiche simili a quelle del computer Amiga 1200. Utilizzando dispositivi di terze parti, è possibile aggiornare il CD32 con tastiera, unità floppy, disco rigido, RAM e mouse, trasformandolo nell'equivalente di un personal computer Amiga 1200. È stato inoltre rilasciato un modulo hardware di decompressione MPEG per la riproduzione di Video CD. Nel periodo natalizio successivo al lancio, il CD32 rappresentò il 38% di tutte le vendite di unità CD-ROM nel Regno Unito, superando le vendite del Mega-CD; tuttavia, fu presto messo in ombra dalle console di gioco basate su CD-ROM di altre aziende, e fu dismesso quando Commodore andò in bancarotta.</systemDescription>
+            <systemDescription>Il Commodore Amiga CD32, comunemente chiamato Amiga CD32 o CD32, è una console per videogiochi prodotta dalla Commodore International tra il 1993 ed il 1994, basata sulla piattaforma informatica Amiga e sull'uso del CD-ROM come supporto di memoria.
+
+Insieme al precedente Commodore CDTV, del quale è in grado di leggere gran parte del software su CD-ROM per esso sviluppato, l'Amiga CD32 rappresenta il tentativo di Commodore International di conquistare uno spazio nel settore dell'elettronica di consumo non strettamente legato all'informatica. Era pubblicizzato come "The world's first 32-bit CD games console" (la prima console a 32 bit con CD-ROM). In realtà fu Fujitsu che a partire da febbraio 1993, anche se esclusivamente in Giappone, commercializzò la prima vera console a 32-bit con lettore CD-ROM: l'FM Towns Marty.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +124,12 @@
         <variables>
             <systemDescription>Amiga CD32, kallad "CD32" och med kodnamnet "Spellbound", är den första 32-bitars hemkonsolen för videospel som släpptes i Västeuropa, Australien, Kanada och Brasilien. Den presenterades första gången på Science Museum i London den 16 juli 1993 och släpptes i september samma år. CD32 använder CD-ROM-media och utvecklades av Commodore, skaparen av Commodore Amiga-datorn. Den var baserad på Commodores Advanced Graphics Architecture-chipset och har liknande specifikationer som Amiga 1200-datorn. Med hjälp av tredjepartsenheter är det möjligt att uppgradera CD32 med tangentbord, diskettenhet, hårddisk, RAM och mus, vilket gör den till en motsvarighet till en Amiga 1200 persondator. En hårdvarumodul för MPEG-dekomprimering för uppspelning av Video CD släpptes också. Under julperioden efter lanseringen stod CD32 för 38% av all försäljning av CD-ROM-diskar i Storbritannien, vilket överträffade försäljningen av Mega-CD. CD32 hamnade dock snart i skuggan av CD-ROM-baserade spelkonsoler från andra företag och avvecklades när Commodore gick i konkurs.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Amiga CD32, được gọi tắt là "CD32" và có tên mã là "Spellbound", là hệ máy chơi game gia đình 32-bit đầu tiên được phát hành tại Tây Âu, Úc, Canada và Brazil. Sản phẩm này lần đầu tiên được công bố tại Bảo tàng Khoa học London vào ngày 16 tháng 7 năm 1993 và chính thức ra mắt vào tháng 9 cùng năm. CD32 sử dụng đĩa CD-ROM và được phát triển bởi Commodore, nhà sáng tạo ra máy tính Commodore Amiga. Nó dựa trên bộ vi xử lý đồ họa Advanced Graphics Architecture của Commodore và có thông số kỹ thuật tương tự như máy tính Amiga 1200. Bằng cách sử dụng các thiết bị của bên thứ ba, người dùng có thể nâng cấp CD32 với bàn phím, ổ đĩa mềm, ổ cứng, RAM và chuột, biến nó thành một máy tính cá nhân tương đương với Amiga 1200. Một mô-đun giải nén MPEG phần cứng để phát Video CD cũng đã được phát hành. Trong kỳ Giáng sinh sau khi ra mắt, CD32 chiếm 38% tổng doanh số bán ổ đĩa CD-ROM tại Anh, vượt qua doanh số của Mega-CD; tuy nhiên, nó sớm bị lu mờ bởi các máy chơi game dựa trên CD-ROM của các công ty khác và bị ngừng sản xuất khi Commodore phá sản.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

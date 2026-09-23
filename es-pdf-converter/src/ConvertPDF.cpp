@@ -64,7 +64,7 @@ int ConvertPDF::processFile(
     file.read(&fileData[0], fileLength);
     file.close();
 
-    const poppler::document* document {
+    std::unique_ptr<const poppler::document> document {
         poppler::document::load_from_raw_data(&fileData[0], fileLength)};
 
     if (document == nullptr) {
@@ -86,17 +86,15 @@ int ConvertPDF::processFile(
         std::vector<std::string> pageInfo;
         for (int i {0}; i < pageCount; ++i) {
             std::string pageRow;
-            const poppler::page* page {document->create_page(i)};
+            std::unique_ptr<const poppler::page> page {document->create_page(i)};
             if (page == nullptr) {
-                if (page == nullptr) {
 #if defined(__ANDROID__)
-                    __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
-                                        "Error: Couldn't read page %i", i + 1);
+                __android_log_print(ANDROID_LOG_ERROR, ANDROID_APPLICATION_ID,
+                                    "Error: Couldn't read page %i", i + 1);
 #else
-                    std::cerr << "Error: Couldn't read page " << i + 1 << std::endl;
+                std::cerr << "Error: Couldn't read page " << i + 1 << std::endl;
 #endif
-                    return (-1);
-                }
+                return (-1);
             }
 
             std::string orientation;
@@ -140,7 +138,7 @@ int ConvertPDF::processFile(
         return (-1);
     }
 
-    const poppler::page* page {document->create_page(pageNum - 1)};
+    std::unique_ptr<const poppler::page> page {document->create_page(pageNum - 1)};
 
     if (page == nullptr) {
 #if defined(__ANDROID__)
@@ -164,8 +162,8 @@ int ConvertPDF::processFile(
     const double pageHeight {pageRect.height()};
     const double sizeFactor {static_cast<double>(rotate ? height : width) / pageHeight};
 
-    poppler::image image {
-        pageRenderer.render_page(page, 72.0 * sizeFactor, 72.0 * sizeFactor, 0, 0, width, height)};
+    poppler::image image {pageRenderer.render_page(page.get(), 72.0 * sizeFactor, 72.0 * sizeFactor,
+                                                   0, 0, width, height)};
 
     if (!image.is_valid()) {
 #if defined(__ANDROID__)
@@ -176,14 +174,12 @@ int ConvertPDF::processFile(
         return (-1);
     }
 
+    const size_t imageSize {static_cast<size_t>(width) * static_cast<size_t>(height) * 4};
 #if defined(__ANDROID__) || defined(__IOS__)
-    result.insert(0, std::move(image.data()), width * height * 4);
+    result.assign(image.data(), image.data() + imageSize);
 #else
-    // Necessary as the image data stream may contain null characters.
-    std::string imageARGB32;
-    imageARGB32.insert(0, std::move(image.data()), width * height * 4);
-
-    std::cout << imageARGB32;
+    std::cout.write(static_cast<const char*>(image.data()),
+                    static_cast<std::streamsize>(imageSize));
 #endif
 
     return 0;

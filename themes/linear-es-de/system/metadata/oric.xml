@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>كان Oric هو الاسم الذي استخدمته شركة Tangerine Computer Systems ومقرها المملكة المتحدة لسلسلة من الحواسيب المنزلية التي تعتمد على 6502 والتي بيعت في الثمانينيات، في أوروبا بشكل أساسي. مع نجاح ZX Spectrum ZX Spectrum من Sinclair Research، اقترح داعمو Tangerine جهاز كمبيوتر منزلي وشكلت Tangerine شركة Oric Products International Ltd لتطوير Oric-1. طُرح الحاسوب في عام 1982.[5] وخلال عام 1983، تم بيع ما يقرب من 160,000 جهاز كمبيوتر Oric-1 في المملكة المتحدة، بالإضافة إلى 50,000 جهاز آخر في فرنسا (حيث كان الجهاز الأكثر مبيعًا في العام). وقد أدى ذلك إلى الاستحواذ على Oric وتمويل الطراز الذي سيخلفه وهو Oric Atmos لعام 1984.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Oric è il nome utilizzato da Tangerine Computer Systems, società con sede nel Regno Unito, per una serie di home computer basati su 6502 venduti negli anni '80, principalmente in Europa. Con il successo dello ZX Spectrum di Sinclair Research, i finanziatori di Tangerine suggerirono un home computer e Tangerine formò Oric Products International Ltd per sviluppare l'Oric-1. Il computer fu presentato nel 1982. Il computer fu presentato nel 1982.[5] Nel corso del 1983 furono venduti circa 160.000 computer Oric-1 nel Regno Unito, più altri 50.000 in Francia (dove fu la macchina più venduta dell'anno). Questo ha portato all'acquisizione di Oric e al finanziamento di un modello successivo, l'Oric Atmos del 1984.</systemDescription>
+            <systemDescription>Oric è il nome utilizzato da Tangerine Computer Systems, società con sede nel Regno Unito, per una serie di home computer basati su chip 6502 venduti negli anni '80, principalmente in Europa. Con il successo dello ZX Spectrum di Sinclair Research, i finanziatori di Tangerine suggerirono un home computer e Tangerine formò Oric Products International Ltd per sviluppare l'Oric-1. Il computer fu presentato nel 1982. Nel corso del 1983 furono vendute circa 160.000 unità Oric-1 nel Regno Unito, più altri 50.000 in Francia (dove fu la macchina più venduta dell'anno). Questo portò all'acquisizione di Oric ed al finanziamento di un modello successivo, l'Oric Atmos del 1984.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Oric var namnet som användes av brittiska Tangerine Computer Systems för en serie 6502-baserade hemdatorer som såldes under 1980-talet, främst i Europa. Med framgången för ZX Spectrum från Sinclair Research föreslog Tangerines finansiärer en hemdator och Tangerine bildade Oric Products International Ltd för att utveckla Oric-1. Datorn introducerades 1982[5]. 1983 såldes cirka 160.000 Oric-1-datorer i Storbritannien och ytterligare 50.000 i Frankrike (där den var årets mest sålda dator). Detta ledde till att Oric blev uppköpt och fick finansiering för en efterföljare, Oric Atmos från 1984.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Oric là tên gọi mà công ty Tangerine Computer Systems có trụ sở tại Anh sử dụng cho dòng máy tính gia đình dựa trên vi xử lý 6502, được bán ra vào thập niên 1980, chủ yếu tại châu Âu. Nhờ thành công của ZX Spectrum do Sinclair Research sản xuất, các nhà đầu tư của Tangerine đã đề xuất phát triển một mẫu máy tính gia đình, và Tangerine đã thành lập công ty Oric Products International Ltd để phát triển mẫu Oric-1. Máy tính này được giới thiệu vào năm 1982.[5] Trong năm 1983, khoảng 160.000 máy tính Oric-1 đã được bán ra tại Anh, cùng với 50.000 máy khác tại Pháp (nơi nó là máy tính bán chạy nhất trong năm). Điều này dẫn đến việc Oric được mua lại và nhận được tài trợ để phát triển mẫu máy kế thừa, Oric Atmos năm 1984.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

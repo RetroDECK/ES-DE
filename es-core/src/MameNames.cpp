@@ -48,10 +48,25 @@ MameNames::MameNames()
         return;
     }
 
-    for (pugi::xml_node gameNode {doc.child("game")}; gameNode;
-         gameNode = gameNode.next_sibling("game")) {
-        mNamePairs[gameNode.child("mamename").text().get()] =
-            gameNode.child("realname").text().get();
+    {
+        // This adds support for a root tag to make the MAME resource files fully XML-compliant.
+        // Backward compatibility is maintained for the legacy XML format as some users may have
+        // customized MAME resource files that are missing the root tags.
+        const pugi::xml_node& root {doc.child("mamenames")};
+        if (root != nullptr) {
+            for (pugi::xml_node gameNode {root.child("game")}; gameNode;
+                 gameNode = gameNode.next_sibling("game")) {
+                mNamePairs[gameNode.child("mamename").text().get()] =
+                    gameNode.child("realname").text().get();
+            }
+        }
+        else {
+            for (pugi::xml_node gameNode {doc.child("game")}; gameNode;
+                 gameNode = gameNode.next_sibling("game")) {
+                mNamePairs[gameNode.child("mamename").text().get()] =
+                    gameNode.child("realname").text().get();
+            }
+        }
     }
 
     // Read BIOS file.
@@ -75,10 +90,22 @@ MameNames::MameNames()
         return;
     }
 
-    for (pugi::xml_node biosNode {doc.child("bios")}; biosNode;
-         biosNode = biosNode.next_sibling("bios")) {
-        std::string bios = biosNode.text().get();
-        mMameBioses.emplace_back(bios);
+    {
+        const pugi::xml_node& root {doc.child("mamebioses")};
+        if (root != nullptr) {
+            for (pugi::xml_node biosNode {root.child("bios")}; biosNode;
+                 biosNode = biosNode.next_sibling("bios")) {
+                std::string bios = biosNode.text().get();
+                mMameBioses.emplace_back(bios);
+            }
+        }
+        else {
+            for (pugi::xml_node biosNode {doc.child("bios")}; biosNode;
+                 biosNode = biosNode.next_sibling("bios")) {
+                std::string bios = biosNode.text().get();
+                mMameBioses.emplace_back(bios);
+            }
+        }
     }
 
     // Read device file.
@@ -102,9 +129,21 @@ MameNames::MameNames()
         return;
     }
 
-    for (pugi::xml_node deviceNode {doc.child("device")}; deviceNode;
-         deviceNode = deviceNode.next_sibling("device")) {
-        std::string device {deviceNode.text().get()};
-        mMameDevices.emplace_back(device);
+    {
+        const pugi::xml_node& root {doc.child("mamedevices")};
+        if (root != nullptr) {
+            for (pugi::xml_node deviceNode {root.child("device")}; deviceNode;
+                 deviceNode = deviceNode.next_sibling("device")) {
+                std::string device {deviceNode.text().get()};
+                mMameDevices.emplace_back(device);
+            }
+        }
+        else {
+            for (pugi::xml_node deviceNode {doc.child("device")}; deviceNode;
+                 deviceNode = deviceNode.next_sibling("device")) {
+                std::string device {deviceNode.text().get()};
+                mMameDevices.emplace_back(device);
+            }
+        }
     }
 }

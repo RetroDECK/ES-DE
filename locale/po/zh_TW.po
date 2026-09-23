@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-13 22:04+0200\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-10 12:02+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: 繁體中文 <info@es-de.org>\n"
 "Language: zh_TW\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "網路錯誤（狀態："
@@ -596,6 +596,9 @@ msgstr "正在執行……"
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "無法找到可導入內容"
 
+msgid "import"
+msgstr "導入"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -613,14 +616,6 @@ msgstr "請選擇"
 msgid "IMPORT"
 msgstr "導入"
 
-msgid "import"
-msgstr "導入"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "已導入%i個項目"
-
 msgid "SELECT ALL"
 msgstr "選擇全部"
 
@@ -632,6 +627,11 @@ msgstr "取消選擇"
 
 msgid "select none"
 msgstr "取消選擇"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "已導入%i個項目"
 
 msgid "FILTER GAMELIST"
 msgstr "過濾遊戲列表"
@@ -1083,6 +1083,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "繼續"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "在其他螢幕上啟動"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "遊戲媒體目錄"
 
@@ -1183,6 +1186,12 @@ msgstr "影片硬體解碼（實驗性）"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "將影片幀率提升至 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "查詢已安裝的RETROARCH核心（實驗性質）"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "在儲存存取框架模式上使用RETROARCH（不受建議）"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "為每個遊戲啟用備用模擬器"
 
@@ -1192,14 +1201,14 @@ msgstr "顯示隱藏檔案和資料夾"
 msgid "SHOW HIDDEN GAMES"
 msgstr "顯示隱藏的遊戲"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "在另一個螢幕上啟動遊戲"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "啟用自定義事件指令碼"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "瀏覽自定義事件"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "以非阻塞方式運行瀏覽事件"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "僅顯示 gamelist.xml 檔案中的遊戲"
@@ -1296,11 +1305,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "螢幕保護設定"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "啟用在其他螢幕上啟動"
+
 msgid "choose"
 msgstr "選擇"
 
 msgid "close menu"
 msgstr "關閉選單"
+
+msgid "System default (Other)"
+msgstr "系統預設（其他）"
+
+msgid "System default (Primary)"
+msgstr "系統預設（首選）"
+
+msgid "Always on other"
+msgstr "總是在其他"
+
+msgid "Always on primary"
+msgstr "總是在首選"
 
 msgid "EDIT METADATA"
 msgstr "編輯後設資料"
@@ -2435,6 +2459,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "請選擇備用模擬器"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "在螢幕上啟動"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "在哪個螢幕上啟動"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "資料夾連結"
 
@@ -2671,8 +2703,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "清除（留空則重置為預設路徑）"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2709,9 +2741,9 @@ msgstr "更新"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "應用程式更新程式將為您下載最新的行動式 Windows 版本，但您需要手動執行升級。請"

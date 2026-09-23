@@ -1,28 +1,175 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.4.1 / 3.4.1-58 (in development)
+## Version 3.5.0 / 3.5.0-xx (in development)
 
 **Release date:** TBD
 
 ### Release overview
 
+### Detailed list of changes
+
+* (Android) Added per-system and per-game configuration for launching games on the other screen on dual-screen devices
+* (Android) Added experimental support for querying on game launch whether the RetroArch core is installed (needs to be enabled via a menu option)
+* (Android) Added the menu option "Use RetroArch in SAF mode (not recommended)" as well as the corresponding SAF-specific systems configuration file
+* Added support for scraping videos using TheGamesDB
+* Added a "Run browsing events as non-blocking" menu option to greatly reduce latency for browsing event scripts
+* Added translations for Czech (cs_CZ)
+* Added a "Y" button shortcut to the game importer selection screen
+* Added a SplashScreenProgressBarColor option that can be manually set in es_settings.xml to customize the splash screen progress bar color
+* Added mediaviewer-start and mediaviewer-end custom events
+* Added "itemLinearScale" and "itemLinearSpacing" properties to the carousel element
+* Added a "scaleFactor" property to the image element to allow for lower-resolution SVG rasterization
+* Added a "scaleFactor" property to the animation element to allow for lower-resolution Lottie animation rasterization
+* Added support for "customCollectionNameGrouped" and "customCollectionNameGames" values to the text element metadata property
+* Changed the ScreenScraper platform ID for the j2me system to scrape J2ME instead of Android
+* Added the PCEE2 RetroArch core as the default emulator for the ps2 system
+* Added the AppleWin RetroArch core as the default emulator for the apple2 system
+* Added the Cemu RetroArch core as an alternative emulator for the wiiu system
+* Added the MesenCE RetroArch core as an alternative emulator for the famicom, fds, gamegear, gb, gba, gbc, mark3, mastersystem and nes systems
+* Added the MesenCE RetroArch core as an alternative emulator for the pcengine, pcenginecd, satellaview, sfc, sgb, snes and snesna system
+* Added the MesenCE RetroArch core as an alternative emulator for the supergrafx, tg16, tg-cd, wonderswan and wonderswancolor systems
+* Added the Hatari 2014 RetroArch core as an alternative emulator for the atarist system
+* Added the RustyNES RetroArch core as an alternative emulator for the famicom, fds and nes systems
+* Added the BlastEm RetroArch core as an alternative emulator for the colecovision, gamegear, mark3, mastersystem, megacd and megacdjp systems
+* Added the BlastEm RetroArch core as an alternative emulator for the sega32x, sega32xjp, sega32xna, segacd and sg-1000 systems
+* Added BlastEm standalone as an alternative emulator for the colecovision, gamegear, mark3, mastersystem, megacd and megacdjp systems on Linux, macOS and Windows
+* Added BlastEm standalone as an alternative emulator for the sega32x, sega32xjp, sega32xna, segacd and sg-1000 systems on Linux, macOS and Windows
+* Added the IroGB RetroArch core as an alternative emulator for the gb and gbc systems
+* Added the Tia RetroArch core as an alternative emulator for the atari2600 system
+* Added the Geolith RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems
+* Added the MAME - Current RetroArch core as an alternative emulator for the neogeo system
+* Added the HBMAME RetroArch core as an alternative emulator for the arcade and mame systems
+* Added Emulicious standalone as an alternative emulator for the gamegear, gb, gbc, mark3, mastersystem, msx, msx1 and msx2 systems on Linux and Windows
+* Added SUPER ZSNES standalone as an alternative emulator for the sfc, snes and snesna systems on Linux, macOS and Windows
+* Added PCSX2x6 standalone as an alternative emulator for the arcade, consolearcade and mame systems on Linux, macOS and Windows
+* Added Hypseus [Singe ZLUA] standalone as an alternative emulator for the daphne and laserdisc systems on Linux, macOS and Windows
+* Added Linux Loader standalone as an alternative emulator for the arcade, mame and pcarcade systems on Linux and Windows
+* Added Play! Arcade standalone as an alternative emulator for the arcade and mame systems on Linux, macOS and Windows
+* Added GroovyMAME standalone as an alternative emulator for the arcade and mame systems on Linux and Windows
+* Added veesem standalone as an alternative emulator for the vsmile system on Linux and Windows
+* Added the Virtual Jaguar RetroArch core as the default emulator for the atarijaguarcd system on Linux and Windows
+* Added the Supermodel RetroArch core as the default emulator for the model3 system
+* Added the Supermodel RetroArch core as an alternative emulator for the arcade and mame systems
+* Added the Amiberry RetroArch core as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
+* Removed the --autoload flag from Amiberry standalone for the amiga, amiga1200 and amiga600 systems on Linux and macOS
+* Added an %INJECT% variable for Amiberry standalone for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems on Linux and macOS
+* (Android) Added support for the Sony PlayStation 4 (ps4) system using the BachataS4 emulator
+* (Android) Added WinNative standalone as an alternative emulator for the epic, pcarcade, steam, type-x and windows systems
+* (Android) Added support for the Atari Jaguar CD (atarijaguarcd) system using the Virtual Jaguar RetroArch core
+* (Android) Added the LRPS2 RetroArch core as an alternative emulator for the ps2 system
+* (Android) Added NetherSX2, NetherSX2-Turnip and NetherSX2-Turnip Classic standalone as alternative emulators for the ps2 system
+* (Android) Added find rule entries for the new package names for ARMSX2 Refresh (Play store and GitHub releases)
+* (Android) Added ARMSX1 standalone as an alternative emulator for the psx system
+* (Android) Added ARMSX3 Game Serial and ARMSX3 Directory or ISO standalone as alternative emulators for the consolearcade and ps3 systems
+* (Android) Added EmuCoreC Directory or ISO standalone as an alternative emulator for the consolearcade and ps3 systems
+* (Android) Added Starboard standalone as an alternative emulator for the ports system
+* (Android) Added SUPER3 standalone as an alternative emulator for the arcade and mame systems
+* (Android) Added MAME4droid Current [Software list] standalone as an alternative emulator for the apple2gs system
+* (Android) Added EmuCoreX standalone as an alternative emulator for the ps2 system
+* (Android) Added the BlastEm RetroArch core as an alternative emulator for the genesis, megadrive and megadrivejp systems
+* (Android) Added the Citra 2018 RetroArch core as an alternative emulator for the n3ds system
+* (Android) Added EmuCoreV standalone as an alternative emulator for the psvita system
+* (Android) Added WatermelonDS standalone as an alternative emulator for the nds system
+* (Android) Added SeedlessDS standalone as an alternative emulator for the nds system
+* (Android) Added D.Smile standalone as an alternative emulator for the vsmile system
+* (Android) Added XenDroid standalone as an alternative emulator for the xbox360 system
+* (Android) Added Xenra standalone as an alternative emulator for the xbox and xbox360 systems
+* (Android) Added "Native port" as an alternative emulator for the ports system
+* (Android) Added the .desktop file extension to the epic and steam systems
+* (Android) Added the .app file extension to the ports system
+* (Android) Added import rules for the ports system
+* (Android) Added GameNative Amazon standalone as an alternative emulator for the windows system
+* (Android) Added the .amazon file extension to the windows system
+* (Android) Added a find rule entry for yet another package name for GameHub Lite
+* (Android) Added find rule entries for the Ludashi fork of Winlator to Winlator Cmod
+* (Linux ARM) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
+* (Linux ARM) Added Play! standalone as an alternative emulator for the ps2 system
+* (Linux ARM) Added Play! Arcade standalone and Play! Disc standalone as alternative emulators for the consolearcade system
+* (Linux ARM) Removed all RetroArch cores that are not built by the RetroArch project
+* (Linux ARM) Added support for the pkgforge-dev AppImage release of Dolphin
+* (Linux ARM) Addeed the .arcadedef file extension to the arcade and mame systems
+* (Linux) Added the FS-UAE RetroArch core as an alternative emulator for the amiga, amiga1200 and amiga600 systems
+* (Linux) Added Missingno standalone as an alternative emulator for the atari2600, gb and gbc systems
+* (Linux) Added sm2-emu standalone as an alternative emulator for the arcade, mame and model2 systems
+* (Linux) Added support for the pkgforge-dev AppImage release of Supermodel
+* (Linux) Added support for parsing the Path key in .desktop shortcut files
+* (Linux) Added ~/AppImages/ as an additional search path for all AppImages
+* (Linux) Changed the AppImage find rule entries for PCSX2 to avoid collisions with PCSX2x6
+* (Linux) Added support for the Flatpak release of Eden
+* (Linux) Added support for the Flatpak release of Amiberry
+* (Linux) Added support for the Flatpak release of BigPEmu
+* (macOS) Added support for the Atari Jaguar CD (atarijaguarcd) system using the Virtual Jaguar RetroArch core
+* (macOS) Added the LRPS2 RetroArch core as an alternative emulator for the ps2 system
+* (macOS) Added the Citra and Citra 2018 RetroArch cores as alternative emulators for the n3ds system
+* (macOS) Added ARMSX2 standalone as an alternative emulator for the ps2 system
+* (macOS) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
+* (Windows) Added Amiberry standalone as an alternative emulator for the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
+* (Windows) Added ArcadeDuck standalone as an alternative emulator for the arcade, consolearcade and mame systems
+* (Windows) Added an additional find rule entry for PCSX2
+* (Windows) Added "Shortcut or script" as an alternative emulator for the xbox system
+* (Windows) Added the .lnk file extension to the xbox system
+* (Windows) Added import rules for the xbox system
+* (Windows) Added the .lindbergh file extension to the arcade, mame and pcarcade systems
+* (Android) Added the .port file extension to the ports system
+* Added the .acgame file extension to the consolearcade system on Linux, macOS and Windows
+* Added the .acgame and .arcadedef file extensions to the arcade and mame systems on Linux, macOS and Windows
+* Added the .a0, .b0 and .rom file extensions to the vic20 system
+* Added the .dsi and .ids file extensions to the nds system
+* (linear-es-de) Updated the system metadata from the upstream system-metadata repository
+* (Linux) Fixed an AppImage build issue caused by a URL change on GitLab
+* Added .m4v as a supported video file extension
+* Added forward compatibility for reading the alternativeEmulator element from the gameList root element of the gamelist.xml files
+* Added forward compatibility for reading the es_settings.xml file with a "settings" root element
+* Added forward compatibility for reading the MAME resource files with "mamebioses", "mamedevices" and "mamenames" root elements
+* The scraper will no longer download media with unsupported file extensions
+* Made multiple improvements to the PDF viewer (optimizations, fixed memory leaks etc.)
+* The UTF8-CPP dependency is now only built on Android
+* (Android) Updated the build environment
+* (Android) Updated a number of Java and Kotlin dependencies
+* (Android) Updated libiconv to 1.19, gettext/libintl to 1.0, ICU to 78.3, libpng to 1.6.58 and libjpeg-turbo to 3.1.4.1
+* (Android) Updated LibTIFF to 4.7.1, OpenJPEG to 2.5.4, HarfBuzz to 14.2.1, FreeType to 2.14.3 and Poppler to 26.06.0
+* (Android) Updated OpenSSL to 4.0.1, curl to 8.20.0 and libgit2 to 1.9.4
+* (macOS) Updated libiconv to 1.19, gettext/libintl to 1.0, ICU to 78.3, libpng to 1.6.58 and libjpeg-turbo to 3.1.4.1
+* (macOS) Updated LibTIFF to 4.7.1, OpenJPEG to 2.5.4, HarfBuzz to 14.2.1, FreeType to 2.14.3 and Poppler to 26.06.0
+* (macOS) Updated libgit2 to 1.9.4, dav1d to 1.5.3 and FFmpeg to 8.1.1
+* (Windows) Updated gettext/libintl to 0.26, ICU to 78.3, OpenSSL to 4.0.1, curl to 8.20.0 and GLEW to 2.3.1
+* (Windows) Updated HarfBuzz to 14.2.1, FreeType to 2.14.3, libgit2 to 1.9.4, Poppler to 26.02.0 and FFmpeg to 8.1.1
+* Updated the MAME index files to include ROMs up to MAME version 0.289
+* Bundled the August 2026 release of the Mozilla TLS/SSL certificates
+* Translation updates for all languages
+
+### Bug fixes
+
+* Some specific theme configuration for the system status indicators could lead to a crash on battery charge status changes
+* (Android) The MAME4droid Current [Diskette] and MAME4droid Current [Software list] emulator entries for the adam system didn't work correctly
+* (Android) The MAME4droid Current [FM-7 Software list] and MAME4droid Current [FM77AV Software list] emulator entries for the fm7 system didn't work correctly
+* (macOS) Worked around an operating system bug where some server responses like 404 errors could lead to incorrectly reported network errors
+* (macOS) The Stella 2023 RetroArch core could not be used as the es_systems.xml entry was invalid
+
+## Version 3.4.1 / 3.4.1-58
+
+**Release date:** 2026-04-10
+
+### Release overview
+
 This release adds official (although experimental) support for Linux on AArch64, which is aiming for operating systems such as the upcoming SteamOS release for ARM. It also adds support for a lot of new emulators across all the main supported operating systems.
 
-For Android specifically there are multiple new systems enabled, those being Namco-Sega-Nintendo Triforce (triforce), Microsoft Xbox (xbox) and Microsoft Xbox 360 (xbox360). And although the Sega Model 3 (model3) system was technically supported in the previous release, it wasn't really very usable in practice due to only MAME being available for these games, but now this system is also fully usable due to the new SUPER3 emulator. Support for multi-user setups has also been fully rolled out for all RetroArch cores as of this release, meaning ES-DE should now work correctly in Android multi-user environments.
+For Android specifically there are three new systems enabled, those being Namco-Sega-Nintendo Triforce (triforce), Microsoft Xbox (xbox) and Microsoft Xbox 360 (xbox360). And although the Sega Model 3 (model3) system was technically supported in the previous release, it wasn't really usable in practice due to only MAME being available for these games, but now these games are fully playable due to the new SUPER3 emulator. Likewise PICO-8 is now much more usable on Android as the official Raspberry Pi build can be used via an unofficial PICO-8 wrapper. Support for multi-user setups has also been fully rolled out for all RetroArch cores as of this release, meaning ES-DE should now work correctly in Android multi-user environments.
 
 On macOS three new systems have been enabled as well, those being OpenBOR Game Engine (openbor), Namco-Sega-Nintendo Triforce (triforce) and Microsoft Xbox 360 (xbox360).
 
-As for general cross-platform topics, a new language has been added, which is Vietnamese. There are also a couple of general bug fixes and translation updates as well as some dependency library updates. There are also quite a number of new RetroArch cores supported for many systems, see below for all details.
+As for general cross-platform topics, a new language has been added, which is Vietnamese. There are also a couple of general bug fixes and translation updates as well as some dependency library updates. There are also quite a number of new standalone emulators and RetroArch cores added for many systems, see below for all details.
 
 Under the hood the remaining ancient Raspberry Pi specific code and configuration has now been fully removed, meaning there is no longer any device-specific code or configuration whatsoever in ES-DE and everything is instead completely generalized.
 
 ### Detailed list of changes
 
-* (Linux) Added initial support for the ARM64/AArch64 architecture (including its own set of find rules, import rules and system configuration)
+* (Linux) Added initial support for the AArch64/ARM64 architecture (including its own set of find rules, import rules and system configuration)
 * (Android) Changed all RetroArch emulator entries to use %INTERNALDATA% and %EXTERNALDATA% to support multi-user setups
 * (Android) Added support for using the "Launch games on the other screen" option on devices where both screens have the same display name
 * Added translations for Vietnamese (vi_VN)
 * Added North America as an additional ScreenScraper region
+* Added a j2me platform to the j2me system so that these games can be scraped using TheGamesDB
 * Added scraper-start and scraper-end custom events for the multi-scraper
 * (Android) Added support for the Namco-Sega-Nintendo Triforce (triforce) system using the Dolphin RetroArch core
 * (Android) Added support for the Microsoft Xbox (xbox) system using the X1 BOX emulator
@@ -61,25 +208,32 @@ Under the hood the remaining ancient Raspberry Pi specific code and configuratio
 * (Linux) Added systempath find rules for xenia and xenia_canary
 * (Linux) Added staticpath find rules for the new pkgforge-dev AppImage filename for xenia canary
 * (Linux) Added staticpath find rules for the new official xenia canary AppImage
-* Added the ClownMDEmu RetroArch core as an alternative emulator for the genesis, megacd, megacdjp, megadrive, megadrivejp and segacd systems
-* Added the SkyEmu RetroArch core as an alternative emulator for the gb, gba, gbc and nds systems
+* (macOS) Added support for the OpenBOR Game Engine (openbor) system
+* (macOS) Added support for the Namco-Sega-Nintendo Triforce (triforce) system using the Dolphin RetroArch core
+* (macOS) Added support for the Microsoft Xbox 360 (xbox360) system using the XeniOS emulator
+* (macOS) Added the YabaSanshiro RetroArch core as an alternative emulator for the saturn and saturnjp systems
+* (macOS) Added the vitaQuake 3 RetroArch core as an alternative emulator for the quake system
+* (macOS) Added Mariani standalone as the default emulator for the apple2 system
+* (macOS) Added Supermodel standalone as the default emulator for the model3 system
+* (macOS) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
+* Added a popular standalone emulator as the default emulator for the switch system
+* Added the Azahar RetroArch core as the default emulator for the n3ds system
 * Added the AmiArcadia RetroArch core as the default emulator for the arcadia system
-* Added the JollyCV RetroArch core as an alternative emulator for the colecovision system
-* Added the Dolphin RetroArch core as an alternative emulator for the consolearcade system
 * Added the JollyCV RetroArch core as the default emulator for the crvision system
 * Added the Dolphin RetroArch core as the default emulator for the triforce system on Linux and Windows
+* Added the ClownMDEmu RetroArch core as an alternative emulator for the genesis, megacd, megacdjp, megadrive, megadrivejp and segacd systems
+* Added the SkyEmu RetroArch core as an alternative emulator for the gb, gba, gbc and nds systems
+* Added the JollyCV RetroArch core as an alternative emulator for the colecovision system
+* Added the Dolphin RetroArch core as an alternative emulator for the consolearcade system
+* Added Dolphin standalone as an alternative emulator for the consolearcade system
 * Added Dolphin standalone as an alternative emulator for the triforce system
 * Added the Mini vMac RetroArch core as an alternative emulator for the macintosh system
-* Added the Azahar RetroArch core as the default emulator for the n3ds system
 * Added the Craft (Minecraft) RetroArch core as an alternative emulator for the ports system
-* Added a popular standalone emulator as the default emulator for the switch system
 * Added Geargrafx standalone as an alternative emulator for the pcengine, pcenginecd, supergrafx, tg16 and tg-cd systems on Linux, macOS and Windows
 * Added the Geargrafx RetroArch core as an alternative emulator for the pcenginecd and tg-cd systems
 * Added the Gearlynx RetroArch core as an alternative emulator for the atarilynx system
 * Added RPCS3 ISO standalone as an alternative emulator for the consolearcade and ps3 systems on Linux, macOS and Windows
-* Added Dolphin standalone as an alternative emulator for the consolearcade system
 * Added Mesen standalone as an alternative emulator for the gba system on Linux and Windows
-* Added a j2me platform to the j2me system so that these games can be scraped using TheGamesDB
 * Added KEGS standalone as an alternative emulator for the apple2gs system on Linux, macOS and Windows
 * Changed the launch parameter for EasyRPG Player standalone on Linux, macOS and Windows to support zipped games
 * Added the .bigpimg file extension to the atarijaguar and atarijaguarcd systems on Linux and Windows
@@ -90,29 +244,22 @@ Under the hood the remaining ancient Raspberry Pi specific code and configuratio
 * Added the .myv file extension to the colecovision system
 * Added the .img file extension to the macintosh system
 * Added the .xiso file extension to the xbox system
-* (macOS) Added support for the OpenBOR Game Engine (openbor) system
-* (macOS) Added support for the Namco-Sega-Nintendo Triforce (triforce) system using the Dolphin RetroArch core
-* (macOS) Added support for the Microsoft Xbox 360 (xbox360) system using the XeniOS emulator
-* (macOS) Added the YabaSanshiro RetroArch core as an alternative emulator for the saturn and saturnjp systems
-* (macOS) Added the vitaQuake 3 RetroArch core as an alternative emulator for the quake system
-* (macOS) Added Mariani standalone as the default emulator for the apple2 system
-* (macOS) Added Supermodel standalone as the default emulator for the model3 system
-* (macOS) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * (Linux) Changed to building the AppImages using appimagetool-uruntime provided by the PkgForge project
 * (Linux) Changed the AppImage build scripts to use the bundled TLS/SSL certificates
 * (Linux) Added an AppImage build script for the AArch64 architecture
 * (Linux) Added RetroArch core find rule entries for NixOS and Nixpkgs
-* (linear-es-de) Updated the system metadata from the upstream system-metadata repository
 * (linear-es-de) Added an OLED color scheme (thanks c-fan for the patch)
+* (linear-es-de) Updated the system metadata from the upstream system-metadata repository
 * The theme downloader will now use the bundled certificates on all platforms if built with the BUNDLED_CERTS option
 * Removed the obsolete and unsupported CEC functionality
 * Removed all specific configuration and code for the Raspberry Pi
 * Updated LunaSVG to commit b350c01cb09b48f1e894463dcb54d1b46d407162
+* (macOS) Added zstd as a dependency
 * (macOS) Updated Ogg to 1.3.6
 * (macOS) Removed obsolete entries for the Vorbis and Opus encoders from the build scripts
+* (Windows) Updated OpenSSL to 3.6.1
 * Updated the MAME index files to include ROMs up to MAME version 0.286
 * Bundled the February 2026 release of the Mozilla TLS/SSL certificates
-* (Windows) Updated OpenSSL to 3.6.1
 * Translation updates for all languages
 
 ### Bug fixes

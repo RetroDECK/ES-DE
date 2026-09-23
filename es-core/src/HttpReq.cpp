@@ -238,6 +238,17 @@ HttpReq::HttpReq(const std::string& url, bool scraperRequest)
         return;
     }
 
+#if defined(__APPLE__)
+    // HTTP2 is broken in the curl build that Apple supplies so it's necessary to use HTTP/1.1
+    // instead or there can be strange behaviors like 404 errors not being handled correctly.
+    err = curl_easy_setopt(mHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
+    }
+#endif
+
     // Add the handle to the multi. This is done in pollCurl(), running in a separate thread.
     std::unique_lock<std::mutex> handleLock {sHandleMutex};
     sAddHandleQueue.push(mHandle);

@@ -124,6 +124,12 @@
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Nintendo 3DS, viết tắt là 3DS, là một hệ máy chơi game cầm tay do Nintendo sản xuất. Thiết bị này có khả năng hiển thị hiệu ứng 3D lập thể mà không cần sử dụng kính 3D hay các phụ kiện bổ sung. Nintendo đã công bố thiết bị này vào tháng 3 năm 2010 và chính thức ra mắt tại triển lãm E3 2010 vào ngày 15 tháng 6 năm 2010. Máy chơi game này là phiên bản kế thừa của Nintendo DS, hỗ trợ khả năng tương thích ngược với các trò chơi video trên Nintendo DS và Nintendo DSi thế hệ trước.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>任天堂 3DS，简称 3DS，是任天堂公司生产的一款便携式游戏机。它能够显示立体 3D 效果，无需使用 3D 眼镜或其他配件。任天堂于 2010 年 3 月宣布推出该设备，并于 2010 年 6 月 15 日在 E3 2010 上正式发布。该游戏机接替了任天堂 DS，具有向后兼容旧版任天堂 DS 和任天堂 DSi 视频游戏的特点。</systemDescription>

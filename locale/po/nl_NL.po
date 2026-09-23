@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-15 09:33+0200\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-04 12:21+0200\n"
 "Last-Translator: Stefan <s.vandenbroekprive@gmail.com>\n"
 "Language-Team: Nederlands <info@es-de.org>\n"
 "Language: nl_NL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Netwerkfout (status:"
@@ -613,6 +613,9 @@ msgstr "BEZIG..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "KON NIETS VINDEN OM TE IMPORTEREN"
 
+msgid "import"
+msgstr "importeren"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -632,15 +635,6 @@ msgstr "MAAK UW KEUZE"
 msgid "IMPORT"
 msgstr "IMPORTEREN"
 
-msgid "import"
-msgstr "importeren"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "GESELECTEERDE %i ENTRIES"
-msgstr[1] "GESELECTEERDE %i ENTRIES"
-
 msgid "SELECT ALL"
 msgstr "ALLES"
 
@@ -652,6 +646,12 @@ msgstr "GEEN"
 
 msgid "select none"
 msgstr "selecteer geen"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "GESELECTEERDE %i ENTRIES"
+msgstr[1] "GESELECTEERDE %i ENTRIES"
 
 msgid "FILTER GAMELIST"
 msgstr "FILTER GAMELIJST"
@@ -1110,6 +1110,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "DOORGAAN"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "OP EEN ANDER SCHERM STARTEN"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "GAME MEDIA GIDS"
 
@@ -1210,6 +1213,12 @@ msgstr "VIDEO HARDWARE DECODERING (EXPERIMENTEEL)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "UPSCALE VIDEOFRAME-SNELHEID NAAR 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "ZOEK NAAR GEÏNSTALLEERDE RETROARCH-KERNEN (EXPERIMENTEEL)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "GEBRUIK RETROARCH IN DE SAF MODUS (NIET AANBEVOLEN)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ALTERNATIEVE EMULATORS PER SPEL INSCHAKELEN"
 
@@ -1219,14 +1228,14 @@ msgstr "VERBORGEN BESTANDEN EN MAPPEN WEERGEVEN"
 msgid "SHOW HIDDEN GAMES"
 msgstr "VERBORGEN SPELLETJES TONEN"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "SPELLEN OP HET ANDERE SCHERM STARTEN"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "AANGEPASTE EVENEMENTEN-SCRIPTS INSCHAKELEN"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "BLADEREN DOOR AANGEPASTE EVENEMENTEN"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "SURFEVENEMENTEN ALS NIET-BLOKKEREND UITVOEREN"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ALLEEN GAMES UIT GAMELIST.XML-BESTANDEN TONEN"
@@ -1327,11 +1336,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "SCREENSAVER-INSTELLINGEN"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "START OP EEN ANDER SCHERM INSCHAKELEN"
+
 msgid "choose"
 msgstr "kiezen"
 
 msgid "close menu"
 msgstr "menu sluiten"
+
+msgid "System default (Other)"
+msgstr "Systeemstandaard (Overig)"
+
+msgid "System default (Primary)"
+msgstr "Systeemstandaard (Primair)"
+
+msgid "Always on other"
+msgstr "Altijd op de andere"
+
+msgid "Always on primary"
+msgstr "Altijd op primair"
 
 msgid "EDIT METADATA"
 msgstr "METADATA BEWERKEN"
@@ -2509,6 +2533,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "SELECTEER ALTERNATIEVE EMULATOR"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "OP HET SCHERM STARTEN"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "OP WELK SCHERM STARTEN"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "MAP LINK"
 
@@ -2763,8 +2795,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "WISSEN (LEEG LATEN OM STANDAARDPAD TE HERSTELLEN)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2808,9 +2840,9 @@ msgstr "UPDATE"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "DE APPLICATIE-UPDATER DOWNLOADT DE NIEUWSTE PORTABLE WINDOWS-RELEASE VOOR U, "

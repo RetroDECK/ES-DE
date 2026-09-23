@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0286.xml -->
+<!-- Last updated with information from MAME driver file mame0289.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
@@ -37,6 +37,7 @@
 <bios>decocass</bios>
 <bios>f355bios</bios>
 <bios>f355dlx</bios>
+<bios>galgames</bios>
 <bios>galgbios</bios>
 <bios>gp_110</bios>
 <bios>gq863</bios>
@@ -50,8 +51,8 @@
 <bios>konamigv</bios>
 <bios>konamigx</bios>
 <bios>konendev</bios>
-<bios>kpython2</bios>
 <bios>kpython</bios>
+<bios>kpython2</bios>
 <bios>kviper</bios>
 <bios>lindbios</bios>
 <bios>list.txt</bios>
@@ -61,8 +62,8 @@
 <bios>megaplay</bios>
 <bios>megatech</bios>
 <bios>miuchiz</bios>
-<bios>naomi2</bios>
 <bios>naomi</bios>
+<bios>naomi2</bios>
 <bios>naomigd</bios>
 <bios>neogeo</bios>
 <bios>nichidvd</bios>

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>قناة فيرتشايلد F هي وحدة تحكم ألعاب فيديو منزلية أصدرتها شركة فيرتشايلد لأشباه الموصلات في نوفمبر 1976.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Fairchild Channel F è una console per videogiochi domestica rilasciata da Fairchild Semiconductor nel novembre 1976.<br />It has the distinction of being the first programmable ROM cartridge–based video game console, and the first console to use a microprocessor. It was launched as the Video Entertainment System, or VES, but when Atari released their VCS the next year, Fairchild renamed it's machine.</systemDescription>
+            <systemDescription>Il Fairchild Channel F è una console per videogiochi domestica rilasciata da Fairchild Semiconductor, nel novembre 1976.<br />Ha il primato di essere la prima console per videogiochi programmabile basata su cartucce ROM e la prima ad utilizzare un microprocessore. Fu lanciata con il nome di "Video Entertainment System" (o VES), ma quando l'anno successivo Atari mise in commercio la propria VCS, Fairchild cambiò il nome della sua macchina.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Fairchild Channel F är en hemkonsol för videospel som släpptes av Fairchild Semiconductor i november 1976.<br />It has the distinction of being the first programmable ROM cartridge–based video game console, and the first console to use a microprocessor. It was launched as the Video Entertainment System, or VES, but when Atari released their VCS the next year, Fairchild renamed it's machine.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Fairchild Channel F là một hệ máy chơi game gia đình do Fairchild Semiconductor phát hành vào tháng 11 năm 1976. </systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

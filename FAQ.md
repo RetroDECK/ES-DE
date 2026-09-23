@@ -26,6 +26,10 @@ EmuDeck is an installer that installs ES-DE and a number of emulators. There is 
 
 See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
 
+## I want to add ES-DE to Steam, do you have any custom graphics that I could use for this?
+
+Yes we have uploaded official assets to SteamGridDB at [this game entry](https://www.steamgriddb.com/game/5323156), and regarding the specific official images there's the [logo](https://www.steamgriddb.com/logo/178430), the [horizontal grid](https://www.steamgriddb.com/grid/825519), the [vertical grid](https://www.steamgriddb.com/grid/825516), the [hero](https://www.steamgriddb.com/hero/180603) and the [icon](https://www.steamgriddb.com/icon/14837).
+
 ## Why can't I press the up button in menus to jump to the bottom row and vice versa?
 
 Menus in ES-DE are not lists but grids, sometimes there is only a list but sometimes there are buttons beneath the list. Enabling the up and down buttons to wrap around would therefore not work consistently as it would sometimes jump to the last row of the list and sometimes to a button, requiring a different number of button presses depending on the menu layout. This type of contextual navigation feels very weird in practice, especially when you have to press the up button twice to get to the bottom of a list. The solution is instead to use the shoulder buttons (which will jump six rows), or the trigger buttons (which will jump to the first and last row). These buttons work consistently throughout the application and avoid the strange side effects just mentioned.
@@ -131,7 +135,7 @@ These files are not loaded by default, only files placed in ES-DE/gamelists/ are
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes you could for example use [Skyscraper](https://github.com/Gemba/skyscraper), [Skraper](https://www.skraper.net) or [ARRM](http://www.jujuvincebros.fr/wiki/arrm/doku.php?id=arrm_relooked_en:start-en).
+Yes you could for example use [Skyscraper](https://github.com/Gemba/skyscraper), [Skraper](https://www.skraper.net), [ARRM](http://www.jujuvincebros.fr/wiki/arrm/doku.php?id=arrm_relooked_en:start-en) or [Gamelist Manager](https://github.com/RobG66/Gamelist-Manager).
 
 There is a video on the official ES-DE YouTube channel on how to use Skraper with ES-DE:\
 https://www.youtube.com/watch?v=23LLH96P7PE

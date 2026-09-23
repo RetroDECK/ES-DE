@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-11-19 15:51+0700\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-12 19:49+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Tiếng Việt <info@es-de.org>\n"
 "Language: vi_VN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Lỗi mạng (trạng thái:"
@@ -606,6 +606,9 @@ msgstr "ĐANG XỬ LÝ..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "KHÔNG TÌM THẤY GÌ ĐỂ NHẬP VÀO"
 
+msgid "import"
+msgstr "nhập"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -624,14 +627,6 @@ msgstr "HÃY CHỌN"
 msgid "IMPORT"
 msgstr "NHẬP"
 
-msgid "import"
-msgstr "nhập"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "ĐÃ NHẬP %i MỤC"
-
 msgid "SELECT ALL"
 msgstr "CHỌN TẤT CẢ"
 
@@ -643,6 +638,11 @@ msgstr "BỎ CHỌN TẤT CẢ"
 
 msgid "select none"
 msgstr "bỏ chọn"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "ĐÃ NHẬP %i MỤC"
 
 msgid "FILTER GAMELIST"
 msgstr "LỌC DANH SÁCH TRÒ CHƠI"
@@ -1098,6 +1098,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "TIẾP TỤC"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "MỞ TRÊN MÀN HÌNH KHÁC"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "THƯ MỤC PHƯƠNG TIỆN TRÒ CHƠI"
 
@@ -1198,6 +1201,12 @@ msgstr "GIẢI MÃ VIDEO BẰNG PHẦN CỨNG (THỬ NGHIỆM)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "NÂNG TẦN SỐ KHUNG HÌNH VIDEO LÊN 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "TRUY VẤN CÁC LÕI RETROARCH ĐÃ CÀI ĐẶT (THỬ NGHIỆM)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "SỬ DỤNG RETROARCH Ở CHẾ ĐỘ SAF (KHÔNG ĐƯỢC KHUYẾN NGHỊ)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "CHỌN GIẢ LẬP CHO TỪNG TRÒ CHƠI"
 
@@ -1207,14 +1216,14 @@ msgstr "HIỂN THỊ TỆP VÀ THƯ MỤC ẨN"
 msgid "SHOW HIDDEN GAMES"
 msgstr "HIỂN THỊ TRÒ CHƠI ẨN"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "BẮT ĐẦU TRÒ CHƠI TRÊN MÀN HÌNH KHÁC"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "BẬT TẬP LỆNH SỰ KIỆN"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "TÙY CHỈNH KHI DUYỆT"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "CHẠY CÁC SỰ KIỆN DUYỆT WEB Ở CHẾ ĐỘ KHÔNG CHẶN"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "CHỈ HIỂN THỊ TRÒ CHƠI TỪ TỆP GAMELIST.XML"
@@ -1315,11 +1324,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "CÀI ĐẶT MÀN HÌNH CHỜ"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "KÍCH HOẠT CHỨC NĂNG KHỞI CHẠY TRÊN MÀN HÌNH KHÁC"
+
 msgid "choose"
 msgstr "lựa chọn"
 
 msgid "close menu"
 msgstr "đóng menu"
+
+msgid "System default (Other)"
+msgstr "Mặc định của hệ thống (Khác)"
+
+msgid "System default (Primary)"
+msgstr "Mặc định của hệ thống (Chính)"
+
+msgid "Always on other"
+msgstr "Khởi chạy trên màn hình khác"
+
+msgid "Always on primary"
+msgstr "Khởi chạy trên màn hình chính"
 
 msgid "EDIT METADATA"
 msgstr "CHỈNH SỬA DỮ LIỆU"
@@ -2483,6 +2507,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "CHỌN TRÌNH GIẢ LẬP THAY THẾ"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "KHỞI CHẠY TRÊN MÀN HÌNH"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "PHÁT TRÊN MÀN HÌNH NÀO"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "LIÊN KẾT THƯ MỤC"
 
@@ -2732,8 +2764,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "XÓA (ĐỂ TRỐNG ĐỂ ĐẶT LẠI ĐƯỜNG DẪN MẶC ĐỊNH)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2775,9 +2807,9 @@ msgstr "CẬP NHẬT"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "TRÌNH CẬP NHẬT ỨNG DỤNG SẼ TẢI PHIÊN BẢN DI ĐỘNG MỚI NHẤT CHO WINDOWS, NHƯNG "

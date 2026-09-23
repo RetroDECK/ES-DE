@@ -171,7 +171,9 @@ private:
                                                                    "systemName",
                                                                    "systemFullname",
                                                                    "sourceSystemName",
-                                                                   "sourceSystemFullname"};
+                                                                   "sourceSystemFullname",
+                                                                   "customCollectionNameGrouped",
+                                                                   "customCollectionNameGames"};
 
     Renderer* mRenderer;
     std::string mDefaultValue;

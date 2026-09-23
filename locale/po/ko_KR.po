@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-13 20:58+0200\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-08 20:53+0200\n"
 "Last-Translator: wakeboxer <ljhmd0825@gmail.com>\n"
 "Language-Team: 한국어 <info@es-de.org>\n"
 "Language: ko_KR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "네트워크 오류 (상태:"
@@ -601,6 +601,9 @@ msgstr "실행 중..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "가져오기할 것을 찾을 수 없었습니다"
 
+msgid "import"
+msgstr "가져오기"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -619,14 +622,6 @@ msgstr "선택하세요"
 msgid "IMPORT"
 msgstr "가져오기"
 
-msgid "import"
-msgstr "가져오기"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "가져옴 %i 개 항목"
-
 msgid "SELECT ALL"
 msgstr "모두 선택"
 
@@ -638,6 +633,11 @@ msgstr "선택 해제"
 
 msgid "select none"
 msgstr "선택 해제"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "가져옴 %i 개 항목"
 
 msgid "FILTER GAMELIST"
 msgstr "게임리스트 필터"
@@ -1091,6 +1091,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "진행하기"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "다른 화면에서 실행"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "게임 미디어 디렉터리"
 
@@ -1191,6 +1194,12 @@ msgstr "비디오 하드웨어 디코딩 (실험적)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "60FPS까지 비디오 프레임 레이트 업스케일링"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "설치된 RetroArch 코어 조회 (실험적 기능)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "SAF 모드에서 RetroArch 사용 (권장하지 않음)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "게임별 대체 에뮬레이터 사용 가능"
 
@@ -1200,14 +1209,14 @@ msgstr "숨긴 파일 및 폴더 보이기"
 msgid "SHOW HIDDEN GAMES"
 msgstr "숨긴 게임 보이기"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "다른 화면에서 게임 실행"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "커스텀 이벤트 스크립트 사용 가능"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "커스텀 이벤트 탐색"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "브라우징 이벤트를 비차단(논블로킹) 방식으로 실행"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "GAMELIST.XML 파일에 있는 게임만 보이기"
@@ -1307,11 +1316,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "화면보호기 설정"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "다른 화면에서 실행 활성화"
+
 msgid "choose"
 msgstr "이동"
 
 msgid "close menu"
 msgstr "메뉴 닫기"
+
+msgid "System default (Other)"
+msgstr "시스템 기본값(기타)"
+
+msgid "System default (Primary)"
+msgstr "시스템 기본값(첫 번째)"
+
+msgid "Always on other"
+msgstr "항상 다른 화면에"
+
+msgid "Always on primary"
+msgstr "항상 첫 번째 화면에 표시"
 
 msgid "EDIT METADATA"
 msgstr "메타데이터 편집"
@@ -2462,6 +2486,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "대체 에뮬레이터 선택"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "화면에서 실행"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "어떤 화면에서 실행할까요"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "폴더 링크"
 
@@ -2657,8 +2689,8 @@ msgid ""
 msgstr ""
 "시스템 구성 파일을 구문 분석할 수 없습니다. 사용자 정의된 es_systems.xml 파일"
 "이 있는 경우 XML 구문에 문제가 있을 수 있습니다. 사용자 정의 시스템 파일이 없"
-"으면 ES-DE 설치가 손상된 것입니다. 추가 정보는 애플리케이션 로그 파일 es_log."
-"txt를 참조하세요"
+"으면 ES-DE 설치가 손상된 것입니다. 추가 정보는 애플리케이션 로그 파일 "
+"es_log.txt를 참조하세요"
 
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
@@ -2705,8 +2737,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "비우기 (기본 경로로 재설정 위해 공란으로 비우기)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2748,9 +2780,9 @@ msgstr "업데이트"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "어플리케이션 업데이트 프로그램이 최신 휴대용 WINDOWS 릴리스를 다운로드하지만 "

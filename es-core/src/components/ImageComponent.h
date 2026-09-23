@@ -129,6 +129,7 @@ public:
 private:
     Renderer* mRenderer;
     glm::vec2 mTargetSize;
+    float mScaleFactor;
 
     bool mFlipX;
     bool mFlipY;

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-19 16:57+0100\n"
+"POT-Creation-Date: 2026-09-08 19:49+0200\n"
+"PO-Revision-Date: 2026-09-08 19:45+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Português (Portugal) <info@es-de.org>\n"
 "Language: pt_PT\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Erro de rede (estado:"
@@ -614,6 +614,9 @@ msgstr "A PROCESSAR..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "NÃO FOI ENCONTRADO NADA PARA IMPORTAR"
 
+msgid "import"
+msgstr "importar"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -632,15 +635,6 @@ msgstr "FAÇA A SUA SELEÇÃO"
 msgid "IMPORT"
 msgstr "IMPORTAR"
 
-msgid "import"
-msgstr "importar"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "IMPORTADA %i ENTRADA"
-msgstr[1] "IMPORTADAS %i ENTRADAS"
-
 msgid "SELECT ALL"
 msgstr "TODOS"
 
@@ -652,6 +646,12 @@ msgstr "NENHUM"
 
 msgid "select none"
 msgstr "nenhum"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "IMPORTADA %i ENTRADA"
+msgstr[1] "IMPORTADAS %i ENTRADAS"
 
 msgid "FILTER GAMELIST"
 msgstr "FILTRAR LISTA DE JOGOS"
@@ -1107,6 +1107,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "CONTINUAR"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "ABRIR EM OUTRA TELA"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "DIRETÓRIO DE MÍDIA DO JOGO"
 
@@ -1207,6 +1210,12 @@ msgstr "DECODIFICAÇÃO DE VÍDEO POR HARDWARE (EXPERIMENTAL)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "ESCALAR VÍDEOS PARA 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "LISTAR NÚCLEOS INSTALADOS DO RETROARCH (EXPERIMENTAL)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "USAR O RETROARCH EM MODO SAF (NÃO RECOMENDADO)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ATIVAR EMULADORES ALTERNATIVOS POR JOGO"
 
@@ -1216,14 +1225,14 @@ msgstr "MOSTRAR FICHEIROS E PASTAS OCULTOS"
 msgid "SHOW HIDDEN GAMES"
 msgstr "MOSTRAR JOGOS OCULTOS"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "INICIAR JOGOS NO OUTRO ECRÃ"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ATIVAR SCRIPTS PERSONALIZADOS"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "ATIVAR SCRIPTS DE NAVEGAÇÃO"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "RODAR EVENTOS DE NAVEGAÇÃO SEM BLOQUEIO"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "INCLUIR APENAS JOGOS DO GAMELIST.XML"
@@ -1324,11 +1333,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "SCREENSAVER"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "ATIVAR EXECUÇÃO EM OUTRA TELA"
+
 msgid "choose"
 msgstr "escolher"
 
 msgid "close menu"
-msgstr "fechar menu"
+msgstr "fechar o menu"
+
+msgid "System default (Other)"
+msgstr "Padrão do sistema (Outro)"
+
+msgid "System default (Primary)"
+msgstr "Padrão do sistema (Primário)"
+
+msgid "Always on other"
+msgstr "Sempre no outro"
+
+msgid "Always on primary"
+msgstr "Sempre no primário"
 
 msgid "EDIT METADATA"
 msgstr "EDITAR METADADOS"
@@ -2518,6 +2542,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "EMULADOR ALTERNATIVO"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "ABRIR NA TELA"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "ABRIR EM QUAL TELA"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "LIGAÇÃO A PASTA"
 
@@ -2772,8 +2804,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "LIMPAR (DEIXE VAZIO PARA CAMINHO PREDEFINIDO)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2817,9 +2849,9 @@ msgstr "ATUALIZAR"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "O ATUALIZADOR DA APLICAÇÃO VAI DESCARREGAR A ÚLTIMA VERSÃO PORTÁTIL PARA "

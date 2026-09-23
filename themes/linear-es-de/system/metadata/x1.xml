@@ -35,7 +35,7 @@ Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos
 بينما كان X1 يكافح من أجل البيع، كان جهاز PC8801 (من NEC) يحظى بشعبية كبيرة في السوق اليابانية. في عام 1984، أصدرت Sharp سلسلة X1 توربو X1 برسومات عالية الدقة (640 × 400، بينما كان X1 يحتوي على 640 × 200). كان بها العديد من التحسينات، لكن سرعة الساعة كانت لا تزال 4 ميجاهرتز فقط. في عام 1986، أصدرت Sharp سلسلة X1 توربو Z سلسلة X1 مع شاشة RGB تناظرية ملونة 4096. وأخيرًا تم إصدار توأم X1، الذي كان يحتوي على محرك كمبيوتر في الخزانة، كآخر جهاز من سلسلة X1 في عام 1987. ثم خلفت هذه السلسلة سلسلة X68000 سلسلة X68000.
 
 تواصل Sharp بيع أجهزة الكمبيوتر المكتبي/التلفزيون المكتبي في اليابان من خلال خط الإنترنت Aquos، حيث يتوفر نظام ألوان أحمر على غرار X1.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -126,7 +126,7 @@ Sharp continues to sell desktop PC/TV combos in Japan through its Internet Aquos
         <variables>
             <systemDescription>L'X1 (エックスワン, Ekkusuwan), talvolta chiamato Sharp X1, è una serie di home computer rilasciati da Sharp Corporation dal 1982 al 1988. Era basato su una CPU Z80.
 
-Nonostante la Divisione Computer di Sharp Corporation avesse rilasciato la serie MZ, improvvisamente la Divisione Televisione rilasciò una nuova serie di computer chiamata X1. All'epoca dell'uscita dell'X1 originale, tutti gli altri home computer erano generalmente dotati di un linguaggio BASIC in ROM. Tuttavia, l'X1 non aveva una ROM BASIC e doveva caricare l'interprete Hu-BASIC da una cassetta. Il lato positivo è che questo concetto significava avere a disposizione un'area RAM libera il più grande possibile quando non si utilizzava il BASIC. Questa politica era stata originariamente copiata dalla serie Sharp MZ, che in Giappone veniva chiamata "computer pulito". La forma del cabinet dell'X1 era inoltre molto più elegante rispetto agli altri computer dell'epoca ed era possibile selezionare una gamma di colori del cabinet (tra cui il rosso).
+Nonostante la Divisione Computer di Sharp Corporation avesse rilasciato la serie MZ, improvvisamente la Divisione Television rilasciò una nuova serie di computer chiamata X1. All'epoca dell'uscita dell'X1 originale, tutti gli altri home computer erano generalmente dotati di un linguaggio BASIC in ROM. Tuttavia, l'X1 non aveva una ROM BASIC e doveva caricare l'interprete Hu-BASIC da una cassetta. Il lato positivo è che questo concetto significava avere a disposizione un'area RAM libera il più grande possibile quando non si utilizzava il BASIC. Questa politica era stata originariamente copiata dalla serie Sharp MZ, che in Giappone veniva chiamata "computer pulito". La forma del cabinet dell'X1 era inoltre molto più elegante rispetto agli altri computer dell'epoca ed era possibile selezionare una gamma di colori del cabinet (tra cui il rosso).
 
 Il monitor RGB dell'X1 era dotato di sintonizzatore televisivo e lo schermo del computer poteva essere sovrapposto alla TV. Tutte le funzioni del televisore potevano essere controllate da un programma per computer. Il font dei caratteri era completamente programmabile (PCG) con colori a 4 bit e veniva utilizzato efficacemente in molti giochi. L'intera memoria VRAM era mappata nell'area I/O, in modo da poterla controllare senza dover cambiare banco. Poiché l'X1 aveva queste caratteristiche, era molto potente per il software di gioco.
 
@@ -274,6 +274,20 @@ Medan X1 hade svårt att sälja blev PC8801 (från NEC) snabbt populär på den 
 
 Sharp fortsätter att sälja stationära PC/TV-kombinationer i Japan genom sin Internet Aquos-linje, där en röd färgskala i X1-stil finns tillgänglig.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>X1 (エックスワン, Ekkusuwan), đôi khi còn được gọi là Sharp X1, là dòng máy tính gia đình do Tập đoàn Sharp phát hành từ năm 1982 đến năm 1988. Dòng máy này sử dụng bộ vi xử lý Z80.
+
+Mặc dù Bộ phận Máy tính của Sharp Corporation đã phát hành dòng MZ, nhưng đột nhiên Bộ phận Truyền hình lại phát hành một dòng máy tính mới có tên là X1. Vào thời điểm X1 ban đầu được phát hành, tất cả các máy tính gia đình khác thường có ngôn ngữ BASIC trong ROM. Tuy nhiên, X1 không có ROM BASIC và phải tải trình thông dịch Hu-BASIC từ băng cassette. Tuy nhiên, mặt tích cực là khái niệm này cho phép có một vùng RAM trống lớn nhất có thể khi không sử dụng BASIC. Chính sách này ban đầu được sao chép từ dòng MZ của Sharp, và chúng được gọi là "máy tính sạch" tại Nhật Bản. Hình dáng vỏ máy của X1 cũng phong cách hơn nhiều so với các mẫu khác cùng thời, và người dùng có thể lựa chọn nhiều màu sắc vỏ máy (bao gồm cả màu Đỏ).
+
+Màn hình hiển thị RGB của X1 tích hợp bộ thu sóng truyền hình, cho phép hiển thị màn hình máy tính chồng lên hình ảnh TV. Tất cả các chức năng TV đều có thể được điều khiển thông qua chương trình máy tính. Phông chữ ký tự hoàn toàn có thể lập trình (còn gọi là PCG) với màu 4 bit, và được sử dụng hiệu quả trong nhiều trò chơi. Toàn bộ bộ nhớ VRAM được ánh xạ vào khu vực I/O, do đó có thể điều khiển mà không cần chuyển đổi bank. Vì X1 có những tính năng này, nó rất mạnh mẽ cho phần mềm trò chơi.
+
+Trong khi X1 gặp khó khăn trong việc bán hàng, PC8801 (của NEC) đang nhanh chóng trở nên phổ biến trên thị trường Nhật Bản. Năm 1984, Sharp ra mắt dòng X1 Turbo với đồ họa độ phân giải cao (640x400, trong khi X1 chỉ có 640x200). Dòng máy này có nhiều cải tiến, nhưng tốc độ xung nhịp vẫn chỉ là 4 MHz. Năm 1986, Sharp ra mắt dòng X1 Turbo Z với màn hình RGB analog 4096 màu. Một phiên bản X1 Twin, có tích hợp PC-Engine trong thùng máy, cuối cùng được ra mắt như máy cuối cùng của dòng X1 vào năm 1987. Sau đó, dòng máy này được thay thế bởi dòng X68000.
+
+Sharp tiếp tục bán các sản phẩm kết hợp máy tính để bàn và TV tại Nhật Bản thông qua dòng sản phẩm Internet Aquos, trong đó có sẵn tùy chọn màu đỏ theo phong cách X1.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

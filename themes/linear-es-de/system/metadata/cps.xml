@@ -76,7 +76,7 @@ Među 33 naslova objavljenih za originalni sustav CP-a uključivali su Street Fi
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il CP System (CPシステム, shīpī shisutemu, CPS in breve) è una scheda di sistema arcade sviluppata da Capcom che eseguiva software di gioco memorizzato su schede secondarie rimovibili. Più di due dozzine di titoli arcade sono stati rilasciati per il CPS-1, prima che Capcom spostasse lo sviluppo dei giochi sul suo successore, il CP System II.
+            <systemDescription>Il Capcom Play System (CPシステム, shīpī shisutemu, CPS in breve) è una scheda di sistema arcade sviluppata da Capcom che eseguiva software di gioco memorizzato su schede secondarie rimovibili. Più di due dozzine di titoli arcade sono stati rilasciati per il CPS-1, prima che Capcom spostasse lo sviluppo dei giochi sui suoi due successori, il CP System II prima (1993) ed il CP System III poi (1996).
 
 Tra i 33 titoli usciti per il CP System originale vi sono Street Fighter II: The World Warrior e i suoi primi due seguiti, Street Fighter II: Champion Edition e Street Fighter II: Hyper Fighting.</systemDescription>
             <systemHardwareType>Arcade</systemHardwareType>
@@ -160,6 +160,14 @@ Printre cele 33 de titluri lansate pentru sistemul CP original se numără Stree
 
 Bland de 33 titlar som släpptes till det ursprungliga CP-systemet fanns bland annat Street Fighter II: The World Warrior och dess två första uppföljare, Street Fighter II: Champion Edition och Street Fighter II: Hyper Fighting.</systemDescription>
             <systemHardwareType>Arkad</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ thống CP (CPシステム, shīpī shisutemu, viết tắt là CPS) là một bo mạch hệ thống máy arcade do Capcom phát triển, cho phép chạy phần mềm trò chơi được lưu trữ trên các bo mạch con có thể tháo lắp. Hơn hai chục tựa game arcade đã được phát hành cho CPS-1, trước khi Capcom chuyển sang phát triển trò chơi trên hệ thống kế thừa của nó, CP System II.
+
+Trong số 33 tựa game được phát hành cho CP System ban đầu có Street Fighter II: The World Warrior và hai phần tiếp theo đầu tiên của nó, Street Fighter II: Champion Edition và Street Fighter II: Hyper Fighting.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

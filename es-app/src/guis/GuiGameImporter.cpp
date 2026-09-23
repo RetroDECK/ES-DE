@@ -371,6 +371,7 @@ std::vector<HelpPrompt> GuiGameImporter::getHelpPrompts()
     if (mSelectorWindow) {
         std::vector<HelpPrompt> prompts {mSelectorMenu->getHelpPrompts()};
         prompts.push_back(HelpPrompt("b", _("cancel")));
+        prompts.push_back(HelpPrompt("y", _("import")));
         return prompts;
     }
     else {
@@ -386,6 +387,7 @@ void GuiGameImporter::pressedStart()
     if (mNoConfig)
         return;
 
+    mFileList.clear();
     Utils::FileSystem::removeDirectory(mTempDir, true);
 
     mTargetSystemDir = mTargetSystem->getSelected();
@@ -493,8 +495,6 @@ void GuiGameImporter::selectorWindow()
                   << (inputFileList.size() == 1 ? " entry" : " entries") << " for system \""
                   << mTargetSystemDir << "\"";
 
-    std::vector<std::pair<std::string, std::string>> fileList;
-
 #if defined(__ANDROID__)
     const bool darkColorScheme {Settings::getInstance()->getString("MenuColorScheme") != "light"};
 #endif
@@ -526,16 +526,16 @@ void GuiGameImporter::selectorWindow()
         }
 
         if (Utils::FileSystem::exists(mediaFile)) {
-            fileList.emplace_back(std::make_pair(
+            mFileList.emplace_back(std::make_pair(
                 file, (Utils::FileSystem::exists(mediaFileAdditional) ? mediaFileAdditional :
                                                                         mediaFile)));
             media->setImage(mediaFile);
         }
         else {
-            fileList.emplace_back(std::make_pair(file, ""));
+            mFileList.emplace_back(std::make_pair(file, ""));
         }
 #else
-        fileList.emplace_back(std::make_pair(file, ""));
+        mFileList.emplace_back(std::make_pair(file, ""));
 #endif
 
         auto checkbox = std::make_shared<ImageComponent>();
@@ -564,109 +564,7 @@ void GuiGameImporter::selectorWindow()
         mSelectorMenu->addRow(row);
     }
 
-    mSelectorMenu->addButton(_("IMPORT"), _("import"), [this, fileList] {
-        const std::string removeEntries {mRemoveEntries->getSelected()};
-#if defined(__ANDROID__)
-        const bool importMedia {mImportMedia->getState()};
-        const bool overwriteMedia {mImportMediaOverwrite->getState()};
-#endif
-        int numEntriesImported {0};
-
-        if (removeEntries == "unselected") {
-            for (auto& file : Utils::FileSystem::getDirContent(
-                     FileData::getROMDirectory() + mTargetSystemDir, false)) {
-#if defined(_WIN64)
-                if (Utils::String::toLower(Utils::FileSystem::getExtension(file)) ==
-                    Utils::String::toLower(mFileExtension)) {
-                    LOG(LogInfo) << "GuiGameImporter: Removed file \""
-                                 << Utils::String::replace(file, "/", "\\") << "\"";
-#elif defined(__APPLE__)
-                if (Utils::String::toLower(Utils::FileSystem::getExtension(file)) ==
-                    Utils::String::toLower(mFileExtension)) {
-                    LOG(LogInfo) << "GuiGameImporter: Removed file \"" << file << "\"";
-#else
-                if (Utils::FileSystem::getExtension(file) == mFileExtension) {
-                    LOG(LogInfo) << "GuiGameImporter: Removed file \"" << file << "\"";
-#endif
-                    Utils::FileSystem::removeFile(file);
-                }
-            }
-        }
-
-        for (int i {0}; i < static_cast<int>(mCheckboxes.size()); ++i) {
-            const std::string systemDir {FileData::getROMDirectory() + mTargetSystemDir};
-#if defined(__ANDROID__)
-            const std::string mediaDir {FileData::getMediaDirectory() + mTargetSystemDir + "/" +
-                                        mMediaTargetDir};
-#endif
-            if (!Utils::FileSystem::exists(systemDir))
-                Utils::FileSystem::createDirectory(systemDir);
-
-            if (!Utils::FileSystem::exists(systemDir))
-                return;
-
-#if defined(__ANDROID__)
-            if (importMedia) {
-                if (!Utils::FileSystem::exists(mediaDir))
-                    Utils::FileSystem::createDirectory(mediaDir);
-
-                if (!Utils::FileSystem::exists(mediaDir))
-                    return;
-            }
-#endif
-
-            if (mCheckboxes[i]->getEnabled()) {
-                mHasUpdates = true;
-                ++numEntriesImported;
-
-                const std::string file {fileList[i].first};
-                if (Utils::FileSystem::exists(file)) {
-#if defined(__APPLE__)
-                    // On macOS we need to move the file to preserve the symlink.
-                    Utils::FileSystem::renameFile(
-                        file, systemDir + "/" + Utils::FileSystem::getFileName(file), true);
-#else
-                    // We have to copy and not rename the files as they may need to move across
-                    // different storage devices.
-                    Utils::FileSystem::copyFile(
-                        file, systemDir + "/" + Utils::FileSystem::getFileName(file), true);
-                    Utils::FileSystem::removeFile(file);
-#endif
-
-                    LOG(LogInfo) << "GuiGameImporter: Importing \""
-                                 << Utils::FileSystem::getStem(Utils::FileSystem::getFileName(file))
-                                 << "\"";
-
-#if defined(__ANDROID__)
-                    const std::string mediaFile {fileList[i].second};
-
-                    if (importMedia) {
-                        if (Utils::FileSystem::exists(mediaFile)) {
-                            Utils::FileSystem::copyFile(
-                                mediaFile,
-                                mediaDir + "/" + Utils::FileSystem::getFileName(mediaFile),
-                                overwriteMedia);
-                            Utils::FileSystem::removeFile(mediaFile);
-                        }
-                    }
-#endif
-                }
-            }
-        }
-
-        if (mHasUpdates) {
-            LOG(LogInfo) << "GuiGameImporter: Imported " << numEntriesImported
-                         << (numEntriesImported == 1 ? " entry" : " entries") << " for system \""
-                         << mTargetSystemDir << "\"";
-            mWindow->queueInfoPopup(
-                Utils::String::format(
-                    _n("IMPORTED %i ENTRY", "IMPORTED %i ENTRIES", numEntriesImported),
-                    numEntriesImported),
-                4000);
-            removeChild(mSelectorMenu.get());
-            mainWindow();
-        }
-    });
+    mSelectorMenu->addButton(_("IMPORT"), _("import"), [this] { importEntries(); });
 
     mSelectorMenu->addButton(_("CANCEL"), _("cancel"), [this] {
         removeChild(mSelectorMenu.get());
@@ -688,6 +586,112 @@ void GuiGameImporter::selectorWindow()
 
     mSelectorWindow = true;
     mWindow->setHelpPrompts(getHelpPrompts());
+}
+
+void GuiGameImporter::importEntries()
+{
+    if (mFileList.empty())
+        return;
+
+    const std::string removeEntries {mRemoveEntries->getSelected()};
+#if defined(__ANDROID__)
+    const bool importMedia {mImportMedia->getState()};
+    const bool overwriteMedia {mImportMediaOverwrite->getState()};
+#endif
+    int numEntriesImported {0};
+
+    if (removeEntries == "unselected") {
+        for (auto& file : Utils::FileSystem::getDirContent(
+                 FileData::getROMDirectory() + mTargetSystemDir, false)) {
+#if defined(_WIN64)
+            if (Utils::String::toLower(Utils::FileSystem::getExtension(file)) ==
+                Utils::String::toLower(mFileExtension)) {
+                LOG(LogInfo) << "GuiGameImporter: Removed file \""
+                             << Utils::String::replace(file, "/", "\\") << "\"";
+#elif defined(__APPLE__)
+            if (Utils::String::toLower(Utils::FileSystem::getExtension(file)) ==
+                Utils::String::toLower(mFileExtension)) {
+                LOG(LogInfo) << "GuiGameImporter: Removed file \"" << file << "\"";
+#else
+            if (Utils::FileSystem::getExtension(file) == mFileExtension) {
+                LOG(LogInfo) << "GuiGameImporter: Removed file \"" << file << "\"";
+#endif
+                Utils::FileSystem::removeFile(file);
+            }
+        }
+    }
+
+    for (int i {0}; i < static_cast<int>(mCheckboxes.size()); ++i) {
+        const std::string systemDir {FileData::getROMDirectory() + mTargetSystemDir};
+#if defined(__ANDROID__)
+        const std::string mediaDir {FileData::getMediaDirectory() + mTargetSystemDir + "/" +
+                                    mMediaTargetDir};
+#endif
+        if (!Utils::FileSystem::exists(systemDir))
+            Utils::FileSystem::createDirectory(systemDir);
+
+        if (!Utils::FileSystem::exists(systemDir))
+            return;
+
+#if defined(__ANDROID__)
+        if (importMedia) {
+            if (!Utils::FileSystem::exists(mediaDir))
+                Utils::FileSystem::createDirectory(mediaDir);
+
+            if (!Utils::FileSystem::exists(mediaDir))
+                return;
+        }
+#endif
+
+        if (mCheckboxes[i]->getEnabled()) {
+            mHasUpdates = true;
+            ++numEntriesImported;
+
+            const std::string file {mFileList[i].first};
+            if (Utils::FileSystem::exists(file)) {
+#if defined(__APPLE__)
+                // On macOS we need to move the file to preserve the symlink.
+                Utils::FileSystem::renameFile(
+                    file, systemDir + "/" + Utils::FileSystem::getFileName(file), true);
+#else
+                // We have to copy and not rename the files as they may need to move across
+                // different storage devices.
+                Utils::FileSystem::copyFile(
+                    file, systemDir + "/" + Utils::FileSystem::getFileName(file), true);
+                Utils::FileSystem::removeFile(file);
+#endif
+
+                LOG(LogInfo) << "GuiGameImporter: Importing \""
+                             << Utils::FileSystem::getStem(Utils::FileSystem::getFileName(file))
+                             << "\"";
+
+#if defined(__ANDROID__)
+                const std::string mediaFile {mFileList[i].second};
+
+                if (importMedia) {
+                    if (Utils::FileSystem::exists(mediaFile)) {
+                        Utils::FileSystem::copyFile(
+                            mediaFile, mediaDir + "/" + Utils::FileSystem::getFileName(mediaFile),
+                            overwriteMedia);
+                        Utils::FileSystem::removeFile(mediaFile);
+                    }
+                }
+#endif
+            }
+        }
+    }
+
+    if (mHasUpdates) {
+        LOG(LogInfo) << "GuiGameImporter: Imported " << numEntriesImported
+                     << (numEntriesImported == 1 ? " entry" : " entries") << " for system \""
+                     << mTargetSystemDir << "\"";
+        mWindow->queueInfoPopup(Utils::String::format(_n("IMPORTED %i ENTRY", "IMPORTED %i ENTRIES",
+                                                         numEntriesImported),
+                                                      numEntriesImported),
+                                4000);
+        removeChild(mSelectorMenu.get());
+        mainWindow();
+    }
 }
 
 void GuiGameImporter::androidpackageRule(std::vector<std::pair<std::string, std::string>> appList)
@@ -1065,6 +1069,9 @@ bool GuiGameImporter::input(InputConfig* config, Input input)
         }
     }
     else {
+        if (config->isMappedTo("y", input) && input.value != 0)
+            importEntries();
+
         if (input.value != 0 &&
             (config->isMappedTo("b", input) || config->isMappedTo("back", input))) {
             removeChild(mSelectorMenu.get());

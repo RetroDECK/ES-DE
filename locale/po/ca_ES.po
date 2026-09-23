@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-20 17:04+0200\n"
-"Last-Translator: Josep M <johnnydement@duck.com>\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-13 13:47+0200\n"
+"Last-Translator: Johnnydement <johnnydement@duck.com>\n"
 "Language-Team: Català <info@es-de.org>\n"
 "Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Error de xarxa (estat:"
@@ -611,6 +611,9 @@ msgstr "TREBALLANT…"
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "NO S'HA TROBAT RES PER A IMPORTAR"
 
+msgid "import"
+msgstr "importa"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -630,15 +633,6 @@ msgstr "ESCULL"
 msgid "IMPORT"
 msgstr "IMPORTA"
 
-msgid "import"
-msgstr "importa"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "S'HA IMPORTAT %i ENTRADA"
-msgstr[1] "S'HAN IMPORTAT %i ENTRADES"
-
 msgid "SELECT ALL"
 msgstr "TOT"
 
@@ -650,6 +644,12 @@ msgstr "NETEJAR"
 
 msgid "select none"
 msgstr "netejar selecció"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "S'HA IMPORTAT %i ENTRADA"
+msgstr[1] "S'HAN IMPORTAT %i ENTRADES"
 
 msgid "FILTER GAMELIST"
 msgstr "FILTRAR LA LLISTA DE JOCS"
@@ -1104,6 +1104,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "PROCEDIR"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "INICIAR A UNA ALTRA PANTALLA"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "DIRECTORI DE MITJANS DE JOC"
 
@@ -1204,6 +1207,12 @@ msgstr "DECODIFICAT DE VÍDEO PER MAQUINARI (EXPERIMENTAL)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "SOBREESCALAR LA TAXA D'IMATGES PER SEGON A 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "QUERY CORES INSTAL·LATS DE RETROARCH (EXPERIMENTAL)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "UTILITZAR RETROARCH EN MODE SAF (NO RECOMANAT)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "HABILITAR EMULADORS ALTERNATIUS PER JOC"
 
@@ -1213,20 +1222,20 @@ msgstr "MOSTRAR ARXIUS I CARPETES OCULTES"
 msgid "SHOW HIDDEN GAMES"
 msgstr "MOSTRAR JOCS OCULTS"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "LLANÇA JOCS A L'ALTRA PANTALLA"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "HABILITAR SCRIPTS PERSONALITZATS D'ESDEVENIMENT"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "VEIENT ESDEVENIMENTS PERSONALITZATS"
 
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "EXECUTA ESDEVENIMENTS DE NAVEGACIÓ COM NO-BLOQUEJANTS"
+
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
-msgstr "MOSTRAR NOMÉS JOCS DELS ARXIUS GAMELIST.XML"
+msgstr "MOSTRAR NOMÉS JOCS A GAMELIST.XML"
 
 msgid "STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)"
-msgstr "DESCARTAR INFO EXTRA DE NOM MAME (CAL REINICIAR)"
+msgstr "DESCARTAR INFO EXTRA DEL NOM MAME (CAL REINICIAR)"
 
 msgid "DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)"
 msgstr "DESHABILITA LA COMPOSICIÓ D'ESCRIPTORI (CAL REINICIAR)"
@@ -1321,11 +1330,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "OPCIONS DEL SALVAPANTALLES"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "HABILITA L'INICI EN UNA ALTRA PANTALLA"
+
 msgid "choose"
 msgstr "tancar"
 
 msgid "close menu"
 msgstr "tancar menú"
+
+msgid "System default (Other)"
+msgstr "Predefinit del sistema (Altres)"
+
+msgid "System default (Primary)"
+msgstr "Predefinit del sistema (Primari)"
+
+msgid "Always on other"
+msgstr "Sempre en una altra pantalla"
+
+msgid "Always on primary"
+msgstr "Sempre a la pantalla principal"
 
 msgid "EDIT METADATA"
 msgstr "EDITAR METADADES"
@@ -2501,6 +2525,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "ESCULL UN EMULADOR ALTERNATIU"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "INICIAR A LA PANTALLA"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "INICIA A LA PANTALLA"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "ENLLAÇ A LA CARPETA"
 
@@ -2756,8 +2788,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "NETEJAR (DEIXA-HO EN BLANC PER REINICIAR A LA RUTA PER DEFECTE)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2799,9 +2831,9 @@ msgstr "ACTUALITZA"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "L'ACTUALITZADOR DE L'APLICACIÓ DESCARREGARÀ LA VERSIÓ PORTABLE MÉS RECENT "

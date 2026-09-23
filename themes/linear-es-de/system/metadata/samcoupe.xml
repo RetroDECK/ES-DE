@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>إن SAM Coupé (تُنطق /sæm ku:peɪ/ من علامتها التجارية البريطانية الأصلية باللغة الإنجليزية) هو كمبيوتر منزلي بريطاني من 8 بت تم إصداره لأول مرة في أواخر عام 1989. وقد استند إلى حاسوب ZX Spectrum 48K وصُمم ليكون متوافقاً مع حاسوب ZX Spectrum 48K وتم تسويقه كترقية منطقية من Spectrum. وقد تم تصنيعه في الأصل من قبل شركة مايلز جوردون تكنولوجي (MGT)، ومقرها في سوانسي في المملكة المتحدة.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il SAM Coupé (pronunciato /sæm ku:peɪ/ dal suo marchio originale in inglese britannico) è un home computer britannico a 8 bit rilasciato per la prima volta alla fine del 1989. Era basato e progettato per essere compatibile con lo ZX Spectrum 48K e commercializzato come un logico upgrade dello Spectrum. Fu originariamente prodotto da Miles Gordon Technology (MGT), con sede a Swansea, nel Regno Unito.</systemDescription>
+            <systemDescription>Il SAM Coupé (pronunciato /sæm ku:peɪ/ dal suo marchio originale in inglese britannico) è un home computer britannico ad 8 bit rilasciato per la prima volta alla fine del 1989. Era basato e progettato per essere compatibile con lo ZX Spectrum 48K e commercializzato come un logico upgrade dello Spectrum. Fu originariamente prodotto da Miles Gordon Technology (MGT), con sede a Swansea, nel Regno Unito.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>SAM Coupé (uttalas /sæm ku:peɪ/ från dess ursprungliga brittisk-engelska varumärke) är en brittisk 8-bitars hemdator som först släpptes i slutet av 1989. Den var baserad på och utformad för att vara kompatibel med ZX Spectrum 48K och marknadsfördes som en logisk uppgradering från Spectrum. Den tillverkades ursprungligen av Miles Gordon Technology (MGT), baserat i Swansea i Storbritannien.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>SAM Coupé (phát âm là /sæm ku:peɪ/ theo tên gọi ban đầu bằng tiếng Anh Anh) là một máy tính gia đình 8-bit của Anh, ra mắt lần đầu vào cuối năm 1989. Máy được phát triển dựa trên và thiết kế để tương thích với ZX Spectrum 48K, đồng thời được quảng bá như một bản nâng cấp hợp lý từ dòng Spectrum. Ban đầu, máy được sản xuất bởi công ty Miles Gordon Technology (MGT), có trụ sở tại Swansea, Vương quốc Anh.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

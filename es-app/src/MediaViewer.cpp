@@ -8,6 +8,7 @@
 
 #include "MediaViewer.h"
 
+#include "Scripting.h"
 #include "Sound.h"
 #include "components/VideoFFmpegComponent.h"
 #include "utils/LocalizationUtil.h"
@@ -35,7 +36,7 @@ MediaViewer::MediaViewer()
     Window::getInstance()->setMediaViewer(this);
 }
 
-bool MediaViewer::startMediaViewer(FileData* game)
+bool MediaViewer::startMediaViewer(FileData* game, bool fromPDFViewer)
 {
     mHasVideo = false;
     mHasImages = false;
@@ -94,6 +95,17 @@ bool MediaViewer::startMediaViewer(FileData* game)
     }
 
     mHelp->setPrompts(getHelpPrompts());
+
+    if (!fromPDFViewer) {
+#if defined(_WIN64)
+        Scripting::fireEvent("mediaviewer-start",
+                             Utils::String::replace(mGame->getPath(), "/", "\\"),
+#else
+        Scripting::fireEvent("mediaviewer-start", mGame->getPath(),
+#endif
+                             mGame->metadata.get("name"), mGame->getSourceSystem()->getName(),
+                             mGame->getSourceSystem()->getFullName());
+    }
 
     return true;
 }
@@ -158,6 +170,7 @@ void MediaViewer::input(InputConfig* config, Input input)
     }
     else if (input.value != 0) {
         // Any other input stops the media viewer.
+        Scripting::fireEvent("mediaviewer-stop");
         Window::getInstance()->stopMediaViewer();
     }
 }

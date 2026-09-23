@@ -23,7 +23,7 @@ The Atari 400 was initially almost half the cost of the Atari 800. Instead of th
             <systemDescription>عائلة أتاري 8 بت هي سلسلة من الحواسيب المنزلية ذات 8 بت قدمتها شركة أتاري في عام 1979 باسم أتاري 400 وأتاري 800 وتم تصنيعها حتى عام 1992. جميع أجهزة العائلة متشابهة من الناحية التقنية وتختلف بشكل أساسي في التغليف. وتعتمد هذه الأجهزة على وحدة المعالجة المركزية MOS Technology 6502 التي تعمل بسرعة 1.79 ميجاهرتز، وكانت أول أجهزة كمبيوتر منزلية مصممة مع رقائق المعالجات المشتركة المخصصة. وقد مكنت هذه البنية من توفير رسومات وصوت أكثر تقدمًا من الأجهزة المعاصرة، وكانت الألعاب من أهم عوامل الجذب. تعتبر لعبة محاكاة القتال الفضائي من منظور الشخص الأول Star Raiders التطبيق القاتل للمنصة. تم إطلاق الأنظمة مع أجهزة طرفية للتوصيل والتشغيل باستخدام الناقل التسلسلي SIO من Atari، وهو نظير مبكر ل USB.
 
 كان أتاري 400 في البداية بنصف تكلفة أتاري 800 تقريباً. فبدلاً من لوحة المفاتيح كاملة الحجم في 800، كان لدى 400 لوحة حساسة للضغط. ويحتوي الطراز 800 على فتحة خرطوشة ثانية وعلبة أكبر تسمح بترقية ذاكرة الوصول العشوائي إلى 48K. استُبدل كلا الطرازين بسلسلة XL في عام 1983، ثم - بعد بيع الشركة وإعادة تأسيسها باسم Atari Corporation - بطراز XE في عام 1985. كان الطرازان XL و XE أخف وزنًا من حيث البنية مع وجود Atari BASIC مدمج ومنفذين لعصا التحكم بدلاً من 4 منافذ. 130XE زادت الذاكرة إلى 128 كيلوبايت من ذاكرة الوصول العشوائي ذات التبديل البنكي.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,9 +76,9 @@ Atari 400 u početku je bio gotovo polovica troškova Atari 800. umjesto tipkovn
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>La famiglia Atari 8-bit è una serie di home computer a 8 bit introdotta da Atari, Inc. nel 1979 come Atari 400 e Atari 800 e prodotta fino al 1992. Tutte le macchine della famiglia sono tecnicamente simili e si differenziano principalmente per la confezione. Si basano sulla CPU MOS Technology 6502 a 1,79 MHz e sono stati i primi home computer progettati con chip coprocessori personalizzati. Questa architettura consentiva una grafica e un suono più avanzati rispetto alle macchine contemporanee e i giochi erano una delle principali attrazioni. Il simulatore di combattimento spaziale in prima persona Star Raiders è considerato la killer app della piattaforma. I sistemi furono lanciati con periferiche plug and play che utilizzavano il bus seriale Atari SIO, un primo analogo dell'USB.
+            <systemDescription>La famiglia Atari 8-bit è una serie di home computer a 8 bit introdotta da Atari, Inc. nel 1979, come Atari 400 ed Atari 800 e prodotta fino al 1992. Tutte le macchine della famiglia sono tecnicamente simili e si differenziano principalmente per la confezione. Si basano sulla CPU MOS Technology 6502 a 1,79 MHz e sono stati i primi home computer progettati con chip coprocessori personalizzati. Questa architettura consentivano una grafica ed un sonoro più avanzati rispetto alle macchine contemporanee ed i giochi erano una delle principali attrazioni. Il simulatore di combattimento spaziale in prima persona Star Raiders è considerato la killer app della piattaforma. I sistemi furono lanciati con periferiche plug and play che utilizzavano il bus seriale Atari SIO, un primo analogo dell'USB.
 
-L'Atari 400 costava inizialmente quasi la metà dell'Atari 800. Al posto della tastiera a grandezza naturale dell'800, il 400 ha un pannello sensibile alla pressione. L'800 ha un secondo slot per cartucce e un case più grande che consente di aggiornare la RAM a 48K. Entrambi i modelli furono sostituiti dalla serie XL nel 1983 e poi, dopo la vendita dell'azienda e la sua ricostituzione come Atari Corporation, dai modelli XE nel 1985. L'XL e l'XE sono più leggeri e hanno l'Atari BASIC integrato e 2 porte joystick invece di 4. Il 130XE aumenta la memoria a 128 KB di RAM commutata in banchi.</systemDescription>
+L'Atari 400 costava inizialmente quasi la metà dell'Atari 800. Al posto della tastiera a grandezza naturale dell'800, il 400 aveva un pannello sensibile alla pressione. L'800 disponeva di un secondo slot per cartucce ed un case più grande che consentiva di aggiornare la RAM a 48K. Entrambi i modelli furono sostituiti dalla serie XL nel 1983 e poi, dopo la vendita dell'azienda e la sua ricostituzione come Atari Corporation, dai modelli XE nel 1985. L'XL e l'XE erano più leggeri, avevano l'Atari BASIC integrato e disponevano di 2 porte joystick invece che di 4. Il 130XE aumentava la memoria a 128 KB di RAM, commutata in banchi.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ Atari 400 a costat inițial aproape jumătate din Atari 800. În locul tastaturi
 
             Atari 400 kostade till en början nästan hälften så mycket som Atari 800. Istället för 800:ans fullstora tangentbord har 400:an en tryckkänslig panel. 800 har en andra kassettplats och ett större hölje som möjliggör RAM-uppgraderingar till 48K. Båda modellerna ersattes av XL-serien 1983, och sedan - efter att företaget sålts och återupprättats som Atari Corporation - XE-modellerna 1985. XL och XE är lättare i konstruktionen samtidigt som de har Atari BASIC inbyggt och 2 joystickportar istället för 4. 130XE ökade minnet till 128 KB bank-switched RAM.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Dòng máy tính Atari 8-bit là một loạt máy tính gia đình 8-bit do Atari, Inc. ra mắt vào năm 1979 với các mẫu Atari 400 và Atari 800, và được sản xuất cho đến năm 1992. Về mặt kỹ thuật, tất cả các máy trong dòng này đều tương tự nhau và chủ yếu khác biệt ở thiết kế vỏ máy. Chúng dựa trên bộ vi xử lý MOS Technology 6502 chạy ở tốc độ 1,79 MHz và là những máy tính gia đình đầu tiên được thiết kế với chip đồng xử lý tùy chỉnh. Kiến trúc này cho phép đồ họa và âm thanh tiên tiến hơn so với các máy tính cùng thời, và trò chơi là điểm thu hút chính. Trò chơi mô phỏng chiến đấu không gian góc nhìn thứ nhất Star Raiders được coi là ứng dụng nổi bật nhất của nền tảng này. Các hệ thống này ra mắt với các thiết bị ngoại vi cắm và chạy sử dụng bus nối tiếp Atari SIO, một phiên bản tương tự sớm của USB.
+
+Atari 400 ban đầu có giá gần bằng một nửa so với Atari 800. Thay vì bàn phím kích thước đầy đủ của 800, 400 sử dụng một bảng cảm ứng áp lực. Atari 800 có khe cắm thẻ thứ hai và vỏ máy lớn hơn, cho phép nâng cấp RAM lên 48K. Cả hai mẫu máy này đều bị thay thế bởi dòng XL vào năm 1983, sau đó – sau khi công ty được bán và tái thành lập với tên gọi Atari Corporation – là các mẫu XE vào năm 1985. Các mẫu XL và XE có cấu trúc nhẹ hơn, đồng thời được tích hợp sẵn Atari BASIC và có 2 cổng điều khiển thay vì 4. Mẫu 130XE đã tăng dung lượng bộ nhớ lên 128 KB RAM chuyển mạch ngân hàng.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

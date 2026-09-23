@@ -40,4 +40,12 @@
             <directory recursive="true">~\Desktop</directory>
         </rule>
     </system>
+    <system name="xbox">
+        <rule name="Shortcut File" type="file">
+            <extension>.lnk</extension>
+            <directory recursive="true">C:\ProgramData\Microsoft\Windows\Start Menu\Programs</directory>
+            <directory recursive="true">~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</directory>
+            <directory recursive="true">~\Desktop</directory>
+        </rule>
+    </system>
 </ruleList>

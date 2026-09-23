@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-06-25 04:03+0800\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-09 19:23+0800\n"
 "Last-Translator: ice <natsumekyousuke211314@gmail.com>\n"
 "Language-Team: 日本語 <info@es-de.org>\n"
 "Language: ja_JP\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "ネットワークエラー（ステータス："
@@ -619,6 +619,9 @@ msgstr "稼働中..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "インポートできる内容がありません"
 
+msgid "import"
+msgstr "インポート"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -637,14 +640,6 @@ msgstr "選んでください"
 msgid "IMPORT"
 msgstr "インポート"
 
-msgid "import"
-msgstr "インポート"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "%i個の項目がインポートされました"
-
 msgid "SELECT ALL"
 msgstr "全部選ぶ"
 
@@ -656,6 +651,11 @@ msgstr "何も選ばない"
 
 msgid "select none"
 msgstr "何も選ばない"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "%i個の項目がインポートされました"
 
 msgid "FILTER GAMELIST"
 msgstr "ゲームリストを絞り込む"
@@ -1111,6 +1111,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "進む"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "他の画面で起動"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "ゲームメディアディレクトリ"
 
@@ -1211,6 +1214,12 @@ msgstr "ビデオハードウェアデコーディング（実験的）"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "ビデオのフレームレートを60 FPSに引き上げる"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "インストール済みのRetroArchコアを照会（試験的）"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "RetroArchをSAFモードで使用（非推奨）"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ゲームごとに代替エミュレータを有効に"
 
@@ -1220,14 +1229,14 @@ msgstr "隠しファイルとフォルダを表示"
 msgid "SHOW HIDDEN GAMES"
 msgstr "非表示中のゲームを表示"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "別のスクリーンでゲームを起動"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "カスタムイベントスクリプトを有効に"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "カスタムイベントを閲覧"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "ブラウジングイベントをノンブロッキングで実行"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "GAMELIST.XML ファイルにあるゲームのみを表示"
@@ -1329,11 +1338,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "スクリーンセーバー設定"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "他の画面での起動を有効に"
+
 msgid "choose"
 msgstr "選ぶ"
 
 msgid "close menu"
 msgstr "メニューを閉じる"
+
+msgid "System default (Other)"
+msgstr "システムデフォルト（その他）"
+
+msgid "System default (Primary)"
+msgstr "システムデフォルト（プライマリ）"
+
+msgid "Always on other"
+msgstr "常に他で表示"
+
+msgid "Always on primary"
+msgstr "常にプライマリで表示"
 
 msgid "EDIT METADATA"
 msgstr "メタデータを編集する"
@@ -2512,6 +2536,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "代替エミュレーターを選んでください"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "スクリーンで起動"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "どのスクリーンで起動するか"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "フォルダリンク"
 
@@ -2714,11 +2746,11 @@ msgid ""
 "YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE ES-DE INSTALLATION IS BROKEN. "
 "SEE THE APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO"
 msgstr ""
-"システムの設定ファイルを解析できませんでした。カスタマイズされたes_systems."
-"xmlファイルがすでに存在している場合、おそらくXML構文に問題がある可能性があり"
-"ます。カスタムシステムファイルが存在しない場合、ES-DEのインストールに問題があ"
-"る可能性があります。詳細情報については、アプリのログファイルであるes_log.txt"
-"を参照してください"
+"システムの設定ファイルを解析できませんでした。カスタマイズされた"
+"es_systems.xmlファイルがすでに存在している場合、おそらくXML構文に問題がある可"
+"能性があります。カスタムシステムファイルが存在しない場合、ES-DEのインストール"
+"に問題がある可能性があります。詳細情報については、アプリのログファイルである"
+"es_log.txtを参照してください"
 
 msgid ""
 "NO GAME FILES WERE FOUND. EITHER IMPORT SOME GAMES OR PLACE THEM MANUALLY IN "
@@ -2766,8 +2798,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "クリア（何も入力せずにデフォルトパスにリセット）"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2809,9 +2841,9 @@ msgstr "アップデート"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "アプリの更新プログラムは、最新のポータブルWindowsリリースをダウンロードします"

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>كانت مجموعة حواسيب Thomson MOTO عبارة عن سلسلة من الحواسيب ذات 8 بت التي تم بيعها في الثمانينيات من قبل شركة الإلكترونيات الفرنسية Thomson، التي تم تأميمها في عام 1982. أصبحت حواسيب MOTO جزءًا لا يتجزأ من خطة الحكومة الفرنسية "معلوماتية للجميع" (IPT) لجعل الحواسيب منتشرة في جميع أنحاء فرنسا من خلال توفير أجهزة الكمبيوتر ودروس البرمجة لأطفال المدارس الفرنسية. تم النظر في عدد من صانعي الحواسيب، بما في ذلك شركة Apple، قبل أن تفوز Thomson بالعقد.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>La linea di computer Thomson MOTO era una serie di computer a 8 bit venduti negli anni '80 dall'azienda elettronica francese Thomson, nazionalizzata nel 1982. I computer MOTO divennero parte integrante del piano informatique pour tous (IPT) del governo francese, che mirava a diffondere i computer in tutta la Francia portando computer e corsi di programmazione ai bambini delle scuole francesi. Prima che Thomson si aggiudicasse il contratto sono stati presi in considerazione diversi produttori di computer, tra cui Apple.</systemDescription>
+            <systemDescription>La linea di computer Thomson MOTO era una serie di computer ad 8 bit venduti negli anni '80 dall'azienda elettronica francese Thomson, nazionalizzata nel 1982. I computer MOTO divennero parte integrante del piano informatique pour tous (IPT) del governo francese, che mirava a diffondere l'utilizzo del personal computer in tutta la Francia, portando calcolatori e corsi di programmazione ai bambini delle scuole francesi. Prima che Thomson si aggiudicasse il contratto sono stati presi in considerazione diversi produttori di computer, fra cui Apple.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Thomson MOTO-serien var en serie 8-bitarsdatorer som såldes under 1980-talet av det franska elektronikföretaget Thomson, som förstatligades 1982. MOTO-datorerna blev en integrerad del av den franska regeringens plan informatique pour tous (IPT) för att sprida datorer i hela Frankrike genom att ge franska skolbarn tillgång till datorer och programmeringskurser. Ett antal datortillverkare, inklusive Apple, övervägdes innan Thomson vann kontraktet.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Dòng máy tính Thomson MOTO là một loạt máy tính 8-bit được công ty điện tử Pháp Thomson – vốn đã được quốc hữu hóa vào năm 1982 – bán ra thị trường trong thập niên 1980. Các máy tính MOTO đã trở thành một phần không thể thiếu trong chương trình “Informatique pour tous” (IPT) của Chính phủ Pháp, nhằm phổ cập máy tính trên toàn nước Pháp thông qua việc đưa máy tính và các lớp học lập trình đến với học sinh Pháp. Trước khi Thomson trúng thầu, một số nhà sản xuất máy tính, trong đó có Apple, đã được xem xét.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

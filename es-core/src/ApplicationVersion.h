@@ -11,15 +11,15 @@
 // Do this version number update as the very last commit for the new release version.
 // clang-format off
 #define PROGRAM_VERSION_MAJOR        3
-#define PROGRAM_VERSION_MINOR        4
-#define PROGRAM_VERSION_MAINTENANCE  1
-#define PROGRAM_RELEASE_NUMBER       51
+#define PROGRAM_VERSION_MINOR        5
+#define PROGRAM_VERSION_MAINTENANCE  0
+#define PROGRAM_RELEASE_NUMBER       52
 // clang-format on
-#define PROGRAM_VERSION_STRING "3.4.1"
+#define PROGRAM_VERSION_STRING "3.5.0-alpha"
 
 #define PROGRAM_BUILT_STRING __DATE__ " - " __TIME__
 
-#define RESOURCE_VERSION_STRING "3,4,1\0"
+#define RESOURCE_VERSION_STRING "3,5,0\0"
 #define RESOURCE_VERSION PROGRAM_VERSION_MAJOR, PROGRAM_VERSION_MINOR, PROGRAM_VERSION_MAINTENANCE
 
 #endif // ES_CORE_APPLICATION_VERSION_H

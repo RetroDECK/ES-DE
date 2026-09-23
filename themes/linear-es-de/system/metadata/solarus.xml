@@ -28,14 +28,14 @@ Both parts (the C++ engine and the Lua scripts of your quest) communicate throug
         <variables>
             <systemDescription>صُممت سولاروس خصيصًا مع وضع كلاسيكيات ألعاب تقمص الأدوار ثنائية الأبعاد في الاعتبار، مثل The Legend of Zelda: A Link to the Past وScret of Mana على سوبر نينتندو، أو Soleil على Sega Megadrive/Genesis.
 
-تمت برمجة المحرك بلغة C++، مع مكتبة SDL وخلفية OpenGL. الألعاب المصنوعة باستخدام سولاروس تسمى المهام، وهي مبرمجة بلغة Lua.
+تمت برمجة محرك بلغة C++، مع مكتبة SDL وخلفية OpenGL. الألعاب المصنوعة باستخدام سولاروس تسمى المهام، وهي مبرمجة بلغة Lua.
 
-يقوم المحرك بجميع العمليات الحسابية الثقيلة (على سبيل المثال، عمليات التحقق من التصادم) والعمليات منخفضة المستوى مثل رسم الشاشة وتحريك العفاريت وتشغيل الأصوات.
+يقوم محرك بجميع العمليات الحسابية الثقيلة (على سبيل المثال، عمليات التحقق من التصادم) والعمليات منخفضة المستوى مثل رسم الشاشة وتحريك العفاريت وتشغيل الأصوات.
 
 كصانع مهام، أنت لست مهتمًا كثيرًا بتنفيذ هذه الخوارزميات. على العكس، أنت تريد تحديد منطق اللعبة. نصوص Lua النصية الخاصة بك تصف سلوك الأعداء، وما يحدث عند الضغط على مفتاح على خريطة معينة. ستنفذ أيضًا أشياء مثل شاشة العنوان وشاشة العرض الأمامية.
 
-يتواصل كلا الجزأين (محرك C++ المحرك ونصوص Lua البرمجية الخاصة بمهمتك) من خلال واجهة برمجة تطبيقات Solarus Lua. يعمل الاتصال في كلا الاتجاهين: يمكنك استدعاء وظائف المحرك (على سبيل المثال: تريد تحريك شخصية لا تلعب) ويستدعي المحرك وظائفك الخاصة (على سبيل المثال: أن يتم إعلامك بأن عدوًا قد قُتل للتو). لكن قبل استخدام واجهة برمجة تطبيقات سولاروس هذه، عليك أن تتعلم أساسيات لغة Lua (لغة سهلة وبسيطة لكنها قوية).</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+يتواصل كلا الجزأين (محرك C++ محرك ونصوص Lua البرمجية الخاصة بمهمتك) من خلال واجهة برمجة تطبيقات Solarus Lua. يعمل الاتصال في كلا الاتجاهين: يمكنك استدعاء وظائف محرك (على سبيل المثال: تريد تحريك شخصية لا تلعب) ويستدعي محرك وظائفك الخاصة (على سبيل المثال: أن يتم إعلامك بأن عدوًا قد قُتل للتو). لكن قبل استخدام واجهة برمجة تطبيقات سولاروس هذه، عليك أن تتعلم أساسيات لغة Lua (لغة سهلة وبسيطة لكنها قوية).</systemDescription>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -124,15 +124,14 @@ Both parts (the C++ engine and the Lua scripts of your quest) communicate throug
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Solarus è stato progettato pensando ai classici action-RPG 2D di culto, come The Legend of Zelda: A Link to the Past e Secret of Mana per Super Nintendo, o Soleil per Sega Megadrive/Genesis.
+            <systemDescription>Solarus è un motore di gioco multipiattaforma, libero e open source, per lo sviluppo di titoli con grafica 2D. È stato progettato per la creazione di giochi di ruolo d'azione (action RPG), sebbene il suo utilizzo non sia limitato a questo genere. Il motore è scritto in C++ e utilizza Lua come linguaggio di scripting; è distribuito sotto la licenza GNU General Public License.
 
-Il motore è programmato in C++, con la libreria SDL e un backend OpenGL. I giochi realizzati con Solarus sono chiamati quest e sono programmati in Lua.
+Solarus offre un'API Lua che copre gli aspetti principali dello sviluppo di videogiochi: audio, video, input, movimenti, ecc. La sua peculiarità risiede nell'API dedicata agli Action-RPG, che gestisce gli elementi tipici del genere: tesori, interruttori, blocchi, ecc. Un gioco realizzato con Solarus viene definito "quest", una scelta che riflette le sue origini ispirate a *The Legend of Zelda*. Tuttavia, il motore e la sua API stanno evolvendo verso un approccio più modulare.
 
-Il motore esegue tutti i calcoli pesanti (ad esempio, i controlli di collisione) e le operazioni di basso livello come il disegno dello schermo, l'animazione degli sprite e la riproduzione dei suoni.
+Per gli sviluppatori, Solarus mette a disposizione un editor chiamato Solarus Quest Editor, dotato di strumenti per la creazione di mappe, sprite e tileset.
 
-Come creatore di missioni, non siete molto interessati a implementare questi algoritmi. Al contrario, volete definire la logica di gioco. I vostri script Lua descrivono il comportamento dei nemici, cosa succede quando si preme un interruttore su una mappa specifica. Implementeranno anche elementi come la schermata del titolo e l'head-up display.
-
-Entrambe le parti (il motore C++ e gli script Lua della missione) comunicano attraverso l'API Solarus Lua. La comunicazione funziona in entrambi i modi: si possono chiamare funzioni del motore (ad esempio, si vuole muovere un personaggio non giocante) e il motore chiama le proprie funzioni (ad esempio, viene informato che un nemico è stato appena ucciso). Ma prima di utilizzare questa API di Solarus, è necessario imparare le basi di Lua (linguaggio semplice e minimale, ma potente).</systemDescription>
+Per i giocatori, Solarus offre un'applicazione chiamata Solarus Launcher, che carica i giochi realizzati con il motore in modo simile a quanto fanno gli emulatori.            
+            </systemDescription>
             <systemHardwareType>Motore</systemHardwareType>
         </variables>
     </language>
@@ -274,6 +273,20 @@ Som uppdragsskapare är du inte särskilt intresserad av att implementera dessa 
 
 Båda delarna (C++-motorn och Lua-skripten för ditt uppdrag) kommunicerar via Solarus Lua API. Kommunikationen fungerar på båda sätten: du kan anropa funktioner i motorn (exempel: du vill flytta en icke-spelande karaktär) och motorn anropar dina egna funktioner (exempel: bli informerad om att en fiende just dödats). Men innan du använder Solarus API måste du lära dig grunderna i Lua (ett enkelt och minimalt, men ändå kraftfullt språk).</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Solarus được thiết kế đặc biệt với cảm hứng từ những tựa game hành động nhập vai 2D kinh điển được yêu thích, như The Legend of Zelda: A Link to the Past và Secret of Mana trên hệ máy Super Nintendo, hay Soleil trên hệ máy Sega Megadrive/Genesis.
+
+Engine này được lập trình bằng ngôn ngữ C++, sử dụng thư viện SDL và nền tảng OpenGL. Các trò chơi được phát triển bằng Solarus được gọi là "quest" và được lập trình bằng ngôn ngữ Lua.
+
+Engine này thực hiện tất cả các tính toán nặng (ví dụ: kiểm tra va chạm) và các thao tác cấp thấp như vẽ màn hình, tạo hiệu ứng động cho sprite và phát âm thanh.
+
+Với tư cách là người tạo quest, bạn không cần quan tâm nhiều đến việc triển khai các thuật toán này. Ngược lại, bạn muốn định nghĩa logic trò chơi. Các skript Lua của bạn mô tả hành vi của kẻ thù, những gì xảy ra khi nhấn một công tắc trên bản đồ cụ thể. Chúng cũng sẽ triển khai các thành phần như màn hình tiêu đề và giao diện hiển thị thông tin (HUD).
+
+Cả hai phần (engine C++ và các skript Lua của quest) giao tiếp thông qua API Lua của Solarus. Giao tiếp diễn ra theo cả hai chiều: bạn có thể gọi các hàm của engine (ví dụ: bạn muốn di chuyển một nhân vật không điều khiển) và engine gọi các hàm của bạn (ví dụ: được thông báo rằng một kẻ thù vừa bị tiêu diệt). Nhưng trước khi sử dụng API Solarus này, bạn phải học những kiến thức cơ bản về Lua (một ngôn ngữ dễ học, tối giản nhưng mạnh mẽ).</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

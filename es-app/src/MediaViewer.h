@@ -21,7 +21,7 @@ class MediaViewer : public Window::MediaViewer
 public:
     MediaViewer();
 
-    bool startMediaViewer(FileData* game) override;
+    bool startMediaViewer(FileData* game, bool fromPDFViewer) override;
     void stopMediaViewer() override;
     void launchPDFViewer() override;
 

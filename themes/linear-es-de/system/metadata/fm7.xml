@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>FM-7 ("فوجيتسو مايكرو 7") هو كمبيوتر منزلي من إنتاج فوجيتسو. تم إصداره لأول مرة في عام 1982 وتم بيعه في اليابان وإسبانيا. وهو نسخة مجردة من كمبيوتر فوجيتسو السابق FM-8، وكان يشار إليه أثناء تطويره باسم "FM-8 جونيور".</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>L'FM-7 ("Fujitsu Micro 7") è un home computer creato da Fujitsu. È stato rilasciato per la prima volta nel 1982 ed è stato venduto in Giappone e in Spagna. Si tratta di una versione ridotta del precedente computer FM-8 di Fujitsu, e durante lo sviluppo veniva chiamato "FM-8 Jr.".</systemDescription>
+            <systemDescription>L'FM-7 ("Fujitsu Micro 7") è un home computer creato da Fujitsu. È stato rilasciato per la prima volta nel 1982 ed è stato venduto in Giappone ed in Spagna. Si tratta di una versione ridotta del precedente computer FM-8 di Fujitsu, che durante lo sviluppo veniva chiamato "FM-8 Jr.".</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>FM-7 ("Fujitsu Micro 7") är en hemdator som skapades av Fujitsu. Den släpptes första gången 1982 och såldes i Japan och Spanien. Den är en nedbantad version av Fujitsus tidigare FM-8-dator och under utvecklingen kallades den för "FM-8 Jr.".</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>FM-7 ("Fujitsu Micro 7") là một mẫu máy tính gia đình do Fujitsu sản xuất. Máy được ra mắt lần đầu vào năm 1982 và được bán tại Nhật Bản và Tây Ban Nha. Đây là phiên bản rút gọn của mẫu máy tính FM-8 trước đó của Fujitsu, và trong quá trình phát triển, nó được gọi là "FM-8 Jr.".</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

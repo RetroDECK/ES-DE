@@ -17,7 +17,9 @@ namespace GamelistFileParser
     void parseGamelist(SystemData* system);
 
     // Writes currently loaded metadata for a SystemData to gamelist.xml.
-    void updateGamelist(SystemData* system, bool updateAlternativeEmulator = false);
+    void updateGamelist(SystemData* system,
+                        const bool updateAlternativeEmulator = false,
+                        const bool updateScreenLaunch = false);
 
 } // namespace GamelistFileParser
 

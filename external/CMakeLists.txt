@@ -13,6 +13,8 @@ set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 
 if(WIN32)
+    # To prevent a warning regarding MSVC not being an assembler.
+    set(CMAKE_POLICY_DEFAULT_CMP194 OLD)
     # On Windows the build type needs to match the main binary.
     if(CMAKE_BUILD_TYPE MATCHES Profiling)
         set(CMAKE_BUILD_TYPE Release)

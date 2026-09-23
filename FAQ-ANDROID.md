@@ -44,7 +44,7 @@ No, you will not lose any settings or data when you upgrade, everything will sta
 
 There are two possible reasons for this, the first and most common issue is that your device does not fulfill the basic requirements for ES-DE, which is that it has to run a 64-bit version of Android 10 or later.
 
-The second reason is that the APK is corrupt or not complete. When we make releases we include an MD5 hash value with the download link, and it's recommended to check the hash of the downloaded file before you attempt to install it. This will also ensure that you actually have the real release and not some third party scam or fake app or similar. A recommended app for generating the MD5 checksums is [Simple Hash Checker](https://play.google.com/store/apps/details?id=com.appcraft.hashchecker) from the Google Play store.
+The second reason is that the APK is corrupt or not complete. When we make releases we include an MD5 hash value with the download link, and it's recommended to check the hash of the downloaded file before you attempt to install it. This will also ensure that you actually have the real release and not some third party scam or fake app or similar. A recommended app for generating the MD5 checksum is [HashCalc](https://play.google.com/store/apps/details?id=com.goyalsoftech.hashcalc) from the Google Play store.
 
 ## Can I set ES-DE as my home app/launcher?
 
@@ -61,7 +61,9 @@ If you have set ES-DE as your home app then for some devices the onboarding conf
 ## Does ES-DE run on dual-screen devices?
 
 Yes ES-DE runs fine on dual-screen devices, for example you can launch the app on either screen, move it between the screens on the fly (which will just cause a reload and an adjustment to the aspect ratio of the new screen) and you can also choose to launch games from ES-DE on the other display via the _Launch games on the other screen_ setting in the _Other settings_ menu. ES-DE does however not render on both screens. Although it's possible that support for this will get added in the future it's unlikely as the app would need to be rearchitected, and more importantly the theme developers would need to support it for a wide range of devices. But there is a solution available in the form of a semi-official companion app which will allow you to use the custom event scripts functionality in ES-DE to display game media on the second screen. You can read the setup instructions and download the app from its GitHub site:\
-https://github.com/RobZombie9043/es-de-companion
+https://github.com/RobZombie9043/es-de-companion \
+As an alternative to the companion app you could use Járngreipr:\
+https://github.com/BrianJr03/Jarngreipr
 
 ## Can I use ES-DE with Samsung DeX?
 
@@ -83,8 +85,6 @@ Yes but this is not recommended. It's tedious to setup and not how ES-DE is inte
 ## When I launch a game using RetroArch I just see a black screen, what is wrong?
 
 RetroArch on Android is very unforgiving, if you haven't installed the necessary core or BIOS files it's a high chance that you just see a black screen and it will hang there, possibly until you kill it. And due to the security model in Android it's not possible for ES-DE to check if a core is actually installed prior to attempting to launch RetroArch (on Linux, macOS and Windows a popup is shown if the core file is missing and the game is never actually launched in this case). Also make sure that the core you have installed in RetroArch is the one you actually use in ES-DE. You can select between different cores and emulators for most systems using the _Alternative emulators_ interface in the _Other settings_ menu, or per game via the metadata editor.
-
-Another reason for the black screen is if you have multiple users configured on your device and attempt to run RetroArch from a non-primary user while having your ROMs on internal storage. In ES-DE 3.4.0 there is experimental multi-user support for RetroArch for a limited number of emulator entries, and the plan is to roll this out for all entries in the future, which should fully resolve this issue.
 
 As a side note, the RetroArch release on the Google Play store has not been updated in a very long time, so it's instead strongly recommended to download a current release from the [RetroArch](https://retroarch.com) website.
 

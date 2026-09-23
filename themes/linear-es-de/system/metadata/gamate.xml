@@ -124,6 +124,12 @@
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Gamate, được gọi là 超級小子 (pinyin: chāojí xiǎozi, nghĩa đen là "Siêu Cậu Bé") tại Đài Loan và 超级神童 (pinyin: chāojí shéntóng, nghĩa đen là "Thần đồng Siêu đẳng") tại Trung Quốc, là một máy chơi game cầm tay do Bit Corporation sản xuất vào đầu những năm 1990, và được phát hành tại Úc, một số khu vực ở châu Âu, châu Á (Đài Loan và Trung Quốc), Argentina và Hoa Kỳ.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Gamate 在台湾被称为 "超級小子"，在中国被称为 "超级神童"：超级神童（拼音：chāojí shéntóng，字面意思为 "超级神童"）是 Bit Corporation 在 20 世纪 90 年代初生产的一款掌上游戏机，在澳大利亚、欧洲部分地区、亚洲（台湾和中国）、阿根廷和美国发行。</systemDescription>

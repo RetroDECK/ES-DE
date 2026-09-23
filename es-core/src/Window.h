@@ -55,7 +55,7 @@ public:
     class MediaViewer
     {
     public:
-        virtual bool startMediaViewer(FileData* game) = 0;
+        virtual bool startMediaViewer(FileData* game, bool fromPDFViewer) = 0;
         virtual void stopMediaViewer() = 0;
         virtual void launchPDFViewer() = 0;
 
@@ -142,7 +142,7 @@ public:
     void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
     bool isScreensaverActive() { return mRenderScreensaver; }
 
-    void startMediaViewer(FileData* game);
+    void startMediaViewer(FileData* game, bool fromPDFViewer);
     void stopMediaViewer();
     void setMediaViewer(MediaViewer* mediaViewer) { mMediaViewer = mediaViewer; }
     bool isMediaViewerActive() { return mRenderMediaViewer; }

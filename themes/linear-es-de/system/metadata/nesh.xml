@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>نظام نينتندو إنترتينمنت سيستم هو جهاز ألعاب فيديو 8 بت تم إصداره من قبل نينتندو في أمريكا الشمالية خلال عام 1985، وفي أوروبا خلال عام 1986 وأستراليا في عام 1987. في معظم دول آسيا، بما في ذلك اليابان (حيث تم إطلاقه لأول مرة في عام 1983) والصين وفيتنام وسنغافورة والشرق الأوسط وهونج كونج، تم إصداره باسم كمبيوتر العائلة، والذي يُعرف عادةً باسم فاميكوم بالحروف اللاتينية أو اختصارًا إلى FC. في كوريا الجنوبية، عُرف في كوريا الجنوبية باسم Hyundai Comboy، وتم توزيعه بواسطة شركة Hynix التي كانت تُعرف آنذاك باسم Hyundai Electronics.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Nintendo Entertainment System è una console per videogiochi a 8 bit pubblicata da Nintendo in Nord America nel 1985, in Europa nel 1986 e in Australia nel 1987. Nella maggior parte dell'Asia, tra cui Giappone (dove è stata lanciata per la prima volta nel 1983), Cina, Vietnam, Singapore, Medio Oriente e Hong Kong, è stata distribuita come Family Computer, comunemente abbreviato con la contrazione romanizzata Famicom o con l'abbreviazione FC. In Corea del Sud era conosciuto come Hyundai Comboy ed era distribuito da Hynix, allora nota come Hyundai Electronics.</systemDescription>
+            <systemDescription>Il Nintendo Entertainment System è una console per videogiochi ad 8 bit rilasciata da Nintendo in Nord America nel 1985, in Europa nel 1986 ed in Australia nel 1987. Nella maggior parte dell'Asia, tra cui Giappone (dove è stata lanciata per la prima volta nel 1983), Cina, Vietnam, Singapore, Medio Oriente e Hong Kong, è stata distribuita come Family Computer, comunemente abbreviato con la contrazione romanizzata Famicom o con l'abbreviazione FC. In Corea del Sud era conosciuto come Hyundai Comboy ed era distribuito da Hynix, allora nota come Hyundai Electronics.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Nintendo Entertainment System är en 8-bitars videospelskonsol som släpptes av Nintendo i Nordamerika under 1985, i Europa under 1986 och i Australien under 1987. I större delen av Asien, inklusive Japan (där den först lanserades 1983), Kina, Vietnam, Singapore, Mellanöstern och Hong Kong, släpptes den som Family Computer, ofta förkortad som antingen den romaniserade sammandragningen Famicom eller förkortad till FC. I Sydkorea var den känd som Hyundai Comboy och distribuerades av Hynix, som då var känt som Hyundai Electronics.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Hệ máy chơi game Nintendo Entertainment System (NES) là một hệ máy chơi game 8-bit do Nintendo phát hành tại Bắc Mỹ vào năm 1985, tại châu Âu vào năm 1986 và tại Úc vào năm 1987. Tại hầu hết các nước châu Á, bao gồm Nhật Bản (nơi hệ máy này được ra mắt lần đầu tiên vào năm 1983), Trung Quốc, Việt Nam, Singapore, Trung Đông và Hồng Kông, hệ máy này được phát hành với tên gọi Family Computer, thường được viết tắt là Famicom hoặc FC. Tại Hàn Quốc, hệ máy này được biết đến với tên gọi Hyundai Comboy và được phân phối bởi Hynix, công ty lúc đó còn được gọi là Hyundai Electronics.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Amiga هي عائلة من الحواسيب الشخصية التي تم تسويقها من قبل Commodore في الثمانينيات والتسعينيات. تم إطلاق النموذج الأول في عام 1985 كحاسوب منزلي متطور وأصبح شائعاً بسبب قدراته الرسومية والصوتية والمتعددة المهام. وفّر Amiga ترقية كبيرة من حواسيب 8 بت، مثل Commodore 64، وسرعان ما ازدادت شعبية المنصة بين عشاق الحواسيب. طُرح الطراز الأكثر مبيعاً، وهو Amiga 500، في عام 1987 وأصبح الكمبيوتر المنزلي الرائد في أواخر الثمانينيات وأوائل التسعينيات في معظم أنحاء أوروبا الغربية.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Amiga è una famiglia di personal computer commercializzata da Commodore negli anni '80 e '90. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e multi-tasking. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e di multitasking. L'Amiga rappresentava un aggiornamento significativo rispetto ai computer a 8 bit, come il Commodore 64, e la piattaforma crebbe rapidamente di popolarità tra gli appassionati di computer. Il modello più venduto, l'Amiga 500, fu introdotto nel 1987 e divenne il principale home computer della fine degli anni '80 e dell'inizio degli anni '90 in gran parte dell'Europa occidentale.</systemDescription>
+            <systemDescription>Amiga è una famiglia di personal computer commercializzata da Commodore negli anni '80 e '90. Il primo modello fu lanciato nel 1985 come home computer di fascia alta e divenne popolare per le sue capacità grafiche, audio e multi-tasking. L'Amiga ha rappresentato un miglioramento significativo rispetto ai computer a 8 bit, come il Commodore 64 e la piattaforma crebbe rapidamente di popolarità tra gli appassionati di computer. Il modello più venduto, l'Amiga 500, fu introdotto nel 1987 e divenne il principale home computer della fine degli anni '80 e dell'inizio degli anni '90 in gran parte dell'Europa occidentale.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Amiga är en familj av persondatorer som marknadsfördes av Commodore under 1980- och 1990-talen. Den första modellen lanserades 1985 som en avancerad hemdator och blev populär för sina grafiska och ljudmässiga egenskaper samt för sin förmåga att hantera flera uppgifter samtidigt. Amiga innebar en betydande uppgradering från 8-bitarsdatorer, som Commodore 64, och plattformen blev snabbt populär bland datorentusiaster. Den mest sålda modellen, Amiga 500, introducerades 1987 och blev den ledande hemdatorn under slutet av 1980-talet och början av 1990-talet i stora delar av Västeuropa.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Amiga là dòng máy tính cá nhân do Commodore đưa ra thị trường trong những năm 1980 và 1990. Mẫu máy đầu tiên được ra mắt vào năm 1985 với tư cách là một chiếc máy tính gia đình cao cấp và nhanh chóng trở nên phổ biến nhờ khả năng xử lý đồ họa, âm thanh và đa nhiệm. Amiga mang lại một bước tiến đáng kể so với các máy tính 8-bit như Commodore 64, và nền tảng này nhanh chóng trở nên phổ biến trong giới đam mê máy tính. Mẫu bán chạy nhất, Amiga 500, được giới thiệu vào năm 1987 và trở thành máy tính gia đình hàng đầu vào cuối thập niên 1980 và đầu thập niên 1990 tại phần lớn khu vực Tây Âu.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

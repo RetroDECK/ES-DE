@@ -23,7 +23,7 @@ MSX systems were popular in Japan and several other countries. Sony was the prim
             <systemDescription>MSX هي بنية حاسوبية منزلية موحدة للكمبيوتر المنزلي، أعلنت عنها شركة مايكروسوفت وشركة ASCII في 16 يونيو 1983. تم تصميمه في البداية من قبل مايكروسوفت كمنتج للقطاع الشرقي، وتم تسويقه بشكل مشترك من قبل كازوهيكو نيشي، الذي كان يشغل منصب نائب رئيس مايكروسوفت ومدير شركة ASCII. وتصورت مايكروسوفت ونيشي المشروع كمحاولة لإنشاء معايير موحدة بين مختلف الشركات المصنعة لأنظمة الحوسبة المنزلية في تلك الفترة، على غرار معيار VHS لأجهزة الفيديو المنزلية.
 
 كانت أنظمة MSX شائعة في اليابان والعديد من البلدان الأخرى. وكانت سوني هي المصنع الرئيسي لأنظمة MSX في وقت الإصدار، وطوال معظم عمر المنتجات، حيث أنتجت وحدات أكثر من أي مصنع آخر. وفي نهاية المطاف تم بيع 5 ملايين وحدة من أنظمة MSX في اليابان وحدها. وعلى الرغم من مشاركة Microsoft، إلا أنه تم إصدار عدد قليل من الأجهزة القائمة على MSX في الولايات المتحدة.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,9 +76,9 @@ MSX sustavi bili su popularni u Japanu i nekoliko drugih zemalja. Sony je bio gl
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>MSX è un'architettura standardizzata per home computer, annunciata da Microsoft e ASCII Corporation il 16 giugno 1983. Fu inizialmente concepito da Microsoft come prodotto per il settore orientale e commercializzato congiuntamente da Kazuhiko Nishi, allora vicepresidente di Microsoft e direttore di ASCII Corporation. Microsoft e Nishi concepirono il progetto come un tentativo di creare standard unificati tra i vari produttori di sistemi informatici domestici dell'epoca, alla stregua dello standard VHS per le macchine videofonografiche domestiche.
+            <systemDescription>L'MSX conobbe diverse evoluzioni nel corso degli anni. Il primo MSX, poi distinto come MSX1 o MSX 1 (1983) era dotato di un processore Zilog Z80A con frequenza di 3,576 MHz, una ROM da 32 KB, in cui erano presenti il BIOS ed il sistema operativo MSX BASIC V1.0, un quantitativo di RAM variabile (16-64 KB, espandibile fino ad 1 MB), un chip video Texas Instruments TMS99180 con 16 KB di memoria in grado di supportare 32 sprite ad un colore, un chip audio General Instrument AY-3-8910 (PSG) a 3 canali ad onda quadra + white noise bianco a 12 bit.
 
-I sistemi MSX erano popolari in Giappone e in diversi altri paesi. Sony fu il principale produttore di sistemi MSX al momento del lancio e per la maggior parte della durata del prodotto, producendo più unità di qualsiasi altro produttore. Solo in Giappone furono venduti 5 milioni di unità basate su MSX. Nonostante il coinvolgimento di Microsoft, negli Stati Uniti furono rilasciate poche macchine basate su MSX.</systemDescription>
+Vari videogiochi in cartuccia contenevano anche un chip aggiuntivo SCC o SCC+, che aggiungeva altri 5 canali sonori oltre ad implementare la logica di mappatura della memoria necessaria ad interfacciare ROM di dimensioni fino a 4 Mbit. Ogni canale è pilotato da un sample di 32 byte che ne definisce la forma d'onda. La differenza tra le due versioni è che nella prima i canali 4 e 5 condividono un solo sample di 32 byte, mentre nella seconda i 5 canali sono tutti indipendenti.</systemDescription>
             <systemHardwareType>Computer</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ Sistemele MSX au fost populare în Japonia și în alte câteva țări. Sony a f
 
 MSX-systemen var populära i Japan och i flera andra länder. Sony var den största tillverkaren av MSX-system vid lanseringen och under större delen av produktens livstid och tillverkade fler enheter än någon annan tillverkare. Så småningom såldes 5 miljoner MSX-baserade enheter bara i Japan. Trots Microsofts engagemang släpptes få MSX-baserade maskiner i USA.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>MSX là một kiến trúc máy tính gia đình tiêu chuẩn, được Microsoft và ASCII Corporation công bố vào ngày 16 tháng 6 năm 1983. Ban đầu, Microsoft đã hình thành ý tưởng này như một sản phẩm dành cho thị trường khu vực Đông Á, và được tiếp thị chung bởi Kazuhiko Nishi, khi đó là phó chủ tịch tại Microsoft và giám đốc tại ASCII Corporation. Microsoft và Nishi đã hình thành dự án này như một nỗ lực nhằm tạo ra các tiêu chuẩn thống nhất giữa các nhà sản xuất hệ thống máy tính gia đình khác nhau vào thời điểm đó, theo cách tương tự như tiêu chuẩn VHS dành cho máy ghi băng video gia đình.
+
+Hệ thống MSX rất phổ biến tại Nhật Bản và một số quốc gia khác. Sony là nhà sản xuất chính của hệ thống MSX tại thời điểm ra mắt và trong suốt phần lớn thời gian tồn tại của sản phẩm, với số lượng sản phẩm bán ra nhiều hơn bất kỳ nhà sản xuất nào khác. Cuối cùng, 5 triệu sản phẩm dựa trên MSX đã được bán ra chỉ riêng tại Nhật Bản. Mặc dù có sự tham gia của Microsoft, rất ít máy tính dựa trên MSX được phát hành tại Hoa Kỳ.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

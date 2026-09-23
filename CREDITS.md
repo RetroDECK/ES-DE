@@ -23,6 +23,8 @@ Weestuarty \
 SecularSteve \
 **Catalan** \
 Johnnydement \
+**Czech** \
+Petr Rataj \
 **German** \
 Thorsten \
 Pest \
@@ -158,6 +160,9 @@ https://github.com/nemtrif/utfcpp
 
 Vorbis \
 https://gitlab.xiph.org/xiph/vorbis
+
+zstd \
+https://github.com/facebook/zstd
 
 # Code
 

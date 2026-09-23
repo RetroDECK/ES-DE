@@ -2,7 +2,7 @@ ES-DE Frontend - Portable installation on Windows
 -------------------------------------------------
 
 ES-DE release:
-3.4.1
+3.5.0-alpha
 
 The latest version can be downloaded from https://es-de.org
 
@@ -45,8 +45,10 @@ Emulators\3dSen\3dSen.exe
 Emulators\a7800\a7800.exe
 Emulators\AceDL\AceDL.exe
 Emulators\AdvanceMAME\advmame.exe
+Emulators\ArcadeDuck\ArcadeDuck.exe
 Emulators\Altirra\Altirra64.exe
 Emulators\Altirra\Altirra.exe
+Emulators\amiberry\Amiberry.exe
 Emulators\AppleWin\AppleWin.exe
 Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe
@@ -76,6 +78,7 @@ Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG-SSE2.exe
 Emulators\EasyRPG\Player.exe
 Emulators\eden\eden.exe
 Emulators\EKA2L1\eka2l1_qt.exe
+Emulators\Emulicious\Emulicious.exe
 Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe
@@ -92,6 +95,7 @@ Emulators\Gearboy\Gearboy.exe
 Emulators\Geargrafx\Geargrafx.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\gopher64\gopher64-windows-x86_64.exe
+Emulators\groovymame\mame.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\izapple2\izapple2sdl_windows_amd64.exe
@@ -100,6 +104,7 @@ Emulators\kegs\kegswin.exe
 Emulators\KEmulator\KEmulator.exe
 Emulators\kronos\kronos.exe
 Emulators\lime3ds\lime3ds.exe
+Emulators\linuxloader\linuxloader.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\mandarine\mandarine-qt.exe
@@ -116,6 +121,9 @@ Emulators\Panda3DS\Alber.exe
 Emulators\parallel-launcher\parallel-launcher.exe
 Emulators\PCSX2\pcsx2.exe
 Emulators\PCSX2-Qt\pcsx2-qt.exe
+Emulators\PCSX2\pcsx2-qt*.exe
+Emulators\PCSX2x6\pcsx2x6*.exe
+Emulators\PCSX2x6\pcsx2-qt*.exe
 Emulators\PICO-8\pico8.exe
 Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
@@ -145,10 +153,12 @@ Emulators\SSF\SSF.exe
 Emulators\Stella\64-bit\Stella.exe
 Emulators\Supermodel\Supermodel.exe
 Emulators\Supermodel-Dojo\supermodel.exe
+Emulators\SUPERZSNES\SUPERZSNES.exe
 Emulators\tic80\tic80.exe
 Emulators\Triforce\DolphinWX.exe
 Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe
+Emulators\veesem\veesem.exe
 Emulators\VICE\x64sc.exe
 Emulators\VICE\bin\x64sc.exe
 Emulators\VICE\xplus4.exe

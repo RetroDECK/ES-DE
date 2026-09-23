@@ -400,16 +400,18 @@ void SystemStatusComponent::update(int deltaTime)
             if (mBatteryPercentage != nullptr)
                 mBatteryPercentage->setValue(std::to_string(mBatteryCapacity) + "%");
 
-            if (mBatteryCharging)
-                mBattery->setImage(mIconPathMap["battery_charging"]);
-            else if (mBatteryCapacity >= 0 && mBatteryCapacity <= 25)
-                mBattery->setImage(mIconPathMap["battery_low"]);
-            else if (mBatteryCapacity >= 26 && mBatteryCapacity <= 60)
-                mBattery->setImage(mIconPathMap["battery_medium"]);
-            else if (mBatteryCapacity >= 61 && mBatteryCapacity <= 90)
-                mBattery->setImage(mIconPathMap["battery_high"]);
-            else if (mBatteryCapacity > 90)
-                mBattery->setImage(mIconPathMap["battery_full"]);
+            if (mBattery != nullptr) {
+                if (mBatteryCharging)
+                    mBattery->setImage(mIconPathMap["battery_charging"]);
+                else if (mBatteryCapacity >= 0 && mBatteryCapacity <= 25)
+                    mBattery->setImage(mIconPathMap["battery_low"]);
+                else if (mBatteryCapacity >= 26 && mBatteryCapacity <= 60)
+                    mBattery->setImage(mIconPathMap["battery_medium"]);
+                else if (mBatteryCapacity >= 61 && mBatteryCapacity <= 90)
+                    mBattery->setImage(mIconPathMap["battery_high"]);
+                else if (mBatteryCapacity > 90)
+                    mBattery->setImage(mIconPathMap["battery_full"]);
+            }
         }
     }
 }

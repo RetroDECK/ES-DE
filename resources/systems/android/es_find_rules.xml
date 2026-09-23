@@ -16,12 +16,6 @@
             <entry>com.explusalpha.A2600Emu/com.imagine.BaseActivity</entry>
         </rule>
     </emulator>
-    <emulator name="AETHERSX2">
-        <!-- Sony PlayStation 2 emulator AetherSX2 -->
-        <rule type="androidpackage">
-            <entry>xyz.aethersx2.android/.EmulationActivity</entry>
-        </rule>
-    </emulator>
     <emulator name="APS3E">
         <!-- Sony PlayStation 3 emulator aPS3e -->
         <rule type="androidpackage">
@@ -29,11 +23,25 @@
             <entry>aenu.aps3e/aenu.aps3e.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="ARMSX1">
+        <!-- Sony PlayStation 1 emulator ARMSX1 -->
+        <rule type="androidpackage">
+            <entry>com.nanodata.armsx/com.armsx2.Main</entry>
+        </rule>
+    </emulator>
     <emulator name="ARMSX2">
         <!-- Sony PlayStation 2 emulator ARMSX2 -->
         <rule type="androidpackage">
+            <entry>come.nanodata.armsx2/com.armsx2.MainActivity</entry>
+            <entry>com.armsx2/.MainActivity</entry>
             <entry>come.nanodata.armsx2/kr.co.iefriends.pcsx2.MainActivity</entry>
             <entry>come.nanodata.armsx2.debug/kr.co.iefriends.pcsx2.MainActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="ARMSX3">
+        <!-- Sony PlayStation 3 emulator ARMSX3-->
+        <rule type="androidpackage">
+            <entry>com.armsx3/com.armsx2.Main</entry>
         </rule>
     </emulator>
     <emulator name="AX360E">
@@ -54,6 +62,13 @@
         <!-- Nintendo 3DS emulator AzaharPlus -->
         <rule type="androidpackage">
             <entry>io.github.azaharplus.android/org.citra.citra_emu.activities.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="BACHATAS4">
+        <!-- Sony PlayStation 4 emulator BachataS4 -->
+        <rule type="androidpackage">
+            <entry>com.bachatas4.android/.DirectLaunchActivity</entry>
+            <entry>com.bachatas4.android.github/com.bachatas4.android.DirectLaunchActivity</entry>
         </rule>
     </emulator>
     <emulator name="C64-EMU">
@@ -126,6 +141,12 @@
             <entry>com.dsemu.drastic/.DraSticActivity</entry>
         </rule>
     </emulator>
+    <emulator name="DSMILE">
+        <!-- VTech V.Smile emulator D.Smile -->
+        <rule type="androidpackage">
+            <entry>com.dsmile.emulator/.ui.EmuActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="androidpackage">
@@ -152,6 +173,24 @@
         <!-- Symbian and Nokia N-Gage emulator EKA2L1 -->
         <rule type="androidpackage">
             <entry>com.github.eka2l1/.emu.EmulatorActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="EMUCOREC">
+        <!-- Sony PlayStation 3 emulator EmuCoreC -->
+        <rule type="androidpackage">
+            <entry>com.sbro.emucorec/.core.ps3.Emulator</entry>
+        </rule>
+    </emulator>
+    <emulator name="EMUCOREV">
+        <!-- Sony PlayStation Vita emulator EmuCoreV -->
+        <rule type="androidpackage">
+            <entry>com.sbro.emucorev/.core.vita.Emulator</entry>
+        </rule>
+    </emulator>
+    <emulator name="EMUCOREX">
+        <!-- Sony PlayStation 2 emulator EmuCoreX -->
+        <rule type="androidpackage">
+            <entry>com.sbro.emucorex/.MainActivity</entry>
         </rule>
     </emulator>
     <emulator name="EPSXE">
@@ -194,6 +233,7 @@
             <entry>com.antutu.ABenchMark/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>com.tencent.ig/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
             <entry>com.ludashi.aibench/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
+            <entry>com.antutu.benchmark.full/com.xj.landscape.launcher.ui.gamedetail.GameDetailActivity</entry>
         </rule>
     </emulator>
     <emulator name="GAMENATIVE">
@@ -379,6 +419,24 @@
             <entry>com.androidemu.nes/.EmulatorActivity</entry>
         </rule>
     </emulator>
+    <emulator name="NETHERSX2">
+        <!-- Sony PlayStation 2 emulator NetherSX2 (AetherSX2) -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.android/.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="NETHERSX2-TURNIP">
+        <!-- Sony PlayStation 2 emulator NetherSX2-Turnip -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.tturnip/xyz.aethersx2.android.EmulationActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="NETHERSX2-TURNIP-CLASSIC">
+        <!-- Sony PlayStation 2 emulator NetherSX2-Turnip Classic -->
+        <rule type="androidpackage">
+            <entry>xyz.aethersx2.cturnip/xyz.aethersx2.android.EmulationActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="NGP-EMU">
         <!-- SNK Neo Geo Pocket emulator NGP.emu -->
         <rule type="androidpackage">
@@ -480,6 +538,12 @@
             <entry>org.scummvm.scummvm/org.scummvm.scummvm.SplashActivity</entry>
         </rule>
     </emulator>
+    <emulator name="SEEDLESSDS">
+        <!-- Nintendo DS and DSi emulator SeedlessDS -->
+        <rule type="androidpackage">
+            <entry>com.seedlessds.app/.LaunchGame</entry>
+        </rule>
+    </emulator>
     <emulator name="SKYEMU">
         <!-- Nintendo Game Boy, Game Boy Color, Game Boy Advance and DS emulator SkyEmu -->
         <rule type="androidpackage">
@@ -503,6 +567,12 @@
         <rule type="androidpackage">
             <entry>com.fms.speccy.deluxe/com.fms.emulib.TVActivity</entry>
             <entry>com.fms.speccy/com.fms.emulib.TVActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="STARBOARD">
+        <!-- PortMaster compatibility layer Starboard -->
+        <rule type="androidpackage">
+            <entry>org.force9.starboard/.ui.game.GameActivity</entry>
         </rule>
     </emulator>
     <emulator name="SUPER3">
@@ -545,10 +615,19 @@
             <entry>org.vita3k.emulator.ikhoeyZX/org.vita3k.emulator.Emulator</entry>
         </rule>
     </emulator>
+    <emulator name="WATERMELONDS">
+        <!-- Nintendo DS and DSi emulator WatermelonDS -->
+        <rule type="androidpackage">
+            <entry>me.magnum.melondualds/me.magnum.melonds.ui.emulator.EmulatorActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="WINLATOR-CMOD">
         <!-- Microsoft Windows emulator Winlator Cmod -->
         <rule type="androidpackage">
             <entry>com.winlator.cmod/.XServerDisplayActivity</entry>
+            <entry>com.winlator.vanilla/com.winlator.cmod.XServerDisplayActivity</entry>
+            <entry>com.ludashi.benchmark/com.winlator.cmod.XServerDisplayActivity</entry>
+            <entry>com.tencent.ig/com.winlator.cmod.XServerDisplayActivity</entry>
         </rule>
     </emulator>
     <emulator name="WINLATOR-GLIBC">
@@ -563,10 +642,32 @@
             <entry>com.cmodded.winlator/com.winlator.XServerDisplayActivity</entry>
         </rule>
     </emulator>
+    <emulator name="WINNATIVE">
+        <!-- Microsoft Windows emulator WinNative -->
+        <rule type="androidpackage">
+            <entry>com.winnative.cmod/com.winlator.cmod.runtime.display.XServerDisplayActivity</entry>
+            <entry>com.antutu.ABenchMark/com.winlator.cmod.runtime.display.XServerDisplayActivity</entry>
+            <entry>com.ludashi.benchmark/com.winlator.cmod.runtime.display.XServerDisplayActivity</entry>
+            <entry>com.tencent.ig/com.winlator.cmod.runtime.display.XServerDisplayActivity</entry>
+        </rule>
+    </emulator>
     <emulator name="X1-BOX">
         <!-- Microsoft Xbox emulator X1 BOX -->
         <rule type="androidpackage">
             <entry>com.izzy2lost.x1box/.LauncherActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="XENDROID">
+        <!-- Microsoft Xbox 360 emulator XenDroid -->
+        <rule type="androidpackage">
+            <entry>xendroid.compose/.EmulatorHostActivity</entry>
+        </rule>
+    </emulator>
+    <emulator name="XENRA">
+        <!-- Microsoft Xbox and Xbox 360 emulator Xenra -->
+        <rule type="androidpackage">
+            <entry>Ali.Xanite.green/Ali.Xanite.LauncherActivity</entry>
+            <entry>Ali.Xanite/Ali.Xanite.LauncherActivity</entry>
         </rule>
     </emulator>
     <emulator name="YABASANSHIRO-2">

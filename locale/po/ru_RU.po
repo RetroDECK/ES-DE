@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-19 17:38+0400\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-12 20:05+0200\n"
 "Last-Translator: Northwestern Software <info@es-de.org>\n"
 "Language-Team: Русский <info@es-de.org>\n"
 "Language: ru_RU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Ошибка сети (статус:"
@@ -616,6 +616,9 @@ msgstr "ВЫПОЛНЕНИЕ..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "НЕ НАЙДЕНО НИЧЕГО ДЛЯ ИМПОРТА"
 
+msgid "import"
+msgstr "импорт"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -634,16 +637,6 @@ msgstr "СДЕЛАЙТЕ ВЫБОР"
 msgid "IMPORT"
 msgstr "ИМПОРТ"
 
-msgid "import"
-msgstr "импорт"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "ИМПОРТИРОВАНА %i ЗАПИСЬ"
-msgstr[1] "ИМПОРТИРОВАНО %i ЗАПИСИ"
-msgstr[2] "ИМПОРТИРОВАНО %i ЗАПИСЕЙ"
-
 msgid "SELECT ALL"
 msgstr "ВЫБРАТЬ ВСЁ"
 
@@ -655,6 +648,13 @@ msgstr "СНЯТЬ ВЫБОР"
 
 msgid "select none"
 msgstr "не выбирать"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "ИМПОРТИРОВАНА %i ЗАПИСЬ"
+msgstr[1] "ИМПОРТИРОВАНО %i ЗАПИСИ"
+msgstr[2] "ИМПОРТИРОВАНО %i ЗАПИСЕЙ"
 
 msgid "FILTER GAMELIST"
 msgstr "ФИЛЬТР ГЕЙМЛИСТА"
@@ -1111,6 +1111,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "ПРОДОЛЖИТЬ"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "ЗАПУСТИТЬ НА ДРУГОМ ЭКРАНЕ"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "КАТАЛОГ ИГРОВЫХ МЕДИА"
 
@@ -1211,6 +1214,12 @@ msgstr "АППАРАТНОЕ ДЕКОДИРОВАНИЕ ВИДЕО (ЭКСПЕР
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "УВЕЛИЧЕНИЕ ЧАСТОТЫ КАДРОВ ВИДЕО ДО 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "ПРОВЕРКА УСТАНОВЛЕННЫХ ЯДЕР RETROARCH (ЭКСПЕР.)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "ИСПОЛЬЗУЙТЕ RETROARCH В РЕЖИМЕ SAF (НЕ РЕКОМЕНДУЕТСЯ)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "РАЗРЕШИТЬ АЛЬТ. ЭМУЛЯТОРЫ ДЛЯ КАЖДОЙ ИГРЫ"
 
@@ -1220,14 +1229,14 @@ msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ФАЙЛЫ И ПАПКИ"
 msgid "SHOW HIDDEN GAMES"
 msgstr "ПОКАЗЫВАТЬ СКРЫТЫЕ ИГРЫ"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "ЗАПУСКАТЬ ИГРЫ НА ДРУГОМ ЭКРАНЕ"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "РАЗРЕШИТЬ ПОЛЬЗ. СЦЕНАРИИ СОБЫТИЙ"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "ПОЛЬЗ. СОБЫТИЯ ПРИ НАВИГАЦИИ"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "ЗАПУСКАТЬ СОБЫТИЯ ПРОСМОТРА В НЕБЛОКИРУЮЩЕМ РЕЖИМЕ"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "ПОКАЗЫВАТЬ ИГРЫ ТОЛЬКО ИЗ GAMELIST.XML"
@@ -1328,11 +1337,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "НАСТРОЙКИ ЗАСТАВКИ"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "ВКЛЮЧИТЬ ЗАПУСК НА ДРУГОМ ЭКРАНЕ"
+
 msgid "choose"
 msgstr "выбор"
 
 msgid "close menu"
 msgstr "закр. меню"
+
+msgid "System default (Other)"
+msgstr "По умолчанию (Другой)"
+
+msgid "System default (Primary)"
+msgstr "По умолчанию (Основной)"
+
+msgid "Always on other"
+msgstr "Всегда на другом"
+
+msgid "Always on primary"
+msgstr "Всегда на первичный"
 
 msgid "EDIT METADATA"
 msgstr "ИЗМЕНИТЬ МЕТАДАННЫЕ"
@@ -2509,6 +2533,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "ВЫБЕРИТЕ АЛЬТ. ЭМУЛЯТОРЫ"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "ЗАПУСТИТЬ НА ЭКРАНЕ"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "ЗАПУСТИТЬ НА КАКОМ ЭКРАНЕ"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "ССЫЛКА НА ПАПКУ"
 
@@ -2770,8 +2802,8 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "ОЧИСТИТЬ (ОСТАВЬТЕ ПУСТЫМ, ЧТОБЫ СБРОСИТЬ ПУТЬ ПО УМОЛЧАНИЮ)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
@@ -2813,9 +2845,9 @@ msgstr "ОБНОВИТЬ"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "ПРОГРАММА ОБНОВЛЕНИЯ ПРИЛОЖЕНИЯ ЗАГРУЗИТ ПОСЛЕДНЮЮ ПОРТАТИВНУЮ ВЕРСИЮ ДЛЯ "

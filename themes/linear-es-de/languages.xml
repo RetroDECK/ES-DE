@@ -40,6 +40,20 @@
             <langYourCollections>Les teves Col·leccions</langYourCollections>
         </variables>
     </language>
+    <language name="cs_CZ">
+        <variables>
+            <langLabelRating>Hodnocení</langLabelRating>
+            <langLabelReleasedate>Datum vydání</langLabelReleasedate>
+            <langLabelPlayers>Hráči</langLabelPlayers>
+            <langLabelGenre>Žánr</langLabelGenre>
+            <langLabelDeveloper>Developer</langLabelDeveloper>
+            <langLabelPublisher>Vydavatel</langLabelPublisher>
+            <langLabelLastPlayed>Naposledy hrál</langLabelLastPlayed>
+            <langLabelPlayTime>Doba hraní</langLabelPlayTime>
+            <langCustomCollections>Vlastní kolekce</langCustomCollections>
+            <langYourCollections>Tvoje kolekce</langYourCollections>
+        </variables>
+    </language>
     <language name="de_DE">
         <variables>
             <langLabelRating>Bewertung</langLabelRating>

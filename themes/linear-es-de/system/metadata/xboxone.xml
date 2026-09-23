@@ -20,10 +20,10 @@ It's notable that there are few exclusives on this console as Microsoft had star
     </variables>
     <language name="ar_SA">
         <variables>
-            <systemDescription>جهاز Xbox One هو جهاز ألعاب فيديو منزلي من الجيل الثامن تم تطويره من قبل شركة مايكروسوفت. تم إصداره في عام 2013 كخليفة لجهاز Xbox 360، وفي حين أن التسويق الأولي كان يركز على ميزات الوسائط المتعددة بدلاً من قدرات الألعاب، إلا أن هذا الأمر تغير طوال فترة استخدام وحدة التحكم.
+            <systemDescription>جهاز Xbox One هو جهاز ألعاب فيديو منزلي من الجيل الثامن تم تطويره من قبل شركة مايكروسوفت. تم إصداره في عام 2013 كخليفة لجهاز Xbox 360، وفي حين أن التسويق الأولي كان يركز على ميزات الوسائط المتعددة بدلاً من قدرات الألعاب، إلا أن هذا الأمر تغير طوال فترة استخدام كونسول.
             
-من الملاحظ أن هناك القليل من الألعاب الحصرية على وحدة التحكم هذه حيث بدأت Microsoft في التركيز بشكل متزايد على توفير معظم الألعاب أيضاً على نظام التشغيل Windows الخاص بها.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+من الملاحظ أن هناك القليل من الألعاب الحصرية على كونسول هذه حيث بدأت Microsoft في التركيز بشكل متزايد على توفير معظم الألعاب أيضاً على نظام تشغيل Windows الخاص بها.</systemDescription>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -76,7 +76,7 @@ It's notable that there are few exclusives on this console as Microsoft had star
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>La Xbox One è una console per videogiochi di ottava generazione sviluppata da Microsoft. È stata rilasciata nel 2013 come successore della Xbox 360 e, sebbene il marketing iniziale fosse incentrato sulle sue caratteristiche multimediali piuttosto che sulle sue capacità di gioco, ciò è cambiato nel corso della vita della console.
+            <systemDescription>L'Xbox One è una console per videogiochi di ottava generazione sviluppata da Microsoft. È stata rilasciata nel 2013 come successore dell'Xbox 360 e, sebbene il marketing iniziale fosse incentrato sulle sue caratteristiche multimediali piuttosto che sulle sue capacità di gioco, ciò è cambiato nel corso della vita della console.
 
 È degno di nota il fatto che ci siano poche esclusive su questa console, poiché Microsoft ha iniziato a concentrarsi sempre di più sulla fornitura della maggior parte dei giochi anche sul suo sistema operativo Windows.</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
@@ -157,6 +157,14 @@ It's notable that there are few exclusives on this console as Microsoft had star
 
 Det är anmärkningsvärt att det finns få exklusiva spel på den här konsolen eftersom  Microsoft hade börjat fokusera alltmer på att tillhandahålla de flesta spel även på  deras Windows-operativsystem.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Xbox One là hệ máy chơi game gia đình thế hệ thứ tám do Microsoft phát triển. Thiết bị này được ra mắt vào năm 2013 với tư cách là phiên bản kế nhiệm của Xbox 360; mặc dù chiến lược tiếp thị ban đầu tập trung vào các tính năng đa phương tiện hơn là khả năng chơi game, nhưng điều này đã thay đổi trong suốt thời gian tồn tại của hệ máy.
+ 
+Điều đáng chú ý là hệ máy này có rất ít tựa game độc quyền, bởi Microsoft đã bắt đầu ngày càng tập trung vào việc phát hành hầu hết các tựa game trên hệ điều hành Windows của họ.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

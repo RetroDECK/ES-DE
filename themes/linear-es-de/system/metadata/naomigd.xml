@@ -76,9 +76,9 @@ Naomi su naslijedile ploče Sega Hikaru i Sega Naomi 2, iako su nadmašili Naomi
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il NAOMI (New Arcade Operation Machine Idea) è un sistema arcade rilasciato da Sega nel 1998. È stato progettato come successore dell'hardware del Sega Model 3, utilizzando un'architettura simile a quella del Sega Dreamcast.
+            <systemDescription>Il NAOMI (New Arcade Operation Machine Idea) è un sistema arcade rilasciato da Sega nel 1998. È stato progettato come successore dell'hardware del Sega Model 3, utilizzando un'architettura molto simile a quella del Sega Dreamcast.
 
-Il NAOMI è stato succeduto dalle schede Sega Hikaru e Sega NAOMI 2, pur avendo superato il NAOMI 2, la Hikaru e il Sega Aurora. Anche la Sega Chihiro, o forse anche la Sega Lindbergh, potrebbero essere considerate dei successori.</systemDescription>
+Il NAOMI è stato succeduto dalle schede Sega Hikaru e Sega NAOMI 2, anche se è durato di quest'ultime e anche del Sega Aurora. Anche Sega Chihiro, o forse anche Sega Lindbergh, potrebbero essere considerate dei successori.</systemDescription>
             <systemHardwareType>Arcade</systemHardwareType>
         </variables>
     </language>
@@ -160,6 +160,14 @@ NAOMI a fost succedat de plăcile Sega Hikaru și Sega NAOMI 2, deși a depăși
 
 NAOMI efterträddes av Sega Hikaru och Sega NAOMI 2, som dock hade överlevt NAOMI 2, Hikaru och Sega Aurora. Sega Chihiro, eller möjligen till och med Sega Lindbergh, kan också ses som efterföljare.</systemDescription>
             <systemHardwareType>Arkad</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>NAOMI (New Arcade Operation Machine Idea) là một hệ thống máy chơi game arcade do Sega phát hành vào năm 1998. Hệ thống này được thiết kế như một phiên bản kế thừa của phần cứng Sega Model 3, sử dụng kiến trúc tương tự như Sega Dreamcast.
+
+NAOMI được thay thế bởi các bo mạch Sega Hikaru và Sega NAOMI 2, mặc dù đã tồn tại lâu hơn NAOMI 2, Hikaru và Sega Aurora. Sega Chihiro, hoặc thậm chí có thể là Sega Lindbergh, cũng có thể được coi là những người kế nhiệm.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

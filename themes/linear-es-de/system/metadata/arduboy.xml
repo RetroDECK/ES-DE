@@ -124,6 +124,12 @@
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Arduboy là một máy chơi game cầm tay chạy phần mềm mã nguồn mở, dựa trên nền tảng phần cứng Arduino.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Arduboy 是一款基于 Arduino 硬件平台的掌上游戏机，采用开源软件。</systemDescription>

@@ -85,9 +85,9 @@ Bila je to prva konzola za video igre koja je uključivala zaslon osjetljiv na d
     <language name="it_IT">
         <variables>
             <systemDescription>Game.com è una console portatile di quinta generazione rilasciata da Tiger Electronics nell'agosto 1997. Una versione più piccola, il Game.com Pocket Pro, è stata rilasciata a metà del 1999.
-La prima versione del Game.com può essere collegata a un modem a 14,4 kbit/s per la connettività a Internet, da cui il nome che fa riferimento al dominio di primo livello .com.
+La prima versione del Game.com può essere collegata ad un modem a 14,4 Kbit/s per la connettività a Internet, da cui il nome, che fa riferimento al dominio di primo livello .com.
 
-È stata la prima console per videogiochi a includere un touchscreen e la prima console portatile a includere la connettività Internet.</systemDescription>
+È stata la prima console per videogiochi ad includere un touchscreen e la prima console portatile ad includere la connettività Internet.</systemDescription>
             <systemHardwareType>Portatile</systemHardwareType>
         </variables>
     </language>
@@ -179,6 +179,15 @@ Den första versionen av Game.com kan anslutas till ett 14,4 kbit/s modem för I
 
 Det var den första videospelskonsolen med pekskärm och den första handhållna konsolen med Internetanslutning.</systemDescription>
             <systemHardwareType>Bärbar</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Game.com là một hệ máy chơi game cầm tay thế hệ thứ năm do Tiger Electronics phát hành vào tháng 8 năm 1997. Một phiên bản nhỏ gọn hơn, Game.com Pocket Pro, đã được ra mắt vào giữa năm 1999.
+Phiên bản đầu tiên của Game.com có thể kết nối với modem 14,4 kbit/s để truy cập Internet, do đó tên gọi của nó gợi ý đến tên miền cấp cao nhất .com.
+
+Đây là máy chơi game video đầu tiên được trang bị màn hình cảm ứng và là máy chơi game cầm tay đầu tiên có khả năng kết nối Internet.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

@@ -9,6 +9,7 @@
     <language>en_GB</language>
     <language>bs_BA</language>
     <language>ca_ES</language>
+    <language>cs_CZ</language>
     <language>de_DE</language>
     <language>es_ES</language>
     <language>fr_FR</language>
@@ -42,6 +43,7 @@
         <label language="en_GB">Dark</label>
         <label language="bs_BA">Tamna</label>
         <label language="ca_ES">Fosc</label>
+        <label language="cs_CZ">Tmavé</label>
         <label language="de_DE">Dunkel</label>
         <label language="es_ES">Oscuro</label>
         <label language="fr_FR">Foncé</label>
@@ -68,6 +70,7 @@
         <label language="en_GB">Light</label>
         <label language="bs_BA">Svjetla</label>
         <label language="ca_ES">Clar</label>
+        <label language="cs_CZ">Světlé</label>
         <label language="de_DE">Hell</label>
         <label language="es_ES">Claro</label>
         <label language="fr_FR">Clair</label>
@@ -110,6 +113,7 @@
         <label language="en_GB">Textlist</label>
         <label language="bs_BA">Tekstlista</label>
         <label language="ca_ES">Llistat</label>
+        <label language="cs_CZ">Seznam</label>
         <label language="de_DE">Liste</label>
         <label language="es_ES">Lista</label>
         <label language="fr_FR">Liste</label>
@@ -137,6 +141,7 @@
         <label language="en_GB">Textlist without videos</label>
         <label language="bs_BA">Tekstlista bez videa</label>
         <label language="ca_ES">Llistat sense vídeos</label>
+        <label language="cs_CZ">Seznam bez videí</label>
         <label language="de_DE">Liste ohne videos</label>
         <label language="es_ES">Lista sin videos</label>
         <label language="fr_FR">Liste sans vidéos</label>
@@ -164,6 +169,7 @@
         <label language="en_GB">Simple textlist</label>
         <label language="bs_BA">Jednostavna tekstlista</label>
         <label language="ca_ES">Llistat simple</label>
+        <label language="cs_CZ">Jednoduchý seznam</label>
         <label language="de_DE">Einfache liste</label>
         <label language="es_ES">Lista simple</label>
         <label language="fr_FR">Simple liste</label>
@@ -191,6 +197,7 @@
         <label language="en_GB">Simple textlist without videos</label>
         <label language="bs_BA">Jednostavna tekstlista bez videa</label>
         <label language="ca_ES">Llistat simple sense vídeos</label>
+        <label language="cs_CZ">Jednoduchý seznam bez videí</label>
         <label language="de_DE">Einfache liste ohne videos</label>
         <label language="es_ES">Lista simple sin videos</label>
         <label language="fr_FR">Simple liste sans vidéos</label>
@@ -218,6 +225,7 @@
         <label language="en_GB">Carousel</label>
         <label language="bs_BA">Vrtuljak</label>
         <label language="ca_ES">Carrusel</label>
+        <label language="cs_CZ">Karusel</label>
         <label language="de_DE">Karussell</label>
         <label language="es_ES">Carrusel</label>
         <label language="fr_FR">Carrousel</label>
@@ -245,6 +253,7 @@
         <label language="en_GB">Simple carousel</label>
         <label language="bs_BA">Jednostavan vrtuljak</label>
         <label language="ca_ES">Carrusel simple</label>
+        <label language="cs_CZ">Jednoduchý karusel</label>
         <label language="de_DE">Einfaches karussell</label>
         <label language="es_ES">Carrusel simple</label>
         <label language="fr_FR">Simple carrousel</label>
@@ -272,6 +281,7 @@
         <label language="en_GB">Instant and slide</label>
         <label language="bs_BA">Instantno i klizivo</label>
         <label language="ca_ES">Instantani i lliscar</label>
+        <label language="cs_CZ">Okamžité a snímkové</label>
         <label language="de_DE">Sofort und gleiten</label>
         <label language="es_ES">Instantanea y deslizante</label>
         <label language="fr_FR">Instantané et glissement</label>
@@ -305,6 +315,7 @@
         <label language="en_GB">Instant</label>
         <label language="bs_BA">Instantno</label>
         <label language="ca_ES">Instantani</label>
+        <label language="cs_CZ">Okamžité</label>
         <label language="de_DE">Sofort</label>
         <label language="es_ES">Instantanea</label>
         <label language="fr_FR">Instantané</label>
@@ -338,6 +349,7 @@
         <label language="en_GB">Fade</label>
         <label language="bs_BA">Blijed</label>
         <label language="ca_ES">Desaparèixer</label>
+        <label language="cs_CZ">Prolínání</label>
         <label language="de_DE">Überblendung</label>
         <label language="es_ES">Fundido</label>
         <label language="fr_FR">Fondu</label>

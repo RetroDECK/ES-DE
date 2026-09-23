@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>Daphne هو تطبيق محاكي لألعاب الأركيد يحاكي مجموعة متنوعة من ألعاب الفيديو الليزرية بهدف الحفاظ على هذه الألعاب وجعل تجربة اللعب مطابقة للألعاب الأصلية قدر الإمكان. يُطلق المطور على Daphne اسم "أول محاكي ألعاب ليزر ديسك ليزر متعدد الأركيد على الإطلاق" ("FEMALE"). ويستمد اسمه من الأميرة دافني، بطلة لعبة Dragon's Lair.</systemDescription>
-            <systemHardwareType>المحاكي</systemHardwareType>
+            <systemHardwareType>محاكى</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Daphne è un'applicazione di emulazione arcade che emula una serie di videogiochi laserdisc con l'intento di preservare questi giochi e rendere l'esperienza di gioco il più fedele possibile agli originali. Lo sviluppatore chiama Daphne "First Ever Multiple Arcade Laserdisc Emulator" ("FEMALE"). Il suo nome deriva dalla principessa Daphne, l'eroina di Dragon's Lair.</systemDescription>
+            <systemDescription>Daphne è un'applicazione di emulazione arcade che emula una serie di videogiochi laserdisc con l'intento di preservare questi giochi e rendere l'esperienza di gioco il più fedele possibile all'originale. Lo sviluppatore chiama Daphne "F.E.M.A.L.E." che sarebbe l'acronimo di "First Ever Multiple Arcade Laserdisc Emulator" (in italiano "Il primo assoluto emulatore multiplo di cabinati laserdisc"). Il suo nome deriva dalla principessa Daphne, l'eroina di Dragon's Lair, il titolo storicamente più rappresentativo dei videogiochi laserdisc.</systemDescription>
             <systemHardwareType>Emulatore</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Daphne är ett arkademulatorprogram som emulerar en mängd olika laserdisc-videospel i syfte att bevara dessa spel och göra spelupplevelsen så trogen originalen som möjligt. Utvecklaren kallar Daphne för "First Ever Multiple Arcade Laserdisc Emulator" ("FEMALE"). Den har fått sitt namn från prinsessan Daphne, hjältinnan i Dragon's Lair.</systemDescription>
             <systemHardwareType>Emulator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Daphne là một ứng dụng giả lập máy arcade có khả năng mô phỏng nhiều tựa game video trên đĩa laser, với mục đích bảo tồn các tựa game này và mang lại trải nghiệm chơi game trung thực nhất có thể so với bản gốc. Nhà phát triển gọi Daphne là "Trình giả lập máy arcade đa đĩa laser đầu tiên trên thế giới" ("FEMALE"). Tên gọi này được lấy cảm hứng từ Công chúa Daphne, nhân vật nữ chính trong trò chơi Dragon's Lair.</systemDescription>
+            <systemHardwareType>Trình giả lập</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

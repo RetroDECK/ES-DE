@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>كان Adobe Flash (المعروف سابقًا باسم Macromedia Flash وFutureSplash) عبارة عن منصة برمجيات وسائط متعددة تُستخدم لإنتاج الرسوم المتحركة وتطبيقات الويب الغنية وتطبيقات سطح المكتب وتطبيقات الجوال وألعاب الجوال ومشغلات الفيديو المدمجة في متصفح الويب. يعرض فلاش النصوص والرسومات المتجهة والرسومات النقطية لتوفير الرسوم المتحركة وألعاب الفيديو والتطبيقات. وهو يسمح ببث الصوت والفيديو، ويمكنه التقاط مدخلات الماوس ولوحة المفاتيح والميكروفون والكاميرا.</systemDescription>
-            <systemHardwareType>المحرك</systemHardwareType>
+            <systemHardwareType>محرك</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Adobe Flash (tidigare Macromedia Flash och FutureSplash) var en programvaruplattform för multimedia som användes för att skapa animationer, rika webbapplikationer, skrivbordsapplikationer, mobilappar, mobilspel och inbäddade videospelare för webbläsare. Flash visar text, vektorgrafik och rastergrafik för att skapa animationer, videospel och applikationer. Det möjliggör streaming av ljud och video och kan fånga in mus-, tangentbords-, mikrofon- och kamerainmatning.</systemDescription>
             <systemHardwareType>Motor</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Adobe Flash (trước đây là Macromedia Flash và FutureSplash) là một nền tảng phần mềm đa phương tiện được sử dụng để sản xuất các đoạn phim hoạt hình, ứng dụng web nâng cao, ứng dụng máy tính để bàn, ứng dụng di động, trò chơi di động và trình phát video tích hợp trong trình duyệt web. Flash hiển thị văn bản, đồ họa vector và đồ họa raster để tạo ra các đoạn phim hoạt hình, trò chơi điện tử và ứng dụng. Nó cho phép phát trực tuyến âm thanh và video, đồng thời có thể thu nhận dữ liệu đầu vào từ chuột, bàn phím, micrô và camera.</systemDescription>
+            <systemHardwareType>Động cơ</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

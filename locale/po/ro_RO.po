@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-12 21:31+0300\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-04 22:25+0300\n"
 "Last-Translator: Mihai Vasiliu <mihai.vasiliu.93@gmail.com>\n"
 "Language-Team: Română <info@es-de.org>\n"
 "Language: ro_RO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Eroare rețea (stare:"
@@ -621,6 +621,9 @@ msgstr "SE LUCREAZĂ..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "NU S-A PUTUT GĂSI NIMIC DE IMPORTAT"
 
+msgid "import"
+msgstr "importă"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -639,16 +642,6 @@ msgstr "SELECTEAZĂ"
 msgid "IMPORT"
 msgstr "IMPORTĂ"
 
-msgid "import"
-msgstr "importă"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "S-A IMPORTAT %i INTRARE"
-msgstr[1] "S-AU IMPORTAT %i INTRĂRI"
-msgstr[2] "S-AU IMPORTAT %i DE INTRĂRI"
-
 msgid "SELECT ALL"
 msgstr "SELECTEAZĂ TOT"
 
@@ -660,6 +653,13 @@ msgstr "NU SELECTA NIMIC"
 
 msgid "select none"
 msgstr "nu selecta nimic"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "S-A IMPORTAT %i INTRARE"
+msgstr[1] "S-AU IMPORTAT %i INTRĂRI"
+msgstr[2] "S-AU IMPORTAT %i DE INTRĂRI"
 
 msgid "FILTER GAMELIST"
 msgstr "FILTREAZĂ LISTA DE JOCURI"
@@ -1115,6 +1115,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "CONTINUĂ"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "LANSEAZĂ PE ECRANUL SECUNDAR"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "DOSAR FIȘIERE MEDIA JOC"
 
@@ -1215,6 +1218,12 @@ msgstr "DECODARE HARDWARE VIDEO (EXPERIMENTAL)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "UPSCALE RATĂ DE CADRE LA 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "INTEROGHEAZĂ NUCLEELE RETROARCH INSTALATE (EXPERIMENTAL)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "FOLOSEȘTE RETROARCH ÎN MODUL SAF (NERECOMANDAT)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "ACTIVEAZĂ EMULATOARE ALTERNATIVE PER JOC"
 
@@ -1224,14 +1233,14 @@ msgstr "AFIȘEAZĂ FIȘIERELE ȘI DOSARELE ASCUNSE"
 msgid "SHOW HIDDEN GAMES"
 msgstr "AFIȘEAZĂ JOCURILE ASCUNSE"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "LANSEAZĂ JOCURILE PE CELĂLALT ECRAN"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "ACTIVEAZĂ SCRIPT EVENIMENTE PERSONALIZATE"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "EVENIMENTE PERSONALIZATE LA NAVIGARE"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "RULEAZĂ EVENIMENTELE DE NAVIGARE CA NON-BLOCANTE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "AFIȘEAZĂ DOAR JOCURILE DIN FIȘIERELE GAMELIST.XML"
@@ -1332,11 +1341,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "SETĂRI ECONOMIZOR ECRAN"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "ACTIVEAZĂ LANSAREA PE ECRANUL SECUNDAR"
+
 msgid "choose"
 msgstr "alege"
 
 msgid "close menu"
 msgstr "închide meniul"
+
+msgid "System default (Other)"
+msgstr "Implicit sistem (secundar)"
+
+msgid "System default (Primary)"
+msgstr "Implicit sistem (primar)"
+
+msgid "Always on other"
+msgstr "Mereu pe secundar"
+
+msgid "Always on primary"
+msgstr "Mereu pe primar"
 
 msgid "EDIT METADATA"
 msgstr "EDITEAZĂ METADATELE"
@@ -2515,6 +2539,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "SELECTEAZĂ EMULATOR ALTERNATIV"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "LANSEAZĂ PE ECRANUL"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "LANSEAZĂ PE ECRANUL"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "LEGĂTURĂ DOSAR"
 
@@ -2776,14 +2808,14 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "CURĂȚĂ (LASĂ LIBER PENTRU A RESETA LA CALEA IMPLICITĂ)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
-"ACEST LUCRU VA CREA DOSARE PENTRU TOATE SISTEMELE DEFINITE ÎN es_systems."
-"xml\n"
+"ACEST LUCRU VA CREA DOSARE PENTRU TOATE SISTEMELE DEFINITE ÎN "
+"es_systems.xml\n"
 "\n"
 "CA REZULTAT, VOR FI CREATE MULTE DOSARE, DECI ESTE RECOMANDAT SĂ LE ȘTERGI "
 "PE CELE DE CARE NU AI NEVOIE"
@@ -2821,9 +2853,9 @@ msgstr "ACTUALIZEAZĂ"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "ACTUALIZATORUL APLICAȚIEI VA DESCĂRCA ULTIMA VERSIUNE PORTABILĂ PENTRU "

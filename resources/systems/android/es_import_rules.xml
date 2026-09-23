@@ -26,4 +26,9 @@
             <extension>.app</extension>
         </rule>
     </system>
+    <system name="ports">
+        <rule name="Android Package" type="androidpackage">
+            <extension>.app</extension>
+        </rule>
+    </system>
 </ruleList>

@@ -18,6 +18,7 @@ https://github.com/lilbud/es-de-theme-stuff
 
 To test whether your theme includes support for all ES-DE systems, download one of the following archives which contain ROM directory trees fully populated with dummy files:
 
+[ROMs_ALL_Android.zip](tools/system-dirs-dummy-files/ROMs_ALL_Android.zip)\
 [ROMs_ALL_Linux.zip](tools/system-dirs-dummy-files/ROMs_ALL_Linux.zip)\
 [ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
 [ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
@@ -1787,6 +1788,16 @@ Properties:
     - Selected item is scaled by the value defined by this property.
     - Minimum value is `0.2` and maximum value is `3`
     - Default is `1.2`
+* `itemLinearScale` - type: NORMALIZED_PAIR
+    - This property makes it possible to linearly increase or decrease the scale of items before and after the center position. The first axis sets scaling for items before the center position, and the second axis sets scaling for items after the center position. Either axis can be independently set as negative or positive values, which means items on one side of the center position can be scaled up while items on the other side can be scaled down, which for a horizontal carousel could be used to simulate perspective with items being closer or further away from the camera depending on their location in the carousel. You probably want to combine this property with `itemLinearSpacing` to prevent item overlap and to achieve visually coherent item spacing.
+    - Minimum value per axis is `-0.5` and maximum value per axis is `1`
+    - Default is `0 0`
+    - This property can only be used when `type` is `horizontal` or `vertical`
+* `itemLinearSpacing` - type: NORMALIZED_PAIR
+    - This property makes it possible to linearly increase or decrease the spacing of items before and after the center position. The first axis sets spacing for items before the center position, and the second axis sets spacing for items after the center position. Either axis can be independently set as negative or positive values, which means items on one side of the center position can be spaced closer while items on the other side can be spaced further away.
+    - Minimum value per axis is `-0.5` and maximum value per axis is `1`
+    - Default is `0 0`
+    - This property can only be used when `type` is `horizontal` or `vertical`
 * `itemRotation` - type: FLOAT
     - Angle in degrees that items should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
     - Default is `7.5`
@@ -2453,6 +2464,11 @@ Properties:
     - Point around which the image will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `scaleFactor` - type: FLOAT
+    - Using scalable vector graphics (SVG) files and displaying them at large sizes consume a lot of VRAM as these images will normally get rasterized at the actual pixel resolution. This is different to raster images which only consume as much VRAM as the actual textures require (regardless of rendered size) as they are scaled to the actual pixel size via the GPU in the rendering pipeline. However, using the `scaleFactor` property it's possible to set a factor for at what size to rasterize SVG images relative to the actual on screen dimensions and then having the GPU scale the textures in the same manner as for raster images. For instance, setting this factor to 0.5 will lead to a quarter of the required VRAM as both the X and Y axes are multiplied by 0.5. However, setting the value too low will lead to visibly pixelated graphics.
+    - Minimum value is `0.1` and maximum value is `1`
+    - Default is `1` (images are rasterized at the defined pixel size)
+    - This property can only be used for scalable vector graphics (SVG) files and it will be ignored if `tile` is set to `true`
 * `stationary` - type: STRING
     - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
     - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
@@ -2515,7 +2531,7 @@ Properties:
     - Valid values are `top` or `bottom`
     - Default is `bottom`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
+    - Interpolation method to use when scaling and rotating images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation or scaleFactor is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `mipmap` - type: BOOLEAN
@@ -2620,7 +2636,7 @@ Properties:
     - `never` - Don't set element as stationary during any transitions.
     - Default is `never`
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored. This is true even if the property does not point to an existing video file. As well, when defining this for the gamelist view the video will not immediately restart when navigating between games.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored. This is true even if the property does not point to an existing video file. As well, when defining this for the gamelist view the video will not immediately restart when navigating between games. The supported file extensions are .mp4, .mkv, .avi, .wmv, .mov, .webm and .m4v.
 * `default` - type: PATH
     - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system. Takes precedence over `defaultImage`.
 * `defaultImage` - type: PATH
@@ -2760,6 +2776,11 @@ Properties:
     - Point around which the animation will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `scaleFactor` - type: FLOAT
+    - Using scalable vector graphics files such as Lottie animations and displaying them at large sizes consume a lot of VRAM as these animations will normally get rasterized at the actual pixel resolution. This is different to raster animations (GIFs) which only consume as much VRAM as the actual textures require (regardless of rendered size) as they are scaled to the actual pixel size via the GPU in the rendering pipeline. However, using the `scaleFactor` property it's possible to set a factor for at what size to rasterize Lottie animations relative to the actual on screen dimensions and then having the GPU scale the textures in the same manner as for raster animations. For instance, setting this factor to 0.5 will lead to a quarter of the required VRAM as both the X and Y axes are multiplied by 0.5. However, setting the value too low will lead to visibly pixelated graphics.
+    - Minimum value is `0.1` and maximum value is `1`
+    - Default is `1` (Lottie animations are rasterized at the defined pixel size)
+    - This property can only be used for Lottie animations
 * `stationary` - type: STRING
     - If using slide transitions, then this property can be set to keep the element stationary during transition animations. This property has no effect when using instant or fade transitions.
     - `withinView` - Set element as stationary when navigating within the same view, i.e. from system to system or from gamelist to gamelist.
@@ -2785,7 +2806,7 @@ Properties:
     - Minimum value is `0` and maximum value is `10`
     - Default is `0` (infinite amount of times)
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling and rotating animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the animation smoother. This property has limited effect on Lottie animations unless rotation is applied.
+    - Interpolation method to use when scaling and rotating animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the animation smoother. This property has limited effect on Lottie animations unless rotation or scaleFactor is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest` if `rotation` is `0`, `90`, `180` or `270` degrees, otherwise it's `linear`
 * `cornerRadius` - type: FLOAT
@@ -3041,7 +3062,7 @@ Properties:
     - `gamecountFavorites` - Number of favorite games for the system, may be blank if favorites is not applicable.
     - `gamecountFavoritesNoText` - Same as the above but with the text _favorite_ or _favorites_ omitted, i.e. only the number is shown.
 * `metadata` - type: STRING
-    - This translates to the metadata values that are available for the game. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per text element.
+    - This translates to the metadata values that are available for the game. To use this property from the `system` view, you will first need to add a `gameselector` element, just be aware that not all values are supported on the system view. You can only define a single metadata value per text element.
      - Valid values:
     - `name` - Game name.
     - `description` - Game description. Should be combined with the `container` property in most cases.
@@ -3066,6 +3087,8 @@ Properties:
     - `systemFullname` - The full system name of the game.
     - `sourceSystemName` - The source short system name of the game. For regular systems this value will be identical to `systemName` but for collections it will show the actual system that the game is located in instead of the collection system name.
     - `sourceSystemFullname` - The source full system name of the game. For regular systems this value will be identical to `systemFullname` but for collections it will show the actual system that the game is located in instead of the collection system name.
+    - `customCollectionNameGrouped` - The name of the custom collection currently selected when browsing the grouped custom collections system. To clarify, this value will not be used if the custom collection is themed, or if the setting _Group custom collections_ in the _Game collection settings_ menu is set to _Never_. Make sure to not set `metadataElement` to `true` when using this value as that will hide the text element.
+    - `customCollectionNameGames` - The name of the custom collection you have navigated into from the grouped custom collections system. This value also applies if the custom collection is themed, or if the setting _Group custom collections_ in the _Game collection settings_ menu is set to _Never_. When using this value, make sure to test your theme with _Group custom collections_ at all three settings.
 * `defaultValue` - type: STRING
     - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values. A secondary use for this property is to set a default value if `metadata` has been set to `systemName`, `systemFullname`, `sourceSystemName` or `sourceSystemFullname` in which case the value will be used if the metadata value is blank. This is useful for defining a specific string at the root of the custom collections system.
 * `systemNameSuffix` - type: BOOLEAN
@@ -3078,7 +3101,7 @@ Properties:
     - Default is `uppercase`
     - This property can only be used when `systemNameSuffix` is `true`, and if `metadata` has been set to `description` then it only applies if `letterCase` is also set to `none`
 * `metadataElement` - type: BOOLEAN
-    - By default game metadata and media are faded out during gamelist fast-scrolling. They are also hidden when enabling the _Hide metadata fields_ setting in the metadata editor. This includes the text metadata fields (except `systemName`, `systemFullname`, `sourceSystemName` and `sourceSystemFullname`), ratings and badges. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels or icons for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
+    - By default game metadata and media are faded out during gamelist fast-scrolling. They are also hidden when enabling the _Hide metadata fields_ setting in the metadata editor. This includes the text metadata fields (except `systemName`, `systemFullname`, `sourceSystemName`, `sourceSystemFullname` and `customCollectionNameGames`), ratings and badges. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels or icons for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
     - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, then this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.

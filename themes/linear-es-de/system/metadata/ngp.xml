@@ -162,6 +162,14 @@ Neo Geo Pocket anses vara en misslyckad konsol. Lägre försäljning än väntat
             <systemHardwareType>Bärbar</systemHardwareType>
         </variables>
     </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Neo Geo Pocket là một hệ máy chơi game cầm tay màn hình đơn sắc do SNK phát hành. Đây là hệ máy cầm tay đầu tiên của công ty và thuộc dòng sản phẩm Neo Geo. Máy ra mắt tại Nhật Bản vào cuối năm 1998 nhưng chưa bao giờ được phát hành tại Mỹ, mà chỉ phân phối độc quyền tại Nhật Bản, châu Á và châu Âu.
+
+Neo Geo Pocket được coi là một hệ máy không thành công. Do doanh số bán hàng thấp hơn dự kiến, hệ máy này đã bị ngừng sản xuất vào năm 1999 và ngay lập tức được thay thế bằng Neo Geo Pocket Color, một thiết bị màu đầy đủ cho phép hệ máy cạnh tranh dễ dàng hơn với hệ máy cầm tay Game Boy Color đang thống trị thị trường, và cũng được phát hành tại Mỹ. Mặc dù hệ máy này chỉ tồn tại trong thời gian ngắn, nhưng vẫn có một số tựa game đáng chú ý được phát hành trên hệ máy này như Samurai Shodown và King of Fighters R-1.</systemDescription>
+            <systemHardwareType>Di động</systemHardwareType>
+        </variables>
+    </language>
     <language name="zh_CN">
         <variables>
             <systemDescription>Neo Geo Pocket 是 SNK 推出的一款单色掌上游戏机。它是该公司的第一款掌上系统，属于 Neo Geo 系列。它于 1998 年底在日本首次亮相，但从未在美国发行，仅在日本、亚洲和欧洲独占。

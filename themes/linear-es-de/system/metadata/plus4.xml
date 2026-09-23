@@ -23,7 +23,7 @@ Internally, the Plus/4 shared the same basic architecture as the lower-end Commo
             <systemDescription>كومودور بلس/4 هو كمبيوتر منزلي أصدرته شركة كومودور إنترناشيونال في عام 1984. ويشير اسم "Plus/4" إلى مجموعة التطبيقات المكتبية المدمجة في ذاكرة القراءة فقط (ROM) المكونة من أربعة تطبيقات (معالج النصوص، وجداول البيانات، وقاعدة البيانات، والرسوم البيانية)؛ وقد وصف بأنه "الكمبيوتر الإنتاجي المزود ببرامج مدمجة".
 
 داخلياً، كان Plus/4 يشترك في نفس البنية الأساسية لطرازات Commodore 16 و116 الأقل تطوراً، وكان قادراً على استخدام البرامج والأجهزة الطرفية المصممة لها. كان Plus/4 غير متوافق مع برامج Commodore 64 وبعض أجهزته. على الرغم من أن كومودور 64 كان أكثر رسوخاً، إلا أن بلس/4 كان يستهدف الجزء الأكثر توجهاً نحو الأعمال من سوق الحواسيب الشخصية.</systemDescription>
-            <systemHardwareType>الحاسب الآلي</systemHardwareType>
+            <systemHardwareType>كمبيوتر</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -160,6 +160,14 @@ Din punct de vedere intern, Plus/4 avea aceeași arhitectură de bază ca și mo
 
 Internt delade Plus/4 samma grundläggande arkitektur som de lägre Commodore 16- och 116-modellerna, och kunde använda programvara och kringutrustning som utformats för dem. Plus/4 var inkompatibel med Commodore 64:s programvara och en del av dess hårdvara. Även om Commodore 64 var mer etablerad var Plus/4 inriktad på den mer affärsinriktade delen av persondatormarknaden.</systemDescription>
             <systemHardwareType>Dator</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Commodore Plus/4 là một máy tính gia đình do Commodore International phát hành vào năm 1984. Tên gọi "Plus/4" ám chỉ bộ phần mềm văn phòng gồm bốn ứng dụng được tích hợp sẵn trong ROM (trình soạn thảo văn bản, bảng tính, cơ sở dữ liệu và phần mềm vẽ đồ thị); sản phẩm này được quảng cáo là "máy tính năng suất với phần mềm tích hợp sẵn".
+
+Về mặt kỹ thuật, Plus/4 chia sẻ kiến trúc cơ bản tương tự như các mẫu Commodore 16 và 116 cấp thấp hơn, và có thể sử dụng phần mềm và thiết bị ngoại vi được thiết kế cho các mẫu này. Plus/4 không tương thích với phần mềm và một số phần cứng của Commodore 64. Mặc dù Commodore 64 đã có vị thế vững chắc hơn, Plus/4 lại nhắm đến phân khúc thị trường máy tính cá nhân hướng đến doanh nghiệp.</systemDescription>
+            <systemHardwareType>Máy tính</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

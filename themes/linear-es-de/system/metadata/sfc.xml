@@ -19,7 +19,7 @@
     <language name="ar_SA">
         <variables>
             <systemDescription>سوبر فاميكوم هو جهاز ألعاب فيديو منزلي 16 بت طورته شركة نينتندو وتم إصداره في عام 1990 في اليابان و1991 في أمريكا الشمالية و1992 في أوروبا وأستراليا (أوقيانوسيا) و1993 في أمريكا الجنوبية.</systemDescription>
-            <systemHardwareType>وحدة التحكم</systemHardwareType>
+            <systemHardwareType>كونسول</systemHardwareType>
         </variables>
     </language>
     <language name="bs_BA">
@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Il Super Famicom è una console per videogiochi domestici a 16 bit sviluppata da Nintendo e pubblicata nel 1990 in Giappone, nel 1991 in Nord America, nel 1992 in Europa e Australasia (Oceania) e nel 1993 in Sud America.</systemDescription>
+            <systemDescription>Il Super Famicom è una console per videogiochi a 16 bit sviluppata da Nintendo e pubblicata nel 1990 in Giappone. Uscì nel 1991 in Nord America, nel 1992 in Europa e Australasia (Oceania) e nel 1993 in Sud America ed in questi mercati venne pubblicata come "Super Nintendo" (o anche Super NES).</systemDescription>
             <systemHardwareType>Console</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Super Famicom är en 16-bitars hemkonsol för videospel som utvecklats av Nintendo och som släpptes 1990 i Japan, 1991 i Nordamerika, 1992 i Europa och Australasien (Oceanien) och 1993 i Sydamerika.</systemDescription>
             <systemHardwareType>Konsol</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Super Famicom là một hệ máy chơi game gia đình 16-bit do Nintendo phát triển, được ra mắt vào năm 1990 tại Nhật Bản, năm 1991 tại Bắc Mỹ, năm 1992 tại châu Âu và châu Đại Dương (Oceania), và năm 1993 tại Nam Mỹ.</systemDescription>
+            <systemHardwareType>Bàn điều khiển</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

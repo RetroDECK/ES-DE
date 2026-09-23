@@ -53,6 +53,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     , mClearGameFunc {clearGameFunc}
     , mDeleteGameFunc {deleteGameFunc}
     , mIsCustomCollection {false}
+    , mHasScreenEntry {false}
     , mMediaFilesUpdated {false}
     , mSavedMediaAndAborted {false}
     , mInvalidEmulatorEntry {false}
@@ -66,6 +67,19 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     // Remove the last "unknown" controller entry.
     if (mControllerBadges.size() > 1)
         mControllerBadges.pop_back();
+
+#if defined(__ANDROID__)
+    if (Settings::getInstance()->getBool("LaunchOnOtherScreen")) {
+        mHasScreenEntry = true;
+        if (mScraperParams.system->getLaunchOnOtherScreen())
+            mScreenEntries.emplace_back(std::make_pair("", _("System default (Other)").c_str()));
+        else
+            mScreenEntries.emplace_back(std::make_pair("", _("System default (Primary)").c_str()));
+
+        mScreenEntries.emplace_back(std::make_pair("other", _("Always on other").c_str()));
+        mScreenEntries.emplace_back(std::make_pair("primary", _("Always on primary").c_str()));
+    }
+#endif
 
     addChild(&mBackground);
     addChild(&mGrid);
@@ -119,15 +133,21 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
     // Populate list.
     for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
-        std::shared_ptr<GuiComponent> ed;
         std::string currentKey {it->key};
-        std::string originalValue {mMetaData->get(it->key)};
-        std::string gamePath;
 
         // Only display the custom collections sortname entry if we're editing the game
         // from within a custom collection.
         if (currentKey == "collectionsortname" && !mIsCustomCollection)
             continue;
+
+        // Likewise only display the screen entry if the option to launch games on the other
+        // screen has been enabled.
+        if (currentKey == "screen" && !mHasScreenEntry)
+            continue;
+
+        std::shared_ptr<GuiComponent> ed;
+        std::string originalValue {mMetaData->get(it->key)};
+        std::string gamePath;
 
         // Don't add statistics.
         if (it->isStatistic)
@@ -427,6 +447,78 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 }
                 break;
             }
+            case MD_SCREEN: {
+                ed =
+                    std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                    mMenuColorPrimary, ALIGN_RIGHT);
+                ed->setSize(0.0f, ed->getFont()->getHeight());
+                row.addElement(ed, true);
+
+                auto spacer = std::make_shared<GuiComponent>();
+                spacer->setSize(mRenderer->getScreenWidth() * 0.005f, 0.0f);
+                row.addElement(spacer, false);
+
+                auto bracket = std::make_shared<ImageComponent>();
+                bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setImage(":/graphics/arrow.svg");
+                bracket->setColorShift(mMenuColorPrimary);
+                row.addElement(bracket, false);
+
+                const std::string title {_p("metadata", it->displayPrompt.c_str())};
+
+                // OK callback (apply new value to ed).
+                auto updateVal = [this, ed, originalValue](const std::string& newVal) {
+                    ed->setValue(newVal);
+                    if (newVal == getScreenValue(originalValue, true)) {
+                        ed->setColor(mMenuColorPrimary);
+                    }
+                    else {
+                        ed->setColor(mMenuColorBlue);
+                    }
+                };
+
+                row.makeAcceptInputHandler([this, title, ed, updateVal] {
+                    GuiSettings* s {new GuiSettings(title)};
+
+                    for (auto entry : mScreenEntries) {
+                        std::string selectedLabel {ed->getValue()};
+                        std::string label;
+                        ComponentListRow row;
+
+                        std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
+                            label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
+                        labelText->setSelectable(true);
+                        labelText->setValue(entry.second);
+
+                        label = entry.second;
+
+                        row.addElement(labelText, true);
+
+                        row.makeAcceptInputHandler([s, updateVal, entry] {
+                            updateVal(entry.second);
+                            delete s;
+                        });
+
+                        // Select the row that corresponds to the selected label.
+                        if (selectedLabel == label)
+                            s->addRow(row, true);
+                        else
+                            s->addRow(row, false);
+                    }
+
+                    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+                    const float maxWidthModifier {
+                        glm::clamp(0.64f * aspectValue, 0.42f,
+                                   (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.92f))};
+                    const float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
+
+                    s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
+                    s->setMenuPosition(
+                        glm::vec3 {(s->getSize().x - maxWidth) / 2.0f, mPosition.y, mPosition.z});
+                    mWindow->pushGui(s);
+                });
+                break;
+            }
             case MD_FOLDER_LINK: {
                 ed =
                     std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
@@ -656,6 +748,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             else
                 ed->setValue(ViewController::EXCLAMATION_CHAR + " " + mMetaData->get(it->key));
         }
+        else if (it->type == MD_SCREEN) {
+            ed->setValue(getScreenValue(originalValue, true));
+        }
         else {
             if ((currentKey == "developer" || currentKey == "publisher" || currentKey == "genre" ||
                  currentKey == "players") &&
@@ -814,9 +909,14 @@ void GuiMetaDataEd::save()
     for (unsigned int i {0}; i < mEditors.size(); ++i) {
         // The offset is needed to make the editor and metadata fields match up if we're
         // skipping the custom collections sortname field (which we do if not editing the
-        // game from within a custom collection gamelist).
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+        // game from within a custom collection gamelist), or if there's no screen entry
+        // for launching games on the other screen.
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         if (mMetaDataDecl.at(i + offset).isStatistic)
             continue;
@@ -833,6 +933,12 @@ void GuiMetaDataEd::save()
             std::string shortName {BadgeComponent::getShortName(mEditors.at(i)->getValue())};
             if (shortName != "unknown")
                 mMetaData->set(key, shortName);
+            continue;
+        }
+
+        if (key == "screen" && mHasScreenEntry) {
+            const std::string value {mEditors.at(i)->getValue()};
+            mMetaData->set(key, getScreenValue(value, false));
             continue;
         }
 
@@ -951,14 +1057,21 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
     // the values previously saved for the game.
-    for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+    for (unsigned int i {0}; i < mEditors.size(); ++i) {
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
+        const std::string value {key == "controller" ?
+                                     BadgeComponent::getShortName(mEditors[i]->getValue()) :
+                                     mEditors[i]->getValue()};
 
-        if (metadata->get(key) != mEditors[i]->getValue())
-            metadata->set(key, mEditors[i]->getValue());
+        if (metadata->get(key) != value)
+            metadata->set(key, value);
     }
 
     GuiScraperSearch::saveMetadata(result, *metadata, mScraperParams.game);
@@ -967,8 +1080,12 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 
     // Update the list with the scraped metadata values.
     for (unsigned int i {0}; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
 
@@ -998,9 +1115,13 @@ void GuiMetaDataEd::close()
     bool metadataUpdated {false};
     int offset {0};
 
-    for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
-            offset = 1;
+    for (unsigned int i {0}; i < mEditors.size(); ++i) {
+        if (mMetaDataDecl.size() > i + offset) {
+            if (mMetaDataDecl.at(i + offset).key == "collectionsortname" && !mIsCustomCollection)
+                offset += 1;
+            else if (mMetaDataDecl.at(i + offset).key == "screen" && !mHasScreenEntry)
+                offset += 1;
+        }
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
 
@@ -1023,6 +1144,10 @@ void GuiMetaDataEd::close()
             if (shortName == "unknown" || mMetaDataValue == shortName)
                 continue;
         }
+
+        if (key == "screen" && mHasScreenEntry &&
+            getScreenValue(mMetaDataValue, true) == mEditorsValue)
+            continue;
 
         if (mMetaDataValue != mEditorsValue) {
             metadataUpdated = true;
@@ -1063,6 +1188,23 @@ void GuiMetaDataEd::close()
             save();
         closeFunc();
     }
+}
+
+std::string GuiMetaDataEd::getScreenValue(const std::string& lookup, const bool displayNameLookup)
+{
+    auto it = std::find_if(
+        mScreenEntries.begin(), mScreenEntries.end(),
+        [&lookup, &displayNameLookup](const std::pair<std::string, std::string>& entry) {
+            if (displayNameLookup)
+                return entry.first == lookup;
+            else
+                return entry.second == lookup;
+        });
+
+    if (it != mScreenEntries.end())
+        return (displayNameLookup ? it->second : it->first);
+    else
+        return "";
 }
 
 bool GuiMetaDataEd::input(InputConfig* config, Input input)

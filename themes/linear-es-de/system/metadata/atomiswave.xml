@@ -60,7 +60,7 @@
     </language>
     <language name="it_IT">
         <variables>
-            <systemDescription>Atomiswave è una scheda e un cabinet per sistemi arcade personalizzati di Sammy Corporation. È basato sulla scheda di sistema NAOMI di Sega (per questo è comune vedere il logo "Sega" sulla schermata di avvio). L'Atomiswave utilizza cartucce di gioco intercambiabili e il pannello di controllo del cabinet può essere facilmente sostituito con diversi set di comandi, tra cui due joystick, due lightgun e un volante. Con il pensionamento del vecchio sistema Neo Geo MVS, SNK Playmore scelse Atomiswave come prossimo sistema per il quale sviluppare giochi. In un contratto con Sammy, SNK Playmore accettò di sviluppare cinque giochi per il sistema Atomiswave. Metal Slug 6 fu il quinto gioco di SNK Playmore per Atomiswave, dopodiché SNK passò a una scheda arcade Taito Type X2.</systemDescription>
+            <systemDescription>Atomiswave consiste in un kit cabinato + scheda per sistemi arcade personalizzati di Sammy Corporation. È basato sulla scheda di sistema NAOMI di Sega (per questo è comune vedere il logo "Sega" sulla schermata di avvio). L'Atomiswave utilizza cartucce di gioco intercambiabili ed il pannello di controllo del cabinet può essere facilmente sostituito con diversi set di comandi, tra cui due joystick, due lightgun ed un volante. Con il pensionamento del vecchio sistema Neo Geo MVS, SNK Playmore scelse Atomiswave come prossimo sistema per il quale sviluppare giochi. In un contratto con Sammy, SNK Playmore accettò di sviluppare cinque giochi per il sistema Atomiswave. Metal Slug 6 fu il quinto gioco di SNK Playmore per Atomiswave, dopodiché SNK passò alla scheda arcade Taito Type X2.</systemDescription>
             <systemHardwareType>Arcade</systemHardwareType>
         </variables>
     </language>
@@ -122,6 +122,12 @@
         <variables>
             <systemDescription>Atomiswave är ett specialtillverkat arkadsystemkort och skåp från Sammy Corporation. Det är baserat på Segas NAOMI-systemkort (därför är det vanligt att se "Sega"-logotypen på dess uppstartsskärm). Atomiswave använder utbytbara spelkassetter och skåpets kontrollpanel kan enkelt bytas ut mot olika kontrolluppsättningar, inklusive dubbla joysticks, dubbla ljuspistoler och en ratt. När det åldrande Neo Geo MVS-systemet pensionerades valde SNK Playmore Atomiswave som sitt nästa system att utveckla spel för. I ett kontrakt med Sammy gick SNK Playmore med på att utveckla fem spel för Atomiswave-systemet. Metal Slug 6 var SNK Playmores femte spel för Atomiswave, varefter SNK gick vidare till ett Taito Type X2 arkadbräde.</systemDescription>
             <systemHardwareType>Arkad</systemHardwareType>
+        </variables>
+    </language>
+    <language name="vi_VN">
+        <variables>
+            <systemDescription>Atomiswave là một bo mạch hệ thống và thùng máy arcade tùy chỉnh của Sammy Corporation. Hệ thống này dựa trên bo mạch NAOMI của Sega (do đó, người dùng thường thấy logo "Sega" trên màn hình khởi động). Atomiswave sử dụng các hộp game có thể thay thế được và bảng điều khiển của thùng máy có thể dễ dàng thay thế bằng các bộ điều khiển khác nhau, bao gồm hai cần điều khiển, hai súng bắn ánh sáng và một vô lăng. Với việc ngừng sản xuất hệ thống Neo Geo MVS đã cũ, SNK Playmore đã chọn Atomiswave làm hệ thống tiếp theo để phát triển trò chơi. Trong hợp đồng với Sammy, SNK Playmore đã đồng ý phát triển năm trò chơi cho hệ thống Atomiswave. Metal Slug 6 là trò chơi thứ năm của SNK Playmore dành cho Atomiswave, sau đó SNK chuyển sang sử dụng bo mạch arcade Taito Type X2.</systemDescription>
+            <systemHardwareType>Trò chơi điện tử</systemHardwareType>
         </variables>
     </language>
     <language name="zh_CN">

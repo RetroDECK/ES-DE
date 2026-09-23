@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ES-DE Frontend\n"
 "Report-Msgid-Bugs-To: info@es-de.org\n"
-"POT-Creation-Date: 2026-03-22 21:12+0100\n"
-"PO-Revision-Date: 2025-10-15 09:29+0200\n"
+"POT-Creation-Date: 2026-09-01 14:56+0200\n"
+"PO-Revision-Date: 2026-09-04 12:33+0200\n"
 "Last-Translator: SecularSteve <info@es-de.org>\n"
 "Language-Team: Bosnian (Bosnia & Herzegovina) <info@es-de.org>\n"
 "Language: bs_BA\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Network error (status:"
 msgstr "Greška mreže (status:"
@@ -625,6 +625,9 @@ msgstr "RADOVI..."
 msgid "COULDN'T FIND ANYTHING TO IMPORT"
 msgstr "NIJE SE MOGLO PRONAĆI NIŠTA ZA UVOZ"
 
+msgid "import"
+msgstr "uvezite"
+
 #, c-format
 msgid ""
 "YOU HAVE CHOSEN TO REMOVE ALL UNSELECTED ENTRIES, THIS WILL DELETE ALL GAME "
@@ -643,16 +646,6 @@ msgstr "NAPRAVITE SVOJ ODABIR"
 msgid "IMPORT"
 msgstr "UVEZITE"
 
-msgid "import"
-msgstr "uvezite"
-
-#, c-format
-msgid "IMPORTED %i ENTRY"
-msgid_plural "IMPORTED %i ENTRIES"
-msgstr[0] "UVEZEN %i UNOS"
-msgstr[1] "UVEZENA %i UNOSA"
-msgstr[2] "UVEZENO %i UNOSA"
-
 msgid "SELECT ALL"
 msgstr "ODABERI SVE"
 
@@ -664,6 +657,13 @@ msgstr "NE ODABERITE NIŠTA"
 
 msgid "select none"
 msgstr "ne biraj ništa"
+
+#, c-format
+msgid "IMPORTED %i ENTRY"
+msgid_plural "IMPORTED %i ENTRIES"
+msgstr[0] "UVEZEN %i UNOS"
+msgstr[1] "UVEZENA %i UNOSA"
+msgstr[2] "UVEZENO %i UNOSA"
 
 msgid "FILTER GAMELIST"
 msgstr "FILTRIRAJ LISTU IGRAČA"
@@ -1120,6 +1120,9 @@ msgstr ""
 msgid "PROCEED"
 msgstr "NASTAVI"
 
+msgid "LAUNCH ON OTHER SCREEN"
+msgstr "POKRENI NA DRUGOM EKRANU"
+
 msgid "GAME MEDIA DIRECTORY"
 msgstr "IMENIK MEDIJA ZA IGRE"
 
@@ -1220,6 +1223,12 @@ msgstr "DEKODIRANJE VIDEO HARDVERA (EKSPERIMENTALNO)"
 msgid "UPSCALE VIDEO FRAME RATE TO 60 FPS"
 msgstr "POVEĆAJTE BRZINU SLIČNOG VIDEO KADROVA NA 60 FPS"
 
+msgid "QUERY INSTALLED RETROARCH CORES (EXPERIMENTAL)"
+msgstr "UPIT INSTALIRANIH RETROARCH JEZGRIH (ISPITIVO)"
+
+msgid "USE RETROARCH IN SAF MODE (NOT RECOMMENDED)"
+msgstr "KORISTITE RETROARCH U SAF MODU (NE PREPORUČUJE SE)"
+
 msgid "ENABLE ALTERNATIVE EMULATORS PER GAME"
 msgstr "OMOGUĆITE ALTERNATIVNE EMULATORE PO IGRI"
 
@@ -1229,14 +1238,14 @@ msgstr "PRIKAŽI SKRIVENE DATOTEKE I MAPE"
 msgid "SHOW HIDDEN GAMES"
 msgstr "PRIKAŽI SKRIVENE IGRE"
 
-msgid "LAUNCH GAMES ON THE OTHER SCREEN"
-msgstr "POKRENITE IGRE NA DRUGOM EKRANU"
-
 msgid "ENABLE CUSTOM EVENT SCRIPTS"
 msgstr "OMOGUĆI PRILAGOĐENI SKRIPTU ZA DOGAĐAJ"
 
 msgid "BROWSING CUSTOM EVENTS"
 msgstr "PREGLED PRILAGOĐENIH DOGAĐAJA"
+
+msgid "RUN BROWSING EVENTS AS NON-BLOCKING"
+msgstr "POKRENITE PREGLEDAVANJE DOGAĐAJA KAO NEBLOKIRAJUĆE"
 
 msgid "ONLY SHOW GAMES FROM GAMELIST.XML FILES"
 msgstr "PRIKAŽI SAMO IGRE IZ DATOTEKE GAMELIST.XML"
@@ -1337,11 +1346,26 @@ msgctxt "short"
 msgid "SCREENSAVER SETTINGS"
 msgstr "POSTAVKE ČUVARA EKRANA"
 
+msgid "ENABLE LAUNCH ON OTHER SCREEN"
+msgstr "OMOGUĆITE POKRETANJE NA DRUGOM EKRANU"
+
 msgid "choose"
 msgstr "odabrati"
 
 msgid "close menu"
 msgstr "zatvori meni"
+
+msgid "System default (Other)"
+msgstr "Sistemska zadana vrijednost (Ostalo)"
+
+msgid "System default (Primary)"
+msgstr "Sistemska zadana vrijednost (Primarna)"
+
+msgid "Always on other"
+msgstr "Uvijek na drugom"
+
+msgid "Always on primary"
+msgstr "Uvijek na primarnom"
 
 msgid "EDIT METADATA"
 msgstr "UREDI METAPODATEKE"
@@ -1401,8 +1425,8 @@ msgid ""
 "THIS WILL DELETE THE GAME FILE, ANY MEDIA FILES AND THE GAMELIST.XML ENTRY\n"
 "ARE YOU SURE?"
 msgstr ""
-"OVIM ĆE BITI IZBRISANA DATOTEKA IGRE, SVE MEDIJALNE DATOTEKE I UNOS GAMELIST."
-"XML\n"
+"OVIM ĆE BITI IZBRISANA DATOTEKA IGRE, SVE MEDIJALNE DATOTEKE I UNOS "
+"GAMELIST.XML\n"
 "JESTE LI SIGURNI?"
 
 msgid "DELETE"
@@ -2521,6 +2545,14 @@ msgid "SELECT ALTERNATIVE EMULATOR"
 msgstr "ODABERITE ALTERNATIVNI EMULATOR"
 
 msgctxt "metadata"
+msgid "LAUNCH ON SCREEN"
+msgstr "POKRENI NA EKRANU"
+
+msgctxt "metadata"
+msgid "LAUNCH ON WHICH SCREEN"
+msgstr "POKRENI NA KOJEM EKRANU"
+
+msgctxt "metadata"
 msgid "FOLDER LINK"
 msgstr "LINK DO MAPE"
 
@@ -2777,14 +2809,14 @@ msgid "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"
 msgstr "IZBRIŠI (OSTAVI PRAZNO ZA VRAT NA ZADANU PUTANJU)"
 
 msgid ""
-"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN es_systems."
-"xml\n"
+"THIS WILL CREATE DIRECTORIES FOR ALL THE GAME SYSTEMS DEFINED IN "
+"es_systems.xml\n"
 "\n"
 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S ADVISED TO REMOVE THE ONES YOU "
 "DON'T NEED"
 msgstr ""
-"OVO ĆE KREIRATI DIREKTORIJUME ZA SVE IGRAČKE SISTEME DEFINISANE U es_systems."
-"xml\n"
+"OVO ĆE KREIRATI DIREKTORIJUME ZA SVE IGRAČKE SISTEME DEFINISANE U "
+"es_systems.xml\n"
 "\n"
 "OVO MOŽE STVORITI PUNO FASCIKLA, PA SE PREPORUČUJE DA UKLONITE ONE KOJE VAM "
 "NE TREBAJU"
@@ -2822,9 +2854,9 @@ msgstr "AŽURIRANJE"
 
 msgid ""
 "THE APPLICATION UPDATER WILL DOWNLOAD THE LATEST PORTABLE WINDOWS RELEASE "
-"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE README."
-"TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS IS "
-"ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
+"FOR YOU, BUT YOU WILL NEED TO MANUALLY PERFORM THE UPGRADE. SEE THE "
+"README.TXT FILE INSIDE THE DOWNLOADED ZIP FILE FOR INSTRUCTIONS ON HOW THIS "
+"IS ACCOMPLISHED. AS IS ALSO DESCRIBED IN THAT DOCUMENT, NEVER UNPACK A NEW "
 "RELEASE ON TOP OF AN OLD INSTALLATION AS THAT MAY BREAK THE APPLICATION."
 msgstr ""
 "AŽURIRANJE APLIKACIJE ĆE PREUZETI NAJNOVIJE PRENOSNO IZDANJE WINDOWS-A ZA "
