@@ -13,6 +13,7 @@
 
 #if defined(RETRODECK)
 #include <algorithm>
+#include <cstring>
 #include <fstream>
 #endif
 
