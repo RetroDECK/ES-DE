@@ -56,6 +56,7 @@
         <!-- Commodore Amiga emulator Amiberry -->
         <rule type="systempath">
             <entry>amiberry</entry>
+            <entry>com.blitterstudio.amiberry</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/amiberry/amiberry</entry>
@@ -90,6 +91,10 @@
     </emulator>
     <emulator name="AZAHAR">
         <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="systempath">
+            <entry>azahar</entry>
+            <entry>org.azahar_emu.Azahar</entry>
+        </rule>
         <rule type="staticpath">
             <entry>~/Applications/Azahar-Enhanced*.AppImage</entry>
             <entry>~/AppImages/Azahar-Enhanced*.AppImage</entry>
@@ -104,6 +109,7 @@
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="systempath">
             <entry>bigpemu</entry>
+            <entry>com.richwhitehouse.BigPEmu</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/bigpemu/bigpemu</entry>
@@ -255,6 +261,7 @@
         <!-- Nintendo Switch emulator Eden -->
         <rule type="systempath">
             <entry>eden</entry>
+            <entry>dev.eden_emu.eden</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Eden*.AppImage</entry>
@@ -268,6 +275,9 @@
     </emulator>
     <emulator name="EMULICIOUS">
         <!-- Multi-system emulator Emulicious -->
+        <rule type="systempath">
+            <entry>net.emulicious.Emulicious</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.emulicious.Emulicious</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.emulicious.Emulicious</entry>
@@ -433,6 +443,9 @@
     </emulator>
     <emulator name="MISSINGNO">
         <!-- Nintendo Game Boy, Game Boy Color and Atari 2600 emulator Missingno -->
+        <rule type="systempath">
+            <entry>net.andyofniall.missingno</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.andyofniall.missingno</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.andyofniall.missingno</entry>
@@ -561,6 +574,7 @@
         <!-- Adobe Flash player Ruffle -->
         <rule type="systempath">
             <entry>ruffle</entry>
+            <entry>rs.ruffle.Ruffle</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/ruffle/ruffle</entry>
@@ -573,6 +587,11 @@
     </emulator>
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
+        <rule type="systempath">
+            <entry>Ryujinx</entry>
+            <entry>ryujinx</entry>
+            <entry>io.github.ryubing.Ryujinx</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.ryubing.Ryujinx</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.ryubing.Ryujinx</entry>
@@ -650,6 +669,7 @@
         <!-- Sega Model 3 emulator Supermodel -->
         <rule type="systempath">
             <entry>supermodel</entry>
+            <entry>com.supermodel3.Supermodel</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Supermodel*.AppImage</entry>
