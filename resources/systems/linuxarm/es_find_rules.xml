@@ -83,6 +83,20 @@
             <entry>~/.local/share/flatpak/exports/bin/dev.ares.ares</entry>
         </rule>
     </emulator>
+    <emulator name="ARMSX2">
+        <!-- Sony PlayStation 2 emulator ARMSX2 -->
+        <rule type="systempath">
+            <entry>armsx2-qt</entry>
+            <entry>armsx2</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/ARMSX2*.AppImage</entry>
+            <entry>~/AppImages/ARMSX2*.AppImage</entry>
+            <entry>~/.local/share/applications/ARMSX2*.AppImage</entry>
+            <entry>~/.local/bin/ARMSX2*.AppImage</entry>
+            <entry>~/bin/ARMSX2*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="systempath">
