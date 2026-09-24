@@ -605,6 +605,7 @@
         <fullname>EasyRPG Game Engine</fullname>
         <path>%ROMPATH%/easyrpg</path>
         <extension>.easyrpg .zip .ZIP</extension>
+        <command label="EasyRPG">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/easyrpg_libretro.so %ROM%</command>
         <command label="EasyRPG Player (Standalone)">%EMULATOR_EASYRPG% --project-path %ROM%</command>
         <platform>easyrpg</platform>
         <theme>easyrpg</theme>
