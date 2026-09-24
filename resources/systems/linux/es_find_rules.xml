@@ -1605,14 +1605,6 @@
             <entry>xenia_canary</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/xenia/xenia</entry>
-            <entry>~/.local/share/applications/xenia/xenia</entry>
-            <entry>~/.local/bin/xenia/xenia</entry>
-            <entry>~/bin/xenia/xenia</entry>
-            <entry>~/Applications/xenia/xenia_canary</entry>
-            <entry>~/.local/share/applications/xenia/xenia_canary</entry>
-            <entry>~/.local/bin/xenia/xenia_canary</entry>
-            <entry>~/bin/xenia/xenia_canary</entry>
             <entry>~/Applications/xenia_canary*.AppImage</entry>
             <entry>~/AppImages/xenia_canary*.AppImage</entry>
             <entry>~/.local/share/applications/xenia_canary*.AppImage</entry>
@@ -1628,6 +1620,14 @@
             <entry>~/.local/share/applications/xenia-canary*.AppImage</entry>
             <entry>~/.local/bin/xenia-canary*.AppImage</entry>
             <entry>~/bin/xenia-canary*.AppImage</entry>
+            <entry>~/Applications/xenia/xenia</entry>
+            <entry>~/.local/share/applications/xenia/xenia</entry>
+            <entry>~/.local/bin/xenia/xenia</entry>
+            <entry>~/bin/xenia/xenia</entry>
+            <entry>~/Applications/xenia/xenia_canary</entry>
+            <entry>~/.local/share/applications/xenia/xenia_canary</entry>
+            <entry>~/.local/bin/xenia/xenia_canary</entry>
+            <entry>~/bin/xenia/xenia_canary</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-EDGE">
