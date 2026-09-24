@@ -812,6 +812,7 @@
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.so %ROM%</command>
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
+        <command label="SkyEmu">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/skyemu_libretro.so %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gb %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy" %ROM%</command>
         <command label="Missingno (Standalone)">%EMULATOR_MISSINGNO% %ROM%</command>
@@ -830,6 +831,7 @@
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
         <command label="VBA Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vba_next_libretro.so %ROM%</command>
         <command label="gpSP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gpsp_libretro.so %ROM%</command>
+        <command label="SkyEmu">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/skyemu_libretro.so %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gba %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Advance" %ROM%</command>
         <command label="Mesen (Standalone)">%EMULATOR_MESEN% --fullscreen %ROM%</command>
@@ -856,6 +858,7 @@
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.so %ROM%</command>
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
+        <command label="SkyEmu">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/skyemu_libretro.so %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gb %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Color" %ROM%</command>
         <command label="Missingno (Standalone)">%EMULATOR_MISSINGNO% %ROM%</command>
@@ -1345,6 +1348,7 @@
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.so %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.so %ROM%</command>
         <command label="DeSmuME (Standalone)">%EMULATOR_DESMUME% %ROM%</command>
+        <command label="SkyEmu">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/skyemu_libretro.so %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
