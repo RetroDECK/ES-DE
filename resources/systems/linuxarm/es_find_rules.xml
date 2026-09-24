@@ -156,6 +156,20 @@
             <entry>~/.local/share/flatpak/exports/bin/dev.bsnes.bsnes</entry>
         </rule>
     </emulator>
+    <emulator name="CEMU">
+        <!-- Nintendo Wii U emulator Cemu -->
+        <rule type="systempath">
+            <entry>cemu</entry>
+            <entry>Cemu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Cemu*.AppImage</entry>
+            <entry>~/AppImages/Cemu*.AppImage</entry>
+            <entry>~/.local/share/applications/Cemu*.AppImage</entry>
+            <entry>~/.local/bin/Cemu*.AppImage</entry>
+            <entry>~/bin/Cemu*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="CPCEMU">
         <!-- Amstrad CPC emulator CPCemu -->
         <rule type="systempath">
