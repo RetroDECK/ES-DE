@@ -518,10 +518,10 @@
             <entry>pico8</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/pico-8/pico8</entry>
-            <entry>~/.local/share/applications/pico-8/pico8</entry>
-            <entry>~/.local/bin/pico-8/pico8</entry>
-            <entry>~/bin/pico-8/pico8</entry>
+            <entry>~/Applications/pico-8/pico8_64</entry>
+            <entry>~/.local/share/applications/pico-8/pico8_64</entry>
+            <entry>~/.local/bin/pico-8/pico8_64</entry>
+            <entry>~/bin/pico-8/pico8_64</entry>
         </rule>
     </emulator>
     <emulator name="PLAY!">
