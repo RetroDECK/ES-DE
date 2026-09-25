@@ -27,6 +27,6 @@
 # Ordering convention: Within each system's <system> block, list ES-DE/upstream entries first, followed by RetroDECK-specific customizations (e.g., alternative cores, RetroDECK-only emulators). This maintains a clear separation between upstream content and RetroDECK additions.
 
 
-git fetch https://gitlab.com/es-de/emulationstation-de/ "master"  # Fetch the latest changes from the remote stable-3.4 branch
+git fetch https://gitlab.com/es-de/emulationstation-de/ "stable-3.5"  # Fetch the latest changes from the remote stable-3.4 branch
 git merge FETCH_HEAD  # Merge the fetched changes into your current branch
 echo -e "PLEASE CHECK IF ANYTHING IS CHANGED IN:\n-resources/systems/linux/es_find_rules.xml\n-resources/systems/linux/es_systems.xml"
