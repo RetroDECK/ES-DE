@@ -129,6 +129,7 @@
         <!-- Commodore Amiga emulator Amiberry -->
         <rule type="systempath">
             <entry>amiberry</entry>
+            <entry>com.blitterstudio.amiberry</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/amiberry/amiberry</entry>
@@ -171,6 +172,7 @@
         <!-- Nintendo 3DS emulator Azahar -->
         <rule type="systempath">
             <entry>azahar</entry>
+            <entry>org.azahar_emu.Azahar</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/azahar*.AppImage</entry>
@@ -225,6 +227,7 @@
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="systempath">
             <entry>bigpemu</entry>
+            <entry>com.richwhitehouse.BigPEmu</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/bigpemu/bigpemu</entry>
@@ -284,6 +287,7 @@
         <rule type="systempath">
             <entry>cemu</entry>
             <entry>Cemu</entry>
+            <entry>info.cemu.Cemu</entry>
             <!-- RetroDECK -->
             <entry>Cemu-wrapper</entry>
         </rule>
@@ -529,6 +533,7 @@
         <!-- Nintendo Switch emulator Eden -->
         <rule type="systempath">
             <entry>eden</entry>
+            <entry>dev.eden_emu.eden</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Eden*.AppImage</entry>
@@ -566,6 +571,9 @@
     </emulator>
     <emulator name="EMULICIOUS">
         <!-- Multi-system emulator Emulicious -->
+        <rule type="systempath">
+            <entry>net.emulicious.Emulicious</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.emulicious.Emulicious</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.emulicious.Emulicious</entry>
@@ -863,6 +871,7 @@
             <entry>lime3ds</entry>
             <entry>lime3ds-gui</entry>
             <entry>lime-qt</entry>
+            <entry>io.github.lime3ds.Lime3DS</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/lime3ds.AppImage</entry>
@@ -1074,6 +1083,9 @@
     </emulator>
     <emulator name="MISSINGNO">
         <!-- Nintendo Game Boy, Game Boy Color and Atari 2600 emulator Missingno -->
+        <rule type="systempath">
+            <entry>net.andyofniall.missingno</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.andyofniall.missingno</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.andyofniall.missingno</entry>
@@ -1319,6 +1331,7 @@
         <!-- Nintendo NES and Famicom emulator puNES -->
         <rule type="systempath">
             <entry>punes</entry>
+            <entry>io.github.punesemu.puNES</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/punes/punes</entry>
@@ -1406,6 +1419,7 @@
             <entry>ruffle-rdwrapper.sh</entry>
             <!-- RetroDECK -->
             <entry>ruffle</entry>
+            <entry>rs.ruffle.Ruffle</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/ruffle/ruffle</entry>
@@ -1710,6 +1724,7 @@
         <!-- Sega Model 3 emulator Supermodel -->
         <rule type="systempath">
             <entry>supermodel</entry>
+            <entry>com.supermodel3.Supermodel</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Supermodel*.AppImage</entry>
@@ -1811,6 +1826,7 @@
         <!-- VTech V.Smile emulator veesem -->
         <rule type="systempath">
             <entry>veesem</entry>
+            <entry>com.github.sp1187.veesem</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/veesem/veesem</entry>
@@ -1948,14 +1964,10 @@
             <entry>xenia_canary</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/xenia/xenia</entry>
-            <entry>~/.local/share/applications/xenia/xenia</entry>
-            <entry>~/.local/bin/xenia/xenia</entry>
-            <entry>~/bin/xenia/xenia</entry>
-            <entry>~/Applications/xenia/xenia_canary</entry>
-            <entry>~/.local/share/applications/xenia/xenia_canary</entry>
-            <entry>~/.local/bin/xenia/xenia_canary</entry>
-            <entry>~/bin/xenia/xenia_canary</entry>
+            <!-- RetroDECK -->
+            <entry>/app/retrodeck/components/xenia/component_launcher.sh</entry>
+            <entry>/var/data/retrodeck/external_components/xenia/component_launcher.sh</entry>
+            <!-- RetroDECK -->
             <entry>~/Applications/xenia_canary*.AppImage</entry>
             <entry>~/AppImages/xenia_canary*.AppImage</entry>
             <entry>~/.local/share/applications/xenia_canary*.AppImage</entry>
@@ -1971,9 +1983,14 @@
             <entry>~/.local/share/applications/xenia-canary*.AppImage</entry>
             <entry>~/.local/bin/xenia-canary*.AppImage</entry>
             <entry>~/bin/xenia-canary*.AppImage</entry>
-            <!-- RetroDECK -->
-            <entry>/app/retrodeck/components/xenia/component_launcher.sh</entry>
-            <entry>/var/data/retrodeck/external_components/xenia/component_launcher.sh</entry>
+            <entry>~/Applications/xenia/xenia</entry>
+            <entry>~/.local/share/applications/xenia/xenia</entry>
+            <entry>~/.local/bin/xenia/xenia</entry>
+            <entry>~/bin/xenia/xenia</entry>
+            <entry>~/Applications/xenia/xenia_canary</entry>
+            <entry>~/.local/share/applications/xenia/xenia_canary</entry>
+            <entry>~/.local/bin/xenia/xenia_canary</entry>
+            <entry>~/bin/xenia/xenia_canary</entry>
         </rule>
     </emulator>
     <emulator name="XENIA-EDGE">

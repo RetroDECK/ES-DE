@@ -56,6 +56,7 @@
         <!-- Commodore Amiga emulator Amiberry -->
         <rule type="systempath">
             <entry>amiberry</entry>
+            <entry>com.blitterstudio.amiberry</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/amiberry/amiberry</entry>
@@ -82,6 +83,20 @@
             <entry>~/.local/share/flatpak/exports/bin/dev.ares.ares</entry>
         </rule>
     </emulator>
+    <emulator name="ARMSX2">
+        <!-- Sony PlayStation 2 emulator ARMSX2 -->
+        <rule type="systempath">
+            <entry>armsx2-qt</entry>
+            <entry>armsx2</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/ARMSX2*.AppImage</entry>
+            <entry>~/AppImages/ARMSX2*.AppImage</entry>
+            <entry>~/.local/share/applications/ARMSX2*.AppImage</entry>
+            <entry>~/.local/bin/ARMSX2*.AppImage</entry>
+            <entry>~/bin/ARMSX2*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="systempath">
@@ -90,6 +105,10 @@
     </emulator>
     <emulator name="AZAHAR">
         <!-- Nintendo 3DS emulator Azahar -->
+        <rule type="systempath">
+            <entry>azahar</entry>
+            <entry>org.azahar_emu.Azahar</entry>
+        </rule>
         <rule type="staticpath">
             <entry>~/Applications/Azahar-Enhanced*.AppImage</entry>
             <entry>~/AppImages/Azahar-Enhanced*.AppImage</entry>
@@ -104,6 +123,7 @@
         <!-- Atari Jaguar emulator BigPEmu -->
         <rule type="systempath">
             <entry>bigpemu</entry>
+            <entry>com.richwhitehouse.BigPEmu</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/bigpemu/bigpemu</entry>
@@ -134,6 +154,20 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/dev.bsnes.bsnes</entry>
             <entry>~/.local/share/flatpak/exports/bin/dev.bsnes.bsnes</entry>
+        </rule>
+    </emulator>
+    <emulator name="CEMU">
+        <!-- Nintendo Wii U emulator Cemu -->
+        <rule type="systempath">
+            <entry>cemu</entry>
+            <entry>Cemu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Cemu*.AppImage</entry>
+            <entry>~/AppImages/Cemu*.AppImage</entry>
+            <entry>~/.local/share/applications/Cemu*.AppImage</entry>
+            <entry>~/.local/bin/Cemu*.AppImage</entry>
+            <entry>~/bin/Cemu*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
@@ -255,6 +289,7 @@
         <!-- Nintendo Switch emulator Eden -->
         <rule type="systempath">
             <entry>eden</entry>
+            <entry>dev.eden_emu.eden</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Eden*.AppImage</entry>
@@ -268,6 +303,9 @@
     </emulator>
     <emulator name="EMULICIOUS">
         <!-- Multi-system emulator Emulicious -->
+        <rule type="systempath">
+            <entry>net.emulicious.Emulicious</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.emulicious.Emulicious</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.emulicious.Emulicious</entry>
@@ -433,6 +471,9 @@
     </emulator>
     <emulator name="MISSINGNO">
         <!-- Nintendo Game Boy, Game Boy Color and Atari 2600 emulator Missingno -->
+        <rule type="systempath">
+            <entry>net.andyofniall.missingno</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.andyofniall.missingno</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.andyofniall.missingno</entry>
@@ -477,10 +518,10 @@
             <entry>pico8</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/pico-8/pico8</entry>
-            <entry>~/.local/share/applications/pico-8/pico8</entry>
-            <entry>~/.local/bin/pico-8/pico8</entry>
-            <entry>~/bin/pico-8/pico8</entry>
+            <entry>~/Applications/pico-8/pico8_64</entry>
+            <entry>~/.local/share/applications/pico-8/pico8_64</entry>
+            <entry>~/.local/bin/pico-8/pico8_64</entry>
+            <entry>~/bin/pico-8/pico8_64</entry>
         </rule>
     </emulator>
     <emulator name="PLAY!">
@@ -561,6 +602,7 @@
         <!-- Adobe Flash player Ruffle -->
         <rule type="systempath">
             <entry>ruffle</entry>
+            <entry>rs.ruffle.Ruffle</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/ruffle/ruffle</entry>
@@ -573,6 +615,11 @@
     </emulator>
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
+        <rule type="systempath">
+            <entry>Ryujinx</entry>
+            <entry>ryujinx</entry>
+            <entry>io.github.ryubing.Ryujinx</entry>
+        </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.ryubing.Ryujinx</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.ryubing.Ryujinx</entry>
@@ -650,6 +697,7 @@
         <!-- Sega Model 3 emulator Supermodel -->
         <rule type="systempath">
             <entry>supermodel</entry>
+            <entry>com.supermodel3.Supermodel</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/Supermodel*.AppImage</entry>
@@ -715,6 +763,24 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
+        </rule>
+    </emulator>
+    <emulator name="VITA3K">
+        <!-- Sony PlayStation Vita emulator Vita3K -->
+        <rule type="systempath">
+            <entry>vita3k</entry>
+            <entry>Vita3K</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Vita3K*.AppImage</entry>
+            <entry>~/AppImages/Vita3K*.AppImage</entry>
+            <entry>~/.local/share/applications/Vita3K*.AppImage</entry>
+            <entry>~/.local/bin/Vita3K*.AppImage</entry>
+            <entry>~/bin/Vita3K*.AppImage</entry>
+            <entry>~/Applications/Vita3K/Vita3K</entry>
+            <entry>~/.local/share/applications/Vita3K/Vita3K</entry>
+            <entry>~/.local/bin/Vita3K/Vita3K</entry>
+            <entry>~/bin/Vita3K/Vita3K</entry>
         </rule>
     </emulator>
     <emulator name="XEMU">

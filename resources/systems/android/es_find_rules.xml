@@ -34,6 +34,7 @@
         <rule type="androidpackage">
             <entry>come.nanodata.armsx2/com.armsx2.MainActivity</entry>
             <entry>com.armsx2/.MainActivity</entry>
+            <entry>com.armsx2.nightly/com.armsx2.MainActivity</entry>
             <entry>come.nanodata.armsx2/kr.co.iefriends.pcsx2.MainActivity</entry>
             <entry>come.nanodata.armsx2.debug/kr.co.iefriends.pcsx2.MainActivity</entry>
         </rule>

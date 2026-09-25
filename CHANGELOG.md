@@ -1,6 +1,6 @@
 # ES-DE Frontend - Changelog
 
-## Version 3.5.0 / 3.5.0-xx (in development)
+## Version 3.5.0 / 3.5.0-65 (in development)
 
 **Release date:** TBD
 
@@ -82,6 +82,9 @@
 * (Android) Added the .amazon file extension to the windows system
 * (Android) Added a find rule entry for yet another package name for GameHub Lite
 * (Android) Added find rule entries for the Ludashi fork of Winlator to Winlator Cmod
+* (Linux ARM) Added support for the Sony PlayStation Vita (psvita) system using the Vita3K emulator
+* (Linux ARM) Added support for the Nintendo Wii U (wiiu) system using the Cemu emulator
+* (Linux ARM) Added ARMSX2 standalone as an alternative emulator for the ps2 system
 * (Linux ARM) Added BlastEm standalone as an alternative emulator for the genesis, megadrive and megadrivejp systems
 * (Linux ARM) Added Play! standalone as an alternative emulator for the ps2 system
 * (Linux ARM) Added Play! Arcade standalone and Play! Disc standalone as alternative emulators for the consolearcade system
@@ -141,8 +144,11 @@
 ### Bug fixes
 
 * Some specific theme configuration for the system status indicators could lead to a crash on battery charge status changes
+* Auto-adjusting font sizes for themes that defined values outside the allowed size range caused a minor memory leak
 * (Android) The MAME4droid Current [Diskette] and MAME4droid Current [Software list] emulator entries for the adam system didn't work correctly
 * (Android) The MAME4droid Current [FM-7 Software list] and MAME4droid Current [FM77AV Software list] emulator entries for the fm7 system didn't work correctly
+* (Linux ARM) The find rule entries for PICO-8 used the 32-bit build instead of the 64-bit build
+* (Linux) Multiple emulators were missing Flatpak systempath find rule entries
 * (macOS) Worked around an operating system bug where some server responses like 404 errors could lead to incorrectly reported network errors
 * (macOS) The Stella 2023 RetroArch core could not be used as the es_systems.xml entry was invalid
 

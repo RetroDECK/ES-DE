@@ -262,7 +262,8 @@ https://github.com/ARMSX2/ARMSX1/releases
 
 ### ARMSX2
 
-This emulator can be installed from the Play store or downloaded from their GitHub site.
+This emulator can be installed from the Play store or downloaded from their GitHub site. \
+Both the stable and nightly GitHub builds are supported, but they are located under the same emulator entry.
 
 https://play.google.com/store/apps/details?id=come.nanodata.armsx2 \
 https://github.com/ARMSX2/ARMSX2/releases

@@ -891,11 +891,14 @@ The following emulators are supported in AppImage format when using the bundled 
 | n3ds                 | Azahar              | Azahar-Enhanced*.AppImage      | pkgforge-dev         |
 | nds                  | DeSmuME             | desmume*.AppImage              | pkgforge-dev         |
 | nds                  | melonDS             | melonDS*.AppImage              | Official             |
+| ps2                  | ARMSX2              | ARMSX2*.AppImage               | Official             |
 | ps3                  | RPCS3               | rpcs3*.AppImage                | Official             |
 | psp                  | PPSSPP              | PPSSPP*.AppImage               | Official             |
+| psvita               | Vita3K              | Vita3K*.AppImage               | Official             |
 | psx                  | DuckStation         | DuckStation*.AppImage          | Official             |
 | switch               | Eden                | Eden*.AppImage                 | Official             |
 | wii                  | Dolphin             | Dolphin_Emulator*.AppImage     | pkgforge-dev         |
+| wiiu                 | Cemu                | Cemu*.AppImage                 | pkgforge-dev         |
 | xbox                 | xemu                | xemu*.AppImage                 | Official             |
 
 Most AppImages are distributed directly by the official projects, but there's also a good selection of AppImages available at https://github.com/pkgforge-dev which includes some emulators that don't ship AppImages themselves.
@@ -1043,6 +1046,7 @@ The following manually downloaded emulators are supported when using the bundled
 | flash                                         | Ruffle                | ruffle/ruffle                                |
 | n64                                           | Gopher64              | gopher64/gopher64-linux-aarch64              |
 | pico8                                         | PICO-8                | pico-8/pico8                                 |
+| psvita                                        | Vita3K                | Vita3K/Vita3K                                |
 | saturn/saturnjp                               | Ymir                  | ymir/ymir-sdl3                               |
 | scummvm                                       | DREAMM                | dreamm/dreamm                                |
 
@@ -2874,7 +2878,7 @@ To run the games you simply execute their .pak file, which can be placed in the 
 
 ### PICO-8
 
-PICO-8 Fantasy Console is a game engine developed by [Lexaloffle Games](https://www.lexaloffle.com/pico-8.php) that you need to buy a license to use. Doing so will provide you with download links to releases for Linux, macOS and Windows. Make sure to use the 64-bit release as the 32-bit release reportedly has some technical issues. On macOS and Windows the installation is straightforward, but on Linux you need to place PICO-8 in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details.
+PICO-8 Fantasy Console is a game engine developed by [Lexaloffle Games](https://www.lexaloffle.com/pico-8.php) that you need to buy a license to use. Doing so will provide you with download links to releases for Linux, macOS and Windows. Make sure to use the 64-bit release as the 32-bit release reportedly has some technical issues. For Linux on ARM64/AArch64 you need to download the Raspberry Pi build even if you're not using a Raspberry Pi computer. On macOS and Windows the installation is straightforward, but on Linux you need to place PICO-8 in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details.
 
 On Android it's recommended to use the [unofficial PICO-8 wrapper](https://github.com/Macs75/pico8-android) together with the official Raspberry Pi build of PICO-8. Alternatively you could use the Fake-08 RetroArch core, although this needs to be manually downloaded. How that is done is covered briefly in the [ANDROID.md](ANDROID.md#fake-08) document.
 

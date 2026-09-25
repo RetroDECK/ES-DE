@@ -30,15 +30,6 @@ Font::Font(float size, const std::string& path)
     , mSpaceGlyph {0}
     , mShapeText {true}
 {
-    if (mFontSize < 3.0f) {
-        mFontSize = 3.0f;
-        LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
-    }
-    else if (mFontSize > Renderer::getScreenHeight() * 1.5f) {
-        mFontSize = Renderer::getScreenHeight() * 1.5f;
-        LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
-    }
-
     if (!sLibrary) {
         initLibrary();
         sFallbackFonts = getFallbackFontPaths();
@@ -102,9 +93,20 @@ Font::~Font()
 
 std::shared_ptr<Font> Font::get(float size, const std::string& path)
 {
+    float fontSize {size};
+
+    if (fontSize < 3.0f) {
+        fontSize = 3.0f;
+        LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
+    }
+    else if (fontSize > Renderer::getScreenHeight() * 1.5f) {
+        fontSize = Renderer::getScreenHeight() * 1.5f;
+        LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
+    }
+
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
-    const std::tuple<float, std::string> def {size, canonicalPath.empty() ? getDefaultPath() :
-                                                                            canonicalPath};
+    const std::tuple<float, std::string> def {fontSize, canonicalPath.empty() ? getDefaultPath() :
+                                                                                canonicalPath};
 
     auto foundFont = sFontMap.find(def);
     if (foundFont != sFontMap.cend()) {
