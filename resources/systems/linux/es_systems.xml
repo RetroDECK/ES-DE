@@ -1779,8 +1779,8 @@
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
         <extension>.bin .BIN .chd .CHD .ciso .CISO .cso .CSO .desktop .dump .DUMP .elf .ELF .gz .GZ .m3u .M3U .mdf .MDF .img .IMG .iso .ISO .isz .ISZ .ngr .NRG .zso .ZSO</extension>
-        <command label="PCEE2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcee2_libretro.so %ROM%</command>
         <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% -batch %ROM%</command>
+        <command label="PCEE2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcee2_libretro.so %ROM%</command>
         <command label="LRPS2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx2_libretro.so %ROM%</command>
         <command label="PCSX2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx2_libretro.so %ROM%</command>
         <!-- <command label="PCSX2 Legacy (Standalone)">%EMULATOR_PCSX2-LEGACY% &dash;&dash;nogui %ROM%</command> -->
@@ -2216,8 +2216,7 @@
         <path>%ROMPATH%/switch</path>
         <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI</extension>
         <command label="Ryubing (Standalone)">%EMULATOR_RYUBING% %ROM%</command>
-        <!-- <command label="Eden (Standalone)">%EMULATOR_EDEN% %ROM%</command> -->
-        <!-- <command label="Yuzu (via Ponzu)">%INJECT%=%BASENAME%.esprefix %EMULATOR_YUZU% -f -g %ROM%</command> -->
+        <command label="Eden (Standalone)">%EMULATOR_EDEN% %ROM%</command>
         <platform>switch</platform>
         <theme>switch</theme>
     </system>
@@ -2630,70 +2629,4 @@
         <platform>zxspectrum</platform>
         <theme>zxspectrum</theme>
     </system>
-        <!--
-    <system>
-        <name>commander-x16</name>
-        <fullname>Commander X16</fullname>
-        <path>%ROMPATH%/commander-x16</path>
-        <extension>.prg .PRG</extension>
-        <command label="Commander X16 (Standalone)">%EMULATOR_COMMANDER-X16% %ROM%</command>
-        <platform>commander-x16</platform>
-        <theme>commander-x16</theme>
-    </system>
-    <system>
-        <name>duke</name>
-        <fullname>Duke Nukem 3D</fullname>
-        <path>%ROMPATH%/duke</path>
-        <extension>.duke .DUKE</extension>
-        <command label="Raze (Standalone)">%EMULATOR_RAZE% %ROM%</command>
-        <platform>duke</platform>
-        <theme>duke</theme>
-    </system>
-    <system>
-        <name>gametank</name>
-        <fullname>GameTank</fullname>
-        <path>%ROMPATH%/gametank</path>
-        <extension>.gtr .GTR</extension>
-        <command label="GameTank (Standalone)">%EMULATOR_GAMETANK%"</command>
-        <platform>gametank</platform>
-        <theme>gametank</theme>
-    </system>
-    <system>
-        <name>microvision</name>
-        <fullname>Milton-Bradley Microvision</fullname>
-        <path>%ROMPATH%/microvision</path>
-        <extension>.bin .BIN</extension>
-        <command label="MVEM (Standalone)">%EMULATOR_MVEM% %ROM% -f</command>
-        <platform>microvision</platform>
-        <theme>microvision</theme>
-    </system>
-    <system>
-        <name>opensurge</name>
-        <fullname>Open Surge Engine</fullname>
-        <path>%ROMPATH%/opensurge</path>
-        <extension>.surge .SURGE .lev .LEV .qst .QST</extension>
-            <command label="Open Surge Engine (Game) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game "%ROM%"</command>
-            <command label="Open Surge Engine (Surge the Rabbit) (Standalone)">%EMULATOR_OPENSURGE% &dash;&dash;fullscreen &dash;&dash;quality high &dash;&dash;game-folder /app/retrodeck/components/opensurge/opensurge</command>
-        <platform>opensurge</platform>
-        <theme>opensurge</theme>
-    </system>
-    <system>
-        <name>muds</name>
-        <fullname>Multi-User Dungeons</fullname>
-        <path>%ROMPATH%/muds</path>
-        <extension>.mud .MUD</extension>
-        <command label="Mudlet (Standalone)">%EMULATOR_MUDLET% &dash;&dash;fullscreen &dash;&dash;steammode &dash;&dash;profile="%BASENAME%"</command>
-        <platform>muds</platform>
-        <theme>muds</theme>
-    </system>
-    <system>
-        <name>wolf</name>
-        <fullname>Wolfenstein 3D</fullname>
-        <path>%ROMPATH%/wolf</path>
-        <extension>.wolf .WOLF</extension>
-        <command label="ECWolf (Standalone)">%EMULATOR_ECWOLF% %ROM%</command>
-        <platform>wolf</platform>
-        <theme>wolf</theme>
-    </system>
-    -->
 </systemList>
